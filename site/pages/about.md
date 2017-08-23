@@ -7,8 +7,9 @@ Alias: /pages/about-me.html
 Hello, I'm Elias Dorneles, a software developer from Brazil.
 I play the guitar and the piano a little bit, and I love to learn new things.
 
-I work at [Scrapinghub](http://scrapinghub.com) building stuff for storing,
-processing and moving huge datasets of scraped data.
+I'm a [Recurse Center](https://www.recurse.com) alumni.
+
+I work at [Legalstart.fr](https://legalstart.fr).
 
 You can find me on [Twitter](https://twitter.com/eliasdorneles),
 [Github](https://github.com/eliasdorneles),
@@ -45,3 +46,4 @@ a resource in Portuguese for Python programmers.
 
 I've also [translated to Portuguese](https://construa-seu-proprio-lisp.herokuapp.com/)
 the wonderful little book [Build Your Own Lisp](http://buildyourownlisp.com).
+
