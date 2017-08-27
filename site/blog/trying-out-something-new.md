@@ -5,22 +5,22 @@ Slug: trying-out-something-new
 
 
 <!-- PELICAN_BEGIN_SUMMARY -->
-![](http://i.imgur.com/KZo7ObI.png)
+![Hey there!](http://i.imgur.com/KZo7ObI.png)
 <!-- PELICAN_END_SUMMARY -->
 
-![](http://imgur.com/vjWgCAK.png)
+![Smiling: I'm trying something new today](http://imgur.com/vjWgCAK.png)
 
-![](http://imgur.com/QPGcgDE.png)
+![Worried face: not sure if this was a good idea](http://imgur.com/QPGcgDE.png)
 
-![](http://imgur.com/whDBm4O.png)
+![Smiling: But what the heck, you only live once!](http://imgur.com/whDBm4O.png)
 
-![](http://imgur.com/Bq54jBg.png)
+![Doodle joy face: I'm discovering the joy of DOODLING!](http://imgur.com/Bq54jBg.png)
 
-![](http://imgur.com/45YdMZI.png)
+![The lack of perfection is a feature](http://imgur.com/45YdMZI.png)
 
-![](http://imgur.com/zBog5ta.png)
+![Just like life... and being human](http://imgur.com/zBog5ta.png)
 
-![](http://imgur.com/fgU8Y57.png)
+![Squared smile: It's easier when you accept the flaws and KEEP GOING](http://imgur.com/fgU8Y57.png)
 
 
 If you liked these drawings, you may like [this video teaching you to draw in a

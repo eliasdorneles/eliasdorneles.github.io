@@ -15,7 +15,7 @@ I thought it would be fun to draw the cards using the [box-drawing characters](h
 
 Here is a screenshot of the final game:
 
-![](https://raw.githubusercontent.com/eliasdorneles/usolitaire/master/screenshot-usolitaire.png)
+![Screenshot showing usolitaire](https://raw.githubusercontent.com/eliasdorneles/usolitaire/master/screenshot-usolitaire.png)
 
 Before starting to code, I explored the library a bit in the shell, following [the examples from the tutorial](http://urwid.org/tutorial/index.html).
 I also did [some planning](https://raw.githubusercontent.com/eliasdorneles/usolitaire/c18b4643bcd20cf53705a16de6072f2d1e766a43/PLAN.txt), working out how to draw the game elements so that it would fit a 40x80 characters terminal window.

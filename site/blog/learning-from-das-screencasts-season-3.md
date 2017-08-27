@@ -46,7 +46,7 @@ there is a complexity threshold for deciding when the effort will pay off.
 I already mentioned [outside-in
 TDD](http://coding-is-like-cooking.info/2013/04/outside-in-development-with-double-loop-tdd/)
 in [the summary for the second
-season]({filename}site/blog/learning-from-das-screencasts-season-2.md), when
+season]({filename}/blog/learning-from-das-screencasts-season-2.md), when
 Gary talked about
 [spiking](https://joneaves.wordpress.com/2004/02/18/spike_to_learn_tdd_to_build/).
 

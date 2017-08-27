@@ -101,7 +101,7 @@ this:
 
 ### The anatomy of a spider
 
-<center><img width="400" src="https://lh6.googleusercontent.com/1OLnj7-I1_85hnfnovq6WbRDl3EQTs2xNxc_QpAZ7x2_twrGG0Olb3ZYG7wxA-QFaJVlxfLxNa14yVFSY4JxmlnTVLSJQ30isc4oifxUnFawhQC3PrIGhYxPOayRJHutZg" /></center>
+<center><img alt="anatomy of a spider" width="400" src="https://lh6.googleusercontent.com/1OLnj7-I1_85hnfnovq6WbRDl3EQTs2xNxc_QpAZ7x2_twrGG0Olb3ZYG7wxA-QFaJVlxfLxNa14yVFSY4JxmlnTVLSJQ30isc4oifxUnFawhQC3PrIGhYxPOayRJHutZg" /></center>
 
 A Scrapy spider is responsible for defining how to follow the links
 "navigating" through a website (that's the so-called crawling part) and how to
@@ -244,7 +244,7 @@ page, that's where we'll do the information extraction, i.e., the data scraping
 itself.
 
 
-<center><img width="500" src="https://lh3.googleusercontent.com/fTtt8VFXX5jcaTlMj9okmgKJxovkhZhKO392KqHkopX0oCmpPp0d8HA9tBY7vkTvE8NXlYR2NjAyeRJF0FW3A3BE01uI2YMH1Pkcq369Sx9pgARuSKH71mHM5TEumlOqFw" /></center>
+<center><img alt="Little kid smiling: I can't wait to write my own spider to watch prices of games for my new console!" width="500" src="https://lh3.googleusercontent.com/fTtt8VFXX5jcaTlMj9okmgKJxovkhZhKO392KqHkopX0oCmpPp0d8HA9tBY7vkTvE8NXlYR2NjAyeRJF0FW3A3BE01uI2YMH1Pkcq369Sx9pgARuSKH71mHM5TEumlOqFw" /></center>
 
 
 ### Callbacks, Requests & Items
@@ -385,7 +385,7 @@ to explore. The most important object is the variable `response`, which contains
 the response of the HTTP request and corresponds to theresponse argument
 received by the callbacks.
 
-<center><img width="500" src="https://lh3.googleusercontent.com/kdW_fmpWTyloxYfesyGVQdB-rx54lM-r1LIptocDvhxd6TsJ3__w4mWXMHI6o8SXvaO3tN19HhIf9kZ7iwZTztRpdF8g6HoHNA6aer7E-mk8jlM63o8taJVdPSA9EooORg" /></center>
+<center><img width="500" alt="Happy dog: dude!! it even has a shell!! love the shell! love the shell! love the shell!" src="https://lh3.googleusercontent.com/kdW_fmpWTyloxYfesyGVQdB-rx54lM-r1LIptocDvhxd6TsJ3__w4mWXMHI6o8SXvaO3tN19HhIf9kZ7iwZTztRpdF8g6HoHNA6aer7E-mk8jlM63o8taJVdPSA9EooORg" /></center>
 
     >>> response.url
     'http://stackoverflow.com'
@@ -540,7 +540,7 @@ output, you should see some stats, including the item scraped count:
 > used the JSON Lines format (the previous default), and may change in the
 > future.
 
-<center><img width="500" src="https://lh5.googleusercontent.com/8wSeSQMfk_DBDrTpejqaBlAhoazIg--pdjDWfk5vcIhB504FSu78MEULRtnuYPN-0FVjuX23OWnqIEzf_j0YorWy42EQcTnUVKfqF9-UfbpSu-nuZ4iXB5m15WPhXqBLXw" /></center>
+<center><img width="500" alt="SO: all your questions are belong to us" src="https://lh5.googleusercontent.com/8wSeSQMfk_DBDrTpejqaBlAhoazIg--pdjDWfk5vcIhB504FSu78MEULRtnuYPN-0FVjuX23OWnqIEzf_j0YorWy42EQcTnUVKfqF9-UfbpSu-nuZ4iXB5m15WPhXqBLXw" /></center>
 
 #### Arachnoid arguments
 
@@ -689,7 +689,7 @@ on the CSS selector for the author field, to break it in two lines.
 
 If you made until here, congratulations! Here is a trophy for you:
 
-<center><img width="500" src="https://lh3.googleusercontent.com/EboKX-uRyuikN3lI8voa529LP3W6OnHn3vjWi21fvisFEpbuPu-fPY9be1Z3PB_CxT991AL0SquUnypXp4-sbiMTdVY8hiVu_zrbUdFPVhu5BixW6Mu3LUE9Jbz37Jn8Iw" /></center>
+<center><img width="500" alt="Trophy Scrapy apprentice: champion of Reading Long Posts category" src="https://lh3.googleusercontent.com/EboKX-uRyuikN3lI8voa529LP3W6OnHn3vjWi21fvisFEpbuPu-fPY9be1Z3PB_CxT991AL0SquUnypXp4-sbiMTdVY8hiVu_zrbUdFPVhu5BixW6Mu3LUE9Jbz37Jn8Iw" /></center>
 
 Now that you have learned to write Scrapy spiders and therefore are enabled to
 download the whole Internet to your home PC, try not to get banned by the

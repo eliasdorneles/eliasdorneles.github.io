@@ -62,7 +62,7 @@ rapidão. Para acompanhar, [instale Erlang](http://www.erlang.org/download.html)
 
 Veja o seguinte esqueleto de um programa concorrente em Erlang:
 
-[![](http://2.bp.blogspot.com/-HmS5hqh97EA/U0D7Y5iIeII/AAAAAAAAAtk/SVLNHGSIVHk/s1600/erlang-loop-menor.png)](http://2.bp.blogspot.com/-HmS5hqh97EA/U0D7Y5iIeII/AAAAAAAAAtk/SVLNHGSIVHk/s1600/erlang-loop-menor.png)
+[!["Esqueleto de programa Erlang"](http://2.bp.blogspot.com/-HmS5hqh97EA/U0D7Y5iIeII/AAAAAAAAAtk/SVLNHGSIVHk/s1600/erlang-loop-menor.png)](http://2.bp.blogspot.com/-HmS5hqh97EA/U0D7Y5iIeII/AAAAAAAAAtk/SVLNHGSIVHk/s1600/erlang-loop-menor.png)
 
 Note a recursão na função `loop`: é assim que se faz processos iterativos
 (loops) em Erlang, que não tem sintaxe especial para isso. O compilador
