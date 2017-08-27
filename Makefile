@@ -24,5 +24,5 @@ clean:
 	rm -rf ${OUTPUT_DIR} cache
 
 server: compile
-	(cd ${OUTPUT_DIR} && python -m webbrowser http://localhost:8000 && python -m SimpleHTTPServer &)
+	(cd ${OUTPUT_DIR} && python -m webbrowser http://localhost:8000 && python -m http.server &)
 	${COMPILE} --autoreload
