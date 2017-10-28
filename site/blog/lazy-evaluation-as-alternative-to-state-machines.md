@@ -1,4 +1,4 @@
-Title: Lazy evaluation as alternative to state machines
+Title: Lazy evaluation as alternative to state machines, maybe
 Date: 2017-03-27 22:13
 Author: Elias Dorneles
 Slug: lazy-evaluation-as-alternative-to-state-machines
