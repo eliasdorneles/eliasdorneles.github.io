@@ -20,7 +20,9 @@ GITHUB_URL = 'https://github.com/eliasdorneles'
 
 # DISQUS_SITENAME = 'hopefulramble'
 
-JINJA_EXTENSIONS = ['jinja2.ext.with_']
+JINJA_ENVIRONMENT = {
+    'extensions': ['jinja2.ext.with_'],
+}
 
 STATIC_PATHS = [
     'images',
