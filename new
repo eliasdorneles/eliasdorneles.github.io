@@ -13,6 +13,7 @@ TEMPLATE = """Title: {title}
 Date: {date}
 Author: Elias Dorneles
 Slug: {title_slug}
+Status: draft
 
 Write here...
 """
