@@ -9,11 +9,12 @@ Software screencasts](https://www.destroyallsoftware.com/screencasts/catalog).
 
 ## Which kind of code should go into Models?
 
-Gary is fond of an architecture style for web applications,
-which is [equivalent to the so-called clean architecture](http://rhodesmill.org/brandon/slides/2014-07-pyohio/clean-architecture/):
+Gary is fond of an architecture style for web applications, which is
+[equivalent to the so-called clean architecture described by Brandon Rhodes
+here](http://rhodesmill.org/brandon/slides/2014-07-pyohio/clean-architecture/):
 
 <center>
-<img src="http://rhodesmill.org/brandon/slides/2013-05-djangoconeu/clean-architecture.jpg" alt="The Clean Architecture diagram" width="500" />
+<img src="{filename}/images/clean-architecture.jpg" alt="The Clean Architecture diagram" width="500" />
 </center>
 
 Following this architecture, the code inside model classes (in Rails, this
