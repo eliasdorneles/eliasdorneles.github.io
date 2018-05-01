@@ -15,14 +15,14 @@ help:
 	@echo "clean    removes output and cache directories"
 
 compile:
-	${COMPILE}
+	pipenv run ${COMPILE}
 
 debug:
-	pudb `which pelican` ${SITE_DIR} -t ${THEME_DIR} -o ${OUTPUT_DIR} -s settings.py
+	pipenv run pudb pelican ${SITE_DIR} -t ${THEME_DIR} -o ${OUTPUT_DIR} -s settings.py
 
 clean:
 	rm -rf ${OUTPUT_DIR} cache
 
 server: compile
-	(cd ${OUTPUT_DIR} && python -m webbrowser http://localhost:8000 && python -m http.server &)
-	${COMPILE} --autoreload
+	(cd ${OUTPUT_DIR} && python3 -m webbrowser http://localhost:8000 && python3 -m http.server &)
+	pipenv run ${COMPILE} --autoreload
