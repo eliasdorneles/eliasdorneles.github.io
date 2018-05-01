@@ -62,7 +62,7 @@ da CPU?), clique com o direito nele e escolha a opção
 `Finalizar Processo` ou `Matar Processo`:
 
 [![Terminando um processo usando o Monitor do Sistema do
-GNOME](http://eljunior.files.wordpress.com/2012/06/matar_processo.png "GNOME - Monitor do Sistema")](http://eljunior.files.wordpress.com/2012/06/matar_processo.png)
+GNOME](https://eljunior.files.wordpress.com/2012/06/matar_processo.png "GNOME - Monitor do Sistema")](https://eljunior.files.wordpress.com/2012/06/matar_processo.png)
 
 Quando o mouse pára de funcionar:
 ---------------------------------

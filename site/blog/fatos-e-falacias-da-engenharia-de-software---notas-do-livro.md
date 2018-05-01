@@ -3,7 +3,7 @@ Date: 2012-12-03 13:23
 Author: Elias Dorneles
 Slug: Fatos-e-Falácias-da-Engenharia-de-Software---notas-do-livro
 
-[![Book cover](http://codinghorror.typepad.com/.a/6a0120a85dcdae970b012877703e5c970c-pi)](http://www.amazon.com/Facts-Fallacies-Software-Engineering-Robert/dp/0321117425)Acabo
+[![Book cover](https://codinghorror.typepad.com/.a/6a0120a85dcdae970b012877703e5c970c-pi)](http://www.amazon.com/Facts-Fallacies-Software-Engineering-Robert/dp/0321117425)Acabo
 de terminar a leitura de um livro simplesmente excelente, *Facts and
 Fallacies of Software Engineering* (Fatos e Falácias da Engenharia de
 Software), do programador/pesquisador/escritor [Robert L.
@@ -265,7 +265,7 @@ tendem a ser um tiro no pé, alienando os profissionais técnicos. E não
 ajuda que o inimigo número um de qualidade na maioria dos projetos é a
 pressão do cronograma. A gerência fica querendo enfiar “qualidade” com
 uma mão e tirar com a outra!
-[![TQM-wont\_work](http://eljunior.files.wordpress.com/2012/12/tqm-wont_work.jpg?w=300)](http://eljunior.files.wordpress.com/2012/12/tqm-wont_work.jpg)  
+[![TQM-wont\_work](https://eljunior.files.wordpress.com/2012/12/tqm-wont_work.jpg?w=300)](https://eljunior.files.wordpress.com/2012/12/tqm-wont_work.jpg)  
 Note que a falácia aqui é que qualidade seja um trabalho da gerência. A
 gerência tem um papel muito importante em atingir qualidade: estabelecer
 a cultura de prioridade em primeiro lugar, remover barreiras que impedem
@@ -278,7 +278,7 @@ queriam fazer o tempo todo: construir algo que eles possam se orgulhar.
 
 -   Post do Jeff Atwood com a lista completa de fatos e falácias (em
     inglês) -- <small>o texto que me instigou a comprar o livro:</small>
-    <http://www.codinghorror.com/blog/2008/03/revisiting-the-facts-and-fallacies-of-software-engineering.html>
+    <https://www.codinghorror.com/blog/2008/03/revisiting-the-facts-and-fallacies-of-software-engineering.html>
 -   *"You can indeed manage what you can’t measure"*:
     -   <http://www.galorath.com/wp/you-can-manage-what-you-cant-measure.php>
     -   <http://blogs.hbr.org/davenport/2010/10/what_cant_be_measured.html>

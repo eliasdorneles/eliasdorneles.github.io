@@ -17,7 +17,7 @@ português](http://eljunior.wordpress.com/2013/01/15/aventuras-com-java-ee/
 "Aventuras apresentando Java EE a mim mesmo").
 
 [![Capa do
-livro](http://eljunior.files.wordpress.com/2014/01/trabalho_eficaz_codigo_legado.jpg?w=210)](http://www.grupoa.com.br/livros/engenharia-de-software-e-metodos-ageis/trabalho-eficaz-com-codigo-legado/9788582600320)
+livro](https://eljunior.files.wordpress.com/2014/01/trabalho_eficaz_codigo_legado.jpg?w=210)](http://www.grupoa.com.br/livros/engenharia-de-software-e-metodos-ageis/trabalho-eficaz-com-codigo-legado/9788582600320)
 
 Veja alguns links sobre o livro, e meu resumo/resenha a seguir:
 

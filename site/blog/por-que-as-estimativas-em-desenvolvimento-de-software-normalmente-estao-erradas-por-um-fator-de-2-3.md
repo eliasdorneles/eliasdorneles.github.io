@@ -19,7 +19,7 @@ Vamos dar uma caminhada saindo da costa de San Francisco até Los Angeles
 para visitar nossos amigos em Newport Beach. Pego meu mapa e desenho
 nossa rota pela costa:
 
-![1](http://eljunior.files.wordpress.com/2013/02/1.png)  
+![1](https://eljunior.files.wordpress.com/2013/02/1.png)  
 O percurso é de aproximadamente 400 milhas; podemos caminhar 4 milhas
 por hora, 10 horas por dia. Dessa forma chegaremos lá em 10 dias.
 Ligamos para nossos amigos e marcamos uma janta para o próximo domingo
@@ -29,7 +29,7 @@ Acordamos cedo no dia seguinte altamente motivados para essa nova
 aventura. Colocamos as mochilas, pegamos o mapa e a rota para o primeiro
 dia. Olhamos então para o mapa. Ai ai:
 
-[![2](http://eljunior.files.wordpress.com/2013/02/2.png)](http://eljunior.files.wordpress.com/2013/02/2.png)  
+[![2](https://eljunior.files.wordpress.com/2013/02/2.png)](https://eljunior.files.wordpress.com/2013/02/2.png)  
 Caramba, a costa tem um milhão de curvas e reentrâncias! Com apenas um
 dia de caminhada de 40 milhas não chegaremos nem em Half Moon Bay. Essa
 viagem tem pelo menos 500 milhas, e não 400! Ligamos para nossos amigos
@@ -41,7 +41,7 @@ Bem, com essa inconveniência resolvida, partimos. Duas horas mais tarde,
 não passamos nem do zoológico. Qual o problema? Olhamos novamente para
 nossa trilha:
 
-[![3](http://eljunior.files.wordpress.com/2013/02/3.jpg)](http://eljunior.files.wordpress.com/2013/02/3.jpg)
+[![3](https://eljunior.files.wordpress.com/2013/02/3.jpg)](https://eljunior.files.wordpress.com/2013/02/3.jpg)
 
 Jesus, essa trilha não é fácil! Areia, água, escadas, riachos, lobos
 marinhos furiosos! Estamos caminhando a no máximo 2 milhas por hora,
@@ -73,7 +73,7 @@ suprimentos novos. Ficaremos bem. Compensaremos amanhã.
 Acordamos na manhã seguinte, protegemos nossos pés de futuras bolhas e
 começamos a caminhar. Contornamos a encosta. Que?! Que porra é essa?
 
-[![4](http://eljunior.files.wordpress.com/2013/02/4.jpg)](http://eljunior.files.wordpress.com/2013/02/4.jpg)
+[![4](https://eljunior.files.wordpress.com/2013/02/4.jpg)](https://eljunior.files.wordpress.com/2013/02/4.jpg)
 
 O maldito mapa não mostra essa merda! Temos que caminhar 3 milhas para o
 interior, contornar uma propriedade federal rodeada por cercas, nos
@@ -92,7 +92,7 @@ alguns dias, então obviamente podemos cumprir o prazo!
 
 Acordamos moídos no dia seguinte. Olho o mapa:
 
-![5](http://eljunior.files.wordpress.com/2013/02/5.png)
+![5](https://eljunior.files.wordpress.com/2013/02/5.png)
 
 Puta merda! Estamos no dia 5 de uma viagem de 10 dias e não saímos nem
 da Bay Area! Isso é patético! Vamos trabalhar em uma estimativa mais

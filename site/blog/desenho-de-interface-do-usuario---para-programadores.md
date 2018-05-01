@@ -135,7 +135,7 @@ poder escolher certas coisas, é por isso que Subway, Spoletto e outros
 restaurantes do tipo fazem sucesso. Todavia, ninguém gosta de escolher
 coisas que *simplesmente não interessam*.
 
-  [![Lembra desse cara chato?](http://eljunior.files.wordpress.com/2013/03/clippy-letter20110724-22047-qcxdai.png)](http://eljunior.files.wordpress.com/2013/03/clippy-letter20110724-22047-qcxdai.png)
+  [![Lembra desse cara chato?](https://eljunior.files.wordpress.com/2013/03/clippy-letter20110724-22047-qcxdai.png)](https://eljunior.files.wordpress.com/2013/03/clippy-letter20110724-22047-qcxdai.png)
   Lembra desse cara chato?
 
 E a verdade é que a maioria dos usuários não se importam com tanta coisa
@@ -228,7 +228,7 @@ atitude arrogante. Não muito, eu diria... *Uma arrogância muito pior é achar
 que o seu software é tão bom e bem-feito que as outras pessoas simplesmente
 devem se virar pra aprender a usá-lo*.
 
-[![UI-usuarios-final](http://eljunior.files.wordpress.com/2013/03/ui-usuarios-final.png)](http://eljunior.files.wordpress.com/2013/03/ui-usuarios-final.png)
+[![UI-usuarios-final](https://eljunior.files.wordpress.com/2013/03/ui-usuarios-final.png)](https://eljunior.files.wordpress.com/2013/03/ui-usuarios-final.png)
 
 Pense comigo. A grande maioria das pessoas sabe operar uma televisão.
 Uma boa porção dessas pessoas deve ser capaz de usar o PC, navegar na

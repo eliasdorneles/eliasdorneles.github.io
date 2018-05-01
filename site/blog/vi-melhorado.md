@@ -11,7 +11,7 @@ sobre o Vim, disponíveis gratuitamente em
 [http://vimcasts.org](http://vimcasts.org/).
 
 [![Edit Text at the Speed of
-Thought](http://eljunior.files.wordpress.com/2013/09/dnvim.jpg?w=250 "Practical
+Thought](https://eljunior.files.wordpress.com/2013/09/dnvim.jpg?w=250 "Practical
 Vim")](http://pragprog.com/book/dnvim/practical-vim)
 
 <!-- PELICAN_END_SUMMARY -->

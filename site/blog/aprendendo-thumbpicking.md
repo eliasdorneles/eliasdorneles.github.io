@@ -4,7 +4,7 @@ Author: Elias Dorneles
 Slug: Aprendendo-Thumbpicking
 
 <center>
-  [![Eu, tocando violão](http://eljunior.files.wordpress.com/2011/12/ahogado.png?w=300 "Eu, fominha, tocando violão em Punta del Este")](http://eljunior.files.wordpress.com/2011/12/ahogado.png)
+  [![Eu, tocando violão](https://eljunior.files.wordpress.com/2011/12/ahogado.png?w=300 "Eu, fominha, tocando violão em Punta del Este")](https://eljunior.files.wordpress.com/2011/12/ahogado.png)
 </center>
 
 > **UPDATE:** atualizei os links pra download dos MP3, porque estouraram
@@ -54,7 +54,7 @@ Tommy](http://www.youtube.com/watch?v=YoqG7PO-MHs "Tommy Emmanuel dando lição 
 <http://www.youtube.com/watch?v=YoqG7PO-MHs>
 
 <center>
-  [![Tommy Emmanuel fazendo palhaçada pra gente](http://eljunior.files.wordpress.com/2011/12/dsc05668.jpg?w=300 "Tommy Emmanuel fazendo palhaçada pra gente")](http://eljunior.files.wordpress.com/2011/12/dsc05668.jpg)
+  [![Tommy Emmanuel fazendo palhaçada pra gente](https://eljunior.files.wordpress.com/2011/12/dsc05668.jpg?w=300 "Tommy Emmanuel fazendo palhaçada pra gente")](https://eljunior.files.wordpress.com/2011/12/dsc05668.jpg)
 
   Tommy fazendo graça, e eu felizão assistindo...
 </center>
@@ -121,7 +121,7 @@ Your browser does not support this audio
 [Baixar
 MP3](https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/01-baixo_alternado.mp3 "Baixar MP3 - Baixo Alternado") 
 |  [Baixar tablatura: Baixo
-Alternado](http://eljunior.files.wordpress.com/2011/12/01-baixo_alternado.pdf)
+Alternado](https://eljunior.files.wordpress.com/2011/12/01-baixo_alternado.pdf)
 
 <div style="padding-left: 30px;">
 
@@ -182,7 +182,7 @@ Your browser does not support this audio
 [Baixar
 MP3](https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/02-acordes_no_tempo_forte_com_baixo_alternado.mp3 "Baixar MP3 - Acordes no Tempo Forte + Baixo Alternado") 
 |  [Baixar tablatura: Acordes no Tempo Torte +
-Baixo\_alternado](http://eljunior.files.wordpress.com/2011/12/02-acordes_no_tempo_forte_com_baixo_alternado.pdf)
+Baixo\_alternado](https://eljunior.files.wordpress.com/2011/12/02-acordes_no_tempo_forte_com_baixo_alternado.pdf)
 
 <div style="padding-left: 30px;">
 
@@ -223,7 +223,7 @@ Your browser does not support this audio
 [Baixar
 MP3](https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/03-acordes_no_contratempo_com_baixo_alternado.mp3 "Baixar MP3 - Acordes no contratempo com baixo alternado") 
 |  [Baixar tablatura: Acordes no contratempo +
-Baixo\_alternado](http://eljunior.files.wordpress.com/2011/12/03-acordes_no_contratempo_com_baixo_alternado.pdf)
+Baixo\_alternado](https://eljunior.files.wordpress.com/2011/12/03-acordes_no_contratempo_com_baixo_alternado.pdf)
 
 Dependendo de como você estiver, esses 3 exercícios podem levar dias,
 semanas ou até meses. Pra mim, levou alguns meses até o som começar a
@@ -259,7 +259,7 @@ Your browser does not support this audio
 [Baixar
 MP3](https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/04-base-thumbpicking.mp3 "Baixar MP3 - Base Thumbpicking")
  |  [Baixar tablatura: Base thumbpicking - Trocando
-acordes](http://eljunior.files.wordpress.com/2011/12/04-base-thumbpicking.pdf)
+acordes](https://eljunior.files.wordpress.com/2011/12/04-base-thumbpicking.pdf)
 
 Repare que quando muda o acorde, temos que recomeçar o padrão de
 alternar baixos em outra corda para tocar a tônica (raiz) do acorde no
@@ -300,7 +300,7 @@ Your browser does not support this audio
 [Baixar
 MP3](https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/05-base_com_dedilhado-thumbpicking.mp3 "Baixar MP3 - Base thumbpicking com dedilhado")
  |  [Baixar tablatura: Base thumbpicking com dedilhado em
-cima](http://eljunior.files.wordpress.com/2011/12/05-base_com_dedilhado-thumbpicking.pdf)
+cima](https://eljunior.files.wordpress.com/2011/12/05-base_com_dedilhado-thumbpicking.pdf)
 
 Por fim, o último exercício é uma variação do anterior, em outro tom e
 com um padrão um pouquinho mais complicado. Todavia, o princípio é o
@@ -324,7 +324,7 @@ Your browser does not support this audio
 [Baixar
 MP3](https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/06-outra_base_com_dedilhado-thumbpicking.mp3 "Baixar MP3 - Base thumbpicking em dó, com dedilhado")
  |  [Baixar tablatura: Base thumbpicking em Dó
-maior](http://eljunior.files.wordpress.com/2011/12/06-outra_base_com_dedilhado-thumbpicking.pdf)
+maior](https://eljunior.files.wordpress.com/2011/12/06-outra_base_com_dedilhado-thumbpicking.pdf)
 
 **Músicas simples de exemplo para estudar**
 
@@ -419,15 +419,15 @@ Google Drive com todos os MP3").
 E as tablaturas estão aqui:
 
 1.  [Baixo
-    Alternado](http://eljunior.files.wordpress.com/2011/12/01-baixo_alternado.pdf)
+    Alternado](https://eljunior.files.wordpress.com/2011/12/01-baixo_alternado.pdf)
 2.  [Acordes no Tempo Torte +
-    Baixo\_alternado](http://eljunior.files.wordpress.com/2011/12/02-acordes_no_tempo_forte_com_baixo_alternado.pdf)
+    Baixo\_alternado](https://eljunior.files.wordpress.com/2011/12/02-acordes_no_tempo_forte_com_baixo_alternado.pdf)
 3.  [Acordes no contratempo +
-    Baixo\_alternado](http://eljunior.files.wordpress.com/2011/12/03-acordes_no_contratempo_com_baixo_alternado.pdf)
+    Baixo\_alternado](https://eljunior.files.wordpress.com/2011/12/03-acordes_no_contratempo_com_baixo_alternado.pdf)
 4.  [Base thumbpicking - Trocando
-    acordes](http://eljunior.files.wordpress.com/2011/12/04-base-thumbpicking.pdf)
+    acordes](https://eljunior.files.wordpress.com/2011/12/04-base-thumbpicking.pdf)
 5.  [Base thumbpicking +
-    dedilhado](http://eljunior.files.wordpress.com/2011/12/05-base_com_dedilhado-thumbpicking.pdf)
+    dedilhado](https://eljunior.files.wordpress.com/2011/12/05-base_com_dedilhado-thumbpicking.pdf)
 6.  [Base thumbpicking em
-    Dó](http://eljunior.files.wordpress.com/2011/12/06-outra_base_com_dedilhado-thumbpicking.pdf)
+    Dó](https://eljunior.files.wordpress.com/2011/12/06-outra_base_com_dedilhado-thumbpicking.pdf)
 

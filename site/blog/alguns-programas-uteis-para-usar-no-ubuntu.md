@@ -19,7 +19,7 @@ vice-versa.
 
 Comparando duas pastas com o Meld:
 
-[![Comparando duas pastas com o Meld](http://eljunior.files.wordpress.com/2013/08/minha_pasta-outra_pasta-meld_004.png "Comparando duas pastas com o Meld")](http://eljunior.files.wordpress.com/2013/08/minha_pasta-outra_pasta-meld_004.png)
+[![Comparando duas pastas com o Meld](https://eljunior.files.wordpress.com/2013/08/minha_pasta-outra_pasta-meld_004.png "Comparando duas pastas com o Meld")](https://eljunior.files.wordpress.com/2013/08/minha_pasta-outra_pasta-meld_004.png)
 
 Ele é uma mão-na-roda para o desenvolvedor na hora de fazer
 *[merges](http://en.wikipedia.org/wiki/Merge_(revision_control) "Artigo sobre merges na Wikipedia")*
@@ -52,7 +52,7 @@ Screen</kbd>, mas o legal do Shutter é que você pode escolher um pedaço
 específico da tela pra capturar, fazer alterações por cima, tudo no
 mesmo passo.
 
-[![Yo dawg, I heard you like taking screenshots!](http://eljunior.files.wordpress.com/2013/08/shutter-yo_dawg.png?w=640)](http://eljunior.files.wordpress.com/2013/08/shutter-yo_dawg.png)
+[![Yo dawg, I heard you like taking screenshots!](https://eljunior.files.wordpress.com/2013/08/shutter-yo_dawg.png?w=640)](https://eljunior.files.wordpress.com/2013/08/shutter-yo_dawg.png)
 
 Ele também tem plugins para aplicar efeitos nas imagens, fazer upload
 para ImgUr, TwitPic, ImageShack, Dropbox, etc.
@@ -85,7 +85,7 @@ frequência diferentes do áudio/vídeo original, até [já andei falando
 antes sobre ele por
 aqui](http://eljunior.wordpress.com/2011/07/28/tocar-video-ou-musica-em-outra-velocidade-mantendo-o-tom/).
 
-  [![Can you guess from which band is this song?](http://eljunior.files.wordpress.com/2013/08/play-it-slowly_012.png)](http://eljunior.files.wordpress.com/2013/08/play-it-slowly_012.png)
+  [![Can you guess from which band is this song?](https://eljunior.files.wordpress.com/2013/08/play-it-slowly_012.png)](https://eljunior.files.wordpress.com/2013/08/play-it-slowly_012.png)
 
 Usando o PlayItSlowly você pode fazer andar mais rápido o vídeo daquela
 palestra lenta que dá sono e também ouvir um trecho duma música
@@ -108,7 +108,7 @@ prometo que a interface melhora legal.
 
 ### Amphetype
 
-  [![Amphetype: pratique digitação digitando e lendo seu texto preferido](http://eljunior.files.wordpress.com/2013/08/amphetype_001.png?w=640 "Tela inicial do Amphetype")](http://eljunior.files.wordpress.com/2013/08/amphetype_001.png)
+  [![Amphetype: pratique digitação digitando e lendo seu texto preferido](https://eljunior.files.wordpress.com/2013/08/amphetype_001.png?w=640 "Tela inicial do Amphetype")](https://eljunior.files.wordpress.com/2013/08/amphetype_001.png)
 
 [Amphetype](http://code.google.com/p/amphetype/) é um programa pra treinar
 digitação com textos que você escolhe, que também gera umas estatísticas
@@ -138,7 +138,7 @@ Um recurso legal dele é o *“Recolor”*, que pinta apenas em cima de uma
 determinada cor. Funciona como aquelas canetas marca-texto, permitindo
 chamar atenção para textos em outras imagens como nesse exemplo:
 
-  [![É divertido pintar com o Pinta =)](http://eljunior.files.wordpress.com/2013/08/diffusionofinnovation-pinta_003.png?w=640)](http://eljunior.files.wordpress.com/2013/08/diffusionofinnovation-pinta_003.png)
+  [![É divertido pintar com o Pinta =)](https://eljunior.files.wordpress.com/2013/08/diffusionofinnovation-pinta_003.png?w=640)](https://eljunior.files.wordpress.com/2013/08/diffusionofinnovation-pinta_003.png)
   É divertido pintar com o Pinta =)
 
 Instale no Ubuntu digitando num terminal:

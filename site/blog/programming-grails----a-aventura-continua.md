@@ -16,7 +16,7 @@ StackOverflow](http://stackoverflow.com/users/160313/burt-beckwith "Burt Beckwit
 [conferências](http://gr8conf.eu/Speakers/Burt-Beckwith) e
 também colaborar no desenvolvimento do próprio Grails.
 
-[![Programming Grails -- Best Practices for Experienced Grails Developers](http://eljunior.files.wordpress.com/2013/07/cat.gif)](http://shop.oreilly.com/product/0636920024750.do)
+[![Programming Grails -- Best Practices for Experienced Grails Developers](https://eljunior.files.wordpress.com/2013/07/cat.gif)](http://shop.oreilly.com/product/0636920024750.do)
 
 Comprei o livro na Amazon ainda antes do lançamento oficial porque sabia
 que sendo material do Burt seria muito bom. Não me decepcionei: o livro

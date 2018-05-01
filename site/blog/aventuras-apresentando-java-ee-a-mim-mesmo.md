@@ -23,7 +23,7 @@ recentemente terminado sua leitura, registro aqui minhas impressões a
 respeito.
 
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  [![Read the original, dude!](http://eljunior.files.wordpress.com/2013/01/intro-javaee.png?w=300)](http://www.amazon.com/Beginning-Java-Platform-GlassFish-Professional/dp/1430219548)
+  [![Read the original, dude!](https://eljunior.files.wordpress.com/2013/01/intro-javaee.png?w=300)](http://www.amazon.com/Beginning-Java-Platform-GlassFish-Professional/dp/1430219548)
   Read the original, dude!
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
