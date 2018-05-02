@@ -54,9 +54,9 @@ than it is for others.
 In any case, narration seems to be an important tool for me. My memory is more
 like an audio-book than a movie. Or maybe an audio-book with an accompanying
 comic book with blurry drawings. It sort of blew my mind when I learned that
-this was a thing, and I keep remembering things related to this that I seem to
-have experienced very differently than other people and I didn't really
-understand it at the time.
+aphantasia was a thing, and I keep remembering things that I seem to have
+experienced very differently than other people because of it and I didn't
+really understand it at the time.
 
 Anyway, that's why I like writing. Someone already said "if you're not writing,
 you're only thinking that you're thinking", and it rings a bell for me. It's
