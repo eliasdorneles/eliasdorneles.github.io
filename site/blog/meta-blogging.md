@@ -4,15 +4,15 @@ Author: Elias Dorneles
 
 I've been wanting to write since a little while but whenever I sit to write a
 post I end up on an endless yak-shaving of making small adjustments to the
-blog. I know that if I wanted to optimize my blogging workflow for writing
+blog. I know that if I wanted to optimize my blogging flow for writing
 I should start using something like Medium, or maybe even go back to good-ol' Wordpress.
 
 But I don't want to increase the exposure of my readership (who are these
-people anyway??) to advertising, nor useless tracking, nor annoying popups like "psst,
+people anyway??) to advertising, nor useless tracking, nor annoying pop-ups like "psst,
 you should create an account to better read". As [my wise friend Luciano
 Ramalho says (in
 Portuguese)](https://ramalho.org/wiki/doku.php?id=porque_cada_pessoa_deve_ter_seu_site_na_web),
-the Web is supposed to be descentralized and shouldn't be controlled by
+the Web is supposed to be decentralized and shouldn't be controlled by
 half-a-dozen tech corporations with their opaque algorithms.
 
 That's how it's like these days, you wanted to share rambling thoughts with the
@@ -38,7 +38,7 @@ about it. It's like, I want to keep them mine.
 
 I also feel like I've become increasingly self-conscious about writing over the
 recent years, which kinda pisses me off. "Stop editing, just write!", a brain
-thread of throught shouts to another. "But the fear is there for a reason"
+thread of thought shouts to another. "But the fear is there for a reason"
 another brain thread jumps in, which gets "just worry about it later!" shouted
 back from first thread.
 
@@ -52,7 +52,7 @@ our screens and shit, but I realize that it's probably more relevant for some
 than it is for others.
 
 In any case, narration seems to be an important tool for me. My memory is more
-like an audiobook than a movie. Or maybe an audiobook with an accompanying
+like an audio-book than a movie. Or maybe an audio-book with an accompanying
 comic book with blurry drawings. It sort of blew my mind when I learned that
 this was a thing, and I keep remembering things related to this that I seem to
 have experienced very differently than other people and I didn't really
@@ -63,7 +63,7 @@ you're only thinking that you're thinking", and it rings a bell for me. It's
 obviously not true (you can think in many ways), but it does feel like that in
 my case, clear thinking usually needs writing.
 
-Okay, enough writing about writing. Nobody really cares. (Btw, see what I mean
+Okay, enough writing about writing. Nobody really cares. (BTW, see what I mean
 about the self-consciousness?)
 
 Hopefully next time I'll have something interesting to say. Cya!
