@@ -4,14 +4,14 @@ Author: Elias Dorneles
 Slug: about
 Alias: /pages/about-me.html
 
-Hello, I'm Elias Dorneles, a software developer from Brazil.
+Hello, I'm Elias Dorneles, a Brazilian software developer based in Paris.
 I play the guitar and the piano a little bit, and I love to learn new things.
 
 I'm a [Recurse Center](https://www.recurse.com) alumni.
 
 I work at [Legalstart.fr](https://legalstart.fr).
 
-You can find me on [Twitter](https://twitter.com/eliasdorneles),
+You can find me on <s>Twitter</s>,
 [Github](https://github.com/eliasdorneles),
 [GoodReads](https://www.goodreads.com/user/show/32990128-elias) and
 [Stackoverflow](http://stackoverflow.com/users/149872/elias?tab=profile).
@@ -22,28 +22,31 @@ You can find me on [Twitter](https://twitter.com/eliasdorneles),
 
 ## Open Source
 
-I collaborate in the development of some open source projects:
+I'm mostly active in the Python open source community. I'm one of the maintainers of [BeeWare](http://pybee.org), where I help maintain [VOC](https://github.com/pybee/voc) and the Android tooling.
 
-* [BeeWare](http://pybee.org) (I help maintain [VOC](https://github.com/pybee/voc) and the Android tooling)
-* [Scrapy](http://www.scrapy.org)
-* [cookiecutter-pypackage](https://github.com/audreyr/cookiecutter-pypackage)
+Some other projects I occasionally collaborate on:
+
 * [parsel](https://github.com/scrapy/parsel)
+* [Scrapy](http://www.scrapy.org)
 * [dateparser](https://github.com/scrapinghub/dateparser)
+* [cookiecutter-pypackage](https://github.com/audreyr/cookiecutter-pypackage)
 
-And here are a few others I've created or co-created:
+Here are some that I've created/co-created but don't maintain anymore:
 
-* [fretprinting](https://github.com/eliasdorneles/fretprinting)
-* [skinfer](https://github.com/scrapinghub/skinfer)
 * [flatson](https://github.com/scrapinghub/flatson)
+* [skinfer](https://github.com/scrapinghub/skinfer)
+* [fretprinting](https://github.com/eliasdorneles/fretprinting)
 
 Plus others you can check at my [Github profile](https://github.com/eliasdorneles).
 
+
 ## Writing
 
-Besides writing on [this blog](/), I also collaborate on
-[Python Help](https://pythonhelp.wordpress.com),
-a resource in Portuguese for Python programmers.
+Besides writing on [this blog](/), I also collaborate on [Python
+Help](https://pythonhelp.wordpress.com), a resource in Portuguese for Python
+programmers.
 
-I've also [translated to Portuguese](https://construa-seu-proprio-lisp.herokuapp.com/)
-the wonderful little book [Build Your Own Lisp](http://buildyourownlisp.com).
-
+I've also translated to Portuguese the wonderful little book
+[Build Your Own Lisp](http://buildyourownlisp.com)
+|
+[Construa Seu Próprio Lisp](https://construa-seu-proprio-lisp.herokuapp.com/).
