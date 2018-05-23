@@ -20,7 +20,7 @@ contribution.
 </div>
 
 It took me several weeks to figure out the whole thing because I was so afraid
-of messing up. And in the end the code didn't even got merged.
+of messing up. And in the end the code didn't even get merged.
 
 I never forgot my frustration during this, which is why today I avoid as much
 as possible to ask for someone to rebase their code in a pull request, unless I
