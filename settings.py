@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 SITENAME = 'Hopeful Ramble'
 
 SITEURL = 'https://eliasdorneles.github.io'
+RELATIVE_URLS = True
 
 FILENAME_METADATA = '(?P<name>[^/]+)'
 
