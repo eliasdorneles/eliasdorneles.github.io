@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import os
+_locally = os.getenv('USER') == 'elias'
 
 SITENAME = 'Hopeful Ramble'
 
 SITEURL = 'https://eliasdorneles.github.io'
-RELATIVE_URLS = True
+
+if _locally:
+    RELATIVE_URLS = True
 
 FILENAME_METADATA = '(?P<name>[^/]+)'
 
