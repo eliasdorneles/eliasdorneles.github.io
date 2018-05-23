@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 
 SITENAME = 'Hopeful Ramble'
 
+SITEURL = 'https://eliasdorneles.github.io'
+
 FILENAME_METADATA = '(?P<name>[^/]+)'
 
 ARTICLE_URL = '{date:%Y}/{date:%m}/{date:%d}/{name}.html'
@@ -32,6 +34,11 @@ STATIC_PATHS = [
 CLEAN_SUMMARY_MINIMUM_ONE = True
 
 CLEAN_SUMMARY_MAXIMUM = 1
+
+FEED_DOMAIN = SITEURL
+FEED_ATOM = 'atom.xml'
+FEED_RSS = 'feed.xml'
+RSS_FEED_SUMMARY_ONLY = False
 
 PLUGIN_PATHS = ["plugins"]
 PLUGINS = [
