@@ -38,16 +38,16 @@ Não é uma série, mas um dos meu canais do Youtube francófonos favorito é o 
 
 [Tu mourra moins bête](http://tumourrasmoinsbete.blogspot.com/) é o blog da
 autora [Marion de Montagne](https://fr.wikipedia.org/wiki/Marion_Montaigne) que
-faz umas paradas muito engraçadas de divulgação científica, muito excelente!
+faz umas paradas bem humoradas de divulgação científica. Recomendo muito!
 
 [Boulet Corp](http://www.bouletcorp.com/) é o site onde o autor de quadrinhos
 (BD, __bande dessinée__)
 [Boulet](https://fr.wikipedia.org/wiki/Boulet_(auteur)) publica suas notas
-desde **2004** -- muito bom!  Tem uma seção com links para vários outros blogs
+desde **2004**!  Tem uma seção com links para vários outros blogs
 de autores de BD também, que ainda não conheço muito (alguns não são muito
 atualizados), mas vale dar uma olhada.
 
-Se você gosta de quadrinhos e de desenhar, pode curtir [o canal de um desenhista francês, com várias dicas de desenho, demonstrações e coisas do tipo](https://www.youtube.com/channel/UCpjg52rm6hnREqbn6msYcLg).
+Se você gosta de quadrinhos e de desenhar, talvez curta também [o canal de um desenhista francês, com várias dicas de desenho, demonstrações e coisas do tipo](https://www.youtube.com/channel/UCpjg52rm6hnREqbn6msYcLg).
 
 
 Voilà, c'est tout pour l'instant !
