@@ -28,10 +28,13 @@ formato longo disponíveis inteiros -- simplesmente fantástico!
 
 Existem também outras mini-séries legais, com episódios curtos:
 
-- [Bref](https://www.youtube.com/user/bref)
-- [Serge le Mytho](https://www.youtube.com/channel/UCYx7aAgyuFvpESh9YGKNsXg) -- história de um mitomano
+- [Bref](https://www.youtube.com/user/bref) - bref, é a história dum cara
+- [Serge le Mytho](https://www.youtube.com/channel/UCYx7aAgyuFvpESh9YGKNsXg) -- história de um mitomano, o ator é um improvisador conhecido.
 
-Não é uma série, mas um dos meu canais do Youtube francófonos favorito é o [Parole de Chat](https://www.youtube.com/user/faireset2).
+Tem [uma lista grande de séries que se pode achar no Youtube,
+mas que ainda não conferi](https://www.senscritique.com/liste/Le_merveilleux_monde_de_Youtube/715414).
+
+Por fim, não é uma série, mas um dos meu canais do Youtube francófonos favorito é o [Parole de Chat](https://www.youtube.com/user/faireset2).
 
 
 ## Quadrinhos
