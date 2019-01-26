@@ -1,4 +1,4 @@
-Title: Cool Linux apps you might now know
+Title: Cool Linux apps you might not know
 Date: 2019-01-25 23:03
 Author: Elias Dorneles
 
