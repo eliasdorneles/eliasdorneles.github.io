@@ -26,7 +26,7 @@ I want to talk about these issues, because I believe this conversation is import
 
 # Scarcity culture
 
-There is this book titled [Daring Greatly](https://www.google.com/url?q=http://www.amazon.com/Daring-Greatly-Courage-Vulnerable-Transforms/dp/1592408419&sa=D&ust=1461109063197000&usg=AFQjCNGWdVvqGri43-QqOO-J44LKSI3MMw) which talks about the culture of scarcity that we’re living in, what’s dangerous about it and how we can deal with it.
+There is this book titled [Daring Greatly](https://www.goodreads.com/book/show/13588356-daring-greatly) which talks about the culture of scarcity that we’re living in, what’s dangerous about it and how we can deal with it.
 
 Scarcity is this strong sense of lacking something, of never being good/smart/healthy/safe/successful/etc enough.
 
@@ -38,7 +38,7 @@ Quoting the book:
 
 Never before we were so aware of how much we lack and how inadequate we are. If you’re like me, you will not have trouble relating to this. We have things like the Github timeline making us feel bad about not contributing much to open source, we obsess about StackOverflow points and similar rank systems, and when comparing to our more accomplished peers it’s easy to think that we are so little and don’t have anything to contribute.
 
-[Brené Brown, the researcher who wrote the book](https://www.google.com/url?q=http://brenebrown.com&sa=D&ust=1461109063200000&usg=AFQjCNEoKz2tS_IqFhSfG8vt0qFwUUvpzQ) tells us that the formula of the scarcity culture is made of three components: shame, comparison and disengagement. This same dynamic can show up not only in the larger culture, but also in family, work or any other community.
+[Brené Brown, the researcher who wrote the book](http://brenebrown.com) tells us that the formula of the scarcity culture is made of three components: shame, comparison and disengagement. This same dynamic can show up not only in the larger culture, but also in family, work or any other community.
 
 She offers the following questionnaire as a starting point to start reflecting on these three components:
 
@@ -74,7 +74,7 @@ Quoting the book:
 >
 > Shame is the intensely painful feeling or experience of believing that we are flawed and therefore unworthy of love and belonging.
 
-And by the way, as far as the brain is concerned, [shame and pain hurt the same way](https://www.google.com/url?q=http://www.pnas.org/content/108/15/6270.abstract&sa=D&ust=1461109063207000&usg=AFQjCNGPtqOUa81AwdWXDVwPHFe3YlFBzA).
+And by the way, as far as the brain is concerned, [shame and pain hurt the same way](https://www.pnas.org/content/108/15/6270.abstract).
 
 > Shame is real pain. The importance of social acceptance and connection is reinforced by our brain chemistry, and the pain that results from social rejection and disconnection is real pain.
 
@@ -84,7 +84,7 @@ Guilt is more like: “I did something bad”. Guilt is not bad, because it’s 
 
 Shame is more like: “I am bad” or “I am not good”, and that’s much more dangerous. Shame is such a deep fear that when we feel it, our instinct is not to try to make amends -- unlike the positive outcome of guilt, shame’s influence is always destructive. If we do something bad, and instead of feeling guilt (e.g., thinking: “oops, I did something stupid”) we feel shame (thinking: “I’m such a stupid loser”), the instinct is to protect ourselves by blaming something or someone, rationalize our mistake, give a fake apology or simply hide.
 
-There is no positive outcome for shame (at least not for unacknowledged shame). Brené Brown [reports](https://www.google.com/url?q=http://www.huffingtonpost.com/2013/04/18/brene-brown-shame-guilt-addiction-oprah_n_2966351.html&sa=D&ust=1461109063209000&usg=AFQjCNGSGSnxy5h8JxbuiAwEAnLGxVm70Q) that researchers have correlated shame with [addiction](https://www.google.com/url?q=http://www.psychologicalscience.org/index.php/news/releases/shame-about-past-alcoholism-predicts-relapse-and-declining-health-in-recovering-alcoholics.html&sa=D&ust=1461109063210000&usg=AFQjCNFrZwI2GDZ-4d7Th1QS02RPYmOQqg), [violence](https://www.google.com/url?q=http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3763505/&sa=D&ust=1461109063210000&usg=AFQjCNFP3ktOBWAVujTuGddB1P-X0Pk96g), aggression, depression, eating disorders and bullying -- while guilt is inversely correlated to those. (the book has many pointers for this, but sadly most are books and academic papers not freely available -- I’m sharing some links at the end).
+There is no positive outcome for shame (at least not for unacknowledged shame). Brené Brown [reports](http://www.huffingtonpost.com/2013/04/18/brene-brown-shame-guilt-addiction-oprah_n_2966351.html) that researchers have correlated shame with [addiction](https://www.psychologicalscience.org/news/releases/shame-about-past-alcoholism-predicts-relapse-and-declining-health-in-recovering-alcoholics.html), [violence](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3763505/), aggression, depression, eating disorders and bullying -- while guilt is inversely correlated to those. (the book has many pointers for this, but sadly most are books and academic papers not freely available -- I’m sharing some links at the end).
 
 The good news, though, is that if we just start talking about shame, it diminishes. Just by being aware of it, and discussing it, we suddenly have more control of it. Such is the power of language.
 
@@ -106,7 +106,7 @@ And when my self-talk is more of acceptance, like “hey, this is difficult for 
 
 # Vulnerability and minding the gap
 
-[The book](https://www.google.com/url?q=http://www.amazon.com/Daring-Greatly-Courage-Vulnerable-Transforms/dp/1592408419&sa=D&ust=1461109063213000&usg=AFQjCNG46ij2IkSdMjoXsxlVzjJR59ZOiQ) has a lot more to offer, there is a great chapter about the “armory” that talks about the defenses that we set up in order to not be vulnerable, how they get in the way and how we can deal with them.
+[The book](https://www.goodreads.com/book/show/13588356-daring-greatly) has a lot more to offer, there is a great chapter about the “armory” that talks about the defenses that we set up in order to not be vulnerable, how they get in the way and how we can deal with them.
 
 On the subject of disengagement, the book tells us to be aware of the gap between where we want to be and where we’re actually standing. We don’t need to be perfect, but we do need to be engaged and committed to our values and keep trying to close this gap between what we aspire and what we practice.
 
@@ -120,9 +120,9 @@ For me, personally, minding the gap means different things in different contexts
 
 The book has a chapter dedicated to disruptive engagement: how we can start daring to have difficult conversations in our organizations, cultivate an honest and constructive feedback culture, and learn to get more comfortable being uncomfortable. And it starts with understanding how scarcity affects us, combat shame by talking about it and normalizing (i.e. sharing how it’s normal to struggle and feel inadequate at times), ultimately rehumanizing the way we lead and work.
 
-An important point is that: “you can’t give what you don’t have”. Who we are matters more than what we know or want to be. This is why it’s important for leaders to embrace shame-resiliency and vulnerability: if we want people to take risks, we have to be willing to engage with vulnerability, take risks and cultivate trust. When we’re [too controlling](https://www.google.com/url?q=http://www.inc.com/shelley-prevost/8-signs-youre-a-control-freak.html&sa=D&ust=1461109063217000&usg=AFQjCNEZ-FljkFz8ZpaoZt1vzFjvzPlGcw), we end up losing impact. When we think of ourselves as not good enough, we tend to spread that feeling unto others who are looking up to us. We become stagnant.
+An important point is that: “you can’t give what you don’t have”. Who we are matters more than what we know or want to be. This is why it’s important for leaders to embrace shame-resiliency and vulnerability: if we want people to take risks, we have to be willing to engage with vulnerability, take risks and cultivate trust. When we’re [too controlling](https://www.inc.com/shelley-prevost/8-signs-youre-a-control-freak.html), we end up losing impact. When we think of ourselves as not good enough, we tend to spread that feeling unto others who are looking up to us. We become stagnant.
 
-The chapter ends with [the leadership manifesto, which is pretty awesome](https://www.google.com/url?q=http://brenebrown.com/wp-content/uploads/2013/09/DaringGreatly-LeadershipManifesto-8x10.pdf&sa=D&ust=1461109063218000&usg=AFQjCNFScFKnhs6bRIaVUmOFf30iRmYjBA).
+The chapter ends with [the leadership manifesto, which is pretty awesome](http://brenebrown.com/wp-content/uploads/2013/09/DaringGreatly-LeadershipManifesto-8x10.pdf).
 
 # Final thoughts
 
@@ -136,11 +136,10 @@ We all want to be brave and dare greatly.
 
 # Links
 
-*   Daring Greatly in GoodReads: [https://www.goodreads.com/book/show/13588356-daring-greatly](https://www.google.com/url?q=https://www.goodreads.com/book/show/13588356-daring-greatly&sa=D&ust=1461109063221000&usg=AFQjCNHhiCeri_YpIM_Us9Q9_vY957vAug)
-*   TED talks from the author which I was too lazy to watch: [http://www.ted.com/talks/brene_brown_on_vulnerability](https://www.google.com/url?q=http://www.ted.com/talks/brene_brown_on_vulnerability&sa=D&ust=1461109063222000&usg=AFQjCNHhn6CERdbN2l1rpBxJytFXBYOJ3g) and [http://www.ted.com/talks/brene_brown_listening_to_shame](https://www.google.com/url?q=http://www.ted.com/talks/brene_brown_listening_to_shame&sa=D&ust=1461109063222000&usg=AFQjCNHpCMdwzoi7U13MlBIS97DWbWltIw)
-*   Article in The Guardian: [http://www.theguardian.com/lifeandstyle/2013/jul/27/brene-brown-people-sick-being-afraid](https://www.google.com/url?q=http://www.theguardian.com/lifeandstyle/2013/jul/27/brene-brown-people-sick-being-afraid&sa=D&ust=1461109063223000&usg=AFQjCNFDhLNncGDtAe5Ftf1oJ5giyWMvpg)
-*   The Man in the Arena -- speech from Theodore’s Roosevelt that gave the book’s title: [https://www.goodreads.com/quotes/7-it-is-not-the-critic-who-counts-not-the-man](https://www.google.com/url?q=https://www.goodreads.com/quotes/7-it-is-not-the-critic-who-counts-not-the-man&sa=D&ust=1461109063224000&usg=AFQjCNGPq_jxO0Ak0DkPmsk640yOOEl1QA)
-*   About correlations between shame and the negative outcomes mentioned, I’ve [found](https://www.google.com/url?q=http://citeseerx.ist.psu.edu/viewdoc/download?doi%3D10.1.1.413.8535%26rep%3Drep1%26type%3Dpdf&sa=D&ust=1461109063225000&usg=AFQjCNEgr-waNkW17mxrnb96KAd84F91qQ) [some](https://www.google.com/url?q=http://www.psychologicalscience.org/index.php/news/releases/shame-about-past-alcoholism-predicts-relapse-and-declining-health-in-recovering-alcoholics.html&sa=D&ust=1461109063225000&usg=AFQjCNGSTJvNIMweoYjQq8hnkeqVp-zSmQ) [articles](https://www.google.com/url?q=http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3763505/&sa=D&ust=1461109063226000&usg=AFQjCNFu53GvZC5OqsIEivtoFjPMuvJ2hw) [online](https://www.google.com/url?q=http://www.soc.ucsb.edu/faculty/scheff/main.php?id%3D2.html&sa=D&ust=1461109063226000&usg=AFQjCNHKybOeX3oxNnXTsPu4VTn9pnbTdA) -- here are some books referred to in Daring Greatly:
-    *   [Shame in the Therapy Hour](https://www.google.com/url?q=http://www.amazon.com/Shame-Therapy-Hour-Ronda-Dearing/dp/1433809672&sa=D&ust=1461109063227000&usg=AFQjCNHF1lH_u9Jj2s5iA8u79oy0ZWjurQ)
-    *   [Shame and Guilt in Neurosis](https://www.google.com/url?q=http://www.amazon.com/Shame-Guilt-Neurosis-Helen-Block/dp/0823626075&sa=D&ust=1461109063228000&usg=AFQjCNHGfXxDQTVoUfMQqDg90bEZcP8_5w)
-    *   [Shame and Guilt](https://www.google.com/url?q=http://www.amazon.com/Shame-Guilt-Emotions-Social-Behavior/dp/1572309873&sa=D&ust=1461109063228000&usg=AFQjCNGBNaOjN89cinNuemBx7saMiXly2g)
+*   TED talks from the author: [http://www.ted.com/talks/brene_brown_on_vulnerability](http://www.ted.com/talks/brene_brown_on_vulnerability) and [http://www.ted.com/talks/brene_brown_listening_to_shame](http://www.ted.com/talks/brene_brown_listening_to_shame)
+*   Article in The Guardian: [http://www.theguardian.com/lifeandstyle/2013/jul/27/brene-brown-people-sick-being-afraid](http://www.theguardian.com/lifeandstyle/2013/jul/27/brene-brown-people-sick-being-afraid)
+*   The Man in the Arena -- speech from Theodore’s Roosevelt that gave the book’s title: [https://www.goodreads.com/quotes/7-it-is-not-the-critic-who-counts-not-the-man](https://www.goodreads.com/quotes/7-it-is-not-the-critic-who-counts-not-the-man)
+*   About correlations between shame and the negative outcomes mentioned, I’ve [found](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.413.8535&rep=rep1&type=pdf) [some](https://www.psychologicalscience.org/news/releases/shame-about-past-alcoholism-predicts-relapse-and-declining-health-in-recovering-alcoholics.html) [articles](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3763505/) [online](http://www.soc.ucsb.edu/faculty/scheff/main.php?id=2.html) -- here are some books referred to in Daring Greatly:
+    *   [Shame in the Therapy Hour](https://www.goodreads.com/book/show/11735397-shame-in-the-therapy-hour)
+    *   [Shame and Guilt in Neurosis](http://www.amazon.com/Shame-Guilt-Neurosis-Helen-Block/dp/0823626075)
+    *   [Shame and Guilt](https://www.goodreads.com/book/show/2045998.Shame_and_Guilt)
