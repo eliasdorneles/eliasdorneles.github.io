@@ -5,7 +5,7 @@ _locally = os.getenv('USER') == 'elias'
 
 SITENAME = 'Hopeful Ramble'
 
-SITEURL = 'https://eliasdorneles.github.io'
+SITEURL = 'https://eliasdorneles.com'
 
 if _locally:
     RELATIVE_URLS = True
