@@ -39,7 +39,7 @@ Por fim, não é uma série, mas um dos meu canais do Youtube francófonos favor
 
 ## Quadrinhos
 
-[Tu mourra moins bête](http://tumourrasmoinsbete.blogspot.com/) é o blog da
+[Tu mourra moins bête](https://tumourrasmoinsbete.blogspot.com/) é o blog da
 autora [Marion de Montagne](https://fr.wikipedia.org/wiki/Marion_Montaigne) que
 faz umas paradas bem humoradas de divulgação científica. Recomendo muito!
 

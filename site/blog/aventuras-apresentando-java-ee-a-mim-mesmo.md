@@ -12,18 +12,18 @@ tenho culpa de ter conhecido
 [Ruby](http://www.ruby-lang.org/ "Ruby-Lang.org") antes :P), todavia a
 plataforma tem os seus apelos. Só que eu estava ficando com vergonha de
 ainda desconhecer o *stack* do [Java
-EE](http://en.wikipedia.org/wiki/Java_EE), ao passo que uso diariamente
+EE](https://en.wikipedia.org/wiki/Java_EE), ao passo que uso diariamente
 várias tecnologias relacionadas no meu trabalho. Por isso, decidi que
 iria tomar vergonha na cara e estudar um pouco mais da parada (e tentar
 reclamar menos). Comprei [o
 livro](http://antoniogoncalves.org/2009/02/13/java-ee-6-book/) do
 [Antonio Goncalves](http://antoniogoncalves.org/) sobre [Java
-EE](http://en.wikipedia.org/wiki/Java_EE) 6, e caí em cima. Tendo
+EE](https://en.wikipedia.org/wiki/Java_EE) 6, e caí em cima. Tendo
 recentemente terminado sua leitura, registro aqui minhas impressões a
 respeito.
 
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  [![Read the original, dude!](https://eljunior.files.wordpress.com/2013/01/intro-javaee.png?w=300)](http://www.amazon.com/Beginning-Java-Platform-GlassFish-Professional/dp/1430219548)
+  [![Read the original, dude!](https://eljunior.files.wordpress.com/2013/01/intro-javaee.png?w=300)](https://www.amazon.com/Beginning-Java-Platform-GlassFish-Professional/dp/1430219548)
   Read the original, dude!
   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -38,10 +38,10 @@ mal-traduzido bem difícil de entender. Resumindo: a tradução atrapalha
 muito mais do que ajuda! Se soubesse que seria tão desleixada, jamais
 teria comprado o livro traduzido. Portanto, se você já lê inglês,
 obtenha [a versão
-original](http://www.amazon.com/Beginning-Java-Platform-GlassFish-Professional/dp/1430219548)
+original](https://www.amazon.com/Beginning-Java-Platform-GlassFish-Professional/dp/1430219548)
 (mesmo que saia mais caro): você vai poupar sofrimento e a leitura será
 mais tranquila. Se você não lê inglês, leia [a versão
-original](http://www.amazon.com/Beginning-Java-Platform-GlassFish-Professional/dp/1430219548 "Beginning Java EE 6 Platform with Glassfish 3")
+original](https://www.amazon.com/Beginning-Java-Platform-GlassFish-Professional/dp/1430219548 "Beginning Java EE 6 Platform with Glassfish 3")
 também e aproveite pra começar a aprender inglês logo: será mais
 saudável pra sua carreira não depender de traduções fajutas! OK, fim da
 reclamação.
@@ -50,27 +50,27 @@ O livro fornece uma visão geral da plataforma, e também tenta mostrar o
 contexto histórico e motivações para o surgimento dos protocolos e APIs.
 Após apresentar rapidamente o que consiste a plataforma e os programas
 necessários para rodar os exemplos
-([JDK](http://en.wikipedia.org/wiki/Java_Development_Kit),
+([JDK](https://en.wikipedia.org/wiki/Java_Development_Kit),
 [Maven](https://maven.apache.org/), [Glassfish
 3](http://glassfish.java.net/), [Junit
-4](http://en.wikipedia.org/wiki/JUnit) and
+4](https://en.wikipedia.org/wiki/JUnit) and
 [Derby](http://db.apache.org/derby)), o livro começa a apresentar as
 APIs e conceitos da plataforma numa abordagem meio *bottom-up*: alguns
 capítulos sobre mapeamento objeto-relacional com
-[JPA](http://en.wikipedia.org/wiki/Java_Persistence_API) -- a API
+[JPA](https://en.wikipedia.org/wiki/Java_Persistence_API) -- a API
 especificada para persistência com Java, depois alguns capítulos sobre
 as partes de Java EE usadas principalmente para a lógica de negócio
-([EJBs](http://en.wikipedia.org/wiki/Enterprise_JavaBeans), Transações,
-[AOP](http://en.wikipedia.org/wiki/Aspect-oriented_programming) no
+([EJBs](https://en.wikipedia.org/wiki/Enterprise_JavaBeans), Transações,
+[AOP](https://en.wikipedia.org/wiki/Aspect-oriented_programming) no
 estilo Java EE com *Callbacks* e *Interceptors*), seguidos de uma visão
 rápida das tecnologias usadas para a parte de apresentação na Web
-([JSF](http://en.wikipedia.org/wiki/JavaServer_Faces),
-[JSP](http://en.wikipedia.org/wiki/JavaServer_Pages), e assuntos
+([JSF](https://en.wikipedia.org/wiki/JavaServer_Faces),
+[JSP](https://en.wikipedia.org/wiki/JavaServer_Pages), e assuntos
 relacionados), e culmina com os últimos 3 capítulos dedicados a
 comunicação entre sistemas: mensageria com
-[JMS](http://en.wikipedia.org/wiki/Java_Message_Service), [Web Services
-SOAP](http://en.wikipedia.org/wiki/Java_API_for_XML_Web_Services) e
-[RESTful](http://en.wikipedia.org/wiki/Java_API_for_RESTful_Web_Services).
+[JMS](https://en.wikipedia.org/wiki/Java_Message_Service), [Web Services
+SOAP](https://en.wikipedia.org/wiki/Java_API_for_XML_Web_Services) e
+[RESTful](https://en.wikipedia.org/wiki/Java_API_for_RESTful_Web_Services).
 
 O conteúdo é bom pra *“designorantar-se”* dos conceitos e tecnologias
 disponíveis na plataforma, acho que dá pra recomendar pra qualquer
@@ -88,17 +88,17 @@ Gostei bastante da cobertura de JPA, relativamente bem completa para um
 livro de introdução à plataforma. Rapidamente encontrei material pra uso
 no meu trabalho. A seção sobre EJBs pra mim foi interessante para
 comparar com a minha experiência com os recursos substitutos do
-[Spring](http://en.wikipedia.org/wiki/Spring_Framework). (Parece que os
-meus [SLSBs](http://en.wikipedia.org/wiki/Session_Beans#Stateless_Session_Beans)
+[Spring](https://en.wikipedia.org/wiki/Spring_Framework). (Parece que os
+meus [SLSBs](https://en.wikipedia.org/wiki/Session_Beans#Stateless_Session_Beans)
 são beans do Spring com
 [@Transactional](http://static.springsource.org/spring/docs/2.5.x/api/org/springframework/transaction/annotation/Transactional.html).
 :) As partes exclusivamente sobre JSF não me reservaram muitas
 surpresas, mas curti aprender mais sobre o contexto histórico do
 framework, com a seção descrevendo o surgimento de
-[JSP](http://en.wikipedia.org/wiki/JavaServer_Pages),
-[JSTL](http://en.wikipedia.org/wiki/JavaServer_Pages_Standard_Tag_Library),
-[Facelets](http://en.wikipedia.org/wiki/Facelets),
-[EL](http://en.wikipedia.org/wiki/Unified_Expression_Language), etc.
+[JSP](https://en.wikipedia.org/wiki/JavaServer_Pages),
+[JSTL](https://en.wikipedia.org/wiki/JavaServer_Pages_Standard_Tag_Library),
+[Facelets](https://en.wikipedia.org/wiki/Facelets),
+[EL](https://en.wikipedia.org/wiki/Unified_Expression_Language), etc.
 Achei muito boa também a exposição sobre a API Javascript que ganhou
 especificação no JSF 2, usada para as requisições Ajax.
 

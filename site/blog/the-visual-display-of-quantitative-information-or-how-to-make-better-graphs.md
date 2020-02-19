@@ -6,15 +6,15 @@ Slug: The-Visual-Display-of-Quantitative-Information,-or-How-to-Make-Better-Grap
 
 
 [The Visual Display
-of Quantitative Information](http://www.edwardtufte.com/tufte/books_vdqi),
-by [Edward Tufte](http://www.edwardtufte.com/), is a beautiful book. It's not
+of Quantitative Information](https://www.edwardtufte.com/tufte/books_vdqi),
+by [Edward Tufte](https://www.edwardtufte.com/), is a beautiful book. It's not
 just well-written, it's really beautiful, you feel like every inch of the book
 was planned and designed with great care. The book makes the case for better
 data graphics, shows you several examples of great graphics (some of them were
 published centuries ago), plus some bad examples and how to improve them.
 
-<a href="http://www.edwardtufte.com/tufte/books_vdqi">
-    <img src="http://www.edwardtufte.com/tufte/graphics/vdqi_bookcover.gif" align="right" />
+<a href="https://www.edwardtufte.com/tufte/books_vdqi">
+    <img src="https://www.edwardtufte.com/tufte/graphics/vdqi_bookcover.gif" align="right" />
 </a>
 
 
@@ -40,9 +40,9 @@ about it.
 
 A nice example used throughout the book is [the graphic by Charles Minard
 showing Napoleon's disastrous attempt to conquer
-Russia](http://en.wikipedia.org/wiki/Charles_Joseph_Minard#Work):
+Russia](https://en.wikipedia.org/wiki/Charles_Joseph_Minard#Work):
 
-  [![900px-Minard.png](https://lh4.googleusercontent.com/D1zpfFIzj6ExFTso1a4fCr7RA2PWSQQ2FIBbNu03Ey1CPKzkumOdT7eiXhw7i116WelNxBRtMFXJXljwR0ZC6aXKE1_HSj90_gkgY9uLEymrRjS5ssDGdd3SoDLeyTwdJA)](http://en.wikipedia.org/wiki/File:Minard.png)
+  [![900px-Minard.png](https://lh4.googleusercontent.com/D1zpfFIzj6ExFTso1a4fCr7RA2PWSQQ2FIBbNu03Ey1CPKzkumOdT7eiXhw7i116WelNxBRtMFXJXljwR0ZC6aXKE1_HSj90_gkgY9uLEymrRjS5ssDGdd3SoDLeyTwdJA)](https://en.wikipedia.org/wiki/File:Minard.png)
 
 
 ### Good graphics don't lie
@@ -61,17 +61,17 @@ take inflation into account when showing money-over-time.
 
 ### Above all else show the data
 
-[Data-ink ratio](http://www.infovis-wiki.net/index.php/Data-Ink_Ratio) is the
+[Data-ink ratio](https://www.infovis-wiki.net/index.php/Data-Ink_Ratio) is the
 proportion of a graphic's ink devoted to the non-redundant display of
 data-information. Namely, it represents the parts of a graphic that cannot be
 erased without loss of information.
 
 The process of creating a great data graphic involves maximizing the data-ink
 ratio, reducing all the non-relevant information.The folks at [DarkHorse
-Analytics](http://darkhorseanalytics.com/) have done a good demonstration of
+Analytics](https://darkhorseanalytics.com/) have done a good demonstration of
 this in [their neat Remove to Improve
 slideshows](https://speakerdeck.com/cherdarchuk) ([read more about it on their
-blog](http://darkhorseanalytics.com/blog/)).
+blog](https://darkhorseanalytics.com/blog/)).
 
 
 ### Friendly data graphics are accessible
@@ -88,7 +88,7 @@ with serifs.
 
 
 Liked it? [Buy the book and read
-it](http://www.amazon.com/The-Visual-Display-Quantitative-Information/dp/0961392142),
+it](https://www.amazon.com/The-Visual-Display-Quantitative-Information/dp/0961392142),
 it's worthy it.
 
 Thanks [Paul](https://twitter.com/skywy), for the great book recommendation. =)

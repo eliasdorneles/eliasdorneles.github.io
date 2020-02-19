@@ -12,23 +12,23 @@ se fôssemos lembrados disso mais vezes.
 
 Há uns dias li o fantástico
 livrito [*Team Geek, a Software Developer’s Guide to Working Well with
-Others*](http://shop.oreilly.com/product/0636920018025.do) (ou *Equipe
+Others*](https://shop.oreilly.com/product/0636920018025.do) (ou *Equipe
 Geek, um Guia do Desenvolvedor para Trabalhar Bem com Outros*). Deixa
 ver, como descrever... Um exercício catártico! Um banho na alma! Todo
 mundo envolvido em desenvolvimento de software deveria ler esse livro e
 colocar nos seus *top 10*! E a capa é joinha:
 
 <center>
-<a href="http://www.amazon.com/Team-Geek-Software-Developers-Working/dp/1449302440">
-<img width="300" src="http://akamaicovers.oreilly.com/images/0636920018025/lrg.jpg" />
+<a href="https://www.amazon.com/Team-Geek-Software-Developers-Working/dp/1449302440">
+<img width="300" src="https://akamaicovers.oreilly.com/images/0636920018025/lrg.jpg" />
 </a>
 </center>
 
 Contrastando com
-[*Peopleware*](http://www.amazon.com/Peopleware-Productive-Projects-Teams-Second/dp/0932633439),
+[*Peopleware*](https://www.amazon.com/Peopleware-Productive-Projects-Teams-Second/dp/0932633439),
 que está por aí (sendo ignorado) há já alguns anos e é mais voltado para
 gerentes, [*Team
-Geek*](http://www.amazon.com/Team-Geek-Software-Developers-Working/dp/1449302440)
+Geek*](https://www.amazon.com/Team-Geek-Software-Developers-Working/dp/1449302440)
 é para os desenvolvedores/engenheiros de software aprenderem a trabalhar
 com humanos -- e justamente por isso que é tão urgente.
 
@@ -40,12 +40,12 @@ importantes e você acabaria não lendo o livro -- o que você deve. Serve tamb�
 como uma boa desculpa para a minha preguiça, é claro. Mas ei, eu tenho outros
 livros pra ler, ok? Faz meses que estou em 30% do *[Agile Principles, Patterns
 and Practices in
-C\#](http://www.amazon.com/Agile-Principles-Patterns-Practices-C/dp/0131857258
+C\#](https://www.amazon.com/Agile-Principles-Patterns-Practices-C/dp/0131857258
 "link do livro na Amazon")* e tremo só de pensar em escrever sobre!
 
 Enfim, hoje você terá que se contentar com minha tradução livre de algumas
 quotes não muito selecionadas, e depois decidir se vai [ler o livro
-sofregamente](http://www.amazon.com/Team-Geek-Software-Developers-Working/dp/1449302440)
+sofregamente](https://www.amazon.com/Team-Geek-Software-Developers-Working/dp/1449302440)
 ou ver [algum](https://www.youtube.com/watch?v=q-7l8cnpI4k "Programming Well
 with Others -- Social Skills for Geeks")
 [dos](https://www.youtube.com/watch?v=0SARbwvhupQ "The Myth of the Genius

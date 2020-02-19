@@ -51,7 +51,7 @@ chegam ao extremo de achar que a sua primeira linguagem é realmente a
 melhor, tudo que ele precisa, e não vai mudar mais nunca.
 
 [Primeiras escolhas
-importam!](http://www.youtube.com/watch?v=iKQ3DIP8mzU)  
+importam!](https://www.youtube.com/watch?v=iKQ3DIP8mzU)  
 Elas afetam você e as decisões que vai tomar depois, mais do que você
 consegue se dar conta.
 

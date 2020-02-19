@@ -23,16 +23,16 @@ vontade](http://groovy.dzone.com/news/java-groovy-few-easy-steps) e há
 muito bons para fazer isso.
 
 Mas não vou ficar explicando aqui [o que é
-Groovy](http://pt.wikipedia.org/wiki/Groovy) e [o que é
-Grails](http://pt.wikipedia.org/wiki/Grails), a Wikipedia tá aí pra
+Groovy](https://pt.wikipedia.org/wiki/Groovy) e [o que é
+Grails](https://pt.wikipedia.org/wiki/Grails), a Wikipedia tá aí pra
 isso. Só quero anotar algumas coisas, mesmo -- também não é como se você
 estivesse com as expectativas lá muito altas. :P
 
 Como você talvez já se deu conta, as tais [linguagens de domínio
 específico
-(DSLs)](http://pt.wikipedia.org/wiki/Linguagem_de_dom%C3%ADnio_espec%C3%ADfico)
+(DSLs)](https://pt.wikipedia.org/wiki/Linguagem_de_dom%C3%ADnio_espec%C3%ADfico)
 representam hoje [nossa melhor chance de conseguir reuso em grande
-escala](http://eljunior.wordpress.com/2012/12/03/fatos-e-falacias-da-engenharia-de-software-notas-do-livro/)
+escala](https://eljunior.wordpress.com/2012/12/03/fatos-e-falacias-da-engenharia-de-software-notas-do-livro/)
 -- isto é, reuso de soluções para problemas genéricos. Groovy, a
 linguagem que empodera Grails, tem vários [recursos justamente pra
 facilitar a criação de

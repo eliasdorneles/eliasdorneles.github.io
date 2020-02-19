@@ -59,9 +59,9 @@ Você pode conferir as músicas do [Luciano Bilu](http://www.lucianobilu.com.br/
 dele](http://lucianobilu.bandcamp.com/ "Bandcamp do Luciano Bilu"), curtir a
 [página no Facebook](http://www.facebook.com/luciano.bilu.9 "Luciano Bilu no
 Facebook") e acompanhar os vídeos da gravação do terceiro álbum no [canal
-LucianoBilu no Youtube](http://www.youtube.com/LucianoBilu "Luciano Bilu no
+LucianoBilu no Youtube](https://www.youtube.com/LucianoBilu "Luciano Bilu no
 Youtube").
 
 Pra acabar, um vídeozinho da minha apresentação:
 
-<http://www.youtube.com/watch?v=SUJvAepO-rc>
+<https://www.youtube.com/watch?v=SUJvAepO-rc>

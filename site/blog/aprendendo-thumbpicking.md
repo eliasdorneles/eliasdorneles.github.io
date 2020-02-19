@@ -12,14 +12,14 @@ Slug: Aprendendo-Thumbpicking
 
 Já faz uns 3 anos que comecei a tocar no violão o estilo conhecido como
 *thumbpicking* (alguns também chamam de *fingerpicking*, embora [esse termo
-parece ser mais genérico](http://en.wikipedia.org/wiki/Fingerstyle_guitar
+parece ser mais genérico](https://en.wikipedia.org/wiki/Fingerstyle_guitar
 "Página da Wikipedia em inglês sobre violão fingerstyle")).
 
 Desde piá eu já tocava um pouco de violão e teclado, e sempre tive vontade de
 tentar emular no violão o que conseguia no teclado: tocar a melodia ao mesmo
 tempo que a base. A primeira vez que vi isso ser feito de verdade, sem deixar
 nada sobrando, foi há mais ou menos uns 3 anos atrás, quando vi [um
-vídeo](http://www.youtube.com/watch?v=AhR04kmcSXU "Tommy Emmanuel tocando
+vídeo](https://www.youtube.com/watch?v=AhR04kmcSXU "Tommy Emmanuel tocando
 Angelina") do [Tommy Emmanuel](http://www.tommyemmanuel.com/ "Tommy Emmanuel -
 Site Oficial") no Youtube.
 
@@ -34,24 +34,24 @@ Emmanuel, pare de ler esse texto agora mesmo e vá catar alguns vídeos do
 Tommy no Youtube! Aliás, vá mesmo que você nem curta muito o tal do
 violão! O Tommy é muito mais do que um baita músico, a chance é que você
 vai se abobar de qualquer forma. Pode começar com [esse vídeo de Guitar
-Boogie](http://www.youtube.com/watch?v=JNZL7GkqeRI "Tommy Emmanuel tocando Guitar Boogie em St Louis"),
+Boogie](https://www.youtube.com/watch?v=JNZL7GkqeRI "Tommy Emmanuel tocando Guitar Boogie em St Louis"),
 ou com a [versão dele de Purple
-Haze](http://www.youtube.com/watch?v=apXSU8F8zWs "Tommy Emmanuel tocando Purple Haze no quintal da casa dele").
+Haze](https://www.youtube.com/watch?v=apXSU8F8zWs "Tommy Emmanuel tocando Purple Haze no quintal da casa dele").
 
 Pois bem, o estilo que Tommy desenvolveu é em boa parte o *thumbpicking*
 de [Chet
-Atkins](http://en.wikipedia.org/wiki/Chet_Atkins "Chet Atkins na Wikipedia"),
+Atkins](https://en.wikipedia.org/wiki/Chet_Atkins "Chet Atkins na Wikipedia"),
 que desenvolveu o próprio estilo de tocar melodia em cima de baixos
 alternados tentando reproduzir o que ouvia de [Merle
-Travis](http://en.wikipedia.org/wiki/Merle_Travis "Merle Travis na Wikipedia").
+Travis](https://en.wikipedia.org/wiki/Merle_Travis "Merle Travis na Wikipedia").
 Travis, por sua vez, desenvolveu o seu estilo a partir do *country
 blues* que era tocado pelos negros americanos da sua região.
 
 Enfim, a origem da coisa toda é muito interessante, mas eu obviamente só
 fui descobrir essas coisas pesquisando bastante depois. Eu comecei nessa
 parada mesmo, basicamente, a partir dessa [pequena lição do próprio
-Tommy](http://www.youtube.com/watch?v=YoqG7PO-MHs "Tommy Emmanuel dando lição de violão"):
-<http://www.youtube.com/watch?v=YoqG7PO-MHs>
+Tommy](https://www.youtube.com/watch?v=YoqG7PO-MHs "Tommy Emmanuel dando lição de violão"):
+<https://www.youtube.com/watch?v=YoqG7PO-MHs>
 
 <center>
   [![Tommy Emmanuel fazendo palhaçada pra gente](https://eljunior.files.wordpress.com/2011/12/dsc05668.jpg?w=300 "Tommy Emmanuel fazendo palhaçada pra gente")](https://eljunior.files.wordpress.com/2011/12/dsc05668.jpg)
@@ -87,11 +87,11 @@ independência na mão direita, treinar o baixo alternado com o polegar
 sozinho, o famoso dedão (em inglês, *thumb* - daí o nome
 *thumbpicking*). Esse é o famoso *"boom-chick"*, o som característico do
 estilo! Alguns exemplos de músicas: [Locomotivation - Tommy
-Emmanuel](http://www.youtube.com/watch?v=DrDbaUKE4mM "Tommy Emmanuel tocando Locomotivation"),
+Emmanuel](https://www.youtube.com/watch?v=DrDbaUKE4mM "Tommy Emmanuel tocando Locomotivation"),
 [I'll see you in My Dreams - Chet Atkins & Mark
-Knopfler](http://www.youtube.com/watch?v=5wTVLIZaxMk "I'll see you in my dreams - Chet Atkins & Mark Knopfler"),
+Knopfler](https://www.youtube.com/watch?v=5wTVLIZaxMk "I'll see you in my dreams - Chet Atkins & Mark Knopfler"),
 [Thanks Chet - Robbie
-McIntosh](http://www.youtube.com/watch?v=BORQTtjscTg "(Robbie's Bit) Thanks Chet - Robbie McIntosh").
+McIntosh](https://www.youtube.com/watch?v=BORQTtjscTg "(Robbie's Bit) Thanks Chet - Robbie McIntosh").
 
 O princípio é simples: você precisa abafar de leve as cordas mais graves
 que você vai usar para o baixo alternado, para que ele não se sobressaia
@@ -146,7 +146,7 @@ O detalhe desse exercício é tentar abafar apenas as 3 cordas graves que
 você vai utilizar para o baixo, deixando as 3 cordas de baixo livres e
 "desabafadas" pra você usar depois. Essa técnica de abafamento com o
 lado da palma é também conhecida como [palm
-mute](http://en.wikipedia.org/wiki/Palm_mute "Palm mute"), e é muito
+mute](https://en.wikipedia.org/wiki/Palm_mute "Palm mute"), e é muito
 usada por guitarristas que usam palheta.
 
 Aliás, se você tiver uma dedeira dando sopa, pode tentar usá-la, se
@@ -336,7 +336,7 @@ aprender músicas novas!
 Para o pontapé inicial, gravei essas versões de Aloha Oe e Windy and
 Warm pra esta pequena lição de *thumbpicking*. Você pode começar
 trabalhando nelas, ou achar outras no YouTube ([Freight
-Train](http://www.youtube.com/watch?v=Z3RArufrbgw "Freight Train lesson no Youtube")
+Train](https://www.youtube.com/watch?v=Z3RArufrbgw "Freight Train lesson no Youtube")
 é uma boa).
 
 **Exemplo de Thumbpicking - Aloha Oe**
@@ -394,7 +394,7 @@ fazer aula com você. :)
 
 Uma coisa que ajuda na hora de aprender uma música, é [reproduzir o
 arquivo de áudio e/ou vídeo mais lento, mantendo o mesmo
-tom](http://eljunior.wordpress.com/2011/07/28/tocar-video-ou-musica-em-outra-velocidade-mantendo-o-tom/ "como tocar vídeo ou música em outra velocidade, mantendo o tom").
+tom](https://eljunior.wordpress.com/2011/07/28/tocar-video-ou-musica-em-outra-velocidade-mantendo-o-tom/ "como tocar vídeo ou música em outra velocidade, mantendo o tom").
 Existem programas que ajudam nisso, no Linux eu uso o [Play It
 Slowly](http://29a.ch/playitslowly/ "Play It Slowly") e o
 [mplayer](http://www.mplayerhq.hu/ "site do mplayer") (na linha de

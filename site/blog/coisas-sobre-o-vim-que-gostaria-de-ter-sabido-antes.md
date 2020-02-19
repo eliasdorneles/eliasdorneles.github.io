@@ -24,7 +24,7 @@ falta de esforço meu pra sair da zona de conforto. Talvez seja porque ele seja
 uma ferramenta que se encaixe bem no meu modo de pensar -- o meu *[user
 model](http://www.joelonsoftware.com/uibook/fog0000000249.html)*. Talvez seja
 porque ele é uma ferramenta [boa o
-suficiente](http://en.wikipedia.org/wiki/Principle_of_good_enough) pra mim.
+suficiente](https://en.wikipedia.org/wiki/Principle_of_good_enough) pra mim.
 Talvez, em vez de sentir vergonha de usar uma ferramenta com aparência
 antiquada, eu deveria valorizá-lo mais e melhorar o meu próprio uso dele.
 

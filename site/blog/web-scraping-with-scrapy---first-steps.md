@@ -30,9 +30,9 @@ problem we introduced above is a walk in the park.
 
 
 It is worth noting that Scrapy tries not only to solve the content extraction
-(called [scraping](http://en.wikipedia.org/wiki/Web_scraping)), but also the
+(called [scraping](https://en.wikipedia.org/wiki/Web_scraping)), but also the
 navigation to the relevant pages for the extraction
-(called [crawling](http://en.wikipedia.org/wiki/Web_crawler)).  To achieve that,
+(called [crawling](https://en.wikipedia.org/wiki/Web_crawler)).  To achieve that,
 a core concept in the framework is theSpider -- in practice, a Python object
 with a few special features, for which you write the code and the framework is
 responsible for triggering it.
@@ -345,9 +345,9 @@ The advantage of defining classes for items is that it allows you to take
 advantage of other features of the framework that works for these classes. For
 example, [you can use the feed exports
 mechanism](http://scrapy.readthedocs.org/en/latest/topics/feed-exports.html) to
-export the collected items to [JSON](http://en.wikipedia.org/wiki/JSON),
-[CSV](http://en.wikipedia.org/wiki/Comma-separated_values),
-[XML](http://en.wikipedia.org/wiki/XML), etc. You can also exploit the [item
+export the collected items to [JSON](https://en.wikipedia.org/wiki/JSON),
+[CSV](https://en.wikipedia.org/wiki/Comma-separated_values),
+[XML](https://en.wikipedia.org/wiki/XML), etc. You can also exploit the [item
 pipeline](http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html)
 features, that allows you to plug-in other processing on top of the collected
 items (things like validating the extracted data, removing duplicated items,
@@ -358,11 +358,11 @@ Now, let's do some scraping!
 
 
 To do the scraping itself, i.e., extracting the data from the page, it's nice
-if you know [XPath](http://en.wikipedia.org/wiki/XPath), a language created for
+if you know [XPath](https://en.wikipedia.org/wiki/XPath), a language created for
 doing queries in XML content which is core to the [selectors mechanism of the
 framework](http://doc.scrapy.org/en/latest/topics/selectors.html).  If you
 don't know XPath, you can use [CSS
-selectors](http://en.wikipedia.org/wiki/Cascading_Style_Sheets#Selector) in
+selectors](https://en.wikipedia.org/wiki/Cascading_Style_Sheets#Selector) in
 Scrapy just as well. We encourage you to learn some XPath nevertheless, because
 it allows for expressions much more powerful than just CSS (in fact, the CSS
 functionality in Scrapy works by converting your CSS expressions to XPath

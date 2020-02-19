@@ -15,7 +15,7 @@ be useful in the context of many long running JVM processes.
 So, the most important thing to monitor in a long running JVM is arguably the
 garbage collection stats. When some JVM is misbehaving, the first thing you
 want to check is how much of the
-[heap](http://en.wikipedia.org/wiki/Java_virtual_machine#Heap) is being used
+[heap](https://en.wikipedia.org/wiki/Java_virtual_machine#Heap) is being used
 and how often the full GC is being called.
 
 One quick tip to reduce GC load is to set the initial heap size to the same
@@ -76,7 +76,7 @@ way.
 
 <center>
 <img width="500" alt="I think my Tomcat can handle more work... Now, should I increase maxThreads or the backlog?"
-src="http://3.bp.blogspot.com/-1Op2WBzfGno/U5928NTAtqI/AAAAAAAAAwQ/d1lxWxNcmHY/s1600/doubt-maxThreads_vs_backlog.jpg"/>
+src="https://3.bp.blogspot.com/-1Op2WBzfGno/U5928NTAtqI/AAAAAAAAAwQ/d1lxWxNcmHY/s1600/doubt-maxThreads_vs_backlog.jpg"/>
 </center>
 
 But here is the little secret: it's usually much easier for the operating

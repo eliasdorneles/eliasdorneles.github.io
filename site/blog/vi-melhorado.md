@@ -88,7 +88,7 @@ selecionado, o que é bem mais útil. =)
 
 Curti também as explicações sobre a integração do Vim com
 [ctags](http://ctags.sourceforge.net/),
-[grep](http://en.wikipedia.org/wiki/Grep) & [ack](http://beyondgrep.com/), o
+[grep](https://en.wikipedia.org/wiki/Grep) & [ack](http://beyondgrep.com/), o
 funcionamento do corretor ortográfico, etc -- tem uma seção do livro dedicada a
 esses assuntos. Ainda não coloquei muita coisa na prática, mas fiquei cheio de
 ideias.
@@ -107,7 +107,7 @@ prazo.
 
 
 
-Enfim, [compre](http://www.amazon.com/Practical-Vim-Thought-Pragmatic-Programmers/dp/1934356980)
+Enfim, [compre](https://www.amazon.com/Practical-Vim-Thought-Pragmatic-Programmers/dp/1934356980)
 [o livro](http://pragprog.com/book/dnvim/practical-vim), [assista os
 vídeos](http://vimcasts.org/), siga [o twitter do
 Vimcasts](https://twitter.com/vimcasts)...

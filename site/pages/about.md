@@ -14,20 +14,20 @@ I work at [Legalstart.fr](https://legalstart.fr).
 You can find me on <s>Twitter</s>,
 [Github](https://github.com/eliasdorneles),
 [GoodReads](https://www.goodreads.com/user/show/32990128-elias) and
-[Stackoverflow](http://stackoverflow.com/users/149872/elias?tab=profile).
+[Stackoverflow](https://stackoverflow.com/users/149872/elias?tab=profile).
 
-<a href="http://stackexchange.com/users/50263">
-<img src="http://stackexchange.com/users/flair/50263.png?theme=clean" width="208" height="58" alt="profile for elias on Stack Exchange, a network of free, community-driven Q&amp;A sites" title="profile for elias on Stack Exchange, a network of free, community-driven Q&amp;A sites" /></a>
+<a href="https://stackexchange.com/users/50263">
+<img src="https://stackexchange.com/users/flair/50263.png?theme=clean" width="208" height="58" alt="profile for elias on Stack Exchange, a network of free, community-driven Q&amp;A sites" title="profile for elias on Stack Exchange, a network of free, community-driven Q&amp;A sites" /></a>
 
 
 ## Open Source
 
-I'm mostly active in the Python open source community. I'm one of the maintainers of [BeeWare](http://pybee.org), where I help maintain [VOC](https://github.com/pybee/voc) and the Android tooling.
+I'm mostly active in the Python open source community. I'm one of the maintainers of [BeeWare](https://pybee.org), where I help maintain [VOC](https://github.com/pybee/voc) and the Android tooling.
 
 Some other projects I occasionally collaborate on:
 
 * [parsel](https://github.com/scrapy/parsel)
-* [Scrapy](http://www.scrapy.org)
+* [Scrapy](https://www.scrapy.org)
 * [dateparser](https://github.com/scrapinghub/dateparser)
 * [cookiecutter-pypackage](https://github.com/audreyr/cookiecutter-pypackage)
 

@@ -10,7 +10,7 @@ So you are a command line geek, you do your
 shell-scripts and one-liners using bash to get information you
 need.
 
-You use [cut](http://en.wikipedia.org/wiki/Cut_(Unix))
+You use [cut](https://en.wikipedia.org/wiki/Cut_(Unix))
 for handling things delimited by some character like comma or space, but
 sometimes you have a list of stuff separated by a varied amount of
 spaces, like this:
@@ -24,7 +24,7 @@ spaces, like this:
 This form of vertical alignment is cool because you can skim through any column
 very quickly, but it makes your life a little bit harder when processing it in
 the command line. Well, maybe you're smiling to yourself because you already
-know about [awk](http://en.wikipedia.org/wiki/AWK), and you use it all the time
+know about [awk](https://en.wikipedia.org/wiki/AWK), and you use it all the time
 for this kind of stuff doing something like:  
 
     $ cat myfile.txt | awk '{ print $3 }'

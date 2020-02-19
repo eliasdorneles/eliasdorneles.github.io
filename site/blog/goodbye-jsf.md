@@ -11,7 +11,7 @@ aprender outra linguagem de propósito geral (... *ainda*, I hope) mas já
 se interessou por programar para a Web, nesse caso provavelmente já
 ouviu falar, talvez deu uma conferida, ou quem sabe está ferrado tendo
 que manter aplicações escritas com o [Java Server Faces -- aka
-JSF](http://pt.wikipedia.org/wiki/JavaServer_Faces).
+JSF](https://pt.wikipedia.org/wiki/JavaServer_Faces).
 
 Os motivos para o meu ranço com JSF são vários. Alguns problemas que eu
 vejo são técnicos, outros são culturais e outros são meio filosóficos,
@@ -20,7 +20,7 @@ mesmo.
 Há uns anos atrás, quando tive meu primeiro contato com JSF, odiei a
 tecnologia com todas as minhas forças. Meu background com Web era
 principalmente
-[LAMP](http://en.wikipedia.org/wiki/LAMP_(software_bundle)) -- muito PHP
+[LAMP](https://en.wikipedia.org/wiki/LAMP_(software_bundle)) -- muito PHP
 e um pouquinho de Python/Django -- e todo aquele mundo JSF de
 componentes no servidor era uma coisa **muito** distante. Continua sendo
 distante de certa forma, mas hoje a coisa até que está melhorzinha para
@@ -65,7 +65,7 @@ consecutivas... [1]
 
 Está vindo aí no [JSF 2.2](http://jdevelopment.nl/jsf-22/ "JSF 2.2") o
 suporte a [Stateless
-Views](http://jsfcorner.blogspot.com.br/2013/05/jsf-22-stateless-views-explained.html) (basicamente,
+Views](https://jsfcorner.blogspot.com.br/2013/05/jsf-22-stateless-views-explained.html) (basicamente,
 páginas que não precisem de armazenar a árvore no servidor) para amainar
 o problema, mas como para usá-las você precisa abrir mão de várias
 comodidades do framework
@@ -75,9 +75,9 @@ por exemplo), não percebo tanto avanço assim. [2]
 Problema filosófico chato de JSF
 ================================
 
-[Design by comittee](http://en.wikipedia.org/wiki/Design_by_committee)
+[Design by comittee](https://en.wikipedia.org/wiki/Design_by_committee)
 -- no caso, não só de JSF, mas de [Java
-EE](http://en.wikipedia.org/wiki/Java_Platform,_Enterprise_Edition) em
+EE](https://en.wikipedia.org/wiki/Java_Platform,_Enterprise_Edition) em
 geral. As coisas demoram muito pra evoluir esperando pelos comitês de
 *experts* resolverem as coisas, e não ficam com a melhor qualidade por
 causa disso. Spring está aí sustentando a controvérsia há já alguns anos
@@ -143,7 +143,7 @@ vale a pena ir muito a fundo, acaba se conformando com as soluções
 existentes e fica esperando que alguém mais encarnado resolva os
 problemas parecidos com os que você está tentando resolver -- pra depois
 você copiar a solução. A galera que programa em JSF acaba conhecendo o
-[BalusC](http://balusc.blogspot.com "BalusC's blog") de uma maneira ou
+[BalusC](https://balusc.blogspot.com "BalusC's blog") de uma maneira ou
 outra, basicamente porque ele resolve a maioria dos problemas práticos
 de JSF antes de todo mundo. Esse cara é um herói de Java EE -- ele manja
 mais de JSF que os próprios desenvolvedores da parada!
@@ -152,10 +152,10 @@ Ele faz algumas coisas importantíssimas que mantêm JSF vivo: mantém o
 [OmniFaces](http://code.google.com/p/omnifaces) (um projeto de código
 aberto simplesmente imperdível pra quem programa JSF 2.x), escreve
 tutoriais [bem completos e compreensíveis no seu
-blog](http://balusc.blogspot.com), e responde ativamente as [perguntas
+blog](https://balusc.blogspot.com), e responde ativamente as [perguntas
 no Stackoverflow](http://stackoverflow.com/tags/jsf* "tag JSF no SO").
 Aprendi muito desse cara -- além de ser um
-[maven](http://en.wikipedia.org/wiki/Maven) de Java/JSF, é um cara muito
+[maven](https://en.wikipedia.org/wiki/Maven) de Java/JSF, é um cara muito
 generoso compartilhando seu conhecimento e sempre atencioso. *Hey,
 Bauke, all the JSF devs in the world thank their gods for your very
 existence and spetacular work. You rock, dude!*
@@ -263,7 +263,7 @@ facilita na hora de fazer componentes AJAX reusáveis, porque o alvo das
 alterações (o que você usa no render) sempre terá uma identificação
 única para aquele componente.
 
-9. [Comunicação em JSF 2.0 -- como passar os dados que eu quero para onde eu preciso](http://balusc.blogspot.com.br/2011/09/communication-in-jsf-20.html)
+9. [Comunicação em JSF 2.0 -- como passar os dados que eu quero para onde eu preciso](https://balusc.blogspot.com.br/2011/09/communication-in-jsf-20.html)
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Bom... se você está usando JSF 2.x, provavelmente já chegou esse artigo
@@ -295,7 +295,7 @@ muita aplicação JSF pra ser mantida nos próximos 20 anos. Mas eu prefiro
 investir numa tecnologia que me ajude a alavancar as demais tecnologias
 da Web (especialmente as que eu preciso conhecer de qualquer forma, como
 HTML/CSS/HTTP), e não uma em que as [abstrações simplesmente vazam
-demais](http://en.wikipedia.org/wiki/Leaky_abstraction "abstrações vazadas na Wikipedia em inglês") e
+demais](https://en.wikipedia.org/wiki/Leaky_abstraction "abstrações vazadas na Wikipedia em inglês") e
 dificultam usar os outros blocos da construção. Para mim, JSF está
 definitivamente no último grupo. So... *Goodbye, JSF!*
 

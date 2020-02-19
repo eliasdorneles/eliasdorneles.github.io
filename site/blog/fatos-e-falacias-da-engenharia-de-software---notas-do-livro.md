@@ -3,7 +3,7 @@ Date: 2012-12-03 13:23
 Author: Elias Dorneles
 Slug: Fatos-e-Falácias-da-Engenharia-de-Software---notas-do-livro
 
-[![Book cover](https://codinghorror.typepad.com/.a/6a0120a85dcdae970b012877703e5c970c-pi)](http://www.amazon.com/Facts-Fallacies-Software-Engineering-Robert/dp/0321117425)Acabo
+[![Book cover](https://codinghorror.typepad.com/.a/6a0120a85dcdae970b012877703e5c970c-pi)](https://www.amazon.com/Facts-Fallacies-Software-Engineering-Robert/dp/0321117425)Acabo
 de terminar a leitura de um livro simplesmente excelente, *Facts and
 Fallacies of Software Engineering* (Fatos e Falácias da Engenharia de
 Software), do programador/pesquisador/escritor [Robert L.
@@ -55,9 +55,9 @@ Espie só:
     que tentam transformá-las em engrenagens numa linha de montagem, e
     serem facilmente substituíveis. Um exemplo famoso é o [CMM -
     Capability Maturity
-    Model](http://en.wikipedia.org/wiki/Capability_Maturity_Model) do
+    Model](https://en.wikipedia.org/wiki/Capability_Maturity_Model) do
     [Software Engineering Institute
-    (SEI)](http://en.wikipedia.org/wiki/Software_Engineering_Institute),
+    (SEI)](https://en.wikipedia.org/wiki/Software_Engineering_Institute),
     que se alastrou nas empresas públicas americanas (e vem fazendo o
     mesmo nas brasileiras...), que é baseado na percepção errônea de que
     o caminho para bom software é um bom processo. *Not so!* Mas veja o

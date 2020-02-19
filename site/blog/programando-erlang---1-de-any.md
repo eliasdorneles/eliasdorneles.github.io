@@ -11,7 +11,7 @@ sei.
 
 Como eu gostei de ler as ideias do [Joe Armstrong](http://joearms.github.io/)
 no livro [Coders at Work](http://www.codersatwork.com/), e as [descrições de
-Erlang](http://en.wikipedia.org/wiki/Erlang_(programming_language)) na Internet
+Erlang](https://en.wikipedia.org/wiki/Erlang_(programming_language)) na Internet
 me deixaram curioso, resolvi que em 2014 eu iria aprender Erlang. E assim,
 decidi por comprar logo o livro [Programming
 Erlang](http://pragprog.com/book/jaerlang2/programming-erlang), escrito pelo
@@ -37,11 +37,11 @@ ambiente diferente. A VM de Erlang lembra um sistema operacional em muitas
 formas, possuindo seu próprio shell, seu próprio gerenciador de processos, seu
 esquema de atualização sem precisar parar nenhum processo e seus [mecanismos
 disponíveis para comunicação entre
-processos](http://pt.wikipedia.org/wiki/Comunica%C3%A7%C3%A3o_entre_processos).
+processos](https://pt.wikipedia.org/wiki/Comunica%C3%A7%C3%A3o_entre_processos).
 
 Um processo Erlang não é nem um processo do sistema operacional nem uma thread:
 é um [processo
-leve](http://en.wikipedia.org/wiki/Erlang_(programming_language)#Concurrency_and_distribution_orientation),
+leve](https://en.wikipedia.org/wiki/Erlang_(programming_language)#Concurrency_and_distribution_orientation),
 muito mais leve que threads. A criação de um novo processo é praticamente
 gratuita -- pode-se dizer que criar um novo processo em Erlang é tão comum e
 tão sossegado quanto instanciar um novo objeto em Java.
@@ -50,7 +50,7 @@ Em Erlang, é idiomático encapsular funcionalidade em processos, e é comum um
 sistema ter milhares desses processos concorrentes, cada um com sua
 responsabilidade. Assim, esses processos encapsulando funcionalidades são
 análogos a[serviços em uma arquitetura orientada a
-serviços](http://en.wikipedia.org/wiki/Service_(systems_architecture)), só que
+serviços](https://en.wikipedia.org/wiki/Service_(systems_architecture)), só que
 em Erlang eles aparecem numa forma bem natural na linguagem e mais integrada ao
 ambiente.
 
@@ -62,17 +62,17 @@ rapidão. Para acompanhar, [instale Erlang](http://www.erlang.org/download.html)
 
 Veja o seguinte esqueleto de um programa concorrente em Erlang:
 
-[!["Esqueleto de programa Erlang"](http://2.bp.blogspot.com/-HmS5hqh97EA/U0D7Y5iIeII/AAAAAAAAAtk/SVLNHGSIVHk/s1600/erlang-loop-menor.png)](http://2.bp.blogspot.com/-HmS5hqh97EA/U0D7Y5iIeII/AAAAAAAAAtk/SVLNHGSIVHk/s1600/erlang-loop-menor.png)
+[!["Esqueleto de programa Erlang"](https://2.bp.blogspot.com/-HmS5hqh97EA/U0D7Y5iIeII/AAAAAAAAAtk/SVLNHGSIVHk/s1600/erlang-loop-menor.png)](https://2.bp.blogspot.com/-HmS5hqh97EA/U0D7Y5iIeII/AAAAAAAAAtk/SVLNHGSIVHk/s1600/erlang-loop-menor.png)
 
 Note a recursão na função `loop`: é assim que se faz processos iterativos
 (loops) em Erlang, que não tem sintaxe especial para isso. O compilador
 implementa a otimização de “[recursão de
-cauda](http://pt.wikipedia.org/wiki/Recursividade_(ci%C3%AAncia_da_computa%C3%A7%C3%A3o)#Fun.C3.A7.C3.B5es_recursivas_em_cauda)”
-([tail recursion](http://en.wikipedia.org/wiki/Tail_call)) para fazer uma
+cauda](https://pt.wikipedia.org/wiki/Recursividade_(ci%C3%AAncia_da_computa%C3%A7%C3%A3o)#Fun.C3.A7.C3.B5es_recursivas_em_cauda)”
+([tail recursion](https://en.wikipedia.org/wiki/Tail_call)) para fazer uma
 função escrita de maneira recursiva executar de forma iterativa  -- isto é, sem
 re-chamar a função aumentando a[pilha de
-chamada](http://pt.wikipedia.org/wiki/Pilha_de_chamada) ([call
-stack](http://en.wikipedia.org/wiki/Call_stack)).  
+chamada](https://pt.wikipedia.org/wiki/Pilha_de_chamada) ([call
+stack](https://en.wikipedia.org/wiki/Call_stack)).  
 
 Você pode testar esse código colocando-o em um arquivo `esqueleto.erl` e chamá-lo
 do shell Erlang, conforme a sessão abaixo:
@@ -126,9 +126,9 @@ O comando `receive`  tem algumas habilidades especiais: além de bloquear a
 execução do código até o processo receber uma mensagem (que também pode ter um
 timeout  definido), ele pode selecionar o bloco de código a ser executado
 dependendo da forma ou conteúdo da mensagem, com o mecanismo chamado de
-[pattern matching](http://en.wikipedia.org/wiki/Pattern_matching) (ou,
+[pattern matching](https://en.wikipedia.org/wiki/Pattern_matching) (ou,
 [casamento de
-padrões](http://pt.wikipedia.org/wiki/Casamento_de_padr%C3%B5es)). 
+padrões](https://pt.wikipedia.org/wiki/Casamento_de_padr%C3%B5es)). 
 
 Por exemplo, usando pattern matching, podemos alterar o comando  `receive` da
 função  `loop()`   para executar um código diferente caso receba a mensagem
@@ -170,7 +170,7 @@ De fato, na expressão:
 
 o `=` (igual) é um acionamento do operador depattern matching de Erlang --
 diferente de outras linguagens em que o igual é um operador de
-[atribuição](http://pt.wikipedia.org/wiki/Atribui%C3%A7%C3%A3o_(computa%C3%A7%C3%A3o)).
+[atribuição](https://pt.wikipedia.org/wiki/Atribui%C3%A7%C3%A3o_(computa%C3%A7%C3%A3o)).
 Erlang não tem operador atribuição, que usualmente permite definir e redefinir
 o conteúdo de variáveis.
 
@@ -178,7 +178,7 @@ O que acontece aqui é que o [operador de pattern
 matching](http://www.erlang.org/doc/reference_manual/patterns.html) liga um
 valor a uma variável quando esta ainda não tem nenhum valor associado (isto é,
 quando se trata de uma [variável
-livre](http://pt.wikipedia.org/wiki/Vari%C3%A1veis_livres_e_ligadas), ou
+livre](https://pt.wikipedia.org/wiki/Vari%C3%A1veis_livres_e_ligadas), ou
 *unbound variable*).
 
 Na próxima vez que a variável for referenciada, ela terá o valor "casado"
@@ -230,7 +230,7 @@ interessantes:
 E esta última consequência compensa as dificuldades de dar nomes às variáveis.
 Porque escrever programas multi-thread é difícil de fazer direito (você precisa
 se preocupar com
-[sincronização](http://en.wikipedia.org/wiki/Synchronization_(computer_science))
+[sincronização](https://en.wikipedia.org/wiki/Synchronization_(computer_science))
 de processos e de memória), e o jeito Erlang de escrever programas concorrentes
 que se comunicam via envio de mensagens (o [modelo de
 atores](http://c2.com/cgi/wiki?ActorsModel)) simplifica as coisas, de forma que
@@ -310,7 +310,7 @@ Só tem dois problemas de usabilidade que me incomodam um pouco:
 
 - O shell não tem histórico persistente, e não suporta atalhos comuns em
   aplicações da linha de comando que usam a [GNU
-  Readline](http://en.wikipedia.org/wiki/GNU_Readline).  Parece que o esquema
+  Readline](https://en.wikipedia.org/wiki/GNU_Readline).  Parece que o esquema
   de IO do shell Erlang é meio complicado de manter -- no GitHub tem [um
   projeto que adiciona um histórico persistente
   básico](https://github.com/ferd/erlang-history), mas o FAQ não é muito

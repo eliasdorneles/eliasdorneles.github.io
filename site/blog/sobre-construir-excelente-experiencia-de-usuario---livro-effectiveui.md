@@ -8,7 +8,7 @@ Slug: Sobre-construir-excelente-experiência-de-usuário---livro-EffectiveUI
 > seja o último! :)
 
 O livro é [Effective UI: The Art of Building Great User Experience in
-Software,](http://www.amazon.com/Effective-UI-Building-Experience-Software/dp/059615478X "Effective UI na Amazon")
+Software,](https://www.amazon.com/Effective-UI-Building-Experience-Software/dp/059615478X "Effective UI na Amazon")
 os autores são os fundadores e os empregados da empresa
 [EffectiveUI](http://www.effectiveui.com/), no site deles tem uma
 [página do
@@ -38,7 +38,7 @@ livro também é sobre como escapar das armadilhas que causam a maioria
 dos softwares serem muito ruins de usar, e que fazem projetos
 fracassarem antes de você ouvir falar deles.
 
-> [1]: minha tradução para [User experience design](http://en.wikipedia.org/wiki/User_experience_design), não sei se existe termo melhor.
+> [1]: minha tradução para [User experience design](https://en.wikipedia.org/wiki/User_experience_design), não sei se existe termo melhor.
 
 Boa parte dos conselhos do livro são diretamente aplicáveis para pessoas
 envolvidas com liderança de projetos, mas o conteúdo interessa qualquer
@@ -64,7 +64,7 @@ Alguns pontos importantes do livro:
     prestadora de telefonia...
 -   Na hora de vender a idéia de melhorar a UX para as partes
     interessadas
-    (*[stakeholders](http://pt.wikipedia.org/wiki/Stakeholder "Stakeholder na Wikipedia")*),
+    (*[stakeholders](https://pt.wikipedia.org/wiki/Stakeholder "Stakeholder na Wikipedia")*),
     exponha-as ao feedback dos usuários. Os autores inclusive contam uma
     história de como os *stakeholders* de um projeto finalmente
     decidiram priorizar a melhoria da usabilidade de um produto, depois
@@ -83,7 +83,7 @@ Alguns pontos importantes do livro:
     com isso é fundamental. Planejamento detalhado demais está fadado ao
     fracasso porque muito do desconhecido ainda não foi descoberto.
     Evite os problemas do [Big Design Up
-    Front](http://en.wikipedia.org/wiki/Big_Design_Up_Front) e comece o
+    Front](https://en.wikipedia.org/wiki/Big_Design_Up_Front) e comece o
     desenvolvimento o mais rápido possível. Quanto mais adiante no
     projeto você estiver, mais sábio você será. Por isso, descubra os
     objetivos cedo e postergue as decisões sobre os detalhes.
@@ -111,7 +111,7 @@ colaboração), estabelecer o público-alvo do produto e as características
 de alguns usuários desse público, e ainda, priorizar quais são as partes
 importantes disso tudo. Basicamente, uma sucessão de negociações e de
 aplicações do [princípio de
-Pareto](http://pt.wikipedia.org/wiki/Princ%C3%ADpio_de_Pareto "Princípio de Pareto")
+Pareto](https://pt.wikipedia.org/wiki/Princ%C3%ADpio_de_Pareto "Princípio de Pareto")
 para descobrir o que é realmente necessário.
 
 Mas o trecho que mais me chamou a atenção foi o capítulo intitulado
@@ -156,14 +156,14 @@ Por fim, os últimos dois capítulos tratam sobre o restante do projeto
 feedback e de comunicação durante todas as etapas do projeto. O primeiro
 deles discorre especificamente sobre a importância do processo de
 desenvolvimento ser
-[iterativo](http://pt.wikipedia.org/wiki/Desenvolvimento_iterativo_e_incremental "Desenvolvimento iterativo e incremental - Wikipedia"),
+[iterativo](https://pt.wikipedia.org/wiki/Desenvolvimento_iterativo_e_incremental "Desenvolvimento iterativo e incremental - Wikipedia"),
 para agilizar a obtenção de *feedback* e a reavaliação das decisões,
 restrições e objetivos levando em conta o *feedback*obtido. Esse
 capítulo dá algumas idéias interessantes sobre minimizar as desvantagens
 de um processo de desenvolvimento problemático que você pode estar sendo
 forçado a trabalhar (como um
-[cascata](http://pt.wikipedia.org/wiki/Modelo_em_cascata) ou um
-[BDUF](http://en.wikipedia.org/wiki/Big_Design_Up_Front "Big Design Up Front")):
+[cascata](https://pt.wikipedia.org/wiki/Modelo_em_cascata) ou um
+[BDUF](https://en.wikipedia.org/wiki/Big_Design_Up_Front "Big Design Up Front")):
 
 -    permitir mais liberdade nas etapas posteriores de desenvolvimento;
     às vezes isso pode ser feito simplesmente renomeando os documentos

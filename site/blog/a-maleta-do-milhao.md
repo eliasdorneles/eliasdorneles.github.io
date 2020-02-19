@@ -4,7 +4,7 @@ Author: Elias Dorneles
 Slug: A-maleta-do-milhão
 
 [![maleta do
-milhão](https://eljunior.files.wordpress.com/2011/10/432888092_8887774475_m.jpg "maleta cheia de dinheiro")](http://www.flickr.com/photos/julianrod/432888092/)
+milhão](https://eljunior.files.wordpress.com/2011/10/432888092_8887774475_m.jpg "maleta cheia de dinheiro")](https://www.flickr.com/photos/julianrod/432888092/)
 
 Anos atrás, eu estava numa sessão de conversação da escola de inglês
 (que por sinal, paguei caro e não valeu o retorno), e a professora pediu
@@ -12,7 +12,7 @@ pra cada pessoa dizer o que faria se encontrasse uma maleta com um
 milhão de reais. Desperta a imaginação do pessoal, surgiram rapidamente
 novos adjetivos, verbos e substantivos do idioma da rainha na fala da
 galera, cumprindo a intenção da brincadeira (Ilustração roubada de:
-[julianrod](http://www.flickr.com/photos/julianrod/432888092/ "http://www.flickr.com/photos/julianrod/432888092/")).
+[julianrod](https://www.flickr.com/photos/julianrod/432888092/ "https://www.flickr.com/photos/julianrod/432888092/")).
 
 As respostas variaram entre os malandros que devolveriam a maleta
 pedindo uma recompensa, a galera bon-vivant que beijaria a maleta e
@@ -60,7 +60,7 @@ funciona.
 O pensamento de que a gente seria mais feliz se tivesse mais dinheiro
 está diretamente relacionado com um viés cognitivo conhecido como
 ancoragem (a Wikipedia em inglês tem um [ótimo artigo a
-respeito](http://en.wikipedia.org/wiki/Anchoring)). Ancoragem se trata
+respeito](https://en.wikipedia.org/wiki/Anchoring)). Ancoragem se trata
 da tendência humana de confiar demais em um determinado dado ou
 informação (a "âncora"), na hora de tomar uma decisão. O exemplo da
 Wikipedia é, na busca de um carro usado para comprar, focar

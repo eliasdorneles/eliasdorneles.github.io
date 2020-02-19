@@ -7,13 +7,13 @@ Slug: Trabalho-Eficaz-com-Código-Legado
 Legado](http://www.grupoa.com.br/livros/engenharia-de-software-e-metodos-ageis/trabalho-eficaz-com-codigo-legado/9788582600320
 "Página do livro na editora brasileira") é o título em português do famoso
 livro sobre código legado (título original: *[Working Effectively with Legacy
-Code](http://www.amazon.com/Working-Effectively-Legacy-Michael-Feathers/dp/0131177052)*)
+Code](https://www.amazon.com/Working-Effectively-Legacy-Michael-Feathers/dp/0131177052)*)
 escrito por [Michael Feathers](https://twitter.com/mfeathers), um [consultor
 muito experiente e reconhecido na comunidade
 Agile/XP](http://www.objectmentor.com/omTeam/feathers_m.html). Acabei de ler a
 versão traduzida que um amigo emprestou, e a tradução está bem decente -- bem
 diferente da [última vez que li um livro técnico em
-português](http://eljunior.wordpress.com/2013/01/15/aventuras-com-java-ee/
+português](https://eljunior.wordpress.com/2013/01/15/aventuras-com-java-ee/
 "Aventuras apresentando Java EE a mim mesmo").
 
 [![Capa do
@@ -24,7 +24,7 @@ Veja alguns links sobre o livro, e meu resumo/resenha a seguir:
 - [Página sobre o livro na
   WikiWikiWeb](http://c2.com/cgi/wiki?WorkingEffectivelyWithLegacyCode)
 - [Working Effectively with Legacy Code na
-  Amazon](http://www.amazon.com/Working-Effectively-Legacy-Michael-Feathers/dp/0131177052)
+  Amazon](https://www.amazon.com/Working-Effectively-Legacy-Michael-Feathers/dp/0131177052)
 - [Página da versão traduzida no grupo de editoras Grupo
   A](http://www.grupoa.com.br/livros/engenharia-de-software-e-metodos-ageis/trabalho-eficaz-com-codigo-legado/9788582600320)
 - [Tópico no programmers.SE com resumo dos pontos chave do
@@ -123,7 +123,7 @@ detalhes.
 
 
 Um exemplo de ponto de extensão é a chamada de um [método
-virtual](http://pt.wikipedia.org/wiki/M%C3%A9todo_virtual) (isto é, um
+virtual](https://pt.wikipedia.org/wiki/M%C3%A9todo_virtual) (isto é, um
 método que pode ser sobrescrito) em uma linguagem orientada a objetos.
 Se você tem um método *updateDb()* chamando um método virtual
 *getConnection()* na mesma classe, você poderá criar uma nova classe que

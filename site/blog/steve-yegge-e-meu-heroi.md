@@ -4,7 +4,7 @@ Author: Elias Dorneles
 Slug: Steve-Yegge-é-meu-herói!
 
 [Steve
-Yegge](http://steve-yegge.blogspot.com "http://steve-yegge.blogspot.com")
+Yegge](https://steve-yegge.blogspot.com "https://steve-yegge.blogspot.com")
 é meu herói!
 
 Já que ele voltou a escrever no blog (dois posts na mesma semana, yay!),
@@ -36,15 +36,15 @@ preciso seguir tentando aprender.
 Por isso, que eu tô indo reler novamente os rants antigos do Steve, pra
 aprender que [sou um péssimo programador e preciso aprender com os
 melhores que
-eu](http://steve-yegge.blogspot.com/2008/06/done-and-gets-things-smart.html "http://steve-yegge.blogspot.com/2008/06/done-and-gets-things-smart.html"), [não
+eu](https://steve-yegge.blogspot.com/2008/06/done-and-gets-things-smart.html "https://steve-yegge.blogspot.com/2008/06/done-and-gets-things-smart.html"), [não
 devo ter medo de
-código](http://steve-yegge.blogspot.com/2008/02/portrait-of-n00b.html "http://steve-yegge.blogspot.com/2008/02/portrait-of-n00b.html"),
+código](https://steve-yegge.blogspot.com/2008/02/portrait-of-n00b.html "https://steve-yegge.blogspot.com/2008/02/portrait-of-n00b.html"),
 [o melhor jeito de escolher projetos é fazer pra mim
-mesmo](http://steve-yegge.blogspot.com/2008/08/business-requirements-are-bullshit.html "http://steve-yegge.blogspot.com/2008/08/business-requirements-are-bullshit.html"),
+mesmo](https://steve-yegge.blogspot.com/2008/08/business-requirements-are-bullshit.html "https://steve-yegge.blogspot.com/2008/08/business-requirements-are-bullshit.html"),
 [compiladores importam e eu tenho que escrever
-um](http://steve-yegge.blogspot.com/2007/06/rich-programmer-food.html "http://steve-yegge.blogspot.com/2007/06/rich-programmer-food.html"),
+um](https://steve-yegge.blogspot.com/2007/06/rich-programmer-food.html "https://steve-yegge.blogspot.com/2007/06/rich-programmer-food.html"),
 [o tempo que leva é o tempo que
-leva](http://steve-yegge.blogspot.com/2009/04/have-you-ever-legalized-marijuana.html "http://steve-yegge.blogspot.com/2009/04/have-you-ever-legalized-marijuana.html"),
+leva](https://steve-yegge.blogspot.com/2009/04/have-you-ever-legalized-marijuana.html "https://steve-yegge.blogspot.com/2009/04/have-you-ever-legalized-marijuana.html"),
 e o resto que eu uh... esqueci já! Tá vendo? Eu preciso mesmo reler!
 
 Espero que o Steve Yegge não se importe que eu descreva o blog dele

@@ -4,7 +4,7 @@ Author: Elias Dorneles
 Slug: Programming-Grails----a-aventura-continua
 
 Alguns dias atrás terminei de ler o *[Programming
-Grails](http://shop.oreilly.com/product/0636920024750.do "Programming Grails - OReilly") ([Amazon](http://www.amazon.com/Programming-Grails-Burt-Beckwith/dp/1449323936))*,
+Grails](http://shop.oreilly.com/product/0636920024750.do "Programming Grails - OReilly") ([Amazon](https://www.amazon.com/Programming-Grails-Burt-Beckwith/dp/1449323936))*,
 um livro sobre [o framework Grails](http://www.grails.org/) voltado para
 desenvolvedores experientes, que explica como funcionam várias coisas do
 framework e aponta vários caminhos das pedras. O autor é [Burt
@@ -123,8 +123,8 @@ outros.
 ### Spring e Injeção de Dependência
 
 O capítulo seguinte é sobre o papel do
-[Spring](http://pt.wikipedia.org/wiki/Spring_Framework) e [injeção de
-dependência](http://pt.wikipedia.org/wiki/Inje%C3%A7%C3%A3o_de_depend%C3%AAncia)
+[Spring](https://pt.wikipedia.org/wiki/Spring_Framework) e [injeção de
+dependência](https://pt.wikipedia.org/wiki/Inje%C3%A7%C3%A3o_de_depend%C3%AAncia)
 no Grails, explicando o funcionamento dos serviços Grails (que são beans
 do Spring com suporte a transação), vários detalhes de configuração que
 funcionam em cima do Spring, incluindo como integrar com outras
@@ -189,7 +189,7 @@ ler os posts do Peter Ledbrook da série GORM Gotchas, seguem os links:
 Especificamente sobre o comportamento do [método
 save()](http://grails.org/doc/latest/ref/Domain%20Classes/save.html "save()")
 explicado no primeiro post dessa série GORM Gotchas, eu [penso um pouco
-diferente](http://eljunior.wordpress.com/2013/06/03/aventurando-se-com-grails/)
+diferente](https://eljunior.wordpress.com/2013/06/03/aventurando-se-com-grails/)
 dos autores do framework e sempre configuro a chave
 `grails.gorm.failOnError=true` no *Config.groovy* logo após criar um
 projeto novo em Grails. Acho que é especialmente importante fazer isso
@@ -315,7 +315,7 @@ algumas configurações para fazer escalar. Curti! =)
 
 A seguir, vem um trecho interessante sobre as técnicas de [programação
 orientada a
-aspectos](http://pt.wikipedia.org/wiki/Programa%C3%A7%C3%A3o_orientada_a_aspecto)
+aspectos](https://pt.wikipedia.org/wiki/Programa%C3%A7%C3%A3o_orientada_a_aspecto)
 disponíveis por padrão no Grails (basicamente, as mesmas já disponíveis no
 Spring só que empoderadas pela linguagem Groovy), e também como adicionar
 outras capacidades usando o [plugin AspectJ](http://grails.org/plugin/aspectj).

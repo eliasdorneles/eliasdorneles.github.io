@@ -4,13 +4,13 @@ Author: Elias Dorneles
 Slug: Você-devia-aprender-shell-script
 
 Se você é programador, você devia aprender
-[shell-script](http://pt.wikipedia.org/wiki/Shell_script). Ou pelo
+[shell-script](https://pt.wikipedia.org/wiki/Shell_script). Ou pelo
 menos, algo parecido.
 
 Nem que seja apenas o básico para se virar: criar o arquivo e deixar
 executável, ler e escrever variáveis, redirecionar entrada e saída,
-encadear comandos, [grep](http://en.wikipedia.org/wiki/Grep) e
-[cut](http://en.wikipedia.org/wiki/Cut_(Unix)) basicão.
+encadear comandos, [grep](https://en.wikipedia.org/wiki/Grep) e
+[cut](https://en.wikipedia.org/wiki/Cut_(Unix)) basicão.
 
 Você pode ainda não saber que precisa da habilidade de fazer
 shell-scripts, e isso é um problema. Tem sido difícil para mim comunicar
@@ -88,8 +88,8 @@ aprendendo outras coisas.
 Essa é a beleza de shell-scripting, a de permitir você combinar várias
 coisas, mesmo algumas que não tenham sido feitas para serem combinadas.
 É a beleza da [filosofia
-Unix](http://pt.wikipedia.org/wiki/Filosofia_Unix). *Thanks, [Mr.
-McIlroy](http://pt.wikipedia.org/wiki/Douglas_McIlroy), we’ve seen the
+Unix](https://pt.wikipedia.org/wiki/Filosofia_Unix). *Thanks, [Mr.
+McIlroy](https://pt.wikipedia.org/wiki/Douglas_McIlroy), we’ve seen the
 light now*.
 
 Um dos melhores investimentos do meu tempo na época que estava na faculdade foi

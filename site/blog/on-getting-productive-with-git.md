@@ -165,11 +165,11 @@ breaking things. The next tips will be a bit more random.
 
 Your brain can parse this:
 
-<img src="http://i.imgur.com/OBOFz7A.png" width="400" class="align-center">
+<img src="https://i.imgur.com/OBOFz7A.png" width="400" class="align-center">
 
 Much easier than this:
 
-<img src="http://i.imgur.com/ajXQxbA.png" width="400" class="align-center">
+<img src="https://i.imgur.com/ajXQxbA.png" width="400" class="align-center">
 
 In case your Git output isn't showing colored output, configure it to do so:
 
@@ -237,7 +237,7 @@ keep solving the same conflicts again and again and save a few brain cycles.
 
 ## Opening files in your editor
 
-I edit code in [Vim](http://www.vim.org).
+I edit code in [Vim](https://www.vim.org).
 
 But even if you don't, you might find useful these Bash functions and aliases
 (taken from [my `~/.bashrc` file](https://github.com/eliasdorneles/dotfiles/blob/master/bashrc))
@@ -341,12 +341,12 @@ in my workflow, though, I'm still evaluating.
 There is also this thing called [Legit](http://www.git-legit.org), a set of
 extensions (used via aliases) created by [Kenneth
 Reitz](https://twitter.com/kennethreitz) (from [Python
-Requests](http://www.python-requests.org) and [httpbin](http://httpbin.org/)
+Requests](https://www.python-requests.org) and [httpbin](https://httpbin.org/)
 fame) which looks interesting. I have only recently started experimenting with
 it, so I can't comment much. I know that Git deserves something like it. If you
 use it, let me know how you like it.
 
 Finally, you may also like this [StackOverflow thread with Git questions and
-answers](http://stackoverflow.com/questions/315911/git-for-beginners-the-definitive-practical-guide).
+answers](https://stackoverflow.com/questions/315911/git-for-beginners-the-definitive-practical-guide).
 
 That's all I had for now, folks!

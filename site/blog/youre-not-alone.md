@@ -141,5 +141,5 @@ We all want to be brave and dare greatly.
 *   The Man in the Arena -- speech from Theodore’s Roosevelt that gave the book’s title: [https://www.goodreads.com/quotes/7-it-is-not-the-critic-who-counts-not-the-man](https://www.goodreads.com/quotes/7-it-is-not-the-critic-who-counts-not-the-man)
 *   About correlations between shame and the negative outcomes mentioned, I’ve [found](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.413.8535&rep=rep1&type=pdf) [some](https://www.psychologicalscience.org/news/releases/shame-about-past-alcoholism-predicts-relapse-and-declining-health-in-recovering-alcoholics.html) [articles](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3763505/) [online](http://www.soc.ucsb.edu/faculty/scheff/main.php?id=2.html) -- here are some books referred to in Daring Greatly:
     *   [Shame in the Therapy Hour](https://www.goodreads.com/book/show/11735397-shame-in-the-therapy-hour)
-    *   [Shame and Guilt in Neurosis](http://www.amazon.com/Shame-Guilt-Neurosis-Helen-Block/dp/0823626075)
+    *   [Shame and Guilt in Neurosis](https://www.amazon.com/Shame-Guilt-Neurosis-Helen-Block/dp/0823626075)
     *   [Shame and Guilt](https://www.goodreads.com/book/show/2045998.Shame_and_Guilt)

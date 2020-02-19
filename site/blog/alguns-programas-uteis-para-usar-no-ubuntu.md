@@ -22,7 +22,7 @@ Comparando duas pastas com o Meld:
 [![Comparando duas pastas com o Meld](https://eljunior.files.wordpress.com/2013/08/minha_pasta-outra_pasta-meld_004.png "Comparando duas pastas com o Meld")](https://eljunior.files.wordpress.com/2013/08/minha_pasta-outra_pasta-meld_004.png)
 
 Ele é uma mão-na-roda para o desenvolvedor na hora de fazer
-*[merges](http://en.wikipedia.org/wiki/Merge_(revision_control) "Artigo sobre merges na Wikipedia")*
+*[merges](https://en.wikipedia.org/wiki/Merge_(revision_control) "Artigo sobre merges na Wikipedia")*
 complicados, e também para verificar a situação de projetos que foram
 alterados por pessoas diferentes sem usar um sistema de controle de
 versão decente (que aliás, se a escolha estiver em aberto pra você ou
@@ -83,7 +83,7 @@ O [PlayItSlowly](http://29a.ch/playitslowly/) é um programa muito legal
 que permite reproduzir arquivos de áudio ou vídeo em velocidade e
 frequência diferentes do áudio/vídeo original, até [já andei falando
 antes sobre ele por
-aqui](http://eljunior.wordpress.com/2011/07/28/tocar-video-ou-musica-em-outra-velocidade-mantendo-o-tom/).
+aqui](https://eljunior.wordpress.com/2011/07/28/tocar-video-ou-musica-em-outra-velocidade-mantendo-o-tom/).
 
   [![Can you guess from which band is this song?](https://eljunior.files.wordpress.com/2013/08/play-it-slowly_012.png)](https://eljunior.files.wordpress.com/2013/08/play-it-slowly_012.png)
 
@@ -150,7 +150,7 @@ Instale no Ubuntu digitando num terminal:
 Além desses programas, gostaria ainda de falar rapidão de outros
 programas úteis pra quem também gosta de usar a linha de comando:
 
--   [quilt](http://en.wikipedia.org/wiki/Quilt_(software)) é um conjunto
+-   [quilt](https://en.wikipedia.org/wiki/Quilt_(software)) é um conjunto
     de shell-scripts que ajudam a lidar com diffes e patches, é uma
     ótima ferramenta para um desenvolvedor ter na sua caixa, já me foi
     útil várias vezes. Instale com:  

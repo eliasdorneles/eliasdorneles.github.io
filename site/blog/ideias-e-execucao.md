@@ -38,7 +38,7 @@ teve incentivo do governo, e o que mais inventar o poderoso gerador de
 desculpas conhecido como cérebro humano.  
 
 <center>
-  [![Linus Pauling, cientista superprodutivo](http://upload.wikimedia.org/wikipedia/commons/5/58/L_Pauling.jpg "Linus Pauling")](http://pt.wikipedia.org/wiki/Linus_Pauling)
+  [![Linus Pauling, cientista superprodutivo](https://upload.wikimedia.org/wikipedia/commons/5/58/L_Pauling.jpg "Linus Pauling")](https://pt.wikipedia.org/wiki/Linus_Pauling)
 </center>
 
 > Se você quer ter boas idéias, você precisa ter muitas idéias. A
@@ -47,7 +47,7 @@ desculpas conhecido como cérebro humano.
 
 
 Ward Cunningham, famoso pela [invenção do Wiki e de outras noções
-importantes](http://en.wikipedia.org/wiki/Ward_Cunningham#Ideas_and_inventions)
+importantes](https://en.wikipedia.org/wiki/Ward_Cunningham#Ideas_and_inventions)
 que acabaram dando forma à indústria de software, é conhecido por viver
 [trocando idéias com os colegas](http://www.nagarro.com/blog/ward-cunningham/),
 e implementando uma ou outra [idéia bizarra](http://c2.com/ward/glory/) das

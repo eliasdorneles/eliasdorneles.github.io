@@ -450,7 +450,7 @@ No caso do nosso site, podemos simular o problema no próprio browser se
 apertarmos o botão atualizar várias vezes no mesmo segundo:
 
 <center>
-  ![Screenshot showing Too Many Requests](http://i.imgur.com/V3arr9E.jpg)
+  ![Screenshot showing Too Many Requests](https://i.imgur.com/V3arr9E.jpg)
 </center>
 
 Neste caso, a mensagem no próprio site já nos diz o problema e a solução: o máximo de
@@ -759,7 +759,7 @@ Ele fica esperando você colar uma requisição no formato cURL. Para isto,
 encontre a requisição AJAX que você quer replicar na aba Network do browser, e
 use o recurso "Copy as cURL":
 
-  ![Screenshot showing Copy as cURL](http://i.imgur.com/hqz9b58.jpg)
+  ![Screenshot showing Copy as cURL](https://i.imgur.com/hqz9b58.jpg)
 
 Cole no prompt do minreq, e espere ele fazer a mágica. =)
 
@@ -810,40 +810,40 @@ Antes do deploy, você precisa criar um projeto no Scrapy Cloud. Na tela
 inicial, clique no botão adicionar uma organização:
 
 <center>
-  ![Scrapinghub screenshot: Add an organization](http://i.imgur.com/9fsBv4I.png)
+  ![Scrapinghub screenshot: Add an organization](https://i.imgur.com/9fsBv4I.png)
 </center>
 
 Dê um nome para a organização e confirme:
 
 <center>
-  ![Scrapinghub screenshot: criando organização](http://i.imgur.com/GvfEXzu.png)
+  ![Scrapinghub screenshot: criando organização](https://i.imgur.com/GvfEXzu.png)
 </center>
 
 Em seguida, adicione um serviço do para hospedar o seu serviço, clicando no
 botão "+ Service" que aparece dentro da organização criada:
 
 <center>
-  ![Scrapinghub screenshot: Adicionar serviço](http://i.imgur.com/D0VTJLc.png)
+  ![Scrapinghub screenshot: Adicionar serviço](https://i.imgur.com/D0VTJLc.png)
 </center>
 
 Preencha os dados do seu projeto e confirme:
 
 <center>
-  ![Scrapinghub screenshot: Adicionar serviço](http://i.imgur.com/05Hvbu3.png)
+  ![Scrapinghub screenshot: Adicionar serviço](https://i.imgur.com/05Hvbu3.png)
 </center>
 
 Depois disso, clique no nome do serviço na página inicial para acessar o local
 onde seu projeto estará disponível:
 
 <center>
-  ![Scrapinghub screenshot: acessar serviço](http://i.imgur.com/OIZLxYA.png)
+  ![Scrapinghub screenshot: acessar serviço](https://i.imgur.com/OIZLxYA.png)
 </center>
 
 Note o número identificador do seu projeto: você usará esse identificador na
 hora fazer o deploy.
 
 <center>
-  ![Scrapinghub screenshot: pegando id do projeto](http://i.imgur.com/ErsMJbB.png)
+  ![Scrapinghub screenshot: pegando id do projeto](https://i.imgur.com/ErsMJbB.png)
 </center>
 
 

@@ -4,13 +4,13 @@ Author: Elias Dorneles
 Slug: Algoritmos-deviam-ser-ensinados-breadth-first,-e-não-depth-first
 
 Algoritmos deviam ser ensinados 
-[*breadth-first*](http://pt.wikipedia.org/wiki/Busca_em_largura "Busca em largura (Breadth-first search), na Wikipedia"),
+[*breadth-first*](https://pt.wikipedia.org/wiki/Busca_em_largura "Busca em largura (Breadth-first search), na Wikipedia"),
 e não
-[*depth-first*](http://pt.wikipedia.org/wiki/Busca_em_profundidade "Busca em profundidade (Depth-first search) na Wikipedia")!  
+[*depth-first*](https://pt.wikipedia.org/wiki/Busca_em_profundidade "Busca em profundidade (Depth-first search) na Wikipedia")!  
 
 > Note que não me refiro ao aprendizado de programação, mas ao estudo sistemático de algoritmos (envolvendo projeto e análise).
 
-[Depth-first](http://pt.wikipedia.org/wiki/Busca_em_profundidade "Busca em
+[Depth-first](https://pt.wikipedia.org/wiki/Busca_em_profundidade "Busca em
 profundidade (Depth-first search) na Wikipedia") é demasiado frustrante,
 especialmente para quem já trabalha na indústria e sabe que existem muitas
 outras coisas tão ou mais importantes quanto performance (legibilidade,
@@ -20,7 +20,7 @@ otimização de uma determinada solução na teoria, não percebo as vantagens d
 aprender a fazê-lo para cada tipo de algoritmo **na prática**.
 
 Seria muito melhor uma abordagem
-[breadth-first,](http://pt.wikipedia.org/wiki/Busca_em_largura "Busca em
+[breadth-first,](https://pt.wikipedia.org/wiki/Busca_em_largura "Busca em
 largura (Breadth-first search), na Wikipedia") em que você ficasse sabendo das
 técnicas existentes de projeto de algoritmos, um apanhado das soluções
 existentes para os problemas clássicos envolvendo as estruturas de dados

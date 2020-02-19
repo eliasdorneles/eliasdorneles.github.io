@@ -4,9 +4,9 @@ Author: Elias Dorneles
 Slug: Problemas-da-Filosofia
 
 Um amigo indicou-me a leitura de [The Problems of
-Philosophy](http://en.wikipedia.org/wiki/The_Problems_of_Philosophy)
+Philosophy](https://en.wikipedia.org/wiki/The_Problems_of_Philosophy)
 (*Os Problemas da Filosofia*), uma introdução a Filosofia escrita por
-[Bertrand Russell](http://en.wikipedia.org/wiki/Bertrand_Russell),
+[Bertrand Russell](https://en.wikipedia.org/wiki/Bertrand_Russell),
 filósofo e historiador britânico. O livro é excelente, esclareceu várias
 dúvidas minhas e me fez pensar melhor sobre muitas coisas.
 

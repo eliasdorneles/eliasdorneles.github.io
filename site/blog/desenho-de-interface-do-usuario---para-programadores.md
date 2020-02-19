@@ -22,7 +22,7 @@ mini-livro dele voltado para programadores que trata desenho de
 interfaces de
 usuário](http://www.joelonsoftware.com/uibook/fog0000000249.html) (tem
 [outra versão à venda na Amazon que parece ter mais
-conteúdo](http://www.amazon.com/User-Interface-Design-Programmers-Spolsky/dp/1893115941)).
+conteúdo](https://www.amazon.com/User-Interface-Design-Programmers-Spolsky/dp/1893115941)).
 Tempo muito bem gasto, diga-se de passagem, porque o conteúdo é muito
 bom! O Joel escreve bem pra caramba, a leitura é muito engajante e as
 histórias que ele conta são bem divertidas.
@@ -31,7 +31,7 @@ histórias que ele conta são bem divertidas.
 
 Ele comenta sobre o desgosto que alguns programadores têm de fazer
 interfaces, provavelmente baseado no medo injustificado de ter que fazer
-[design gráfico](http://pt.wikipedia.org/wiki/Design_gr%C3%A1fico) (não,
+[design gráfico](https://pt.wikipedia.org/wiki/Design_gr%C3%A1fico) (não,
 não é a mesma coisa que *desenho de interface -- UI design*).
 Programadores tendem a pensar sobre si mesmos como pessoas racionais,
 com bom raciocínio mas fraco em arte. Todavia, Joel explica, desenho de
@@ -97,7 +97,7 @@ externa](http://web.cs.wpi.edu/~matt/courses/cs563/talks/smartin/int_design.html
 isto é, a consistência com as outras ferramentas que o usuário está
 acostumado (este assunto é também tratado [no livro sobre experiência do
 usuário que comentei há uns tempos
-atrás](http://eljunior.wordpress.com/2012/11/25/livro-effectiveui-minhas-notas/)).
+atrás](https://eljunior.wordpress.com/2012/11/25/livro-effectiveui-minhas-notas/)).
 Quando as primeiras aplicações começaram a aparecer, todo mundo precisou
 imaginar os próprios atalhos, menus e botões para determinadas coisas.
 Ainda existe muito software daquela época que é assim até hoje, em que
