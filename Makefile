@@ -19,7 +19,7 @@ compile:
 	pipenv run ${COMPILE}
 
 debug:
-	pipenv run pudb pelican ${SITE_DIR} -t ${THEME_DIR} -o ${OUTPUT_DIR} -s settings.py
+	pipenv run pudb ${COMPILE}
 
 clean:
 	rm -rf ${OUTPUT_DIR} cache
