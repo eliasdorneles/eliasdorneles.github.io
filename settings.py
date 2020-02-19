@@ -34,7 +34,9 @@ JINJA_ENVIRONMENT = {
 STATIC_PATHS = [
     'images',
     'static',
+    'extra/CNAME',
 ]
+EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},}
 
 CLEAN_SUMMARY_MINIMUM_ONE = True
 
