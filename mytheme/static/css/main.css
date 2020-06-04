@@ -1,76 +1,77 @@
 @import url('//fonts.googleapis.com/css?family=Covered+By+Your+Grace');
 
-@media all and (min-width: 800px) {
+@media all and (min-width: 960px) {
     body {
-        width: 800px;
+        width: 960px;
         margin: 0 auto;
     }
     .highlight pre {
-        font-size: 0.9em;
+        font-size: 1.1rem;
         padding: 10px;
     }
 }
 
-@media all and (min-width: 600px) and (max-width:799px) {
+@media all and (min-width: 800px) and (max-width:959px) {
     body {
-        width: 500px;
+        width: 700px;
         margin: 0 auto;
     }
     .highlight pre {
-        font-size: 0.8em;
         padding: 8px;
     }
 }
 
-@media all and (min-width: 400px) and (max-width:599px) {
+@media all and (min-width: 500px) and (max-width:799px) {
     body {
-        width: 400px;
+        width: 480px;
         margin: 0 auto;
     }
     .highlight pre {
-        font-size: 0.8em;
         padding: 5px;
     }
 }
 
-@media all and (max-width:399px) {
+@media all and (max-width:499px) {
     body {
-        width: 340px;
+        width: 380px;
         margin: 0 auto;
     }
     .highlight pre {
-        font-size: 0.6em;
+        font-size: 1rem;
         padding: 2px;
     }
 }
 
 body {
-    font: 16px arial, sans-serif;
+    font: 20px arial, sans-serif;
     color: #111;
-    background-color: #dadaea;
+    background-color: #935db1; /* site background */
 }
 
 .site-container {
     background-color: #fefefe;
     padding: 1em;
-    border: 1px solid #aaaaba;
+    border: 8px solid #92e263;
     border-top: 0;
     border-bottom: 0;
 }
 
-a, a:hover, a:visited {
-    color: #101087;
+h1, h2, h1, h1 a, h2 a {
+    text-decoration: none;
+}
+
+a, a:visited {
+    color: #312c64;
+}
+
+a:hover {
+    color: #553f80;
 }
 
 #banner h1 {
     margin-top: 0;
     font-family: Covered By Your Grace, arial;
     font-size: 3em;
-}
-
-h1, h2, h1, h1 a, h2 a {
-    text-decoration: none;
-    color: #811 !important;
 }
 
 h1 {
