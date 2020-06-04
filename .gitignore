@@ -2,3 +2,4 @@ deploy_key.pem
 cache
 output
 *.pyc
+.mypy_cache

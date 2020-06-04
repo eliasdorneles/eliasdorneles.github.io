@@ -7,8 +7,8 @@ I've recently discovered the [BeeWare project, also known as pybee][1], and
 it's bloody awesome.
 
 <center>
-<a href="https://pybee.org">
-<img src="https://pybee.org/static/images/brutus-270.png" alt="BeeWare logo" width="150">
+<a href="https://beeware.org">
+<img src="https://beeware.org/static/images/brutus-270.png" alt="BeeWare logo" width="150">
 </a>
 </center>
 
@@ -24,7 +24,7 @@ didn't seem much more than a bunch of developers tools born out of yak-shaving.
 However, while there is some fun yak-shaving involved, it's just a teeny tiny
 part of the picture.
 
-[BeeWare is about bringing to people the power of computing](https://pybee.org/project/overview/).
+[BeeWare is about bringing to people the power of computing](https://beeware.org/project/overview/).
 
 <!-- PELICAN_END_SUMMARY -->
 
@@ -66,14 +66,14 @@ until getting to the point of building apps for all platforms from the same
 codebase, but the foundation is there.
 
 If you love Python and are looking for an open source project to contribute,
-consider the [BeeWare project](https://pybee.org/contributing/).
+consider the [BeeWare project](https://beeware.org/contributing/).
 
 It's got a wonderful mission, it's welcoming to beginners and there's plenty
 of work to do. You'll be helping to build the future of Python.
 
 Go watch the video of the talk [Python All the Things][2], presented at Pycon
 Australia by the [delightful Russell Keith-Magee who founded the BeeWare
-project](https://pybee.org/community/team/), get excited and get to work! =)
+project](https://beeware.org/community/team/), get excited and get to work! =)
 
-[1]: https://pybee.org
-[2]: https://pybee.org/community/resources/python-all-the-things/
+[1]: https://beeware.org
+[2]: https://beeware.org/community/resources/python-all-the-things/
