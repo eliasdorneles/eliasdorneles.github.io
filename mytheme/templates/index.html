@@ -15,8 +15,8 @@
         <small class="published" title="{{ article.date.isoformat() }}">{{ article.date.strftime("%Y, %B %d") }}</small>
     </header>
 
-    <div class="postsummary"> {{ article.summary }} </div>
-    {% if article.content != article.summary %}
+    <div class="postsummary"> {{ article._summary }} </div>
+    {% if article.content != article._summary %}
     <a href="{{ SITEURL }}/{{ article.url }}"
         title="Permalink to {{ article.title|striptags }}">Continue reading &rarr;
     </a>
