@@ -19,7 +19,7 @@ compile:
 	pipenv run ${COMPILE}
 
 debug:
-	pipenv run pudb ${COMPILE}
+	pipenv run pudb3 ${COMPILE}
 
 clean:
 	rm -rf ${OUTPUT_DIR} cache

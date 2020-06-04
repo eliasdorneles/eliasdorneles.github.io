@@ -1,4 +1,6 @@
 language: python
+
+# NOTE: need to keep in sync w/ Pipfile
 python: 3.7
 
 before_install:
