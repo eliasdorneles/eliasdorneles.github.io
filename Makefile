@@ -24,7 +24,10 @@ debug:
 clean:
 	rm -rf ${OUTPUT_DIR} cache
 
-server: compile
+install:
+	pipenv sync
+
+server: install compile
 	(cd ${OUTPUT_DIR} && python3 -m webbrowser http://localhost:8000 && python3 -m http.server &)
 	pipenv run ${COMPILE} --autoreload
 
