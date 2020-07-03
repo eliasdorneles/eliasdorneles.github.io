@@ -20,7 +20,7 @@ ouvido falar da empresa antes, mas se a
 o livro, imagino que eles devem saber do que estão falando. :)  
 
 <center>
-[![Effective UI book cover](http://akamaicovers.oreilly.com/images/9780596154790/cat.gif "EffectiveUI - livro")](http://shop.oreilly.com/product/9780596154790.do)
+[![Effective UI book cover](https://akamaicovers.oreilly.com/images/9780596154790/cat.gif "EffectiveUI - livro")](http://shop.oreilly.com/product/9780596154790.do)
 </center>
 
 Ele trata do assunto: *"como fazer um projeto de software de qualidade,
