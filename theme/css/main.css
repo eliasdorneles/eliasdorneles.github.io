@@ -1,0 +1,260 @@
+@import url('//fonts.googleapis.com/css?family=Covered+By+Your+Grace');
+
+@media all and (min-width: 960px) {
+    body {
+        width: 960px;
+        margin: 0 auto;
+    }
+    .highlight pre {
+        font-size: 1.1rem;
+        padding: 10px;
+    }
+}
+
+@media all and (min-width: 800px) and (max-width:959px) {
+    body {
+        width: 700px;
+        margin: 0 auto;
+    }
+    .highlight pre {
+        padding: 8px;
+    }
+}
+
+@media all and (min-width: 500px) and (max-width:799px) {
+    body {
+        width: 480px;
+        margin: 0 auto;
+    }
+    .highlight pre {
+        padding: 5px;
+    }
+}
+
+@media all and (max-width:499px) {
+    body {
+        width: 380px;
+        margin: 0 auto;
+    }
+    .highlight pre {
+        font-size: 1rem;
+        padding: 2px;
+    }
+}
+
+body {
+    font: 20px arial, sans-serif;
+    color: #111;
+    background-color: #935db1; /* site background */
+}
+
+.site-container {
+    background-color: #fefefe;
+    padding: 1em;
+    border: 8px solid #92e263;
+    border-top: 0;
+    border-bottom: 0;
+}
+
+h1, h2, h1, h1 a, h2 a {
+    text-decoration: none;
+}
+
+a, a:visited {
+    color: #312c64;
+}
+
+a:hover {
+    color: #553f80;
+}
+
+#banner h1 {
+    margin-top: 0;
+    font-family: Covered By Your Grace, arial;
+    font-size: 3em;
+}
+
+h1 {
+    font-size: 1.7em;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+}
+
+header:first-child h1 {
+    margin-top: 1em;
+}
+
+h2, h3, h4 {
+    font-size: 1em;
+    margin: 0;
+    margin-top: 1.8em;
+}
+
+h2 {
+    font-size: 140%;
+}
+
+h3 {
+    color: #666;
+}
+
+h4 {
+    font-size: 80%;
+    color: #666;
+}
+
+h1.archive-title {
+    color: #444 !important;
+    font-size: 1.8em;
+}
+
+nav ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+.highlight pre {
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+
+    white-space: pre-wrap;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+#sidebar {
+    display: none;
+}
+
+hr {
+    margin-top: 30px;
+    color: #ccc;
+}
+
+img, div.figure {
+    max-width: 100%;
+    height: auto;
+}
+
+img {
+    border: 1px solid #bbb;
+    border-radius: 3px;
+    padding: 4px;
+    margin: 1em 1em 1em 0;
+    box-shadow: 4px 4px 4px 0px rgba(128, 128, 128, 0.5);
+}
+
+img.align-left {
+    float: left;
+}
+
+img.align-right {
+    float: right;
+    margin: 1em 0 1em 1em;
+}
+
+.align-center {
+    display: block;
+    margin-right: auto !important;
+    margin-left: auto !important;
+}
+
+.figure {
+    border: 1px solid #bbb;
+    border-radius: 3px;
+    padding: 4px;
+    margin: 0 1em 1em 0;
+    box-shadow: 4px 4px 4px 0px rgba(128, 128, 128, 0.5);
+}
+
+.figure.align-right {
+    float: right;
+    margin: 0 0 1em 1em;
+}
+
+.figure.align-left {
+    float: left;
+}
+
+/* always center figures at home page */
+.home-content .align-left, .home-content .align-right {
+  float: none;
+  display: block;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+.figure img {
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+.figure p.caption {
+    margin: 0;
+    font-size: 80%;
+    padding: 4px;
+    text-align: left;
+    color: #666;
+}
+
+.figure div.legend {
+    padding: 4px;
+    font-size: 80%;
+    color: #aaa;
+    font-style: italic;
+}
+
+.footer-menu {
+    padding: 10px;
+}
+
+code {
+    background-color: #ddd;
+    padding: 1px 2px;
+}
+
+.taglist {
+    font-size: 90%;
+    font-style: italic;
+}
+
+ul.posts-list li {
+    list-style-type: none;
+}
+
+blockquote {
+    background: #f0f0f0;
+    border-left: 10px solid #ccc;
+    margin: 1.5em 10px;
+    padding: 0.5em 10px;
+    quotes: "\201C""\201D""\2018""\2019";
+}
+
+blockquote:before {
+    color: #ccc;
+    content: open-quote;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+}
+
+blockquote p {
+    display: inline;
+}
+
+a.edit-article {
+    color: transparent;
+}
+
+address:hover > a.edit-article {
+    color: #ccc;
+}

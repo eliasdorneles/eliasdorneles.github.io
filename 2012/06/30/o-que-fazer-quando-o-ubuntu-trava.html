@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>O que fazer quando o Ubuntu trava</title>
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/pygments.css" type="text/css" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+        <link href="https://eliasdorneles.com/atom.xml" type="application/atom+xml" rel="alternate" title="Hopeful Ramble ATOM Feed" />
+        <link href="https://eliasdorneles.com/feed.xml" type="application/rss+xml" rel="alternate" title="Hopeful Ramble RSS Feed" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Hopeful Ramble </a></h1>
+                <nav><ul>
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                    <li ><a href="https://eliasdorneles.com/pages/about.html">About</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="2012/06/30/o-que-fazer-quando-o-ubuntu-trava.html"
+                    rel="bookmark" title="Permalink to O que fazer quando o Ubuntu trava">O que fazer quando o Ubuntu trava</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+<footer class="post-info">
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about-me.html">Elias Dorneles</a>
+            on <abbr class="published" title="2012-06-30T21:11:00-03:00">2012, June 30</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/o-que-fazer-quando-o-ubuntu-trava.md">Edit</a>
+        </address>
+</footer>            <p>Um amigo meu costumava dizer que tudo no Linux é com malabarismos no
+teclado, porque certa vez ele conseguiu rebootar um sistema que estava
+travado, apertando várias teclas aleatórias ao mesmo tempo
+("Alt+Shift+Ctrl+Del+K+Enter", narrava). Tempos depois, ele acabou
+adotando o <a href="http://www.ubuntu.com">Linux Ubuntu</a> no desktop, e embora
+ainda tenha problemas de vez em quando, tenho a impressão que ele já se
+adaptou bem... Este post é uma homenagem a ele, uma versão em Português
+duma <a href="http://askubuntu.com/questions/4408/what-should-i-do-when-ubuntu-freezes" title="AskUbuntu - What should I do when Ubuntu freezes">resposta no AskUbuntu à pergunta do que fazer quando o Ubuntu
+trava</a>!
+:)</p>
+<h2>Quando um programa pára de funcionar:</h2>
+<p>Quando a janela dum programa pára de responder, você geralmente consegue
+parar o programa no botão Fechar (aquele com o X), no canto superior
+direito (ou esquerdo, nas versões mais novas do Unity). Geralmente isso
+vai resultar numa mensagem avisando que o programa não está respondendo,
+e lhe mostrar a opção para matar o programa ou continuar esperando até
+ele voltar a responder.</p>
+<p>Às vezes isso não funciona como esperado. Se você não consegue fechar
+uma janela do jeito normal, você pode abrir um terminal (ou apertar
+<kbd>Alt</kbd> + <kbd>F2</kbd>) e executar o comando <code>xkill</code>. Feito
+isso, o cursor do mouse se transformará em um X, e você pode clicar na
+janela com problema para matar o processo, ou clicar com o direito em
+qualquer lugar para voltar o mouse ao normal.</p>
+<p>Quando comandos rodando num terminal param de responder, geralmente eles
+podem ser parados com as combinações <kbd>Ctrl</kbd> + <kbd>C</kbd> ou
+<kbd>Ctrl</kbd> + <kbd>/</kbd>. Se nenhum funcionar, você pode abrir
+outro terminal (ou tentar recuperar o controle do mesmo com
+<kbd>Ctrl</kbd> + <kbd>Z</kbd>), e tentar descobrir o número do processo
+para matar "na mão", usando <code>ps ax | grep COMANDO</code> onde COMANDO é o nome
+do programa que não está respondendo. Isso deve resultar numa saída
+parecida com essa:  </p>
+<div class="highlight"><pre><span></span><code>$ ps ax <span class="p">|</span> grep firefox
+<span class="m">2110</span> ?        Sl    <span class="m">30</span>:32 /usr/lib/firefox/firefox
+<span class="m">2192</span> ?        Sl    <span class="m">21</span>:19 /usr/lib/firefox/plugin-container /usr/lib/flashplugin-installer/libflashplayer.so -greomni /usr/lib/firefox/omni.ja
+<span class="m">2110</span> <span class="nb">true</span> plugin <span class="m">4584</span> pts/0    S+     <span class="m">0</span>:00 grep --color<span class="o">=</span>auto firefox
+</code></pre></div>
+
+<p>O primeiro campo de cada linha é o número do processo (PID, de <em>Process
+ID</em>) dos programas que o <code>grep</code> encontrou na busca (você pode ignorar o
+último, que representa o próprio <code>grep</code>). Para matar o processo, use o
+comando: <code>kill -9 PID_DO_PROCESSO</code>, usando o número correspondente ao
+programa problemático no lugar de <em>PID_DO_PROCESSO</em>. Você pode ter que
+fuçar um pouco mais pra descobrir qual o processo certo da lista,
+refinando a busca do <code>grep</code> ou então usar o programa <code>top</code> no lugar.</p>
+<p>Se você estiver usando o <a href="http://www.gnome.org">GNOME</a>, você não precisa
+ter que lidar com essas elocubrações na linha de comando pra fazer isso,
+simplesmente abra o <em>Monitor do Sistema</em> (vá em <code>Sistema</code> →
+<code>Administração</code> → <code>Monitor do Sistema</code>), vá para a aba <em>Processos</em>,
+escolha o processo que você precisa matar (talvez o que está usando 90%
+da CPU?), clique com o direito nele e escolha a opção
+<code>Finalizar Processo</code> ou <code>Matar Processo</code>:</p>
+<p><a href="https://eljunior.files.wordpress.com/2012/06/matar_processo.png"><img alt="Terminando um processo usando o Monitor do Sistema do
+GNOME" src="https://eljunior.files.wordpress.com/2012/06/matar_processo.png" title="GNOME - Monitor do Sistema"></a></p>
+<h2>Quando o mouse pára de funcionar:</h2>
+<p>Se o teclado ainda funciona, você pode tentar reiniciar o ambiente
+gráfico com a combinação <kbd>Alt</kbd> + <kbd>SysReq (Print
+Screen)</kbd> + <kbd>K</kbd>. Isso vai fechar todos os programas rodando
+no ambiente gráfico e voltar você à tela de login. Opcionalmente, você
+pode tentar abrir o <code>gnome-terminal</code> com <kbd>Alt</kbd> + <kbd>F2</kbd>
+e tentar descobrir o que está acontecendo (quem sabe matar o programa
+que avacalhou o mouse?).</p>
+<h2>Quando tudo, teclas e mouse, param de funcionar:</h2>
+<p>Tente fazer um reboot seguro usando as <a href="http://jvflima.wordpress.com/2007/01/09/magicas-do-sysreq/" title="Mágicas do SysReq">Mágicas do
+SysReq</a>.
+Isso vai envolver um certo malabarismo tecladístico que faz jus aos
+comentários do meu amigo: enquanto mantém pressionadas as teclas
+<kbd>Alt</kbd> e <kbd>SysReq (Print Screen)</kbd>, digite a sequência
+<kbd>R</kbd> <kbd>E</kbd> <kbd>I</kbd> <kbd>S</kbd> <kbd>U</kbd>
+<kbd>B</kbd>. Esses comandos são reconhecidos pelo kernel Linux, que
+executam as operações:</p>
+<ul>
+<li>un<strong>R</strong>aw:      recupera o controle do teclado,</li>
+<li>t<strong>E</strong>rminate:  envia o sinal SIGTERM a todos os processos, permitindo que terminem graciosamente,</li>
+<li>k<strong>I</strong>ll:      envia o sinal SIGKILL para todos os processos, forçando-os a terminar imediatamente,</li>
+<li><strong>S</strong>ync:     sincroniza dados do sistema de arquivos com o disco,</li>
+<li><strong>U</strong>nmount:  remonta todos os arquivos em modo somente leitura,</li>
+<li>re<strong>B</strong>oot:    reinicia o sistema</li>
+</ul>
+<blockquote>
+<p><strong>Nota:</strong> Na época que aprendi essa sequência de comandos, lembro que me ajudou a decorar como <em>BUSIER</em> ao contrário...</p>
+</blockquote>
+<p>Se isso não funcionar, então está na hora de reiniciar o computador no dedão!</p>
+        </div>
+
+        <div class="taglist"></div>
+
+    </article>
+</section>
+
+        <aside id="sidebar">
+                <div class="widget">
+                        <h2>Categories</h2>
+                        <ul>
+                           <li class="active"><a href="https://eliasdorneles.com/category/blog.html">blog</a></li>
+                        </ul>
+                </div>
+        </aside><!-- /#sidebar -->
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+            <hr />
+            <div class="rc-scout"></div>
+            <script async defer src="https://www.recurse-scout.com/loader.js?t=5372463d63166734808f47d8eb0124cb"></script>
+        </footer>
+</div>
+
+</body>
+</html>
