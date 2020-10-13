@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Start new post (opening in Vim)
 """
@@ -7,7 +7,6 @@ from __future__ import print_function
 import re
 import os
 import glob
-from slugify import slugify
 from datetime import datetime
 
 
@@ -23,20 +22,13 @@ POSTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'site', 'bl
 
 
 def _gen_article_filename(title):
+    from slugify import slugify
     slug = slugify(title)
     return os.path.join(POSTS_DIR, '%s.md' % slug)
 
 
 def new_post():
-    try:
-        title = raw_input('Title (hit ^C to cancel): ')
-    except KeyboardInterrupt:
-        return
-
-    if not title:
-        print('No title given, giving up')
-        return
-
+    title = "New Blog Post"
     date = datetime.now().strftime('%Y-%m-%d %H:%M')
     snippet = TEMPLATE.format(title=title, date=date)
 

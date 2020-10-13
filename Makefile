@@ -14,6 +14,7 @@ help:
 	@echo "server   generate site watching for changes and start server"
 	@echo "clean    removes output and cache directories"
 	@echo "post     start writing new post"
+	@echo "fix      fix draft file names, after updating a title"
 
 compile:
 	pipenv run ${COMPILE}
@@ -32,4 +33,7 @@ server: install compile
 	pipenv run ${COMPILE} --autoreload
 
 post:
-	./posts new
+	pipenv run ./posts new
+
+fix:
+	pipenv run ./posts rename-drafts
