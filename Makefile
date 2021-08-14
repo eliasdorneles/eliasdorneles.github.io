@@ -15,6 +15,7 @@ help:
 	@echo "clean    removes output and cache directories"
 	@echo "post     start writing new post"
 	@echo "fix      fix draft file names, after updating a title"
+	@echo "deploy   deploy to Github pages from local content"
 
 require_pipenv:
 	(which pipenv || pip install pipenv)
@@ -40,3 +41,7 @@ post: require_pipenv
 
 fix: require_pipenv
 	pipenv run ./posts rename-drafts
+
+deploy: clean compile require_pipenv
+	pipenv run ghp-import -m "Update site" output
+	git push origin gh-pages:master --force
