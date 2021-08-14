@@ -6,7 +6,7 @@ I haven't written much on the blog on the last few years, I don't know, I
 didn't felt like I had much to say.  There is so much being said on the Web,
 lots of great stuff, but also tons of crap too, and I didn't feel like adding
 to the noise. I've learned loads of stuff, but not in the mood for sharing, and
-anyway the most important stuff wasn't at all related to tech.
+anyway the most important stuff wasn't related to tech.
 
 But today I've got the itch to write, and this little comeback is to tell you that I think
 [YAML](https://en.wikipedia.org/wiki/YAML) is a pretty cool thing because it
@@ -43,7 +43,7 @@ and you gotta implement it like any other user feature, which means it's
 even more expensive.  I'll stick to Django or similar here to make my
 point.)</sup>
 
-So it's pretty great, and it is one of the reasons why I and many people like
+So it's great, and it is one of the reasons why I and many people like
 Django. It's a web framework for perfectionists with deadlines. Even as a solo
 developer, you get a lot of shit done real fast, with code that doesn't look
 too bad. Awesome!
@@ -110,13 +110,13 @@ There were a bunch of things that I liked about this:
 
 1. I had one central place to put all the "knobs" that determined how the program behave. That's pretty neat, if I came back later to code that I had written before, I didn't need to read through the code to figure out where to tweak some parameter: I would go directly to my configuration array.
 
-2. I could quickly extend the configuration (copy and paste, modify, tap tap tap...), and use my text editor features and my growing [vim](https://www.vim.org) skills.  Working on vim is pretty active: I still code on it to this day, even after trying lots of other editors and IDEs ([and my configuration files are on Github, if you're curious](https://github.com/eliasdorneles/dotfiles)).
+2. I could quickly extend the configuration (copy and paste, modify, tap tap tap...), and use my text editor features and my growing [vim](https://www.vim.org) skills.  Working on vim is addictive: I still code on it to this day, even after trying lots of other editors and IDEs ([and my configuration files are on Github, if you're curious](https://github.com/eliasdorneles/dotfiles)).
 
 3. I could easily add new knobs and extend the model as needed, sometimes by only changing the type of structure: need to add more details to some value in one place? Replace the scalar variable and turn it yet into an array, then in the code type-check and do the right thing if it's an array or scalar.
 
 At the time I was doing it mostly out of intuition, I don't remember having
 clearly stated why I like to do it like this back then. But I like to think
-that that the young programmer I was, in his own way, felt already the need to
+that the young programmer I was, in his own way, felt already the need to
 come up with something of a clean architecture.
 
 Though I'd probably tell you off if you'd tell me something like that, back
