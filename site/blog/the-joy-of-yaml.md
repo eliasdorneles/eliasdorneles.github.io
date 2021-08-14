@@ -2,11 +2,15 @@ Title: The Joy of YAML
 Date: 2021-08-13 22:14
 Author: Elias Dorneles
 
-I haven't written much on the blog on the last few years, I don't know, I didn't felt like I had much to say.  There is so much being said on the Web, lots of great stuff, but also tons of crap too, and I didn't feel like adding to the noise. I've learned loads of stuff, but not in the mood for sharing, and anyway the most important stuff wasn't at all related to tech.
+I haven't written much on the blog on the last few years, I don't know, I
+didn't felt like I had much to say.  There is so much being said on the Web,
+lots of great stuff, but also tons of crap too, and I didn't feel like adding
+to the noise. I've learned loads of stuff, but not in the mood for sharing, and
+anyway the most important stuff wasn't at all related to tech.
 
 But today I've got the itch to write, and this little comeback is to tell you that I think
 [YAML](https://en.wikipedia.org/wiki/YAML) is a pretty cool thing because it
-lets you cut corners, ship things fast, give power to your power users and all
+lets you cut corners, ship things fast, give power to your power users, all
 that while keeping the design straightforward.
 
 The traditional way most Web programmers have learned to do things like content
@@ -17,20 +21,22 @@ management systems, forms, and such, goes something along these lines:
 3. create the user facing features, either by old-fashioned Web app, or API + frontend app
 4. create an administration interface for staff users to update content
 
-<sup>(yeah yeah, there are cloud paas providers, nosql, graphql, brainfucql, yadda yadda... whatever, I said _traditional way_! By that I mean, people that learned like me =P)</sup>
+<sup>(yeah yeah, there are cloud paas providers, nosql, graphql, brainfucql,
+yadda yadda... whatever, I said _traditional way_! By that I mean, people that
+learned like me =P)</sup>
 
 I want to talk about this last step: the admin interface for your internal users.
 
-When you're doing this for users that you can reasonably trust, that's where
-YAML can be of great value.
+When you're doing this for users that you can trust, that's where YAML can be
+of great value.
 
 ## Growing the admin interface is tricky
 
 If you use a framework like
 [Django](https://docs.djangoproject.com/en/3.2/ref/contrib/admin/), you get
-lots of help for quickly having a nice helpful administration interface. With a
+lots of help for quickly having a neat administration interface from the start. With a
 few lines of code, you get something that users can actually use, which can be
-extended in many ways by adding a few other lines of more code.
+extended in many ways by adding a few more lines of code.
 
 <sup>(If you're not using Django or something similar, you don't get much help
 and you gotta implement it like any other user feature, which means it's
@@ -104,7 +110,7 @@ There were a bunch of things that I liked about this:
 
 1. I had one central place to put all the "knobs" that determined how the program behave. That's pretty neat, if I came back later to code that I had written before, I didn't need to read through the code to figure out where to tweak some parameter: I would go directly to my configuration array.
 
-2. I could quickly extend the configuration (copy and paste, modify, tap tap tap...), and use my nice text editor features and my growing [vim](https://www.vim.org) skills.  Working on vim is pretty active: I still code on it to this day, even after trying lots of other editors and IDEs ([and my configuration files are on Github, if you're curious](https://github.com/eliasdorneles/dotfiles)).
+2. I could quickly extend the configuration (copy and paste, modify, tap tap tap...), and use my text editor features and my growing [vim](https://www.vim.org) skills.  Working on vim is pretty active: I still code on it to this day, even after trying lots of other editors and IDEs ([and my configuration files are on Github, if you're curious](https://github.com/eliasdorneles/dotfiles)).
 
 3. I could easily add new knobs and extend the model as needed, sometimes by only changing the type of structure: need to add more details to some value in one place? Replace the scalar variable and turn it yet into an array, then in the code type-check and do the right thing if it's an array or scalar.
 
@@ -166,17 +172,20 @@ features](https://www.netways.de/en/blog/2019/11/21/gitlab-ci-yaml-write-less-wi
 so that I don't need to repeat myself, unless if I so desire.
 
 And it's not hard to learn, you can learn the basics in Y minutes:
-https://learnxinyminutes.com/docs/yaml/ Of course you won't do this right now,
-you'll learn as you go when you need it, on your rhythm, and that's totally
-fine.
+[https://learnxinyminutes.com/docs/yaml/](https://learnxinyminutes.com/docs/yaml/).
+Of course you won't do this right now, you'll learn as you go when you need it,
+on your rhythm, and that's totally fine.
 
 The only kinda bad thing about using YAML is that, depending on your parser
 implementation, sometimes you might run into some confusing error messages for
-some silly syntax errors.  As it's indentation-based (like Python), there are
-some corner cases for which it's tricky to handle the error with a clear error
-message.  But most of the time it works correctly, and the value that it brings
-overcomes this by far.  Plus, the tooling will surely only get better and
-better.
+some silly syntax errors, which is **VERY** annoying.  As YAML is
+indentation-based (like Python), there are some corner cases for which it's
+tricky to handle the error with a clear error message -- oh well.
+
+But most of the time it works correctly, and the value that it brings overcomes
+this by far.  Plus, the tooling will get better and better, and perhaps more
+importantly, people get better at avoiding mistakes even more quickly, so it's
+fine.
 
 
 ## YAML inspiration
@@ -188,8 +197,14 @@ One great example is [the Gitlab CI
 configuration](https://docs.gitlab.com/ee/ci/quick_start/#create-a-gitlab-ciyml-file)
 which is all YAML-based, which is a great inspiration. They've actually kind of extended
 YAML supporting "include" features and other things.
-A French startup called Papernest [has essentially built an internal CMS based
-on
+
+Someone did a round up of [some common formats used for configuration
+here](https://octopus.com/blog/state-of-config-file-formats), mostly to explain
+why Hashicorp went out to develop [their own language](https://github.com/hashicorp/hcl) to use
+in Terraform, which is actually quite cool, but not really usable for anything other at this point.
+
+A non-DevOps example: a French startup called Papernest [has essentially built
+an internal CMS based on
 YAML](https://medium.com/papernest/papercraft-le-secret-des-po-de-papernest-pour-sortir-des-features-sans-une-seule-ligne-de-code-f5b85de97202),
 with AB-testing support and all.  I specially like how they came up with a neat
 way of representing nested AND/OR conditions that you can see on one of the
@@ -198,11 +213,6 @@ interface
 for](https://ux.stackexchange.com/questions/11177/good-solutions-for-boolean-filter-with-sub-conditions),
 [even for
 Apple](https://ux.stackexchange.com/questions/1737/intuitive-interface-for-composing-boolean-logic).
-
-Someone did a round up of [some common formats used for configuration
-here](https://octopus.com/blog/state-of-config-file-formats), mostly to explain
-why Hashicorp went out to develop [their own language](https://github.com/hashicorp/hcl) to use
-in Terraform, which is actually quite cool, but not really usable for anything other at this point.
 
 Okay, I think I said everything I wanted to say, let's stop here!
 
