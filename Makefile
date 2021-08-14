@@ -5,7 +5,7 @@ OUTPUT_DIR := ./output
 
 COMPILE := pelican ${SITE_DIR} -t ${THEME_DIR} -o ${OUTPUT_DIR} -s settings.py
 
-.PHONY: clean compile post
+.PHONY: clean compile post require_pipenv
 
 help:
 	@echo Quick help:
@@ -16,24 +16,27 @@ help:
 	@echo "post     start writing new post"
 	@echo "fix      fix draft file names, after updating a title"
 
-compile:
+require_pipenv:
+	(which pipenv || pip install pipenv)
+
+compile: require_pipenv
 	pipenv run ${COMPILE}
 
-debug:
+debug: require_pipenv
 	pipenv run pudb3 ${COMPILE}
 
 clean:
 	rm -rf ${OUTPUT_DIR} cache
 
-install:
+install: require_pipenv
 	pipenv sync
 
 server: install compile
 	(cd ${OUTPUT_DIR} && python3 -m webbrowser http://localhost:8000 && python3 -m http.server &)
 	pipenv run ${COMPILE} --autoreload
 
-post:
+post: require_pipenv
 	pipenv run ./posts new
 
-fix:
+fix: require_pipenv
 	pipenv run ./posts rename-drafts
