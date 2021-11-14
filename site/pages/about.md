@@ -21,7 +21,7 @@ You can find me on [Github](https://github.com/eliasdorneles),
 
 ## Open Source
 
-I'm a fond of open source software, and in the past I have been active notably in the Python open source community. I've been maintainer of [BeeWare](https://pybee.org), where I helped maintain [VOC](https://github.com/pybee/voc) and the Android tooling.
+I'm fond of open source software, and in the past I have been active notably in the Python open source community. I've been maintainer of [BeeWare](https://pybee.org), where I helped maintain [VOC](https://github.com/pybee/voc) and the Android tooling.
 
 Some other projects I collaborated on:
 
