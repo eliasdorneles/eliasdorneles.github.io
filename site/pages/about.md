@@ -9,10 +9,9 @@ I play the guitar and the piano a little bit, and I love to learn new things.
 
 I'm a [Recurse Center](https://www.recurse.com) alumni.
 
-I work at [Legalstart.fr](https://legalstart.fr).
+I work for [CTMA](https://www.ctma.fr).
 
-You can find me on <s>Twitter</s>,
-[Github](https://github.com/eliasdorneles),
+You can find me on [Github](https://github.com/eliasdorneles),
 [GoodReads](https://www.goodreads.com/user/show/32990128-elias) and
 [Stackoverflow](https://stackoverflow.com/users/149872/elias?tab=profile).
 
@@ -22,9 +21,9 @@ You can find me on <s>Twitter</s>,
 
 ## Open Source
 
-I'm mostly active in the Python open source community. I'm one of the maintainers of [BeeWare](https://pybee.org), where I help maintain [VOC](https://github.com/pybee/voc) and the Android tooling.
+I'm a fond of open source software, and in the past I have been active notably in the Python open source community. I've been maintainer of [BeeWare](https://pybee.org), where I helped maintain [VOC](https://github.com/pybee/voc) and the Android tooling.
 
-Some other projects I occasionally collaborate on:
+Some other projects I collaborated on:
 
 * [parsel](https://github.com/scrapy/parsel)
 * [Scrapy](https://www.scrapy.org)
@@ -33,9 +32,9 @@ Some other projects I occasionally collaborate on:
 
 Here are some that I've created/co-created but don't maintain anymore:
 
+* [fretprinting](https://github.com/eliasdorneles/fretprinting)
 * [flatson](https://github.com/scrapinghub/flatson)
 * [skinfer](https://github.com/scrapinghub/skinfer)
-* [fretprinting](https://github.com/eliasdorneles/fretprinting)
 
 Plus others you can check at my [Github profile](https://github.com/eliasdorneles).
 
