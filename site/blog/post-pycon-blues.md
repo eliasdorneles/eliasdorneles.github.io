@@ -9,7 +9,7 @@ I'm sure many other people knew something was going on, because
 I was welcomed by a screen just after she checked my documents and let me in.
 It was a nice gesture, and it surely put a smile on my tired sleepy face!
 
-![]({filename}/images/hello_pycon_2018.jpg)
+![]({static}/images/hello_pycon_2018.jpg)
 
 Pycon is a great conference, because it's really several events at the same
 time, it goes a lot more than just people presenting talks. In fact I barely
@@ -18,7 +18,7 @@ quickly, I prefer to profit of the time there to just talk to people, see old
 friends, make new ones, talk to my open source buddies and also harass
 famous cool people asking them to take pictures with me!
 
-<img src="{filename}/images/pycon_roomies.jpg" alt="" class="align-right"/>
+<img src="{static}/images/pycon_roomies.jpg" class="align-right"/>
 
 It was my third Pycon this year, and I feel already so at home with those
 folks! Some of my dearest friends are people from the Python community, and I'm
@@ -39,7 +39,7 @@ really about an IDE (anymore).  It's always fun being around these folks,
 preaching the BeeWare word, sharing stories, and I always learn a lot from
 them.
 
-![]({filename}/images/beeware_not_an_ide.jpg)
+![]({static}/images/beeware_not_an_ide.jpg)
 
 One of my favorite things at Pycon are the open source sprints, which btw [have
 already been described as a
@@ -74,4 +74,4 @@ people that I love. To all the organizers, volunteers and everyone: y'all rock!
 
 Now I'll do my best to keep surviving without seeing y'all until next year!
 
-![]({filename}/images/thankyou_pycon.jpg)
+![]({static}/images/thankyou_pycon.jpg)

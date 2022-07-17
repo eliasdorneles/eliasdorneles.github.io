@@ -13,7 +13,7 @@ ipython = "*"
 [requires]
 
 # NOTE: need to keep in sync w/ .travis.yml
-python_version = "3.8"
+python_version = "3.10"
 
 
 [packages]

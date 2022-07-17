@@ -45,7 +45,7 @@ this to explore the idea of alternatives to state machines.
 Here is a diagram of the state machine:
 
 <center>
-![Picture with diagram of Finite State machine]({filename}/images/fsm_strip_comments.png)
+![Picture with diagram of Finite State machine]({static}/images/fsm_strip_comments.png)
 </center>
 
 [Here is the state machine implementation](https://github.com/eliasdorneles/lazy-eval-gt-state-machines/blob/master/001_state_machine.py).

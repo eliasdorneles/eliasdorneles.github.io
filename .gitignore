@@ -3,3 +3,4 @@ cache
 output
 *.pyc
 .mypy_cache
+.ropeproject

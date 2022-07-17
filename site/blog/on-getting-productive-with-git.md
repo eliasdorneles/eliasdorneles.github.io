@@ -13,7 +13,7 @@ this stuff can be for someone just starting out with their first open source
 contribution.
 
 <div class="figure align-right" style="width: 250px">
-<img src="{filename}/images/confused.png">
+<img src="{static}/images/confused.png">
 <p class="caption">
     First-timer OSS contributor asked to rebase and squash commits
 </p>

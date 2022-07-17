@@ -4,7 +4,7 @@ Author: Elias Dorneles
 Slug: Aprendendo-Thumbpicking
 
 <center>
-  [![Eu, tocando violão]({filename}/images/ahogado.jpg "Eu, fominha, tocando violão em Punta del Este")](https://eljunior.files.wordpress.com/2011/12/ahogado.png)
+  [![Eu, tocando violão]({static}/images/ahogado.jpg "Eu, fominha, tocando violão em Punta del Este")](https://eljunior.files.wordpress.com/2011/12/ahogado.png)
 </center>
 
 > **UPDATE:** atualizei os links pra download dos MP3, porque estouraram
