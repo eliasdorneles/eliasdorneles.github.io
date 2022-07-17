@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Web Scraping with Scrapy - first steps</title>
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/pygments.css" type="text/css" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+        <link href="https://eliasdorneles.com/atom.xml" type="application/atom+xml" rel="alternate" title="Hopeful Ramble ATOM Feed" />
+        <link href="https://eliasdorneles.com/feed.xml" type="application/rss+xml" rel="alternate" title="Hopeful Ramble RSS Feed" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Hopeful Ramble </a></h1>
+                <nav><ul>
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                    <li ><a href="https://eliasdorneles.com/pages/about.html">About me</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="2014/08/30/web-scraping-with-scrapy---first-steps.html"
+                    rel="bookmark" title="Permalink to Web Scraping with Scrapy - first steps">Web Scraping with Scrapy - first steps</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+<footer class="post-info">
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about-me.html">Elias Dorneles</a>
+            on <abbr class="published" title="2014-08-30T19:29:00-03:00">2014, août 30</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/web-scraping-with-scrapy---first-steps.md">Edit</a>
+        </address>
+</footer>            <p><strong>Update:</strong> This tutorial isn't up to date with the latest and greatest of Scrapy. You should follow <a href="https://docs.scrapy.org/en/latest/intro/overview.html">the official documentation instead</a>, I've worked together with other Scrapy developers to make it better. I'm leaving this article online for archival purposes only.</p>
+<p><sub><a href="https://pythonhelp.wordpress.com/2014/08/05/web-scraping-com-scrapy-primeiros-passos/">Leia a versão em Português</a></sup></p>
+<hr>
+<p>Imagine you want to extract content from the Web that isn't all in only one
+page: you need a way tonavigate through the site to get to the pages that
+contain the useful information. For example, maybe you want to get the
+latest <a href="http://mentalfloss.com/big-questions">"big questions" articles</a> of
+the <a href="http://mentalfloss.com/">Mental Floss</a> website, but only those in
+theOrigins andFact Check categories.</p>
+<p><img alt="mentalfloss-big-questions.png" src="https://lh6.googleusercontent.com/AjDSrHs8cDBjc7KfD2ljUpYm42lwClr3PSU2baGiDcDIUVWScyD7TfEKqeTA8gi3mzCik0tljsRj5QV-dl2kH1n2F15IME_OFqFOwUNhgPqcYLFZ_GsHF31HFekHUysQ3g"></p>
+<p>If you have an interest in Python and web scraping, you may have already played
+with the nice <a href="http://docs.python-requests.org/">requests library</a> to get
+content of pages from the Web. Maybe you have toyed around using
+<a href="http://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a> or
+<a href="http://lxml.de/">lxml</a> to make the content extraction easier. Well, now we are
+going to show you how to use the <a href="http://scrapy.org/">Scrapy framework</a>, which
+has all these functionalities and many more, so that solving the sort of
+problem we introduced above is a walk in the park.</p>
+<p>It is worth noting that Scrapy tries not only to solve the content extraction
+(called <a href="https://en.wikipedia.org/wiki/Web_scraping">scraping</a>), but also the
+navigation to the relevant pages for the extraction
+(called <a href="https://en.wikipedia.org/wiki/Web_crawler">crawling</a>).  To achieve that,
+a core concept in the framework is theSpider -- in practice, a Python object
+with a few special features, for which you write the code and the framework is
+responsible for triggering it.</p>
+<p>Just so that you have an idea of what it looks like, come on take a peek at the
+code of a little program below that uses Scrapy to extract some information
+(link, title and number of views) from a YouTube channel.  Don't worry about
+understanding this code yet, we're just showing it here so that you have a
+feeling of a code using Scrapy. By the end of this tutorial, you'll be able to
+understand and write programs like this one. =)</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
+<span class="kn">from</span> <span class="nn">scrapy.contrib.loader</span> <span class="kn">import</span> <span class="n">ItemLoader</span>
+
+<span class="k">class</span> <span class="nc">YoutubeVideo</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Item</span><span class="p">):</span>
+    <span class="n">link</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+    <span class="n">views</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">YoutubeChannelLister</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;youtube-channel-lister&#39;</span>
+    <span class="n">youtube_channel</span> <span class="o">=</span> <span class="s1">&#39;LongboardUK&#39;</span>
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;https://www.youtube.com/user/</span><span class="si">%s</span><span class="s1">/videos&#39;</span> <span class="o">%</span> <span class="n">youtube_channel</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">sel</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s2">&quot;ul#channels-browse-content-grid &gt; li&quot;</span><span class="p">):</span>
+            <span class="n">loader</span> <span class="o">=</span> <span class="n">ItemLoader</span><span class="p">(</span><span class="n">YoutubeVideo</span><span class="p">(),</span> <span class="n">selector</span><span class="o">=</span><span class="n">sel</span><span class="p">)</span>
+            <span class="n">loader</span><span class="o">.</span><span class="n">add_xpath</span><span class="p">(</span><span class="s1">&#39;link&#39;</span><span class="p">,</span> <span class="s1">&#39;.//h3/a/@href&#39;</span><span class="p">)</span>
+            <span class="n">loader</span><span class="o">.</span><span class="n">add_xpath</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;.//h3/a/text()&#39;</span><span class="p">)</span>
+            <span class="n">loader</span><span class="o">.</span><span class="n">add_xpath</span><span class="p">(</span><span class="s1">&#39;views&#39;</span><span class="p">,</span> <span class="s2">&quot;.//ul/li[1]/text()&quot;</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">loader</span><span class="o">.</span><span class="n">load_item</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Before we talk more about Scrapy, make sure you have the latest version
+installed using the command (depending on your environment, you may need to use
+<code>sudo</code> or the <code>--user</code> option for <code>pip install</code>):</p>
+<div class="highlight"><pre><span></span><code>pip install --upgrade scrapy
+</code></pre></div>
+
+<blockquote>
+<p><strong>Note:</strong> depending on your Python environment, the installation may be a bit
+tricky because of the dependency on <a href="https://twistedmatrix.com/">Twisted</a>.  If
+you use Windows, check out <a href="http://scrapy.readthedocs.org/en/latest/intro/install.html#platform-specific-installation-notes">the specific instructions in the official
+installation
+guide</a>.
+If you use a Debian-based Linux distro, you may want to use the <a href="http://scrapy.readthedocs.org/en/latest/topics/ubuntu.html#topics-ubuntu">official
+Scrapy APT
+repository</a>.</p>
+</blockquote>
+<p>To be able to follow this tutorial, you'll need Scrapy version 0.24 or above.
+You can check your installed Scrapy version using the command:</p>
+<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;import scrapy; print scrapy.__version__&#39;</span>
+</code></pre></div>
+
+<p>The output of this command in the environment we used for this tutorial is like
+this:</p>
+<div class="highlight"><pre><span></span><code><span class="err">$</span> <span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;import scrapy; print scrapy.__version__&#39;</span>
+<span class="mf">0.24.2</span>
+</code></pre></div>
+
+<h3>The anatomy of a spider</h3>
+<p><center><img alt="anatomy of a spider" width="400" src="https://lh6.googleusercontent.com/1OLnj7-I1_85hnfnovq6WbRDl3EQTs2xNxc_QpAZ7x2_twrGG0Olb3ZYG7wxA-QFaJVlxfLxNa14yVFSY4JxmlnTVLSJQ30isc4oifxUnFawhQC3PrIGhYxPOayRJHutZg" /></center></p>
+<p>A Scrapy spider is responsible for defining how to follow the links
+"navigating" through a website (that's the so-called crawling part) and how to
+extract the information from the pages into Python data structures.</p>
+<p>To define a minimal spider, create a class extending
+<a href="http://doc.scrapy.org/en/latest/topics/spiders.html#scrapy.spider.Spider">scrapy.Spider</a>
+and give it a name using thename attribute:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
+
+<span class="k">class</span> <span class="nc">MinimalSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The smallest Scrapy-Spider in the world!&quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;minimal&#39;</span>
+</code></pre></div>
+
+<p>Put this in a file with the name <code>minimal.py</code> and run your spider to check if
+everything is okay, using the command:</p>
+<div class="highlight"><pre><span></span><code>scrapy runspider minimal.py
+</code></pre></div>
+
+<p>If everything is fine, you'll see in the screen some messages from the log
+marked as <code>INFO</code> and <code>DEBUG.</code> If there is any message marked as <code>ERROR</code>, it
+means that there is something wrong and you need to check for errors in your
+spider code.</p>
+<p>The life of a spider starts with the generation of HTTP requests (<a href="http://doc.scrapy.org/en/latest/topics/request-response.html">Request
+objects</a>) to put
+in motion the framework engine. The part of the spider responsible for this is
+the <code>start_requests()</code> method, that returns an
+<a href="https://docs.python.org/2/glossary.html#term-iterable">iterable</a> with the
+first requests to be done for the spider.</p>
+<p>Adding this element to our minimal spider, we have:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
+<span class="k">class</span> <span class="nc">MinimalSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The smallest Scrapy-Spider of the world, maybe&quot;&quot;&quot;</span>
+
+    <span class="n">name</span><span class="o">=</span><span class="s1">&#39;minimal&#39;</span>
+
+    <span class="k">def</span> <span class="nf">start_requests</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;http://www.google.com&#39;</span><span class="p">,</span> <span class="s1">&#39;http://www.yahoo.com&#39;</span><span class="p">]]</span>
+</code></pre></div>
+
+<p>The <code>start_requests()</code> method must return an
+<a href="https://docs.python.org/2/glossary.html#term-iterable">iterable</a> of
+<a href="http://doc.scrapy.org/en/latest/topics/request-response.html">scrapy.Request</a>
+objects, which represent an HTTP request to be made by the framework (these
+contain data like URL, parameters, cookies, etc) and define a function to be
+called when the request is complete -- a callback.</p>
+<p><strong>Note:</strong> if you are familiar with implementing AJAX in JavaScript, this way of
+  work dispatching requests and registering callbacks may sound familiar.</p>
+<p>In our example, we return a simple list of requests to Google and Yahoo
+websites, but the <code>start_requests()</code> method could also be implemented as a <a href="https://wiki.python.org/moin/Generators">Python
+generator</a>.</p>
+<p>If you have tried to execute the example like it is now, you may noticed that
+there is something still missing, because Scrapy will show two messages marked
+as ERROR, complaining that a method was not implemented:</p>
+<div class="highlight"><pre><span></span><code>...
+ File
+&quot;/home/elias/.virtualenvs/scrapy/local/lib/python2.7/site-packages/scrapy/spider.py&quot;,
+line 56, in parse
+
+   raise NotImplementedError
+exceptions.NotImplementedError:
+</code></pre></div>
+
+<p>This happens because, as we didn't register a callback for the Request objects,
+Scrapy tried to call the default callback, which is the <code>parse()</code> method of the
+Spider object. Let's add this method to our minimal spider, so that we can
+execute it:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
+
+<span class="k">class</span> <span class="nc">MinimalSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The 2nd smallest Scrapy-Spider of the world!&quot;&quot;&quot;</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;minimal&#39;</span>
+
+    <span class="k">def</span> <span class="nf">start_requests</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;http://www.google.com&#39;</span><span class="p">,</span> <span class="s1">&#39;http://www.yahoo.com&#39;</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;GETTING URL: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Now, when you execute it using the command:scrapy runspider minimal.py you
+should see something like this in the output:</p>
+<div class="highlight"><pre><span></span><code><span class="mi">2014</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">26</span><span class="w"> </span><span class="mi">15</span><span class="err">:</span><span class="mi">39</span><span class="err">:</span><span class="mi">56</span><span class="o">-</span><span class="mi">0300</span><span class="w"> </span><span class="o">[</span><span class="n">minimal</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">Crawled</span><span class="w"> </span><span class="p">(</span><span class="mi">200</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="k">GET</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">google</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">br</span><span class="o">/</span><span class="vm">?</span><span class="n">gfe_rd</span><span class="o">=</span><span class="n">cr</span><span class="o">&amp;</span><span class="n">ei</span><span class="o">=</span><span class="n">_PXTU8f6N4mc8Aas1YDABA</span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="nl">referer</span><span class="p">:</span><span class="w"> </span><span class="k">None</span><span class="p">)</span><span class="w"></span>
+<span class="mi">2014</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">26</span><span class="w"> </span><span class="mi">15</span><span class="err">:</span><span class="mi">39</span><span class="err">:</span><span class="mi">56</span><span class="o">-</span><span class="mi">0300</span><span class="w"> </span><span class="o">[</span><span class="n">minimal</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">GETTING</span><span class="w"> </span><span class="nl">URL</span><span class="p">:</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">google</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">br</span><span class="o">/</span><span class="vm">?</span><span class="n">gfe_rd</span><span class="o">=</span><span class="n">cr</span><span class="o">&amp;</span><span class="n">ei</span><span class="o">=</span><span class="n">_PXTU8f6N4mc8Aas1YDABA</span><span class="w"></span>
+<span class="mi">2014</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">26</span><span class="w"> </span><span class="mi">15</span><span class="err">:</span><span class="mi">39</span><span class="err">:</span><span class="mi">57</span><span class="o">-</span><span class="mi">0300</span><span class="w"> </span><span class="o">[</span><span class="n">minimal</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">Redirecting</span><span class="w"> </span><span class="p">(</span><span class="mi">302</span><span class="p">)</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="o">&lt;</span><span class="k">GET</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">br</span><span class="p">.</span><span class="n">yahoo</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="vm">?</span><span class="n">p</span><span class="o">=</span><span class="n">us</span><span class="o">&gt;</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="o">&lt;</span><span class="k">GET</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">yahoo</span><span class="p">.</span><span class="n">com</span><span class="o">/&gt;</span><span class="w"></span>
+<span class="mi">2014</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">26</span><span class="w"> </span><span class="mi">15</span><span class="err">:</span><span class="mi">39</span><span class="err">:</span><span class="mi">58</span><span class="o">-</span><span class="mi">0300</span><span class="w"> </span><span class="o">[</span><span class="n">minimal</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">Crawled</span><span class="w"> </span><span class="p">(</span><span class="mi">200</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="k">GET</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">br</span><span class="p">.</span><span class="n">yahoo</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="vm">?</span><span class="n">p</span><span class="o">=</span><span class="n">us</span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="nl">referer</span><span class="p">:</span><span class="w"> </span><span class="k">None</span><span class="p">)</span><span class="w"></span>
+<span class="mi">2014</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">26</span><span class="w"> </span><span class="mi">15</span><span class="err">:</span><span class="mi">39</span><span class="err">:</span><span class="mi">58</span><span class="o">-</span><span class="mi">0300</span><span class="w"> </span><span class="o">[</span><span class="n">minimal</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">GETTING</span><span class="w"> </span><span class="nl">URL</span><span class="p">:</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">br</span><span class="p">.</span><span class="n">yahoo</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="vm">?</span><span class="n">p</span><span class="o">=</span><span class="n">us</span><span class="w"></span>
+</code></pre></div>
+
+<p>To make our code even cleaner, we can take advantage of the default
+implementation of <code>start_requests()</code>: if you don't define it, Scrapy will
+create requests for a list of URLs in the attribute named <code>start_urls</code> -- the
+same kind of thing we're doing above. So, we'll keep the same functionality and
+reduce the code, using:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
+
+<span class="k">class</span> <span class="nc">MinimalSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A menor Scrapy-Aranha do mundo!&quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;minimal&#39;</span>
+
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;http://www.google.com&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;http://www.yahoo.com&#39;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;GETTING URL: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">%</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Like in the <code>parse()</code> method shown above, every callback gets the content of
+the HTTP response as an argument (in a
+<a href="http://scrapy.readthedocs.org/en/latest/topics/request-response.html#scrapy.http.Response">Response</a>
+object). So, inside this callback, where we already have the content of the
+page, that's where we'll do the information extraction, i.e., the data scraping
+itself.</p>
+<p><center><img alt="Little kid smiling: I can't wait to write my own spider to watch prices of games for my new console!" width="500" src="https://lh3.googleusercontent.com/fTtt8VFXX5jcaTlMj9okmgKJxovkhZhKO392KqHkopX0oCmpPp0d8HA9tBY7vkTvE8NXlYR2NjAyeRJF0FW3A3BE01uI2YMH1Pkcq369Sx9pgARuSKH71mHM5TEumlOqFw" /></center></p>
+<h3>Callbacks, Requests &amp; Items</h3>
+<p>Functions registered as callbacks for the requests can return an iterable of
+objects, in which every object can be:</p>
+<ul>
+<li>
+<p>an instance of a subclass of
+<a href="http://doc.scrapy.org/en/latest/topics/items.html">scrapy.Item</a>, which you
+define to contain the data to be collected from the page</p>
+</li>
+<li>
+<p>an object of type
+<a href="http://doc.scrapy.org/en/latest/topics/request-response.html">scrapy.Request</a>
+representing yet another request to be made (possibly registering
+anothercallback)</p>
+</li>
+</ul>
+<p>With this mechanism of requests and callbacks that may generate new requests
+(with new callbacks), you can program the navigation through a site
+generating requests for the links to be followed, until getting to the
+pages that contain the items you're interested. For example, for a
+spider that needs to extract products from the website of an online
+store navigating through categories, you could use a structure like the
+following:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
+
+<span class="k">class</span> <span class="nc">SkeletonSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;spider-mummy&#39;</span>
+
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;http://www.some-online-webstore.com&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[</span><span class="o">...</span><span class="p">]:</span>
+            <span class="n">url_category</span> <span class="o">=</span> <span class="o">...</span>
+            <span class="k">yield</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url_category</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_category_page</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">parse_category_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">[</span><span class="o">...</span><span class="p">]:</span>
+            <span class="n">url_product</span> <span class="o">=</span> <span class="o">...</span>
+            <span class="k">yield</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url_product</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_product</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">parse_product</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="o">...</span>
+</code></pre></div>
+
+<p>In the above structure, the default callback --parse() method -- handles the
+response of the first request to the online store website and generates new
+requests for the pages of the categories, registering another callback to
+handle them -- the <code>parse_category_page()</code> method. This last method does
+something similar, generating the requests for the product pages, this time
+registering a callback that extracts the item objects with the product data.</p>
+<h4>Why do I need to define classes for the items?</h4>
+<p>Scrapy proposes that you create a few classes that represent the items you
+intend to extract from the pages. For example, if you want to extract the
+prices and details of products from an online store, you could use a class like
+the following:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
+
+<span class="k">class</span> <span class="nc">Product</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Item</span><span class="p">)</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+    <span class="n">price</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+    <span class="n">brand</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+    <span class="n">category</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+</code></pre></div>
+
+<p>As you can see, the item classes are just subclasses
+from <a href="http://doc.scrapy.org/en/latest/topics/items.html">scrapy.Item</a> in which
+you add the desired fields (instances of the
+class <a href="http://doc.scrapy.org/en/latest/topics/items.html#scrapy.item.Field">scrapy.Field</a>).
+You can then use an instance of this class like if it were a Python dictionary:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; p = Product()
+&gt;&gt;&gt; p[&#39;price&#39;] = 13
+&gt;&gt;&gt; print p
+{&#39;price&#39;:13}
+</code></pre></div>
+
+<p>The biggest difference from a traditional dictionary is that an Item by default
+does not allow you to assign a value to a key that was not declared as a field:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; p[&#39;silly_walk&#39;]=54
+...
+
+KeyError:&#39;Product does not support field: silly_walk&#39;
+</code></pre></div>
+
+<p>The advantage of defining classes for items is that it allows you to take
+advantage of other features of the framework that works for these classes. For
+example, <a href="http://scrapy.readthedocs.org/en/latest/topics/feed-exports.html">you can use the feed exports
+mechanism</a> to
+export the collected items to <a href="https://en.wikipedia.org/wiki/JSON">JSON</a>,
+<a href="https://en.wikipedia.org/wiki/Comma-separated_values">CSV</a>,
+<a href="https://en.wikipedia.org/wiki/XML">XML</a>, etc. You can also exploit the <a href="http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html">item
+pipeline</a>
+features, that allows you to plug-in other processing on top of the collected
+items (things like validating the extracted data, removing duplicated items,
+storing in a database, etc).</p>
+<p>Now, let's do some scraping!</p>
+<p>To do the scraping itself, i.e., extracting the data from the page, it's nice
+if you know <a href="https://en.wikipedia.org/wiki/XPath">XPath</a>, a language created for
+doing queries in XML content which is core to the <a href="http://doc.scrapy.org/en/latest/topics/selectors.html">selectors mechanism of the
+framework</a>.  If you
+don't know XPath, you can use <a href="https://en.wikipedia.org/wiki/Cascading_Style_Sheets#Selector">CSS
+selectors</a> in
+Scrapy just as well. We encourage you to learn some XPath nevertheless, because
+it allows for expressions much more powerful than just CSS (in fact, the CSS
+functionality in Scrapy works by converting your CSS expressions to XPath
+expressions). We'll put some links to useful resources about these at the end
+of the article.</p>
+<p>So, you can test the result of XPath or CSS expressions for a page using the
+<a href="http://doc.scrapy.org/en/latest/topics/shell.html">Scrapy shell</a>.  Run the
+command:</p>
+<div class="highlight"><pre><span></span><code>scrapy shell http://stackoverflow.com
+</code></pre></div>
+
+<p>This command makes a request to the informed URL and opens a Python shell (or
+IPython, if you have it installed) while making available some objects for you
+to explore. The most important object is the variable <code>response</code>, which contains
+the response of the HTTP request and corresponds to theresponse argument
+received by the callbacks.</p>
+<p><center><img width="500" alt="Happy dog: dude!! it even has a shell!! love the shell! love the shell! love the shell!" src="https://lh3.googleusercontent.com/kdW_fmpWTyloxYfesyGVQdB-rx54lM-r1LIptocDvhxd6TsJ3__w4mWXMHI6o8SXvaO3tN19HhIf9kZ7iwZTztRpdF8g6HoHNA6aer7E-mk8jlM63o8taJVdPSA9EooORg" /></center></p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="nt">response</span><span class="p">.</span><span class="nc">url</span><span class="w"></span>
+<span class="s1">&#39;http://stackoverflow.com&#39;</span><span class="w"></span>
+<span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="nt">response</span><span class="p">.</span><span class="nc">headers</span><span class="w"></span>
+<span class="p">{</span><span class="err">&#39;Cache-Control&#39;:&#39;public,</span><span class="w"> </span><span class="err">no-cache=&quot;Set-Cookie&quot;,</span><span class="w"> </span><span class="err">max-age=49&#39;,</span><span class="w"></span>
+<span class="err">&#39;Content-Type&#39;:&#39;text/html</span><span class="p">;</span><span class="w"> </span><span class="err">charset=utf-8&#39;,</span><span class="w"></span>
+<span class="err">&#39;Date&#39;:&#39;Sat,</span><span class="w"> </span><span class="err">09</span><span class="w"> </span><span class="err">Aug</span><span class="w"> </span><span class="err">2014</span><span class="w"> </span><span class="err">03:47:31</span><span class="w"> </span><span class="err">GMT&#39;,</span><span class="w"></span>
+<span class="err">&#39;Expires&#39;:&#39;Sat,</span><span class="w"> </span><span class="err">09</span><span class="w"> </span><span class="err">Aug</span><span class="w"> </span><span class="err">2014</span><span class="w"> </span><span class="err">03:48:20</span><span class="w"> </span><span class="err">GMT&#39;,</span><span class="w"></span>
+<span class="err">&#39;Last-Modified&#39;:&#39;Sat,</span><span class="w"> </span><span class="err">09</span><span class="w"> </span><span class="err">Aug</span><span class="w"> </span><span class="err">2014</span><span class="w"> </span><span class="err">03:47:20</span><span class="w"> </span><span class="err">GMT&#39;,</span><span class="w"></span>
+<span class="err">&#39;Set-Cookie&#39;:&#39;prov=5a8741f7-7ee3-4993-b723-72142d48696c</span><span class="p">;</span><span class="w"> </span><span class="err">domain=.stackoverflow.com</span><span class="p">;</span><span class="w"> </span><span class="err">expires=Fri,</span><span class="w"> </span><span class="err">01-Jan-2055</span><span class="w"> </span><span class="err">00:00:00</span><span class="w"> </span><span class="err">GMT</span><span class="p">;</span><span class="w"> </span><span class="err">path=/</span><span class="p">;</span><span class="w"> </span><span class="err">HttpOnly&#39;,</span><span class="w"></span>
+<span class="err">&#39;Vary&#39;:&#39;*&#39;,</span><span class="w"></span>
+<span class="err">&#39;X-Frame-Options&#39;:&#39;SAMEORIGIN&#39;</span><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+
+<p>You can use the <code>xpath()</code> and <code>css()</code> methods of the <code>response</code> object to query
+the HTML content in the response:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; response.xpath(&#39;//title&#39;) # gets the title via XPath
+[&lt;Selector xpath=&#39;//title&#39; data=u&#39; &#39;&gt;]
+&gt;&gt;&gt; response.css(&#39;title&#39;)# gets the title via CSS
+[&lt;Selector xpath=u&#39;descendant-or-self::title&#39; data=u&#39; &#39;&gt;]
+&gt;&gt;&gt; len(response.css(&#39;div&#39;))# counts the number of div elements
+1345
+</code></pre></div>
+
+<p>The result of calling one of these methods is a list object containing selector
+objects resulting from the query. This list object has an <code>extract()</code> method which
+extracts the HTML content from all the selectors together.  The selectors, on
+the other hand, besides having their own <code>extract()</code> method to extract their
+content, also have <code>xpath()</code> and <code>css()</code> methods that you can use to do new queries
+in the scope of each selector.</p>
+<p>Take a look at the examples below in the same Scrapy shell, that will help
+clearing up things a little bit.</p>
+<p>Extracts HTML content from <code>&lt;title&gt;</code> element, calling the <code>extract()</code> method
+from the selector list (note that the result is a Python list):</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; response.xpath(&#39;//title&#39;).extract()
+[u&#39;<span class="nt">&lt;title&gt;</span>Stack Overflow<span class="nt">&lt;/title&gt;</span>&#39;]
+</code></pre></div>
+
+<p>Stores the first selector of the result in a variable and calls the <code>extract()</code>
+method on the selector (see how the result now is just a string):</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; title_sel= response.xpath(&#39;//title&#39;)[0]
+&gt;&gt;&gt; title_sel.extract()
+u&#39;<span class="nt">&lt;title&gt;</span>Stack Overflow<span class="nt">&lt;/title&gt;</span>&#39;
+</code></pre></div>
+
+<p>Applies the XPath expression <code>text()</code> to get the text content of the selector,
+and calls the extract() method from the resulting list:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; title_sel.xpath(&#39;text()&#39;).extract()
+[u&#39;Stack Overflow&#39;]
+</code></pre></div>
+
+<p>Prints the extraction of the first selector resulting of the XPath expression
+<code>text()</code> applied to selector in variable <code>title_sel</code>:</p>
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; print title_sel.xpath(&#39;text()&#39;)[0].extract()
+StackOverflow
+</code></pre></div>
+
+<p>Well, when you have a good grip on this way to work with selectors, the simple
+way to extract an item is just to create an instance of the desired Item class
+and fill the values obtained using this selectors API.</p>
+<p>Here, take a look at the code of a spider using this technique to get the most
+frequently asked questions of<a href="http://stackoverflow.com/">StackOverflow</a>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
+<span class="kn">import</span> <span class="nn">urlparse</span>
+
+
+<span class="k">class</span> <span class="nc">Question</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Item</span><span class="p">):</span>
+    <span class="n">link</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+    <span class="n">excerpt</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+    <span class="n">tags</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">StackoverflowTopQuestionsSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;so-top-questions&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">questions_url</span> <span class="o">=</span> <span class="s1">&#39;http://stackoverflow.com/questions&#39;</span>
+        <span class="k">if</span> <span class="n">tag</span><span class="p">:</span>
+            <span class="n">questions_url</span> <span class="o">+=</span> <span class="s1">&#39;/tagged/</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">tag</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="n">questions_url</span> <span class="o">+</span> <span class="s1">&#39;?sort=frequent&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="n">build_full_url</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">link</span><span class="p">:</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">link</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">qsel</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s2">&quot;#questions &gt; div&quot;</span><span class="p">):</span>
+            <span class="n">it</span> <span class="o">=</span> <span class="n">Question</span><span class="p">()</span>
+
+            <span class="n">it</span><span class="p">[</span><span class="s1">&#39;link&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">build_full_url</span><span class="p">(</span>
+                <span class="n">qsel</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;.summary h3 &gt; a&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;@href&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">extract</span><span class="p">())</span>
+            <span class="n">it</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">qsel</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;.summary h3 &gt; a::text&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+            <span class="n">it</span><span class="p">[</span><span class="s1">&#39;tags&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">qsel</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;a.post-tag::text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+            <span class="n">it</span><span class="p">[</span><span class="s1">&#39;excerpt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">qsel</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;div.excerpt::text&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+
+            <span class="k">yield</span> <span class="n">it</span>
+</code></pre></div>
+
+<p>As you can see, the spider defines an Item class named <code>Question</code>, and uses the
+Selectors API to iterate through the HTML elements of the questions (obtained
+with the CSS selector <code>#questions &gt; div</code>) and generating a Question object for
+each one of these elements, filling all the fields (link, title, tags and
+question excerpt).</p>
+<p>There are two interesting things worth noticing in the extraction done in the
+<code>parse()</code> callback: the first one is that we use a pseudo-selector <code>::text</code> to
+get the text content of the elements, avoiding the HTML tags. The second is how
+we use the function
+<a href="https://docs.python.org/2/library/urlparse.html">urlparse.urljoin()</a> to
+combine the URL of the request with the content of thehref attribute, making
+sure that the result of this will be a correct absolute URL.</p>
+<p>Put this code in a file named <code>top_asked_so_questions.py</code> and run it using the
+command:</p>
+<div class="highlight"><pre><span></span><code>scrapy runspider top_asked_so_questions.py -o questions.json
+</code></pre></div>
+
+<p>If everything went well, Scrapy will show in the screen the scraped items and
+also write a file namedquestions.json containing them. At the end of the
+output, you should see some stats, including the item scraped count:</p>
+<div class="highlight"><pre><span></span><code><span class="mi">2014</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">02</span><span class="w"> </span><span class="mi">14</span><span class="p">:</span><span class="mi">27</span><span class="p">:</span><span class="mi">37</span><span class="o">-</span><span class="mi">0300</span><span class="w"> </span><span class="p">[</span><span class="n">so</span><span class="o">-</span><span class="n">top</span><span class="o">-</span><span class="n">questions</span><span class="p">]</span><span class="w"> </span><span class="n">INFO</span><span class="p">:</span><span class="w"> </span><span class="n">Dumping</span><span class="w"> </span><span class="n">Scrapy</span><span class="w"> </span><span class="n">stats</span><span class="p">:</span><span class="w"></span>
+<span class="w"> </span><span class="p">{</span><span class="s1">&#39;downloader/request_bytes&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">242</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="s1">&#39;downloader/request_count&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="o">...</span><span class="w"></span>
+<span class="w">  </span><span class="s1">&#39;item_scraped_count&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="s1">&#39;log_count/DEBUG&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">53</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="s1">&#39;log_count/INFO&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"></span>
+<span class="w">  </span><span class="o">...</span><span class="w"></span>
+<span class="w">  </span><span class="s1">&#39;start_time&#39;</span><span class="p">:</span><span class="w"> </span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w"> </span><span class="mi">36</span><span class="p">,</span><span class="w"> </span><span class="mi">912002</span><span class="p">)}</span><span class="w"></span>
+<span class="mi">2014</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">02</span><span class="w"> </span><span class="mi">14</span><span class="p">:</span><span class="mi">27</span><span class="p">:</span><span class="mi">37</span><span class="o">-</span><span class="mi">0300</span><span class="w"> </span><span class="p">[</span><span class="n">so</span><span class="o">-</span><span class="n">top</span><span class="o">-</span><span class="n">questions</span><span class="p">]</span><span class="w"> </span><span class="n">INFO</span><span class="p">:</span><span class="w"> </span><span class="n">Spider</span><span class="w"> </span><span class="n">closed</span><span class="w"> </span><span class="p">(</span><span class="n">finished</span><span class="p">)</span><span class="w"></span>
+</code></pre></div>
+
+<blockquote>
+<p><strong>Note:</strong> if you run this twice in a row, you need to remove the output file
+<code>questions.json</code> file before each run. This is because Scrapy by default
+appends to a file instead of overwriting it, which ends up making the JSON file
+unusable. This is done for historical reasons, it made sense for spiders which
+used the JSON Lines format (the previous default), and may change in the
+future.</p>
+</blockquote>
+<p><center><img width="500" alt="SO: all your questions are belong to us" src="https://lh5.googleusercontent.com/8wSeSQMfk_DBDrTpejqaBlAhoazIg--pdjDWfk5vcIhB504FSu78MEULRtnuYPN-0FVjuX23OWnqIEzf_j0YorWy42EQcTnUVKfqF9-UfbpSu-nuZ4iXB5m15WPhXqBLXw" /></center></p>
+<h4>Arachnoid arguments</h4>
+<p>You may have noticed that the class for this spider has a constructor
+accepting an optional argument called tag.
+We can specify a value for this argument for the spider to get the
+frequently asked questions with the python tag, using the <code>-a</code>
+option:</p>
+<div class="highlight"><pre><span></span><code>scrapy runspider top_asked_so_questions.py -o python-questions.json -a tag=python
+</code></pre></div>
+
+<p>Using this little trick you can write generic spiders, so that you just pass
+some parameters and get a different result. For example, you may write one
+spider for several sites that have the same HTML structure, making the URL of
+the site a parameter. Or, a spider for a blog in which the parameters define a
+time range of the posts and comments to extract.</p>
+<h3>Putting it all together</h3>
+<p>In the previous sections, you saw how to do web crawling with Scrapy,
+navigating through the pages of a site using the mechanism of requests and
+callbacks. You also saw how to use the <a href="http://doc.scrapy.org/en/latest/topics/selectors.html">Selector
+API</a> to extract the
+content of a page into items and execute the spider using the commandscrapy
+runspider.</p>
+<p>Now, we shall put it all together in a spider that solves the problem we
+presented in the introduction: let's scrape the latest "big questions" articles
+from <a href="http://mentalfloss.com/">mentalfloss.com</a>, offering an option to inform
+the category (<a href="http://mentalfloss.com/big-questions/origins">Origins</a>, <a href="http://mentalfloss.com/big-questions/the-body">The
+Body</a>, <a href="http://mentalfloss.com/big-questions/fact-check">Fact
+Check</a>, etc). This way, if you
+just run the spider, it should scrape all the articles in the blog; if you pass
+in a category, it should scrape only the articles of that subject.</p>
+<blockquote>
+<p><strong>Note:</strong> Before writing a spider, it's useful to explore a little bit the
+pages of the site using the browser's inspection capabilities and the scrapy
+shell, so that you can see how the site is structured and you can also try a
+few CSS or XPath expressions in the shell. There are also some browser
+extensions that allow you to test XPath expressions directly in a page: <a href="https://chrome.google.com/webstore/detail/xpath-helper/hgimnogjllphhhkhlmebbmlgjoejdpjl?hl=en">XPath
+Helper</a>
+for Chrome and <a href="https://addons.mozilla.org/en-US/firefox/addon/xpath-checker/">XPath
+Checker</a> for
+Firefox. Discovering the best way to extract the content of a site using XPath
+or CSS is more of an art than a science, therefore we won't try to explain much
+here, but it's worthy telling you that you learn a lot after a little
+experience.</p>
+</blockquote>
+<p>Have a look at the final code of the spider:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
+<span class="kn">import</span> <span class="nn">urlparse</span>
+
+
+<span class="k">class</span> <span class="nc">Article</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Item</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+    <span class="n">link</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">MentalFlossArticles</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;mentalfloss-articles&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">articles_url</span> <span class="o">=</span> <span class="s1">&#39;http://mentalfloss.com/big-questions&#39;</span>
+
+        <span class="k">if</span> <span class="n">category</span><span class="p">:</span>
+            <span class="n">articles_url</span> <span class="o">+=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">category</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="n">articles_url</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the page with the article list,</span>
+<span class="sd">        find the article links and generates</span>
+<span class="sd">        requests for each article page</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">article_links</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span>
+            <span class="s2">&quot;//header/hgroup/h1/a/@href&quot;</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">article_links</span><span class="p">:</span>
+            <span class="n">article_url</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span>
+                <span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">link</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">article_url</span><span class="p">,</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">extract_article</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">extract_article</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the article page and extract</span>
+<span class="sd">        an item with the article data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">article</span> <span class="o">=</span> <span class="n">Article</span><span class="p">()</span>
+        <span class="n">css</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+
+        <span class="n">article</span><span class="p">[</span><span class="s1">&#39;link&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span>
+        <span class="n">article</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">css</span><span class="p">(</span><span class="s2">&quot;h1.title &gt; span::text&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">article</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">css</span><span class="p">(</span><span class="s1">&#39;.date-display-single::text&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">article</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">css</span><span class="p">(</span><span class="s1">&#39;#content-content p::text&#39;</span><span class="p">))</span>
+
+        <span class="n">article</span><span class="p">[</span><span class="s1">&#39;author&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">css</span><span class="p">(</span>
+            <span class="s2">&quot;div.field-name-field-enhanced-authors&quot;</span>
+            <span class="s2">&quot; a::text&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">yield</span> <span class="n">article</span>
+</code></pre></div>
+
+<p>Just like before, you can run the spider with:</p>
+<div class="highlight"><pre><span></span><code>scrapy runspider mentalfloss.py -o articles-all.json
+</code></pre></div>
+
+<p>And to get the articles from each section, you can use commands like:</p>
+<div class="highlight"><pre><span></span><code>scrapy runspider mentalfloss.py -o articles-origins.json -a category=origins
+</code></pre></div>
+
+<p>or:</p>
+<div class="highlight"><pre><span></span><code>scrapy runspider mentalfloss.py -o articles-fact-check.json -a category=fact-check
+</code></pre></div>
+
+<p>The code for this spider has a very similar structure to the previous one, with
+its argument handling and everything.</p>
+<p>The main difference is that in this one, the first callback (the <code>parse()</code> method)
+generates other requests for the article pages, which are handled by the second
+callback: the <code>extract_article()</code> method, which scrapes the article data.</p>
+<p>The content extraction also does a little bit more work. We created a <code>css()</code>
+helper function to abbreviate calling <code>response.css(&lt;selector&gt;).extract()</code> and
+used that to get the result of our selectors to fill the Article item. Note
+also how we take advantage of <a href="https://docs.python.org/2/reference/lexical_analysis.html#string-literal-concatenation">Python's feature of concatenating literal
+strings</a>
+on the CSS selector for the author field, to break it in two lines.</p>
+<h3>Final words</h3>
+<p>If you made until here, congratulations! Here is a trophy for you:</p>
+<p><center><img width="500" alt="Trophy Scrapy apprentice: champion of Reading Long Posts category" src="https://lh3.googleusercontent.com/EboKX-uRyuikN3lI8voa529LP3W6OnHn3vjWi21fvisFEpbuPu-fPY9be1Z3PB_CxT991AL0SquUnypXp4-sbiMTdVY8hiVu_zrbUdFPVhu5BixW6Mu3LUE9Jbz37Jn8Iw" /></center></p>
+<p>Now that you have learned to write Scrapy spiders and therefore are enabled to
+download the whole Internet to your home PC, try not to get banned by the
+website hosts laying around! :)</p>
+<p>Visit the <a href="http://doc.scrapy.org/">official documentation for Scrapy</a>, there is
+a lot of good stuff there, like <a href="http://scrapy.readthedocs.org/en/latest/intro/tutorial.html">the tutorial teaching you how to create
+complete Scrapy
+projects</a>,
+<a href="http://scrapy.readthedocs.org/en/latest/faq.html">frequently asked questions</a>,
+<a href="http://scrapy.readthedocs.org/en/latest/topics/broad-crawls.html">tips for doing huge
+crawls</a>, <a href="http://scrapy.readthedocs.org/en/latest/topics/debug.html">how
+to debug a spider</a>,
+<a href="http://scrapy.readthedocs.org/en/latest/topics/practices.html#avoiding-getting-banned">tips on how to avoid being
+banned</a>
+and a lot more.</p>
+<p><strong>UPDATED:</strong> removed <code>-t json</code> from commands, unnecessary since Scrapy 0.24 (thanks, Mikhail!)</p>
+<p><strong>UPDATED:</strong> added note about Scrapy default behavior of appending to output file (thanks again, Mikhail!)</p>
+<h4>Useful resources:</h4>
+<ul>
+<li>
+<p><a href="http://doc.scrapy.org/en/latest/">Scrapy Official Documentation</a></p>
+</li>
+<li>
+<p><a href="https://github.com/scrapy/scrapy/wiki">Scrapy Wiki with links to videos, slides, articles and related projects</a></p>
+</li>
+<li>
+<p><a href="http://groups.google.com/group/scrapy-users/">scrapy-users Google Group - mailing list</a> </p>
+</li>
+<li>
+<p><a href="http://zvon.org/comp/r/tut-XPath_1.html">Nice XPath Tutorial</a></p>
+</li>
+<li>
+<p><a href="http://blog.scrapinghub.com/2014/07/17/xpath-tips-from-the-web-scraping-trenches/">Some XPath tips</a></p>
+</li>
+<li>
+<p><a href="http://code.tutsplus.com/tutorials/the-30-css-selectors-you-must-memorize--net-16048">The 30 CSS selectors you need to memorize</a> </p>
+</li>
+</ul>
+        </div>
+
+        <div class="taglist"></div>
+
+    </article>
+</section>
+
+        <aside id="sidebar">
+                <div class="widget">
+                        <h2>Categories</h2>
+                        <ul>
+                           <li class="active"><a href="https://eliasdorneles.com/category/blog.html">blog</a></li>
+                        </ul>
+                </div>
+        </aside><!-- /#sidebar -->
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+            <hr />
+            <div class="rc-scout"></div>
+            <script async defer src="https://www.recurse-scout.com/loader.js?t=5372463d63166734808f47d8eb0124cb"></script>
+        </footer>
+</div>
+
+</body>
+</html>

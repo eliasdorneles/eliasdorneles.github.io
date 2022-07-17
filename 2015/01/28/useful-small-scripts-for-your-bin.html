@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Useful small scripts for your ~/bin</title>
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/pygments.css" type="text/css" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+        <link href="https://eliasdorneles.com/atom.xml" type="application/atom+xml" rel="alternate" title="Hopeful Ramble ATOM Feed" />
+        <link href="https://eliasdorneles.com/feed.xml" type="application/rss+xml" rel="alternate" title="Hopeful Ramble RSS Feed" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Hopeful Ramble </a></h1>
+                <nav><ul>
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                    <li ><a href="https://eliasdorneles.com/pages/about.html">About me</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="2015/01/28/useful-small-scripts-for-your-bin.html"
+                    rel="bookmark" title="Permalink to Useful small scripts for your ~/bin">Useful small scripts for your ~/bin</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+<footer class="post-info">
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about-me.html">Elias Dorneles</a>
+            on <abbr class="published" title="2015-01-28T00:03:00-02:00">2015, janvier 28</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/useful-small-scripts-for-your-bin.md">Edit</a>
+        </address>
+</footer>            <h3>fields</h3>
+<p>So you are a command line geek, you do your
+shell-scripts and one-liners using bash to get information you
+need.</p>
+<p>You use <a href="https://en.wikipedia.org/wiki/Cut_(Unix)">cut</a>
+for handling things delimited by some character like comma or space, but
+sometimes you have a list of stuff separated by a varied amount of
+spaces, like this:</p>
+<div class="highlight"><pre><span></span><code>$ cat myfile.txt
+Amelia        <span class="m">555</span>-5553     amelia.zodiacusque@gmail.com
+Julie         <span class="m">555</span>-6699     julie@skeeve.com
+</code></pre></div>
+
+<p>This form of vertical alignment is cool because you can skim through any column
+very quickly, but it makes your life a little bit harder when processing it in
+the command line. Well, maybe you're smiling to yourself because you already
+know about <a href="https://en.wikipedia.org/wiki/AWK">awk</a>, and you use it all the time
+for this kind of stuff doing something like:  </p>
+<div class="highlight"><pre><span></span><code>$ cat myfile.txt <span class="p">|</span> awk <span class="s1">&#39;{ print $3 }&#39;</span>
+amelia.zodiacusque@gmail.com
+julie@skeeve.com
+</code></pre></div>
+
+<p>That's all fine, <a href="http://ferd.ca/awk-in-20-minutes.html">awk is a great tool to
+grok</a>, but typing all that just for
+getting out a field is a bit annoying. So I've written a little script to make
+that yet easier: just <a href="https://github.com/eliasdorneles/dotfiles/raw/master/bin/fields">download
+it</a> and put
+somewhere in your $PATH. After that, next time you find yourself in this
+situation you'll do:</p>
+<div class="highlight"><pre><span></span><code>$ cat myfile.txt <span class="p">|</span> fields <span class="m">1</span>
+Amelia
+Julie
+$ cat myfile.txt <span class="p">|</span> fields <span class="m">2</span>
+<span class="m">555</span>-5553
+<span class="m">555</span>-6699
+$ cat myfile.txt  <span class="p">|</span> fields <span class="m">2</span> <span class="m">3</span>          <span class="c1"># get fields separated by TABs</span>
+<span class="m">555</span>-5553    amelia.zodiacusque@gmail.com
+<span class="m">555</span>-6699    julie@skeeve.com
+$ cat myfile.txt  <span class="p">|</span> fields -s , <span class="m">2</span> <span class="m">3</span>     <span class="c1"># or by comma</span>
+<span class="m">555</span>-5553,amelia.zodiacusque@gmail.com
+<span class="m">555</span>-6699,julie@skeeve.com
+</code></pre></div>
+
+<h3>total_sum</h3>
+<p>Another thing you may found yourself running to awk is when you need a sum of
+numbers. Often when you need a summation you will also need some more stuff,
+and then it might be time to start writing a Python/Ruby/Perl script instead of
+hacking in the command line. But I've often finding myself wanting just a
+simple sum that justified putting the little awk one-liner <a href="https://github.com/eliasdorneles/dotfiles/raw/master/bin/total_sum">into a script of
+its own</a>:</p>
+<div class="highlight"><pre><span></span><code>$ cat ~/bin/total_sum
+<span class="c1">#!/bin/bash</span>
+<span class="c1"># Report sum of numbers fed to the stdin</span>
+
+awk <span class="s1">&#39;{ total+=$1 } END { print total }&#39;</span>
+$ <span class="nb">echo</span> -e <span class="s2">&quot;1\n2\n3\n4&quot;</span>
+<span class="m">1</span>
+<span class="m">2</span>
+<span class="m">3</span>
+<span class="m">4</span>
+$ <span class="nb">echo</span> -e <span class="s2">&quot;1\n2\n3\n4&quot;</span><span class="p">|</span> total_sum
+<span class="m">10</span>
+</code></pre></div>
+
+<h3>humanize</h3>
+<p>If you find yourself having to count digits from a long number representing the
+size in bytes of some big file, you're not alone.</p>
+<p>I got tired of this and wrote <a href="https://github.com/eliasdorneles/dotfiles/blob/master/bin/humanize">a Python script to humanize these
+numbers</a>
+(<a href="https://github.com/eliasdorneles/dotfiles/raw/master/bin/humanize">download
+here</a>),
+shamelessly stealing the naturalsize function from the <a href="https://pypi.python.org/pypi/humanize">humanize Python
+library</a>.</p>
+<p>Look how pleasant it is to use it:</p>
+<div class="highlight"><pre><span></span><code>$ humanize <span class="m">32432</span>
+<span class="m">32</span>.4 kB
+$ <span class="nb">echo</span> -e <span class="s2">&quot;10\n1200\n54356\n3123342\n3294384948&quot;</span> &gt; some_file.txt
+$ cat some_file.txt
+<span class="m">10</span>
+<span class="m">1200</span>
+<span class="m">54356</span>
+<span class="m">3123342</span>
+<span class="m">3294384948</span>
+$ cat some_file.txt <span class="p">|</span> humanize
+<span class="m">10</span> Bytes
+<span class="m">1</span>.2 kB
+<span class="m">54</span>.4 kB
+<span class="m">3</span>.1 MB
+<span class="m">3</span>.3 GB
+$ cat some_file.txt <span class="p">|</span> humanize--binary
+<span class="m">10</span> Bytes
+<span class="m">1</span>.2 KiB
+<span class="m">53</span>.1 KiB
+<span class="m">3</span>.0 MiB
+<span class="m">3</span>.1 GiB
+</code></pre></div>
+
+<p>That's all I had, folks! :)</p>
+        </div>
+
+        <div class="taglist"></div>
+
+    </article>
+</section>
+
+        <aside id="sidebar">
+                <div class="widget">
+                        <h2>Categories</h2>
+                        <ul>
+                           <li class="active"><a href="https://eliasdorneles.com/category/blog.html">blog</a></li>
+                        </ul>
+                </div>
+        </aside><!-- /#sidebar -->
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+            <hr />
+            <div class="rc-scout"></div>
+            <script async defer src="https://www.recurse-scout.com/loader.js?t=5372463d63166734808f47d8eb0124cb"></script>
+        </footer>
+</div>
+
+</body>
+</html>
