@@ -12,7 +12,7 @@ psychotherapy called [Transactional
 Analysis](https://www.goodtherapy.org/learn-about-therapy/types/transactional-analysis),
 hoping to become a practicing psychotherapist.
 
-In this blog I write about personal experiences, books I've read, sofware
+In this blog I write about personal experiences, books I've read, software
 development, opinions about technology and more.
 
 I come from a very musical family, I play the guitar and the piano, as a hobby.
@@ -23,12 +23,12 @@ In 2017, I've attended the [Recurse Center](https://www.recurse.com), a retreat
 for programmers in NYC to get dramatically better at programming. This was a
 great experience where I learned a lot and that gave me plenty of courage.
 
-I'm currently working for [BackMarket](https://www.backmarket.fr), which has
+I'm currently working for [Back Market](https://www.backmarket.fr), which has
 the fine mission of making reconditioned products reliable and desirable. The
 views expressed in this blog are mine and mine alone, and do not represent my
 employer in any way.
 
-You can find me on [Github](https://github.com/eliasdorneles) or [Stackoverflow](https://stackoverflow.com/users/149872/elias?tab=profile).
+You can find me on [GitHub](https://github.com/eliasdorneles) or [Stackoverflow](https://stackoverflow.com/users/149872/elias?tab=profile).
 
 <a href="https://stackexchange.com/users/50263">
 <img src="https://stackexchange.com/users/flair/50263.png?theme=clean" width="208" height="58" alt="profile for elias on Stack Exchange, a network of free, community-driven Q&amp;A sites" title="profile for elias on Stack Exchange, a network of free, community-driven Q&amp;A sites" /></a>
@@ -51,7 +51,7 @@ Here are some that I've created/co-created but don't maintain anymore:
 * [flatson](https://github.com/scrapinghub/flatson)
 * [skinfer](https://github.com/scrapinghub/skinfer)
 
-Plus others you can check at my [Github profile](https://github.com/eliasdorneles).
+Plus others you can check at my [GitHub profile](https://github.com/eliasdorneles).
 
 
 ## Writing
