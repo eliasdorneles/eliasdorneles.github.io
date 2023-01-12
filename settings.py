@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 import os
 
-_locally = os.getenv("USER") == "elias"
+_locally = os.getenv("USER") in ("elias", "batman")
 
 SITENAME = "Hopeful Ramble"
 

@@ -45,13 +45,14 @@
 body {
     font: 20px arial, sans-serif;
     color: #111;
-    background-color: #935db1; /* site background */
+    /* palette: https://coolors.co/d9ed92-b5e48c-99d98c-76c893-52b69a-34a0a4-168aad-1a759f-1e6091-184e77 */
+    background-color: #1E6091; /* site background */
 }
 
 .site-container {
     background-color: #fefefe;
     padding: 1em;
-    border: 8px solid #92e263;
+    border: 8px solid #52B69A;
     border-top: 0;
     border-bottom: 0;
 }
@@ -60,8 +61,13 @@ h1, h2, h1, h1 a, h2 a {
     text-decoration: none;
 }
 
+#banner h1 a, #banner h1 > a:visited, #banner h1 a:hover {
+    /* header text color */
+    color: #52B69A;
+}
+
 a, a:visited {
-    color: #312c64;
+    color: #1A759F;
 }
 
 a:hover {
