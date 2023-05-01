@@ -1,10 +1,12 @@
 Title: So I'm releasing a single!
 Date: 2023-05-01 20:00
 Author: Elias Dorneles
+Lang: en
+Slug: so-i-m-releasing-a-single
 
 <center><img width="400" src="{static}/images/cover_tqqesls.jpg" /></center>
 
-I have written a bunch of songs over the years, their lyrics are scribbled down
+I have written a few songs over the years, their lyrics are scribbled down
 on a personal archive and there are some terrible home-made (phone-made!)
 recordings of them laying around, stuff that I've shared with friends and
 family over WhatsApp and the like.
