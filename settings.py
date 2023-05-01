@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
 import os
 
 _locally = os.getenv("USER") in ("elias", "batman")
@@ -53,3 +54,22 @@ PLUGINS = [
     "clean_summary",
     "pelican_alias",
 ]
+
+DEFAULT_LANG = "en"
+
+
+def lang_display_name(lang):
+    try:
+        import langcodes
+        import language_data  # noqa
+    except ImportError:
+        return lang
+    try:
+        return langcodes.get(lang).display_name(lang).title()
+    except KeyError:
+        return lang
+
+
+JINJA_GLOBALS = {
+    "lang_display_name": lang_display_name,
+}

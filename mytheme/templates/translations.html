@@ -1,6 +1,8 @@
 {% if article.translations %}
-Translations: 
+<p>
+    <small>Read this article in:</small>
     {% for translation in article.translations %}
-        <a href="{{ SITEURL }}/{{ translation.url }}">{{ translation.lang }}</a>
+    <a href="{{ SITEURL }}/{{ translation.url }}">{{ lang_display_name(translation.lang) }}</a>
     {% endfor %}
+</p>
 {% endif %}

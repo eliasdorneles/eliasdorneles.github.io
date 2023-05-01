@@ -19,6 +19,8 @@ python_version = "3.11"
 [packages]
 
 pelican = "*"
+langcodes = "*"
+language_data = "*"
 mistune = "*"
 ghp-import = "*"
 "jinja2" = "*"
