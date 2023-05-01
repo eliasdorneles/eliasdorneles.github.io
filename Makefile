@@ -13,7 +13,7 @@ help:
 	@echo "compile  generate site"
 	@echo "server   generate site watching for changes and start server"
 	@echo "clean    removes output and cache directories"
-	@echo "post     start writing new post"
+	@echo "post     start writing new post (alias: make new)"
 	@echo "fix      fix draft file names, after updating a title"
 	@echo "deploy   deploy to Github pages from local content"
 
@@ -38,6 +38,9 @@ server: install compile
 
 post: require_pipenv
 	pipenv run ./posts new
+
+new:
+	make post
 
 fix: require_pipenv
 	pipenv run ./posts rename-drafts
