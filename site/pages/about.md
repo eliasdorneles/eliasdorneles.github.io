@@ -9,8 +9,7 @@ Hello, I'm Elias Dorneles, a human originally from Brazil 🇧🇷️, living in
 I work as a software developer, notably with [Python](https://www.python.org)
 and web technologies. I'm currently studying a humanistic approach to
 psychotherapy called [Transactional
-Analysis](https://www.goodtherapy.org/learn-about-therapy/types/transactional-analysis),
-hoping to become a practicing psychotherapist.
+Analysis](https://www.goodtherapy.org/learn-about-therapy/types/transactional-analysis).
 
 In this blog I write about personal experiences, books I've read, software
 development, opinions about technology and more.

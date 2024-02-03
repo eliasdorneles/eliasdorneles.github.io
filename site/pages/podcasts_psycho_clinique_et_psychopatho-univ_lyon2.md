@@ -1,8 +1,8 @@
 ﻿Title: Podcasts de Psychologie Clinique et Psychopathologie par René Roussillon, Alain Ferrant et Albert Ciccone
 Date: 2021-11-14
-Author: Elias Dorneles
 Slug: podcasts_psycho_clinique_et_psychopatho-univ_lyon2
 Status: hidden
+Template: noheader
 
 <sup>
 Liste des podcasts des cours de Psychologie Clinique et Psychopathologie disponibilisés

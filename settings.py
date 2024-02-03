@@ -5,7 +5,7 @@ import os
 
 _locally = os.getenv("USER") in ("elias", "batman")
 
-SITENAME = "Hopeful Ramble"
+SITENAME = "Elias Dorneles"
 
 SITEURL = "https://eliasdorneles.com"
 
@@ -23,7 +23,7 @@ MENUITEMS = [("Blog", "")]
 # I'm the only author
 AUTHOR_SAVE_AS = ""
 
-TIMEZONE = "America/Sao_Paulo"
+TIMEZONE = "Europe/Paris"
 
 GITHUB_URL = "https://github.com/eliasdorneles"
 
