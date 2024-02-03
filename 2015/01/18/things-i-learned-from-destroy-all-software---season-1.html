@@ -7,8 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="../../../theme/css/pygments.css" type="text/css" />
         <link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
-        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Hopeful Ramble ATOM Feed" />
-        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Hopeful Ramble RSS Feed" />
+        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
+        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
 <script>
 var host = "eliasdorneles.github.io";
 if (window.location.host == host && window.location.protocol != "https:") {
@@ -22,7 +22,7 @@ if (window.location.host == host && window.location.protocol != "https:") {
 
 <div class="site-container">
         <header id="banner" class="body">
-                <h1><a href="../../../index.html">Hopeful Ramble </a></h1>
+                <h1><a href="../../../index.html">Elias Dorneles </a></h1>
                 <nav><ul>
                     <li >
                         <a href="../../../">Blog</a>
@@ -45,7 +45,7 @@ if (window.location.host == host && window.location.protocol != "https:") {
         <address class="vcard author">
             posted by
             <a href="../../../pages/about-me.html">Elias Dorneles</a>
-            on <abbr class="published" title="2015-01-18T10:07:00-02:00">2015, janvier 18</abbr>
+            on <abbr class="published" title="2015-01-18T10:07:00+01:00">2015, janvier 18</abbr>
             <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/things-i-learned-from-destroy-all-software---season-1.md">Edit</a>
         </address>
 </footer>            <p>So, a few weeks ago I purchased and watched the first season of <a href="https://www.destroyallsoftware.com/">Destroy All
@@ -62,8 +62,8 @@ each commit in the repo.  You can, for example, check the evolution of line
 counts over the course of the project (or any other statistic like number of
 tests, number of files, etc). You can also run the tests for every commit in
 the history:</p>
-<div class="highlight"><pre><span></span><code>git rev-list HEAD <span class="p">|</span> <span class="k">while</span> <span class="nb">read</span> rev<span class="p">;</span> <span class="k">do</span>
-   git checkout <span class="nv">$rev</span> <span class="o">&amp;&amp;</span> git clean-fd <span class="o">&amp;&amp;</span> make <span class="nb">test</span>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>rev-list<span class="w"> </span>HEAD<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>rev<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">   </span>git<span class="w"> </span>checkout<span class="w"> </span><span class="nv">$rev</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>clean-fd<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span><span class="nb">test</span>
 <span class="k">done</span>
 </code></pre></div>
 
@@ -104,16 +104,16 @@ my work.</p>
 where N is the job number reported by the command jobs.</p>
 <p>You can use the output of a command as if it were a filename, using
 <code>&lt;(COMMAND)</code>, like so:</p>
-<div class="highlight"><pre><span></span><code>$ diff &lt;<span class="o">(</span><span class="nb">echo</span><span class="o">)</span> &lt;<span class="o">(</span>date<span class="o">)</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>diff<span class="w"> </span>&lt;<span class="o">(</span><span class="nb">echo</span><span class="o">)</span><span class="w"> </span>&lt;<span class="o">(</span>date<span class="o">)</span>
 1c1
-&lt; 
+&lt;<span class="w"> </span>
 ---
-&gt; Sat Jan <span class="m">17</span> <span class="m">18</span>:47:48 BRST <span class="m">2015</span>
+&gt;<span class="w"> </span>Sat<span class="w"> </span>Jan<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">18</span>:47:48<span class="w"> </span>BRST<span class="w"> </span><span class="m">2015</span>
 </code></pre></div>
 
 <p>The shell will run the commands and pass to the program file descriptors
 with the proper contents, which you can verify doing:</p>
-<div class="highlight"><pre><span></span><code>$ <span class="nb">echo</span> &lt;<span class="o">(</span>ls -l<span class="o">)</span> &lt;<span class="o">(</span>ls -l<span class="o">)</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>&lt;<span class="o">(</span>ls<span class="w"> </span>-l<span class="o">)</span><span class="w"> </span>&lt;<span class="o">(</span>ls<span class="w"> </span>-l<span class="o">)</span>
 /dev/fd/63
 /dev/fd/62
 </code></pre></div>
@@ -125,12 +125,12 @@ from other commands.</p>
 make changes, I store its original output in a file and then while refactoring
 I keep comparing the output of the script with the file to see if I'm not
 breaking anything:</p>
-<div class="highlight"><pre><span></span><code><span class="gh">diff &lt;(./my_script) original.txt</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="gh">diff &lt;(./my_script) original.txt</span>
 </code></pre></div>
 
 <p>It can also be useful to see differences between two different versions of
 the same web application or sites:</p>
-<div class="highlight"><pre><span></span><code><span class="gh">diff &lt;(curl -s http://somesite.com) &lt;(curl -s http://anothersite.com)</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="gh">diff &lt;(curl -s http://somesite.com) &lt;(curl -s http://anothersite.com)</span>
 </code></pre></div>
 
 <h3>About vim:</h3>
@@ -168,9 +168,6 @@ dotfiles</a>.</p>
         <hr />
         <footer class="footer-menu">
             <a href="#top">Back to the top</a>
-            <hr />
-            <div class="rc-scout"></div>
-            <script async defer src="https://www.recurse-scout.com/loader.js?t=5372463d63166734808f47d8eb0124cb"></script>
         </footer>
 </div>
 

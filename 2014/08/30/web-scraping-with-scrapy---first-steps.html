@@ -7,8 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="../../../theme/css/pygments.css" type="text/css" />
         <link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
-        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Hopeful Ramble ATOM Feed" />
-        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Hopeful Ramble RSS Feed" />
+        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
+        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
 <script>
 var host = "eliasdorneles.github.io";
 if (window.location.host == host && window.location.protocol != "https:") {
@@ -22,7 +22,7 @@ if (window.location.host == host && window.location.protocol != "https:") {
 
 <div class="site-container">
         <header id="banner" class="body">
-                <h1><a href="../../../index.html">Hopeful Ramble </a></h1>
+                <h1><a href="../../../index.html">Elias Dorneles </a></h1>
                 <nav><ul>
                     <li >
                         <a href="../../../">Blog</a>
@@ -45,7 +45,7 @@ if (window.location.host == host && window.location.protocol != "https:") {
         <address class="vcard author">
             posted by
             <a href="../../../pages/about-me.html">Elias Dorneles</a>
-            on <abbr class="published" title="2014-08-30T19:29:00-03:00">2014, août 30</abbr>
+            on <abbr class="published" title="2014-08-30T19:29:00+02:00">2014, août 30</abbr>
             <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/web-scraping-with-scrapy---first-steps.md">Edit</a>
         </address>
 </footer>            <p><strong>Update:</strong> This tutorial isn't up to date with the latest and greatest of Scrapy. You should follow <a href="https://docs.scrapy.org/en/latest/intro/overview.html">the official documentation instead</a>, I've worked together with other Scrapy developers to make it better. I'm leaving this article online for archival purposes only.</p>
@@ -139,7 +139,7 @@ and give it a name using thename attribute:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
 
 <span class="k">class</span> <span class="nc">MinimalSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;The smallest Scrapy-Spider in the world!&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The smallest Scrapy-Spider in the world!&quot;&quot;&quot;</span>
     <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;minimal&#39;</span>
 </code></pre></div>
 
@@ -161,7 +161,7 @@ first requests to be done for the spider.</p>
 <p>Adding this element to our minimal spider, we have:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
 <span class="k">class</span> <span class="nc">MinimalSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;The smallest Scrapy-Spider of the world, maybe&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The smallest Scrapy-Spider of the world, maybe&quot;&quot;&quot;</span>
 
     <span class="n">name</span><span class="o">=</span><span class="s1">&#39;minimal&#39;</span>
 
@@ -184,13 +184,13 @@ generator</a>.</p>
 <p>If you have tried to execute the example like it is now, you may noticed that
 there is something still missing, because Scrapy will show two messages marked
 as ERROR, complaining that a method was not implemented:</p>
-<div class="highlight"><pre><span></span><code>...
- File
-&quot;/home/elias/.virtualenvs/scrapy/local/lib/python2.7/site-packages/scrapy/spider.py&quot;,
-line 56, in parse
+<div class="highlight"><pre><span></span><code><span class="o">...</span>
+<span class="w"> </span><span class="nx">File</span>
+<span class="s">&quot;/home/elias/.virtualenvs/scrapy/local/lib/python2.7/site-packages/scrapy/spider.py&quot;</span><span class="p">,</span>
+<span class="nx">line</span><span class="w"> </span><span class="mi">56</span><span class="p">,</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">parse</span>
 
-   raise NotImplementedError
-exceptions.NotImplementedError:
+<span class="w">   </span><span class="nx">raise</span><span class="w"> </span><span class="nx">NotImplementedError</span>
+<span class="nx">exceptions</span><span class="p">.</span><span class="nx">NotImplementedError</span><span class="p">:</span>
 </code></pre></div>
 
 <p>This happens because, as we didn't register a callback for the Request objects,
@@ -200,7 +200,7 @@ execute it:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
 
 <span class="k">class</span> <span class="nc">MinimalSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;The 2nd smallest Scrapy-Spider of the world!&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The 2nd smallest Scrapy-Spider of the world!&quot;&quot;&quot;</span>
 
     <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;minimal&#39;</span>
 
@@ -214,11 +214,11 @@ execute it:</p>
 
 <p>Now, when you execute it using the command:scrapy runspider minimal.py you
 should see something like this in the output:</p>
-<div class="highlight"><pre><span></span><code><span class="mi">2014</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">26</span><span class="w"> </span><span class="mi">15</span><span class="err">:</span><span class="mi">39</span><span class="err">:</span><span class="mi">56</span><span class="o">-</span><span class="mi">0300</span><span class="w"> </span><span class="o">[</span><span class="n">minimal</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">Crawled</span><span class="w"> </span><span class="p">(</span><span class="mi">200</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="k">GET</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">google</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">br</span><span class="o">/</span><span class="vm">?</span><span class="n">gfe_rd</span><span class="o">=</span><span class="n">cr</span><span class="o">&amp;</span><span class="n">ei</span><span class="o">=</span><span class="n">_PXTU8f6N4mc8Aas1YDABA</span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="nl">referer</span><span class="p">:</span><span class="w"> </span><span class="k">None</span><span class="p">)</span><span class="w"></span>
-<span class="mi">2014</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">26</span><span class="w"> </span><span class="mi">15</span><span class="err">:</span><span class="mi">39</span><span class="err">:</span><span class="mi">56</span><span class="o">-</span><span class="mi">0300</span><span class="w"> </span><span class="o">[</span><span class="n">minimal</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">GETTING</span><span class="w"> </span><span class="nl">URL</span><span class="p">:</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">google</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">br</span><span class="o">/</span><span class="vm">?</span><span class="n">gfe_rd</span><span class="o">=</span><span class="n">cr</span><span class="o">&amp;</span><span class="n">ei</span><span class="o">=</span><span class="n">_PXTU8f6N4mc8Aas1YDABA</span><span class="w"></span>
-<span class="mi">2014</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">26</span><span class="w"> </span><span class="mi">15</span><span class="err">:</span><span class="mi">39</span><span class="err">:</span><span class="mi">57</span><span class="o">-</span><span class="mi">0300</span><span class="w"> </span><span class="o">[</span><span class="n">minimal</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">Redirecting</span><span class="w"> </span><span class="p">(</span><span class="mi">302</span><span class="p">)</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="o">&lt;</span><span class="k">GET</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">br</span><span class="p">.</span><span class="n">yahoo</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="vm">?</span><span class="n">p</span><span class="o">=</span><span class="n">us</span><span class="o">&gt;</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="o">&lt;</span><span class="k">GET</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">yahoo</span><span class="p">.</span><span class="n">com</span><span class="o">/&gt;</span><span class="w"></span>
-<span class="mi">2014</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">26</span><span class="w"> </span><span class="mi">15</span><span class="err">:</span><span class="mi">39</span><span class="err">:</span><span class="mi">58</span><span class="o">-</span><span class="mi">0300</span><span class="w"> </span><span class="o">[</span><span class="n">minimal</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">Crawled</span><span class="w"> </span><span class="p">(</span><span class="mi">200</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="k">GET</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">br</span><span class="p">.</span><span class="n">yahoo</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="vm">?</span><span class="n">p</span><span class="o">=</span><span class="n">us</span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="nl">referer</span><span class="p">:</span><span class="w"> </span><span class="k">None</span><span class="p">)</span><span class="w"></span>
-<span class="mi">2014</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">26</span><span class="w"> </span><span class="mi">15</span><span class="err">:</span><span class="mi">39</span><span class="err">:</span><span class="mi">58</span><span class="o">-</span><span class="mi">0300</span><span class="w"> </span><span class="o">[</span><span class="n">minimal</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">GETTING</span><span class="w"> </span><span class="nl">URL</span><span class="p">:</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">br</span><span class="p">.</span><span class="n">yahoo</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="vm">?</span><span class="n">p</span><span class="o">=</span><span class="n">us</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="mi">2014</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">26</span><span class="w"> </span><span class="mi">15</span><span class="err">:</span><span class="mi">39</span><span class="err">:</span><span class="mi">56</span><span class="o">-</span><span class="mi">0300</span><span class="w"> </span><span class="o">[</span><span class="n">minimal</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">Crawled</span><span class="w"> </span><span class="p">(</span><span class="mi">200</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="k">GET</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">google</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">br</span><span class="o">/</span><span class="vm">?</span><span class="n">gfe_rd</span><span class="o">=</span><span class="n">cr</span><span class="o">&amp;</span><span class="n">ei</span><span class="o">=</span><span class="n">_PXTU8f6N4mc8Aas1YDABA</span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="nl">referer</span><span class="p">:</span><span class="w"> </span><span class="k">None</span><span class="p">)</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">26</span><span class="w"> </span><span class="mi">15</span><span class="err">:</span><span class="mi">39</span><span class="err">:</span><span class="mi">56</span><span class="o">-</span><span class="mi">0300</span><span class="w"> </span><span class="o">[</span><span class="n">minimal</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">GETTING</span><span class="w"> </span><span class="nl">URL</span><span class="p">:</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">google</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">br</span><span class="o">/</span><span class="vm">?</span><span class="n">gfe_rd</span><span class="o">=</span><span class="n">cr</span><span class="o">&amp;</span><span class="n">ei</span><span class="o">=</span><span class="n">_PXTU8f6N4mc8Aas1YDABA</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">26</span><span class="w"> </span><span class="mi">15</span><span class="err">:</span><span class="mi">39</span><span class="err">:</span><span class="mi">57</span><span class="o">-</span><span class="mi">0300</span><span class="w"> </span><span class="o">[</span><span class="n">minimal</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">Redirecting</span><span class="w"> </span><span class="p">(</span><span class="mi">302</span><span class="p">)</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="o">&lt;</span><span class="k">GET</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">br</span><span class="p">.</span><span class="n">yahoo</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="vm">?</span><span class="n">p</span><span class="o">=</span><span class="n">us</span><span class="o">&gt;</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="o">&lt;</span><span class="k">GET</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">yahoo</span><span class="p">.</span><span class="n">com</span><span class="o">/&gt;</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">26</span><span class="w"> </span><span class="mi">15</span><span class="err">:</span><span class="mi">39</span><span class="err">:</span><span class="mi">58</span><span class="o">-</span><span class="mi">0300</span><span class="w"> </span><span class="o">[</span><span class="n">minimal</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">Crawled</span><span class="w"> </span><span class="p">(</span><span class="mi">200</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="k">GET</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">br</span><span class="p">.</span><span class="n">yahoo</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="vm">?</span><span class="n">p</span><span class="o">=</span><span class="n">us</span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="nl">referer</span><span class="p">:</span><span class="w"> </span><span class="k">None</span><span class="p">)</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">26</span><span class="w"> </span><span class="mi">15</span><span class="err">:</span><span class="mi">39</span><span class="err">:</span><span class="mi">58</span><span class="o">-</span><span class="mi">0300</span><span class="w"> </span><span class="o">[</span><span class="n">minimal</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">GETTING</span><span class="w"> </span><span class="nl">URL</span><span class="p">:</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">br</span><span class="p">.</span><span class="n">yahoo</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="vm">?</span><span class="n">p</span><span class="o">=</span><span class="n">us</span>
 </code></pre></div>
 
 <p>To make our code even cleaner, we can take advantage of the default
@@ -229,7 +229,7 @@ reduce the code, using:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
 
 <span class="k">class</span> <span class="nc">MinimalSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A menor Scrapy-Aranha do mundo!&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A menor Scrapy-Aranha do mundo!&quot;&quot;&quot;</span>
     <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;minimal&#39;</span>
 
     <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span>
@@ -366,17 +366,17 @@ to explore. The most important object is the variable <code>response</code>, whi
 the response of the HTTP request and corresponds to theresponse argument
 received by the callbacks.</p>
 <p><center><img width="500" alt="Happy dog: dude!! it even has a shell!! love the shell! love the shell! love the shell!" src="https://lh3.googleusercontent.com/kdW_fmpWTyloxYfesyGVQdB-rx54lM-r1LIptocDvhxd6TsJ3__w4mWXMHI6o8SXvaO3tN19HhIf9kZ7iwZTztRpdF8g6HoHNA6aer7E-mk8jlM63o8taJVdPSA9EooORg" /></center></p>
-<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="nt">response</span><span class="p">.</span><span class="nc">url</span><span class="w"></span>
-<span class="s1">&#39;http://stackoverflow.com&#39;</span><span class="w"></span>
-<span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="nt">response</span><span class="p">.</span><span class="nc">headers</span><span class="w"></span>
-<span class="p">{</span><span class="err">&#39;Cache-Control&#39;:&#39;public,</span><span class="w"> </span><span class="err">no-cache=&quot;Set-Cookie&quot;,</span><span class="w"> </span><span class="err">max-age=49&#39;,</span><span class="w"></span>
-<span class="err">&#39;Content-Type&#39;:&#39;text/html</span><span class="p">;</span><span class="w"> </span><span class="err">charset=utf-8&#39;,</span><span class="w"></span>
-<span class="err">&#39;Date&#39;:&#39;Sat,</span><span class="w"> </span><span class="err">09</span><span class="w"> </span><span class="err">Aug</span><span class="w"> </span><span class="err">2014</span><span class="w"> </span><span class="err">03:47:31</span><span class="w"> </span><span class="err">GMT&#39;,</span><span class="w"></span>
-<span class="err">&#39;Expires&#39;:&#39;Sat,</span><span class="w"> </span><span class="err">09</span><span class="w"> </span><span class="err">Aug</span><span class="w"> </span><span class="err">2014</span><span class="w"> </span><span class="err">03:48:20</span><span class="w"> </span><span class="err">GMT&#39;,</span><span class="w"></span>
-<span class="err">&#39;Last-Modified&#39;:&#39;Sat,</span><span class="w"> </span><span class="err">09</span><span class="w"> </span><span class="err">Aug</span><span class="w"> </span><span class="err">2014</span><span class="w"> </span><span class="err">03:47:20</span><span class="w"> </span><span class="err">GMT&#39;,</span><span class="w"></span>
-<span class="err">&#39;Set-Cookie&#39;:&#39;prov=5a8741f7-7ee3-4993-b723-72142d48696c</span><span class="p">;</span><span class="w"> </span><span class="err">domain=.stackoverflow.com</span><span class="p">;</span><span class="w"> </span><span class="err">expires=Fri,</span><span class="w"> </span><span class="err">01-Jan-2055</span><span class="w"> </span><span class="err">00:00:00</span><span class="w"> </span><span class="err">GMT</span><span class="p">;</span><span class="w"> </span><span class="err">path=/</span><span class="p">;</span><span class="w"> </span><span class="err">HttpOnly&#39;,</span><span class="w"></span>
-<span class="err">&#39;Vary&#39;:&#39;*&#39;,</span><span class="w"></span>
-<span class="err">&#39;X-Frame-Options&#39;:&#39;SAMEORIGIN&#39;</span><span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="nt">response</span><span class="p">.</span><span class="nc">url</span>
+<span class="s1">&#39;http://stackoverflow.com&#39;</span>
+<span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="nt">response</span><span class="p">.</span><span class="nc">headers</span>
+<span class="p">{</span><span class="err">&#39;Cache-Control&#39;:&#39;public,</span><span class="w"> </span><span class="err">no-cache=&quot;Set-Cookie&quot;,</span><span class="w"> </span><span class="err">max-age=49&#39;,</span>
+<span class="err">&#39;Content-Type&#39;:&#39;text/html</span><span class="p">;</span><span class="w"> </span><span class="err">charset=utf-8&#39;,</span>
+<span class="err">&#39;Date&#39;:&#39;Sat,</span><span class="w"> </span><span class="err">09</span><span class="w"> </span><span class="err">Aug</span><span class="w"> </span><span class="err">2014</span><span class="w"> </span><span class="err">03:47:31</span><span class="w"> </span><span class="err">GMT&#39;,</span>
+<span class="err">&#39;Expires&#39;:&#39;Sat,</span><span class="w"> </span><span class="err">09</span><span class="w"> </span><span class="err">Aug</span><span class="w"> </span><span class="err">2014</span><span class="w"> </span><span class="err">03:48:20</span><span class="w"> </span><span class="err">GMT&#39;,</span>
+<span class="err">&#39;Last-Modified&#39;:&#39;Sat,</span><span class="w"> </span><span class="err">09</span><span class="w"> </span><span class="err">Aug</span><span class="w"> </span><span class="err">2014</span><span class="w"> </span><span class="err">03:47:20</span><span class="w"> </span><span class="err">GMT&#39;,</span>
+<span class="err">&#39;Set-Cookie&#39;:&#39;prov=5a8741f7-7ee3-4993-b723-72142d48696c</span><span class="p">;</span><span class="w"> </span><span class="err">domain=.stackoverflow.com</span><span class="p">;</span><span class="w"> </span><span class="err">expires=Fri,</span><span class="w"> </span><span class="err">01-Jan-2055</span><span class="w"> </span><span class="err">00:00:00</span><span class="w"> </span><span class="err">GMT</span><span class="p">;</span><span class="w"> </span><span class="err">path=/</span><span class="p">;</span><span class="w"> </span><span class="err">HttpOnly&#39;,</span>
+<span class="err">&#39;Vary&#39;:&#39;*&#39;,</span>
+<span class="err">&#39;X-Frame-Options&#39;:&#39;SAMEORIGIN&#39;</span><span class="p">}</span>
 </code></pre></div>
 
 <p>You can use the <code>xpath()</code> and <code>css()</code> methods of the <code>response</code> object to query
@@ -399,15 +399,15 @@ in the scope of each selector.</p>
 clearing up things a little bit.</p>
 <p>Extracts HTML content from <code>&lt;title&gt;</code> element, calling the <code>extract()</code> method
 from the selector list (note that the result is a Python list):</p>
-<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; response.xpath(&#39;//title&#39;).extract()
-[u&#39;<span class="nt">&lt;title&gt;</span>Stack Overflow<span class="nt">&lt;/title&gt;</span>&#39;]
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt;<span class="w"> </span>response.xpath(&#39;//title&#39;).extract()
+[u&#39;<span class="nt">&lt;title&gt;</span>Stack<span class="w"> </span>Overflow<span class="nt">&lt;/title&gt;</span>&#39;]
 </code></pre></div>
 
 <p>Stores the first selector of the result in a variable and calls the <code>extract()</code>
 method on the selector (see how the result now is just a string):</p>
-<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; title_sel= response.xpath(&#39;//title&#39;)[0]
-&gt;&gt;&gt; title_sel.extract()
-u&#39;<span class="nt">&lt;title&gt;</span>Stack Overflow<span class="nt">&lt;/title&gt;</span>&#39;
+<div class="highlight"><pre><span></span><code>&gt;&gt;&gt;<span class="w"> </span>title_sel=<span class="w"> </span>response.xpath(&#39;//title&#39;)[0]
+&gt;&gt;&gt;<span class="w"> </span>title_sel.extract()
+u&#39;<span class="nt">&lt;title&gt;</span>Stack<span class="w"> </span>Overflow<span class="nt">&lt;/title&gt;</span>&#39;
 </code></pre></div>
 
 <p>Applies the XPath expression <code>text()</code> to get the text content of the selector,
@@ -482,16 +482,16 @@ command:</p>
 <p>If everything went well, Scrapy will show in the screen the scraped items and
 also write a file namedquestions.json containing them. At the end of the
 output, you should see some stats, including the item scraped count:</p>
-<div class="highlight"><pre><span></span><code><span class="mi">2014</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">02</span><span class="w"> </span><span class="mi">14</span><span class="p">:</span><span class="mi">27</span><span class="p">:</span><span class="mi">37</span><span class="o">-</span><span class="mi">0300</span><span class="w"> </span><span class="p">[</span><span class="n">so</span><span class="o">-</span><span class="n">top</span><span class="o">-</span><span class="n">questions</span><span class="p">]</span><span class="w"> </span><span class="n">INFO</span><span class="p">:</span><span class="w"> </span><span class="n">Dumping</span><span class="w"> </span><span class="n">Scrapy</span><span class="w"> </span><span class="n">stats</span><span class="p">:</span><span class="w"></span>
-<span class="w"> </span><span class="p">{</span><span class="s1">&#39;downloader/request_bytes&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">242</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="s1">&#39;downloader/request_count&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="o">...</span><span class="w"></span>
-<span class="w">  </span><span class="s1">&#39;item_scraped_count&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="s1">&#39;log_count/DEBUG&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">53</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="s1">&#39;log_count/INFO&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="o">...</span><span class="w"></span>
-<span class="w">  </span><span class="s1">&#39;start_time&#39;</span><span class="p">:</span><span class="w"> </span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w"> </span><span class="mi">36</span><span class="p">,</span><span class="w"> </span><span class="mi">912002</span><span class="p">)}</span><span class="w"></span>
-<span class="mi">2014</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">02</span><span class="w"> </span><span class="mi">14</span><span class="p">:</span><span class="mi">27</span><span class="p">:</span><span class="mi">37</span><span class="o">-</span><span class="mi">0300</span><span class="w"> </span><span class="p">[</span><span class="n">so</span><span class="o">-</span><span class="n">top</span><span class="o">-</span><span class="n">questions</span><span class="p">]</span><span class="w"> </span><span class="n">INFO</span><span class="p">:</span><span class="w"> </span><span class="n">Spider</span><span class="w"> </span><span class="n">closed</span><span class="w"> </span><span class="p">(</span><span class="n">finished</span><span class="p">)</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="mi">2014</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">02</span><span class="w"> </span><span class="mi">14</span><span class="p">:</span><span class="mi">27</span><span class="p">:</span><span class="mi">37</span><span class="o">-</span><span class="mi">0300</span><span class="w"> </span><span class="p">[</span><span class="n">so</span><span class="o">-</span><span class="n">top</span><span class="o">-</span><span class="n">questions</span><span class="p">]</span><span class="w"> </span><span class="n">INFO</span><span class="p">:</span><span class="w"> </span><span class="n">Dumping</span><span class="w"> </span><span class="n">Scrapy</span><span class="w"> </span><span class="n">stats</span><span class="p">:</span>
+<span class="w"> </span><span class="p">{</span><span class="s1">&#39;downloader/request_bytes&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">242</span><span class="p">,</span>
+<span class="w">  </span><span class="s1">&#39;downloader/request_count&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="o">...</span>
+<span class="w">  </span><span class="s1">&#39;item_scraped_count&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span>
+<span class="w">  </span><span class="s1">&#39;log_count/DEBUG&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">53</span><span class="p">,</span>
+<span class="w">  </span><span class="s1">&#39;log_count/INFO&#39;</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span>
+<span class="w">  </span><span class="o">...</span>
+<span class="w">  </span><span class="s1">&#39;start_time&#39;</span><span class="p">:</span><span class="w"> </span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2014</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w"> </span><span class="mi">27</span><span class="p">,</span><span class="w"> </span><span class="mi">36</span><span class="p">,</span><span class="w"> </span><span class="mi">912002</span><span class="p">)}</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">02</span><span class="w"> </span><span class="mi">14</span><span class="p">:</span><span class="mi">27</span><span class="p">:</span><span class="mi">37</span><span class="o">-</span><span class="mi">0300</span><span class="w"> </span><span class="p">[</span><span class="n">so</span><span class="o">-</span><span class="n">top</span><span class="o">-</span><span class="n">questions</span><span class="p">]</span><span class="w"> </span><span class="n">INFO</span><span class="p">:</span><span class="w"> </span><span class="n">Spider</span><span class="w"> </span><span class="n">closed</span><span class="w"> </span><span class="p">(</span><span class="n">finished</span><span class="p">)</span>
 </code></pre></div>
 
 <blockquote>
@@ -571,7 +571,7 @@ experience.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="n">articles_url</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Gets the page with the article list,</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Gets the page with the article list,</span>
 <span class="sd">        find the article links and generates</span>
 <span class="sd">        requests for each article page</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -586,7 +586,7 @@ experience.</p>
                                  <span class="bp">self</span><span class="o">.</span><span class="n">extract_article</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">extract_article</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Gets the article page and extract</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Gets the article page and extract</span>
 <span class="sd">        an item with the article data</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">article</span> <span class="o">=</span> <span class="n">Article</span><span class="p">()</span>
@@ -688,9 +688,6 @@ and a lot more.</p>
         <hr />
         <footer class="footer-menu">
             <a href="#top">Back to the top</a>
-            <hr />
-            <div class="rc-scout"></div>
-            <script async defer src="https://www.recurse-scout.com/loader.js?t=5372463d63166734808f47d8eb0124cb"></script>
         </footer>
 </div>
 

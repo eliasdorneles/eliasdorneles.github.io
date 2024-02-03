@@ -7,8 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="../../../theme/css/pygments.css" type="text/css" />
         <link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
-        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Hopeful Ramble ATOM Feed" />
-        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Hopeful Ramble RSS Feed" />
+        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
+        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
 <script>
 var host = "eliasdorneles.github.io";
 if (window.location.host == host && window.location.protocol != "https:") {
@@ -22,7 +22,7 @@ if (window.location.host == host && window.location.protocol != "https:") {
 
 <div class="site-container">
         <header id="banner" class="body">
-                <h1><a href="../../../index.html">Hopeful Ramble </a></h1>
+                <h1><a href="../../../index.html">Elias Dorneles </a></h1>
                 <nav><ul>
                     <li >
                         <a href="../../../">Blog</a>
@@ -45,7 +45,7 @@ if (window.location.host == host && window.location.protocol != "https:") {
         <address class="vcard author">
             posted by
             <a href="../../../pages/about-me.html">Elias Dorneles</a>
-            on <abbr class="published" title="2013-07-28T10:12:00-03:00">2013, juillet 28</abbr>
+            on <abbr class="published" title="2013-07-28T10:12:00+02:00">2013, juillet 28</abbr>
             <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/programming-grails----a-aventura-continua.md">Edit</a>
         </address>
 </footer>            <p>Alguns dias atrás terminei de ler o <em><a href="http://shop.oreilly.com/product/0636920024750.do" title="Programming Grails - OReilly">Programming
@@ -92,30 +92,30 @@ bastante utilizada para criar as <a href="https://pt.wikipedia.org/wiki/Linguage
 em Grails, tipo as que você usa nos blocos <em>mapping</em> e <em>constraints</em>
 numa classe de domínio.</p>
 <p>Segue um exemplo pra ajudar a entender:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nc">OutraClasse</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">def</span><span class="w"> </span><span class="n">metodoDaOutraClasse</span><span class="o">()</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">println</span><span class="w"> </span><span class="s2">&quot;metodoDaOutraClasse()&quot;</span><span class="w"></span>
-<span class="w">        </span><span class="o">}</span><span class="w"></span>
-<span class="w">    </span><span class="o">}</span><span class="w"></span>
-<span class="w">    </span><span class="kd">class</span><span class="w"> </span><span class="nc">ClasseMae</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
-<span class="w">        </span><span class="kt">def</span><span class="w"> </span><span class="n">minhaClosure</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
-<span class="w">            </span><span class="kt">def</span><span class="w"> </span><span class="n">subClosure</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span><span class="w"></span>
-<span class="w">                </span><span class="n">println</span><span class="w"> </span><span class="s2">&quot;this: ${this.class}&quot;</span><span class="w"></span>
-<span class="w">                </span><span class="n">println</span><span class="w"> </span><span class="s2">&quot;owner: ${owner.class}&quot;</span><span class="w"></span>
-<span class="w">                </span><span class="n">println</span><span class="w"> </span><span class="s2">&quot;delegate: ${delegate.class}&quot;</span><span class="w"></span>
-<span class="w">                </span><span class="n">metodoDaOutraClasse</span><span class="o">()</span><span class="w"></span>
-<span class="w">            </span><span class="o">}</span><span class="w"></span>
-<span class="w">        </span><span class="n">subClosure</span><span class="o">.</span><span class="na">delegate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">OutraClasse</span><span class="o">()</span><span class="w"></span>
-<span class="w">        </span><span class="n">subClosure</span><span class="o">()</span><span class="w"></span>
-<span class="w">    </span><span class="o">}</span><span class="w"></span>
-<span class="o">}</span><span class="w"></span>
-<span class="k">new</span><span class="w"> </span><span class="n">ClasseMae</span><span class="o">().</span><span class="na">minhaClosure</span><span class="o">()</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nc">OutraClasse</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="kt">def</span><span class="w"> </span><span class="n">metodoDaOutraClasse</span><span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="n">println</span><span class="w"> </span><span class="s2">&quot;metodoDaOutraClasse()&quot;</span>
+<span class="w">        </span><span class="o">}</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="w">    </span><span class="kd">class</span><span class="w"> </span><span class="nc">ClasseMae</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span><span class="kt">def</span><span class="w"> </span><span class="n">minhaClosure</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>
+<span class="w">            </span><span class="kt">def</span><span class="w"> </span><span class="n">subClosure</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>
+<span class="w">                </span><span class="n">println</span><span class="w"> </span><span class="s2">&quot;this: ${this.class}&quot;</span>
+<span class="w">                </span><span class="n">println</span><span class="w"> </span><span class="s2">&quot;owner: ${owner.class}&quot;</span>
+<span class="w">                </span><span class="n">println</span><span class="w"> </span><span class="s2">&quot;delegate: ${delegate.class}&quot;</span>
+<span class="w">                </span><span class="n">metodoDaOutraClasse</span><span class="o">()</span>
+<span class="w">            </span><span class="o">}</span>
+<span class="w">        </span><span class="n">subClosure</span><span class="o">.</span><span class="na">delegate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">OutraClasse</span><span class="o">()</span>
+<span class="w">        </span><span class="n">subClosure</span><span class="o">()</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="o">}</span>
+<span class="k">new</span><span class="w"> </span><span class="n">ClasseMae</span><span class="o">().</span><span class="na">minhaClosure</span><span class="o">()</span>
 </code></pre></div>
 
 <p>Nesse exemplo, por causa da redefinição do delegate da <em>subClosure()</em>,
 podemos chamar métodos da <em>OutraClasse</em> dentro dele. O resultado de
 rodar esse código é:</p>
-<div class="highlight"><pre><span></span><code><span class="k">this</span><span class="o">:</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="n">ClasseMaeowner</span><span class="o">:</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="n">ClasseMae$_closure1delegate</span><span class="o">:</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="n">OutraClassemetodoDaOutraClasse</span><span class="o">()</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">this</span><span class="o">:</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="n">ClasseMaeowner</span><span class="o">:</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="n">ClasseMae$_closure1delegate</span><span class="o">:</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="n">OutraClassemetodoDaOutraClasse</span><span class="o">()</span>
 </code></pre></div>
 
 <p>Recomendo assistir a palestra <a href="http://gr8conf.eu/Presentations/Functional-Programming-in-Groo">Functional Programming in
@@ -265,7 +265,7 @@ dizer aqui alguns pontos muito importantes que todo mundo usando Grails
 precisa ficar ligado:</p>
 <p><strong>1)</strong> Considere configurar o codec de HTML por padrão para as páginas
 GSP, no <em>Config.groovy</em>:</p>
-<div class="highlight"><pre><span></span><code><span class="n">grails</span><span class="o">.</span><span class="na">views</span><span class="o">.</span><span class="na">default</span><span class="o">.</span><span class="na">codec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;html&#39;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">grails</span><span class="o">.</span><span class="na">views</span><span class="o">.</span><span class="na">default</span><span class="o">.</span><span class="na">codec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;html&#39;</span>
 </code></pre></div>
 
 <p>Dessa forma, as variáveis usadas nas páginas GSP serão escapadas com
@@ -347,9 +347,6 @@ logo depois de pegar o jeito já pode partir para o <em>Programming Grails</em>
         <hr />
         <footer class="footer-menu">
             <a href="#top">Back to the top</a>
-            <hr />
-            <div class="rc-scout"></div>
-            <script async defer src="https://www.recurse-scout.com/loader.js?t=5372463d63166734808f47d8eb0124cb"></script>
         </footer>
 </div>
 

@@ -7,8 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="../../../theme/css/pygments.css" type="text/css" />
         <link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
-        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Hopeful Ramble ATOM Feed" />
-        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Hopeful Ramble RSS Feed" />
+        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
+        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
 <script>
 var host = "eliasdorneles.github.io";
 if (window.location.host == host && window.location.protocol != "https:") {
@@ -22,7 +22,7 @@ if (window.location.host == host && window.location.protocol != "https:") {
 
 <div class="site-container">
         <header id="banner" class="body">
-                <h1><a href="../../../index.html">Hopeful Ramble </a></h1>
+                <h1><a href="../../../index.html">Elias Dorneles </a></h1>
                 <nav><ul>
                     <li >
                         <a href="../../../">Blog</a>
@@ -45,7 +45,7 @@ if (window.location.host == host && window.location.protocol != "https:") {
         <address class="vcard author">
             posted by
             <a href="../../../pages/about-me.html">Elias Dorneles</a>
-            on <abbr class="published" title="2016-06-19T00:29:00-03:00">2016, juin 19</abbr>
+            on <abbr class="published" title="2016-06-19T00:29:00+02:00">2016, juin 19</abbr>
             <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/on-getting-productive-with-git.md">Edit</a>
         </address>
 </footer>            <p>I remember the first time I submitted a pull request in GitHub and some
@@ -149,12 +149,12 @@ you can undo it with:</p>
 <p>If you've tried doing a rebase or some other command that rewrote the commit history
 and you want to undo it, you can use something called the reference log (or, <code>reflog</code>).
 Try running <code>git reflog</code> in a Git repository, you'll see something like this:</p>
-<div class="highlight"><pre><span></span><code><span class="mf">26</span><span class="n">e15cf</span><span class="w"> </span><span class="n">HEAD</span><span class="err">@{</span><span class="mf">0</span><span class="err">}</span><span class="p">:</span><span class="w"> </span><span class="n">rebase</span><span class="w"> </span><span class="n">finished</span><span class="p">:</span><span class="w"> </span><span class="kr">return</span><span class="n">ing</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="n">refs</span><span class="o">/</span><span class="n">heads</span><span class="o">/</span><span class="n">master</span><span class="w"></span>
-<span class="mf">26</span><span class="n">e15cf</span><span class="w"> </span><span class="n">HEAD</span><span class="err">@{</span><span class="mf">1</span><span class="err">}</span><span class="p">:</span><span class="w"> </span><span class="n">pull</span><span class="w"> </span><span class="o">--</span><span class="n">rebase</span><span class="p">:</span><span class="w"> </span><span class="n">moving</span><span class="w"> </span><span class="n">basic</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="err">~</span><span class="o">/</span><span class="mf">.</span><span class="n">profile</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="n">work</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">gnome</span><span class="w"> </span><span class="n">apps</span><span class="w"></span>
-<span class="n">f993d5c</span><span class="w"> </span><span class="n">HEAD</span><span class="err">@{</span><span class="mf">2</span><span class="err">}</span><span class="p">:</span><span class="w"> </span><span class="n">pull</span><span class="w"> </span><span class="o">--</span><span class="n">rebase</span><span class="p">:</span><span class="w"> </span><span class="n">checkout</span><span class="w"> </span><span class="n">f993d5cc3d6df6ce9f5c083ebf17d45b9c7e9130</span><span class="w"></span>
-<span class="n">b517509</span><span class="w"> </span><span class="n">HEAD</span><span class="err">@{</span><span class="mf">3</span><span class="err">}</span><span class="p">:</span><span class="w"> </span><span class="n">pull</span><span class="p">:</span><span class="w"> </span><span class="n">Merge</span><span class="w"> </span><span class="n">made</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="err">&#39;</span><span class="n">recursive</span><span class="err">&#39;</span><span class="w"> </span><span class="n">strategy</span><span class="mf">.</span><span class="w"></span>
-<span class="mf">29438</span><span class="n">f2</span><span class="w"> </span><span class="n">HEAD</span><span class="err">@{</span><span class="mf">4</span><span class="err">}</span><span class="p">:</span><span class="w"> </span><span class="n">commit</span><span class="p">:</span><span class="w"> </span><span class="n">moving</span><span class="w"> </span><span class="n">basic</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="err">~</span><span class="o">/</span><span class="mf">.</span><span class="n">profile</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="n">work</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">gnome</span><span class="w"> </span><span class="n">apps</span><span class="w"></span>
-<span class="n">a000618</span><span class="w"> </span><span class="n">HEAD</span><span class="err">@{</span><span class="mf">5</span><span class="err">}</span><span class="p">:</span><span class="w"> </span><span class="n">clone</span><span class="p">:</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">git</span><span class="err">@</span><span class="n">github</span><span class="mf">.</span><span class="n">com</span><span class="p">:</span><span class="n">eliasdorneles</span><span class="o">/</span><span class="n">dotfiles</span><span class="mf">.</span><span class="n">git</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="mf">26</span><span class="n">e15cf</span><span class="w"> </span><span class="n">HEAD</span><span class="err">@{</span><span class="mf">0</span><span class="err">}</span><span class="p">:</span><span class="w"> </span><span class="n">rebase</span><span class="w"> </span><span class="n">finished</span><span class="p">:</span><span class="w"> </span><span class="kr">return</span><span class="n">ing</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="n">refs</span><span class="o">/</span><span class="n">heads</span><span class="o">/</span><span class="n">master</span>
+<span class="mf">26</span><span class="n">e15cf</span><span class="w"> </span><span class="n">HEAD</span><span class="err">@{</span><span class="mf">1</span><span class="err">}</span><span class="p">:</span><span class="w"> </span><span class="n">pull</span><span class="w"> </span><span class="o">--</span><span class="n">rebase</span><span class="p">:</span><span class="w"> </span><span class="n">moving</span><span class="w"> </span><span class="n">basic</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="err">~</span><span class="o">/</span><span class="mf">.</span><span class="n">profile</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="n">work</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">gnome</span><span class="w"> </span><span class="n">apps</span>
+<span class="n">f993d5c</span><span class="w"> </span><span class="n">HEAD</span><span class="err">@{</span><span class="mf">2</span><span class="err">}</span><span class="p">:</span><span class="w"> </span><span class="n">pull</span><span class="w"> </span><span class="o">--</span><span class="n">rebase</span><span class="p">:</span><span class="w"> </span><span class="n">checkout</span><span class="w"> </span><span class="n">f993d5cc3d6df6ce9f5c083ebf17d45b9c7e9130</span>
+<span class="n">b517509</span><span class="w"> </span><span class="n">HEAD</span><span class="err">@{</span><span class="mf">3</span><span class="err">}</span><span class="p">:</span><span class="w"> </span><span class="n">pull</span><span class="p">:</span><span class="w"> </span><span class="n">Merge</span><span class="w"> </span><span class="n">made</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="err">&#39;</span><span class="n">recursive</span><span class="err">&#39;</span><span class="w"> </span><span class="n">strategy</span><span class="mf">.</span>
+<span class="mf">29438</span><span class="n">f2</span><span class="w"> </span><span class="n">HEAD</span><span class="err">@{</span><span class="mf">4</span><span class="err">}</span><span class="p">:</span><span class="w"> </span><span class="n">commit</span><span class="p">:</span><span class="w"> </span><span class="n">moving</span><span class="w"> </span><span class="n">basic</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="err">~</span><span class="o">/</span><span class="mf">.</span><span class="n">profile</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="n">work</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">gnome</span><span class="w"> </span><span class="n">apps</span>
+<span class="n">a000618</span><span class="w"> </span><span class="n">HEAD</span><span class="err">@{</span><span class="mf">5</span><span class="err">}</span><span class="p">:</span><span class="w"> </span><span class="n">clone</span><span class="p">:</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">git</span><span class="err">@</span><span class="n">github</span><span class="mf">.</span><span class="n">com</span><span class="p">:</span><span class="n">eliasdorneles</span><span class="o">/</span><span class="n">dotfiles</span><span class="mf">.</span><span class="n">git</span>
 </code></pre></div>
 
 <p>This is a log of every state of your files that is stored, which includes
@@ -238,17 +238,17 @@ keep solving the same conflicts again and again and save a few brain cycles.</p>
 (taken from <a href="https://github.com/eliasdorneles/dotfiles/blob/master/bashrc">my <code>~/.bashrc</code> file</a>)
 and tweak them to your needs:</p>
 <div class="highlight"><pre><span></span><code><span class="nv">edit_modified_files</span><span class="ss">()</span>{
-    <span class="mh">$ED</span><span class="nv">ITOR</span> $<span class="ss">(</span> <span class="ss">(</span><span class="nv">git</span> <span class="nv">ls</span><span class="o">-</span><span class="nv">files</span> <span class="o">-</span><span class="nv">m</span> <span class="o">-</span><span class="nv">o</span> <span class="o">--</span><span class="nv">exclude</span><span class="o">-</span><span class="nv">standard</span><span class="c1">; git diff --cached --name-only --relative .) | sort | uniq)</span>
+<span class="w">    </span><span class="mh">$ED</span><span class="nv">ITOR</span><span class="w"> </span>$<span class="ss">(</span><span class="w"> </span><span class="ss">(</span><span class="nv">git</span><span class="w"> </span><span class="nv">ls</span><span class="o">-</span><span class="nv">files</span><span class="w"> </span><span class="o">-</span><span class="nv">m</span><span class="w"> </span><span class="o">-</span><span class="nv">o</span><span class="w"> </span><span class="o">--</span><span class="nv">exclude</span><span class="o">-</span><span class="nv">standard</span><span class="c1">; git diff --cached --name-only --relative .) | sort | uniq)</span>
 }
 <span class="nv">edit_files_with_conflicts</span><span class="ss">()</span>{
-    <span class="mh">$ED</span><span class="nv">ITOR</span> $<span class="ss">(</span><span class="nv">git</span> <span class="nv">diff</span> <span class="o">--</span><span class="nv">name</span><span class="o">-</span><span class="nv">only</span> <span class="o">--</span><span class="nv">diff</span><span class="o">-</span><span class="nv">filter</span><span class="o">=</span><span class="nv">U</span><span class="ss">)</span>
+<span class="w">    </span><span class="mh">$ED</span><span class="nv">ITOR</span><span class="w"> </span>$<span class="ss">(</span><span class="nv">git</span><span class="w"> </span><span class="nv">diff</span><span class="w"> </span><span class="o">--</span><span class="nv">name</span><span class="o">-</span><span class="nv">only</span><span class="w"> </span><span class="o">--</span><span class="nv">diff</span><span class="o">-</span><span class="nv">filter</span><span class="o">=</span><span class="nv">U</span><span class="ss">)</span>
 }
 <span class="nv">edit_recently_committed</span><span class="ss">()</span>{
-    <span class="mh">$ED</span><span class="nv">ITOR</span> $<span class="ss">(</span><span class="nv">git</span> <span class="k">show</span> <span class="o">--</span><span class="nv">name</span><span class="o">-</span><span class="nv">only</span> <span class="o">--</span><span class="nv">oneline</span> <span class="o">--</span><span class="nv">relative</span> . <span class="o">|</span> <span class="nv">egrep</span> <span class="o">-</span><span class="nv">v</span> <span class="s2">&quot;</span><span class="s">^[a-z0-9]+ </span><span class="s2">&quot;</span><span class="ss">)</span>
+<span class="w">    </span><span class="mh">$ED</span><span class="nv">ITOR</span><span class="w"> </span>$<span class="ss">(</span><span class="nv">git</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="o">--</span><span class="nv">name</span><span class="o">-</span><span class="nv">only</span><span class="w"> </span><span class="o">--</span><span class="nv">oneline</span><span class="w"> </span><span class="o">--</span><span class="nv">relative</span><span class="w"> </span>.<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nv">egrep</span><span class="w"> </span><span class="o">-</span><span class="nv">v</span><span class="w"> </span><span class="s2">&quot;^[a-z0-9]+ &quot;</span><span class="ss">)</span>
 }
-<span class="nv">alias</span> <span class="nv">em</span><span class="o">=</span><span class="nv">edit_modified_files</span>
-<span class="nv">alias</span> <span class="nv">ec</span><span class="o">=</span><span class="nv">edit_files_with_conflicts</span>
-<span class="nv">alias</span> <span class="nv">er</span><span class="o">=</span><span class="nv">edit_recently_committed</span>
+<span class="nv">alias</span><span class="w"> </span><span class="nv">em</span><span class="o">=</span><span class="nv">edit_modified_files</span>
+<span class="nv">alias</span><span class="w"> </span><span class="nv">ec</span><span class="o">=</span><span class="nv">edit_files_with_conflicts</span>
+<span class="nv">alias</span><span class="w"> </span><span class="nv">er</span><span class="o">=</span><span class="nv">edit_recently_committed</span>
 </code></pre></div>
 
 <p>I came up with these functions when I realized how often I wanted to do open
@@ -288,8 +288,8 @@ in your <code>~/.gitconfig</code>:</p>
 
 <p>This alias is using a shell function to parameterize it.
 If you run <code>git fetch-pr</code> it will show the help:</p>
-<div class="highlight"><pre><span></span><code><span class="err">$</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="k">fetch</span><span class="o">-</span><span class="n">pr</span><span class="w"></span>
-<span class="k">Usage</span><span class="err">:</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="k">fetch</span><span class="o">-</span><span class="n">pr</span><span class="w"> </span><span class="n">PULL_REQUEST_ID</span><span class="w"> </span><span class="o">[</span><span class="n">new_branch_name</span><span class="o">]</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="err">$</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="k">fetch</span><span class="o">-</span><span class="n">pr</span>
+<span class="k">Usage</span><span class="err">:</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="k">fetch</span><span class="o">-</span><span class="n">pr</span><span class="w"> </span><span class="n">PULL_REQUEST_ID</span><span class="w"> </span><span class="o">[</span><span class="n">new_branch_name</span><span class="o">]</span>
 </code></pre></div>
 
 <p>Using this, to fetch the code from pull request #1234, you can do simply:</p>
@@ -298,7 +298,7 @@ If you run <code>git fetch-pr</code> it will show the help:</p>
 
 <p>This will create a branch called <code>pr-1234</code> with the checked-out code.
 If you want to name the branch, just provide yet another parameter:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">git</span> <span class="nv">fetch</span><span class="o">-</span><span class="nv">pr</span> <span class="mi">1234</span> <span class="nv">new</span><span class="o">-</span><span class="nv">branch</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">pull</span><span class="o">-</span><span class="nv">request</span><span class="o">-</span><span class="mi">1234</span>
+<div class="highlight"><pre><span></span><code><span class="nv">git</span><span class="w"> </span><span class="nv">fetch</span><span class="o">-</span><span class="nv">pr</span><span class="w"> </span><span class="mi">1234</span><span class="w"> </span><span class="nv">new</span><span class="o">-</span><span class="nv">branch</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">pull</span><span class="o">-</span><span class="nv">request</span><span class="o">-</span><span class="mi">1234</span>
 </code></pre></div>
 
 <h2>Other things that might be helpful</h2>
@@ -350,9 +350,6 @@ answers</a>.</p>
         <hr />
         <footer class="footer-menu">
             <a href="#top">Back to the top</a>
-            <hr />
-            <div class="rc-scout"></div>
-            <script async defer src="https://www.recurse-scout.com/loader.js?t=5372463d63166734808f47d8eb0124cb"></script>
         </footer>
 </div>
 

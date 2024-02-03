@@ -7,8 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="../../../theme/css/pygments.css" type="text/css" />
         <link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
-        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Hopeful Ramble ATOM Feed" />
-        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Hopeful Ramble RSS Feed" />
+        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
+        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
 <script>
 var host = "eliasdorneles.github.io";
 if (window.location.host == host && window.location.protocol != "https:") {
@@ -22,7 +22,7 @@ if (window.location.host == host && window.location.protocol != "https:") {
 
 <div class="site-container">
         <header id="banner" class="body">
-                <h1><a href="../../../index.html">Hopeful Ramble </a></h1>
+                <h1><a href="../../../index.html">Elias Dorneles </a></h1>
                 <nav><ul>
                     <li >
                         <a href="../../../">Blog</a>
@@ -45,7 +45,7 @@ if (window.location.host == host && window.location.protocol != "https:") {
         <address class="vcard author">
             posted by
             <a href="../../../pages/about-me.html">Elias Dorneles</a>
-            on <abbr class="published" title="2015-12-30T12:36:00-02:00">2015, décembre 30</abbr>
+            on <abbr class="published" title="2015-12-30T12:36:00+01:00">2015, décembre 30</abbr>
             <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/learning-from-das-screencasts-season-3.md">Edit</a>
         </address>
 </footer>            <p>Here is a summary of my learning from watching <a href="https://www.destroyallsoftware.com/screencasts/catalog">season 3 of Destroy All
@@ -233,7 +233,7 @@ are bad because they mine our confidence in the test suite.</p>
 that some expression isn't true) are dangerous because it's easy to miss
 a case where result can be incorrect and the assertion still pass.</p>
 <p>The same is true for partial matches (checking containment or substring) like:</p>
-<div class="highlight"><pre><span></span><code><span class="s1">&#39;</span><span class="s">connected</span><span class="s1">&#39;</span> <span class="nv">in</span> <span class="nv">status</span>  # <span class="nv">what</span> <span class="k">if</span> <span class="nv">status</span> <span class="nv">is</span> <span class="s2">&quot;</span><span class="s">disconnected</span><span class="s2">&quot;</span>?
+<div class="highlight"><pre><span></span><code><span class="s1">&#39;connected&#39;</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">status</span><span class="w">  </span>#<span class="w"> </span><span class="nv">what</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">status</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="s2">&quot;disconnected&quot;</span>?
 </code></pre></div>
 
 <p>Tests that obsess about implementation (like, a test checking the internal state
@@ -266,9 +266,6 @@ changed later, best not to pour concrete around them either.</p>
         <hr />
         <footer class="footer-menu">
             <a href="#top">Back to the top</a>
-            <hr />
-            <div class="rc-scout"></div>
-            <script async defer src="https://www.recurse-scout.com/loader.js?t=5372463d63166734808f47d8eb0124cb"></script>
         </footer>
 </div>
 

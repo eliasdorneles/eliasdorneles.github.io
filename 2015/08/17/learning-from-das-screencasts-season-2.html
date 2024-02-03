@@ -7,8 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="../../../theme/css/pygments.css" type="text/css" />
         <link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
-        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Hopeful Ramble ATOM Feed" />
-        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Hopeful Ramble RSS Feed" />
+        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
+        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
 <script>
 var host = "eliasdorneles.github.io";
 if (window.location.host == host && window.location.protocol != "https:") {
@@ -22,7 +22,7 @@ if (window.location.host == host && window.location.protocol != "https:") {
 
 <div class="site-container">
         <header id="banner" class="body">
-                <h1><a href="../../../index.html">Hopeful Ramble </a></h1>
+                <h1><a href="../../../index.html">Elias Dorneles </a></h1>
                 <nav><ul>
                     <li >
                         <a href="../../../">Blog</a>
@@ -45,7 +45,7 @@ if (window.location.host == host && window.location.protocol != "https:") {
         <address class="vcard author">
             posted by
             <a href="../../../pages/about-me.html">Elias Dorneles</a>
-            on <abbr class="published" title="2015-08-17T01:41:00-03:00">2015, août 17</abbr>
+            on <abbr class="published" title="2015-08-17T01:41:00+02:00">2015, août 17</abbr>
             <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/learning-from-das-screencasts-season-2.md">Edit</a>
         </address>
 </footer>            <p>These are my notes for <a href="https://www.destroyallsoftware.com/screencasts/catalog">season 2 of Destroy All Software
@@ -57,27 +57,27 @@ step of the way. This becomes common sense pretty quickly after you acquire the
 habit of doing this kind of thing for a while.</p>
 <p>For example, say you want to remove the untracked files from a git repo.
 Instead of trying to write all of this in one go:</p>
-<div class="highlight"><pre><span></span><code>$ git status -s <span class="p">|</span> grep <span class="s1">&#39;??&#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{ print $2 }&#39;</span> <span class="p">|</span> xargs rm -f
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>status<span class="w"> </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;??&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{ print $2 }&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>rm<span class="w"> </span>-f
 </code></pre></div>
 
 <p>Since you don't want to delete any files by mistake, you will check every step
 along the way, until arriving at the safe command:</p>
-<div class="highlight"><pre><span></span><code>$ git status -s
- M README.rst
-?? anotherfile.txt
-?? file.txt
-$ git status -s <span class="p">|</span> grep <span class="s1">&#39;^??&#39;</span>
-?? anotherfile.txt
-?? file.txt
-$ git status -s <span class="p">|</span> grep <span class="s1">&#39;^??&#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{ print $2 }&#39;</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>status<span class="w"> </span>-s
+<span class="w"> </span>M<span class="w"> </span>README.rst
+??<span class="w"> </span>anotherfile.txt
+??<span class="w"> </span>file.txt
+$<span class="w"> </span>git<span class="w"> </span>status<span class="w"> </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;^??&#39;</span>
+??<span class="w"> </span>anotherfile.txt
+??<span class="w"> </span>file.txt
+$<span class="w"> </span>git<span class="w"> </span>status<span class="w"> </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;^??&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{ print $2 }&#39;</span>
 anotherfile.txt
 file.txt
-$ <span class="c1"># great, got right the list of files now!</span>
-$ <span class="c1"># now let&#39;s pipe it to xargs and print the delete command:</span>
-$ git status -s <span class="p">|</span> grep <span class="s1">&#39;^??&#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{ print $2 }&#39;</span> <span class="p">|</span> xargs <span class="nb">echo</span> rm -f
-rm -f anotherfile.txt file.txt
-$ <span class="c1"># looks safe, let&#39;s remove the echo and do it for real:</span>
-$ git status -s <span class="p">|</span> grep <span class="s1">&#39;^??&#39;</span> <span class="p">|</span> awk <span class="s1">&#39;{ print $2 }&#39;</span> <span class="p">|</span> xargs rm -f
+$<span class="w"> </span><span class="c1"># great, got right the list of files now!</span>
+$<span class="w"> </span><span class="c1"># now let&#39;s pipe it to xargs and print the delete command:</span>
+$<span class="w"> </span>git<span class="w"> </span>status<span class="w"> </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;^??&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{ print $2 }&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>rm<span class="w"> </span>-f
+rm<span class="w"> </span>-f<span class="w"> </span>anotherfile.txt<span class="w"> </span>file.txt
+$<span class="w"> </span><span class="c1"># looks safe, let&#39;s remove the echo and do it for real:</span>
+$<span class="w"> </span>git<span class="w"> </span>status<span class="w"> </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;^??&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{ print $2 }&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>rm<span class="w"> </span>-f
 </code></pre></div>
 
 <p>His example is more complicated and more interesting than this, but you get the gist of it.</p>
@@ -120,12 +120,12 @@ present in Mac OS X and other BSD based systems. The <code>jot</code> command is
 similar to seq in Linux-based distros, only it allows to print a string
 repeatedly (<code>-b</code> argument) while <code>seq</code> does not allow printing things other
 than numbers. This is nice, because you can do things like this:</p>
-<div class="highlight"><pre><span></span><code>$ jot -s <span class="s1">&#39;&#39;</span> -b<span class="s1">&#39;#&#39;</span> <span class="m">10</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>jot<span class="w"> </span>-s<span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span>-b<span class="s1">&#39;#&#39;</span><span class="w"> </span><span class="m">10</span>
 <span class="c1">##########</span>
 </code></pre></div>
 
 <p>Now for an example plotting some numbers:</p>
-<div class="highlight"><pre><span></span><code>$ seq <span class="m">15</span> <span class="m">20</span> <span class="p">|</span> sort -R <span class="p">|</span> <span class="k">while</span> <span class="nb">read</span> num<span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="sb">`</span>jot -s <span class="s1">&#39;&#39;</span> -b<span class="s1">&#39;#&#39;</span> <span class="nv">$num</span><span class="sb">`</span> <span class="nv">$num</span><span class="p">;</span> <span class="k">done</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>seq<span class="w"> </span><span class="m">15</span><span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-R<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>num<span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="sb">`</span>jot<span class="w"> </span>-s<span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span>-b<span class="s1">&#39;#&#39;</span><span class="w"> </span><span class="nv">$num</span><span class="sb">`</span><span class="w"> </span><span class="nv">$num</span><span class="p">;</span><span class="w"> </span><span class="k">done</span>
 <span class="c1">################ 16</span>
 <span class="c1">################### 19</span>
 <span class="c1">################# 17</span>
@@ -136,7 +136,7 @@ than numbers. This is nice, because you can do things like this:</p>
 
 <p>While we don’t have <code>jot</code> distributed by default in Linux distros, we can do the
 same thing in Linux using python:</p>
-<div class="highlight"><pre><span></span><code>$ seq <span class="m">15</span> <span class="m">20</span> <span class="p">|</span> sort -R <span class="p">|</span> <span class="k">while</span> <span class="nb">read</span> num<span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="sb">`</span>python -c <span class="s2">&quot;print(&#39;#&#39;*</span><span class="nv">$num</span><span class="s2">)&quot;</span><span class="sb">`</span> <span class="nv">$num</span><span class="p">;</span> <span class="k">done</span>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>seq<span class="w"> </span><span class="m">15</span><span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-R<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>num<span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="sb">`</span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;print(&#39;#&#39;*</span><span class="nv">$num</span><span class="s2">)&quot;</span><span class="sb">`</span><span class="w"> </span><span class="nv">$num</span><span class="p">;</span><span class="w"> </span><span class="k">done</span>
 <span class="c1">################# 17</span>
 <span class="c1">############### 15</span>
 <span class="c1">################### 19</span>
@@ -241,9 +241,6 @@ then it’s probably not testing at the right level.</p>
         <hr />
         <footer class="footer-menu">
             <a href="#top">Back to the top</a>
-            <hr />
-            <div class="rc-scout"></div>
-            <script async defer src="https://www.recurse-scout.com/loader.js?t=5372463d63166734808f47d8eb0124cb"></script>
         </footer>
 </div>
 

@@ -7,8 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="../../../theme/css/pygments.css" type="text/css" />
         <link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
-        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Hopeful Ramble ATOM Feed" />
-        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Hopeful Ramble RSS Feed" />
+        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
+        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
 <script>
 var host = "eliasdorneles.github.io";
 if (window.location.host == host && window.location.protocol != "https:") {
@@ -22,7 +22,7 @@ if (window.location.host == host && window.location.protocol != "https:") {
 
 <div class="site-container">
         <header id="banner" class="body">
-                <h1><a href="../../../index.html">Hopeful Ramble </a></h1>
+                <h1><a href="../../../index.html">Elias Dorneles </a></h1>
                 <nav><ul>
                     <li >
                         <a href="../../../">Blog</a>
@@ -45,7 +45,7 @@ if (window.location.host == host && window.location.protocol != "https:") {
         <address class="vcard author">
             posted by
             <a href="../../../pages/about-me.html">Elias Dorneles</a>
-            on <abbr class="published" title="2014-04-05T23:35:00-03:00">2014, avril 05</abbr>
+            on <abbr class="published" title="2014-04-05T23:35:00+02:00">2014, avril 05</abbr>
             <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/programando-erlang---1-de-any.md">Edit</a>
         </address>
 </footer>            <p>Na virada do ano, uma das minhas resoluções para 2014 foi a de que este ano
@@ -107,25 +107,25 @@ chamada</a> (<a href="https://en.wikipedia.org/wiki/Call_stack">call
 stack</a>).  </p>
 <p>Você pode testar esse código colocando-o em um arquivo <code>esqueleto.erl</code> e chamá-lo
 do shell Erlang, conforme a sessão abaixo:</p>
-<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="err">$</span><span class="w"> </span><span class="n">erl</span><span class="w"></span>
-<span class="w"> </span><span class="n">Erlang</span><span class="w"> </span><span class="n">R16B01</span><span class="w"> </span><span class="p">(</span><span class="n">erts</span><span class="o">-</span><span class="mf">5.10.2</span><span class="p">)</span><span class="w"> </span><span class="o">[</span><span class="n">source</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">64-bit</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">smp:4:4</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">async-threads:10</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">kernel-poll:false</span><span class="o">]</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="err">$</span><span class="w"> </span><span class="n">erl</span>
+<span class="w"> </span><span class="n">Erlang</span><span class="w"> </span><span class="n">R16B01</span><span class="w"> </span><span class="p">(</span><span class="n">erts</span><span class="o">-</span><span class="mf">5.10.2</span><span class="p">)</span><span class="w"> </span><span class="o">[</span><span class="n">source</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">64-bit</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">smp:4:4</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">async-threads:10</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">kernel-poll:false</span><span class="o">]</span>
 
 
-<span class="w"> </span><span class="n">Eshell</span><span class="w"> </span><span class="n">V5</span><span class="mf">.10.2</span><span class="w">  </span><span class="p">(</span><span class="n">abort</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="o">^</span><span class="n">G</span><span class="p">)</span><span class="w"></span>
-<span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="n">esqueleto</span><span class="p">).</span><span class="w"></span>
-<span class="w"> </span><span class="err">{</span><span class="n">ok</span><span class="p">,</span><span class="n">esqueleto</span><span class="err">}</span><span class="w"></span>
-<span class="w"> </span><span class="mi">2</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nl">esqueleto</span><span class="p">:</span><span class="k">start</span><span class="p">().</span><span class="w"></span>
-<span class="w"> </span><span class="o">&lt;</span><span class="mf">0.41.0</span><span class="o">&gt;</span><span class="w"></span>
-<span class="w"> </span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Pid</span><span class="w"> </span><span class="err">!</span><span class="w"> </span><span class="ss">&quot;alo!&quot;</span><span class="p">.</span><span class="w"></span>
-<span class="w"> </span><span class="nl">Received</span><span class="p">:</span><span class="w"> </span><span class="ss">&quot;alo!&quot;</span><span class="w"></span>
-<span class="w"> </span><span class="ss">&quot;alo!&quot;</span><span class="w"></span>
-<span class="w"> </span><span class="mi">4</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Pid</span><span class="w"> </span><span class="err">!</span><span class="w"> </span><span class="mf">1234.</span><span class="w"></span>
-<span class="w"> </span><span class="nl">Received</span><span class="p">:</span><span class="w"> </span><span class="mi">1234</span><span class="w"></span>
-<span class="w"> </span><span class="mi">1234</span><span class="w"></span>
-<span class="w"> </span><span class="mi">5</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Pid</span><span class="w"> </span><span class="err">!</span><span class="w"> </span><span class="err">{</span><span class="n">teste</span><span class="p">,</span><span class="w"> </span><span class="n">com</span><span class="p">,</span><span class="w"> </span><span class="n">uma</span><span class="p">,</span><span class="w"> </span><span class="n">tupla</span><span class="p">,</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;ola&quot;</span><span class="err">}</span><span class="p">.</span><span class="w"></span>
-<span class="w"> </span><span class="nl">Received</span><span class="p">:</span><span class="w"> </span><span class="err">{</span><span class="n">teste</span><span class="p">,</span><span class="n">com</span><span class="p">,</span><span class="n">uma</span><span class="p">,</span><span class="n">tupla</span><span class="p">,</span><span class="mi">123</span><span class="p">,</span><span class="ss">&quot;ola&quot;</span><span class="err">}</span><span class="w"></span>
-<span class="w"> </span><span class="err">{</span><span class="n">teste</span><span class="p">,</span><span class="n">com</span><span class="p">,</span><span class="n">uma</span><span class="p">,</span><span class="n">tupla</span><span class="p">,</span><span class="mi">123</span><span class="p">,</span><span class="ss">&quot;ola&quot;</span><span class="err">}</span><span class="w"></span>
-<span class="w"> </span><span class="mi">6</span><span class="o">&gt;</span><span class="w"></span>
+<span class="w"> </span><span class="n">Eshell</span><span class="w"> </span><span class="n">V5</span><span class="mf">.10.2</span><span class="w">  </span><span class="p">(</span><span class="n">abort</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="o">^</span><span class="n">G</span><span class="p">)</span>
+<span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="n">esqueleto</span><span class="p">).</span>
+<span class="w"> </span><span class="err">{</span><span class="n">ok</span><span class="p">,</span><span class="n">esqueleto</span><span class="err">}</span>
+<span class="w"> </span><span class="mi">2</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nl">esqueleto</span><span class="p">:</span><span class="k">start</span><span class="p">().</span>
+<span class="w"> </span><span class="o">&lt;</span><span class="mf">0.41.0</span><span class="o">&gt;</span>
+<span class="w"> </span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Pid</span><span class="w"> </span><span class="err">!</span><span class="w"> </span><span class="ss">&quot;alo!&quot;</span><span class="p">.</span>
+<span class="w"> </span><span class="nl">Received</span><span class="p">:</span><span class="w"> </span><span class="ss">&quot;alo!&quot;</span>
+<span class="w"> </span><span class="ss">&quot;alo!&quot;</span>
+<span class="w"> </span><span class="mi">4</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Pid</span><span class="w"> </span><span class="err">!</span><span class="w"> </span><span class="mf">1234.</span>
+<span class="w"> </span><span class="nl">Received</span><span class="p">:</span><span class="w"> </span><span class="mi">1234</span>
+<span class="w"> </span><span class="mi">1234</span>
+<span class="w"> </span><span class="mi">5</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Pid</span><span class="w"> </span><span class="err">!</span><span class="w"> </span><span class="err">{</span><span class="n">teste</span><span class="p">,</span><span class="w"> </span><span class="n">com</span><span class="p">,</span><span class="w"> </span><span class="n">uma</span><span class="p">,</span><span class="w"> </span><span class="n">tupla</span><span class="p">,</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;ola&quot;</span><span class="err">}</span><span class="p">.</span>
+<span class="w"> </span><span class="nl">Received</span><span class="p">:</span><span class="w"> </span><span class="err">{</span><span class="n">teste</span><span class="p">,</span><span class="n">com</span><span class="p">,</span><span class="n">uma</span><span class="p">,</span><span class="n">tupla</span><span class="p">,</span><span class="mi">123</span><span class="p">,</span><span class="ss">&quot;ola&quot;</span><span class="err">}</span>
+<span class="w"> </span><span class="err">{</span><span class="n">teste</span><span class="p">,</span><span class="n">com</span><span class="p">,</span><span class="n">uma</span><span class="p">,</span><span class="n">tupla</span><span class="p">,</span><span class="mi">123</span><span class="p">,</span><span class="ss">&quot;ola&quot;</span><span class="err">}</span>
+<span class="w"> </span><span class="mi">6</span><span class="o">&gt;</span>
 </code></pre></div>
 
 <p>Note os pontos finais no fim de cada comando: o comando não roda se você
@@ -156,15 +156,15 @@ padrões</a>). </p>
 <p>Por exemplo, usando pattern matching, podemos alterar o comando  <code>receive</code> da
 função  <code>loop()</code>   para executar um código diferente caso receba a mensagem
 <code>"alo!"</code>: </p>
-<div class="highlight"><pre><span></span><code><span class="n">loop</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">    </span><span class="n">receive</span><span class="w"></span>
-<span class="w">        </span><span class="ss">&quot;alo!&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="nl">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="ss">&quot;Alooooow, galerinha da paaishhh!&quot;</span><span class="p">),</span><span class="w"></span>
-<span class="w">            </span><span class="n">loop</span><span class="p">();</span><span class="w"></span>
-<span class="w">        </span><span class="ow">Any</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"></span>
-<span class="w">            </span><span class="nl">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="ss">&quot;Received: ~p~n&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">[</span><span class="n">Any</span><span class="o">]</span><span class="p">),</span><span class="w"></span>
-<span class="w">            </span><span class="n">loop</span><span class="p">()</span><span class="w"></span>
-<span class="w">    </span><span class="k">end</span><span class="p">.</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">loop</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">    </span><span class="n">receive</span>
+<span class="w">        </span><span class="ss">&quot;alo!&quot;</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="nl">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="ss">&quot;Alooooow, galerinha da paaishhh!&quot;</span><span class="p">),</span>
+<span class="w">            </span><span class="n">loop</span><span class="p">();</span>
+<span class="w">        </span><span class="ow">Any</span><span class="w"> </span><span class="o">-&gt;</span>
+<span class="w">            </span><span class="nl">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="ss">&quot;Received: ~p~n&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">[</span><span class="n">Any</span><span class="o">]</span><span class="p">),</span>
+<span class="w">            </span><span class="n">loop</span><span class="p">()</span>
+<span class="w">    </span><span class="k">end</span><span class="p">.</span>
 </code></pre></div>
 
 <p>Se você repetir os passos anteriores com esse novo código, receberá uma
@@ -198,13 +198,13 @@ livre</a>, ou
 <em>unbound variable</em>).</p>
 <p>Na próxima vez que a variável for referenciada, ela terá o valor "casado"
 (matched) anteriormente, veja:</p>
-<div class="highlight"><pre><span></span><code><span class="mf">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">A</span><span class="mf">.</span><span class="w"></span>
-<span class="o">*</span><span class="w"> </span><span class="mf">1</span><span class="p">:</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="err">&#39;</span><span class="n">A</span><span class="err">&#39;</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">unbound</span><span class="w"></span>
-<span class="mf">2</span><span class="o">&gt;</span><span class="w"> </span><span class="n">A</span><span class="o">=</span><span class="s">&quot;oi&quot;</span><span class="mf">.</span><span class="w"></span>
-<span class="s">&quot;oi&quot;</span><span class="w"></span>
-<span class="mf">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">A</span><span class="mf">.</span><span class="w"></span>
-<span class="s">&quot;oi&quot;</span><span class="w"></span>
-<span class="mf">4</span><span class="o">&gt;</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="mf">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">A</span><span class="mf">.</span>
+<span class="o">*</span><span class="w"> </span><span class="mf">1</span><span class="p">:</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="err">&#39;</span><span class="n">A</span><span class="err">&#39;</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">unbound</span>
+<span class="mf">2</span><span class="o">&gt;</span><span class="w"> </span><span class="n">A</span><span class="o">=</span><span class="s">&quot;oi&quot;</span><span class="mf">.</span>
+<span class="s">&quot;oi&quot;</span>
+<span class="mf">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">A</span><span class="mf">.</span>
+<span class="s">&quot;oi&quot;</span>
+<span class="mf">4</span><span class="o">&gt;</span>
 </code></pre></div>
 
 <p>Uma vez ligada, a variável só casará com o valor original, e nunca mais com
@@ -212,7 +212,7 @@ outro. Caso tente casar a variável com outro valor (pensando que funcionaria
 como atribuição), você obterá um erro avisando que falhou o casamento do
 padrão:</p>
 <div class="highlight"><pre><span></span><code><span class="mf">4</span><span class="o">&gt;</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;alô&quot;</span><span class="mf">.</span><span class="w"> </span>
-<span class="o">**</span><span class="w"> </span><span class="n">exception</span><span class="w"> </span><span class="n">error</span><span class="p">:</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">match</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="n">hand</span><span class="w"> </span><span class="n">side</span><span class="w"> </span><span class="nb">val</span><span class="n">ue</span><span class="w"> </span><span class="s">&quot;alô&quot;</span><span class="w"></span>
+<span class="o">**</span><span class="w"> </span><span class="n">exception</span><span class="w"> </span><span class="n">error</span><span class="p">:</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">match</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="n">hand</span><span class="w"> </span><span class="n">side</span><span class="w"> </span><span class="nb">val</span><span class="n">ue</span><span class="w"> </span><span class="s">&quot;alô&quot;</span>
 </code></pre></div>
 
 <p>Isto porque em Erlang, as variáveis são imutáveis para o contexto local.  Outra
@@ -259,26 +259,26 @@ com Erlang.</p>
 facilmente iniciar nós de um cluster em algumas máquinas e disparar chamadas
 remotas de um nó para outro.</p>
 <p>Para um exemplo rápido, inicie um nó do cluster em um terminal, dando um nome:</p>
-<div class="highlight"><pre><span></span><code><span class="err">$</span><span class="w"> </span><span class="n">erl</span><span class="w"> </span><span class="o">-</span><span class="n">sname</span><span class="w"> </span><span class="n">lennon</span><span class="nv">@localhost</span><span class="w"></span>
-<span class="n">Erlang</span><span class="w"> </span><span class="n">R16B01</span><span class="w"> </span><span class="p">(</span><span class="n">erts</span><span class="o">-</span><span class="mf">5.10.2</span><span class="p">)</span><span class="w"> </span><span class="o">[</span><span class="n">source</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">64-bit</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">smp:4:4</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">async-threads:10</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">kernel-poll:false</span><span class="o">]</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="err">$</span><span class="w"> </span><span class="n">erl</span><span class="w"> </span><span class="o">-</span><span class="n">sname</span><span class="w"> </span><span class="n">lennon</span><span class="nv">@localhost</span>
+<span class="n">Erlang</span><span class="w"> </span><span class="n">R16B01</span><span class="w"> </span><span class="p">(</span><span class="n">erts</span><span class="o">-</span><span class="mf">5.10.2</span><span class="p">)</span><span class="w"> </span><span class="o">[</span><span class="n">source</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">64-bit</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">smp:4:4</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">async-threads:10</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">kernel-poll:false</span><span class="o">]</span>
 
 
-<span class="n">Eshell</span><span class="w"> </span><span class="n">V5</span><span class="mf">.10.2</span><span class="w">  </span><span class="p">(</span><span class="n">abort</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="o">^</span><span class="n">G</span><span class="p">)</span><span class="w"></span>
-<span class="p">(</span><span class="n">lennon</span><span class="nv">@localhost</span><span class="p">)</span><span class="mi">1</span><span class="o">&gt;</span><span class="w"></span>
+<span class="n">Eshell</span><span class="w"> </span><span class="n">V5</span><span class="mf">.10.2</span><span class="w">  </span><span class="p">(</span><span class="n">abort</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="o">^</span><span class="n">G</span><span class="p">)</span>
+<span class="p">(</span><span class="n">lennon</span><span class="nv">@localhost</span><span class="p">)</span><span class="mi">1</span><span class="o">&gt;</span>
 </code></pre></div>
 
 <p>Em outro terminal, inicie outro nó e faça uma chamada remota ao nó anterior:</p>
-<div class="highlight"><pre><span></span><code><span class="err">$</span><span class="w"> </span><span class="n">erl</span><span class="w"> </span><span class="o">-</span><span class="n">sname</span><span class="w"> </span><span class="n">mccartney</span><span class="nv">@localhost</span><span class="w"></span>
-<span class="n">Erlang</span><span class="w"> </span><span class="n">R16B01</span><span class="w"> </span><span class="p">(</span><span class="n">erts</span><span class="o">-</span><span class="mf">5.10.2</span><span class="p">)</span><span class="w"> </span><span class="o">[</span><span class="n">source</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">64-bit</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">smp:4:4</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">async-threads:10</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">kernel-poll:false</span><span class="o">]</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="err">$</span><span class="w"> </span><span class="n">erl</span><span class="w"> </span><span class="o">-</span><span class="n">sname</span><span class="w"> </span><span class="n">mccartney</span><span class="nv">@localhost</span>
+<span class="n">Erlang</span><span class="w"> </span><span class="n">R16B01</span><span class="w"> </span><span class="p">(</span><span class="n">erts</span><span class="o">-</span><span class="mf">5.10.2</span><span class="p">)</span><span class="w"> </span><span class="o">[</span><span class="n">source</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">64-bit</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">smp:4:4</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">async-threads:10</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">kernel-poll:false</span><span class="o">]</span>
 
 
-<span class="n">Eshell</span><span class="w"> </span><span class="n">V5</span><span class="mf">.10.2</span><span class="w">  </span><span class="p">(</span><span class="n">abort</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="o">^</span><span class="n">G</span><span class="p">)</span><span class="w"></span>
-<span class="p">(</span><span class="n">mccartney</span><span class="nv">@localhost</span><span class="p">)</span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="nl">rpc</span><span class="p">:</span><span class="k">call</span><span class="p">(</span><span class="n">lennon</span><span class="nv">@localhost</span><span class="p">,</span><span class="w"> </span><span class="k">file</span><span class="p">,</span><span class="w"> </span><span class="n">list_dir</span><span class="p">,</span><span class="w"> </span><span class="o">[</span><span class="n">&quot;/&quot;</span><span class="o">]</span><span class="p">).</span><span class="w"></span>
+<span class="n">Eshell</span><span class="w"> </span><span class="n">V5</span><span class="mf">.10.2</span><span class="w">  </span><span class="p">(</span><span class="n">abort</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="o">^</span><span class="n">G</span><span class="p">)</span>
+<span class="p">(</span><span class="n">mccartney</span><span class="nv">@localhost</span><span class="p">)</span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="nl">rpc</span><span class="p">:</span><span class="k">call</span><span class="p">(</span><span class="n">lennon</span><span class="nv">@localhost</span><span class="p">,</span><span class="w"> </span><span class="k">file</span><span class="p">,</span><span class="w"> </span><span class="n">list_dir</span><span class="p">,</span><span class="w"> </span><span class="o">[</span><span class="n">&quot;/&quot;</span><span class="o">]</span><span class="p">).</span>
 <span class="err">{</span><span class="n">ok</span><span class="p">,</span><span class="o">[</span><span class="n">&quot;var&quot;,&quot;tmp&quot;,&quot;mnt&quot;,&quot;lib&quot;,&quot;boot&quot;,&quot;lib32&quot;,&quot;vmlinuz&quot;,</span>
 <span class="n">     &quot;proc&quot;,&quot;media&quot;,&quot;bin&quot;,&quot;lib64&quot;,&quot;sys&quot;,&quot;opt&quot;,&quot;sbin&quot;,&quot;srv&quot;,</span>
 <span class="n">     &quot;root&quot;,&quot;dev&quot;,&quot;usr&quot;,&quot;initrd.img&quot;,&quot;lost+found&quot;,&quot;cdrom&quot;,&quot;home&quot;,</span>
-<span class="n">     &quot;vmlinuz.old&quot;,&quot;run&quot;,&quot;etc&quot;,&quot;initrd.img.old&quot;</span><span class="o">]</span><span class="err">}</span><span class="w"></span>
-<span class="p">(</span><span class="n">mccartney</span><span class="nv">@localhost</span><span class="p">)</span><span class="mi">2</span><span class="o">&gt;</span><span class="w"></span>
+<span class="n">     &quot;vmlinuz.old&quot;,&quot;run&quot;,&quot;etc&quot;,&quot;initrd.img.old&quot;</span><span class="o">]</span><span class="err">}</span>
+<span class="p">(</span><span class="n">mccartney</span><span class="nv">@localhost</span><span class="p">)</span><span class="mi">2</span><span class="o">&gt;</span>
 </code></pre></div>
 
 <p>O argumento <code>-sname</code> faz com que Erlang inicie um nó com o nome passado (note
@@ -351,9 +351,6 @@ nele caindo de buscas do Google e pareceu muito bom. Have a nice journey!  :)</p
         <hr />
         <footer class="footer-menu">
             <a href="#top">Back to the top</a>
-            <hr />
-            <div class="rc-scout"></div>
-            <script async defer src="https://www.recurse-scout.com/loader.js?t=5372463d63166734808f47d8eb0124cb"></script>
         </footer>
 </div>
 
