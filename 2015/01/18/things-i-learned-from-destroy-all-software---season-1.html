@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Things I Learned from Destroy All Software - Season 1</title>
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="../../../theme/css/pygments.css" type="text/css" />
+        <link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
+        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
+        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        <header id="banner" class="body">
+                <h1><a href="../../../index.html">Elias Dorneles </a></h1>
+                <nav><ul>
+                    <li >
+                        <a href="../../../">Blog</a>
+                    </li>
+                    <li ><a href="../../../pages/about.html">About me</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="2015/01/18/things-i-learned-from-destroy-all-software---season-1.html"
+                    rel="bookmark" title="Permalink to Things I Learned from Destroy All Software - Season 1">Things I Learned from Destroy All Software - Season 1</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+<footer class="post-info">
+        <address class="vcard author">
+            posted by
+            <a href="../../../pages/about-me.html">Elias Dorneles</a>
+            on <abbr class="published" title="2015-01-18T10:07:00+01:00">2015, janvier 18</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/things-i-learned-from-destroy-all-software---season-1.md">Edit</a>
+        </address>
+</footer>            <p>So, a few weeks ago I purchased and watched the first season of <a href="https://www.destroyallsoftware.com/">Destroy All
+Software screencasts</a> (from <a href="https://twitter.com/garybernhardt">Gary
+Bernhard</a>), and it was awesome. I'd say
+there are different kinds of stuff to learn from it, depending on your personal
+interests and experience.</p>
+<p>Here are my notes for some things I found useful and want to remember for
+later.</p>
+<h3>About Git:</h3>
+<p>You can use the <code>git rev-list HEAD</code>  command to get a list of commits in the
+current branch. This is useful for writing scripts to report something about
+each commit in the repo.  You can, for example, check the evolution of line
+counts over the course of the project (or any other statistic like number of
+tests, number of files, etc). You can also run the tests for every commit in
+the history:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>rev-list<span class="w"> </span>HEAD<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>rev<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">   </span>git<span class="w"> </span>checkout<span class="w"> </span><span class="nv">$rev</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>clean-fd<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span><span class="nb">test</span>
+<span class="k">done</span>
+</code></pre></div>
+
+<p>Gary has a script ready for this:
+<a href="https://github.com/garybernhardt/dotfiles/blob/master/bin/run-command-on-git-revisions">run-command-on-git-revisions</a></p>
+<p>Git tracks everything that happens in the local repo, even stuff that is not
+shared when you push (like when you rewrite history doing a rebase). You can
+use <code>git reflog</code> to see the history of local changes and <code>git reset --hard
+REFLOG_ENTRY</code> to go back to where you were.</p>
+<h3>About design:</h3>
+<ul>
+<li>
+<p>Avoiding <code>nil</code> is good because it makes your code more predictable and tracebacks
+more understandable.</p>
+</li>
+<li>
+<p>When adding tests to a suite, it's important to pay attention at your stubs.
+If they are getting complicated, the design can probably be improved in a way
+that will render better tests and better production code.</p>
+</li>
+<li>
+<p>When adding extra functions to a 3rd party API, sometimes it's tempting to do
+monkey-patching of the library for a small change. It's usually better to use
+a wrapper it instead, because later you will probably need more changes and
+this will be easier if your production code is already using a wrapper.</p>
+</li>
+<li>
+<p>Isolated tests are good because they run faster, they encourage better design
+and code clarity. This is something I've read about repeatedly in the past and
+also applied to some of the code I've done myself, so it's not that new. But it
+was great to watch someone applying this on several different code bases,
+showing some interesting paths -- it inspired me to apply a bit more of this in
+my work.</p>
+</li>
+</ul>
+<h3>About Unix:</h3>
+<p>To bring a background process to foreground, besides fg, you can also use <code>%N</code>
+where N is the job number reported by the command jobs.</p>
+<p>You can use the output of a command as if it were a filename, using
+<code>&lt;(COMMAND)</code>, like so:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>diff<span class="w"> </span>&lt;<span class="o">(</span><span class="nb">echo</span><span class="o">)</span><span class="w"> </span>&lt;<span class="o">(</span>date<span class="o">)</span>
+1c1
+&lt;<span class="w"> </span>
+---
+&gt;<span class="w"> </span>Sat<span class="w"> </span>Jan<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">18</span>:47:48<span class="w"> </span>BRST<span class="w"> </span><span class="m">2015</span>
+</code></pre></div>
+
+<p>The shell will run the commands and pass to the program file descriptors
+with the proper contents, which you can verify doing:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>&lt;<span class="o">(</span>ls<span class="w"> </span>-l<span class="o">)</span><span class="w"> </span>&lt;<span class="o">(</span>ls<span class="w"> </span>-l<span class="o">)</span>
+/dev/fd/63
+/dev/fd/62
+</code></pre></div>
+
+<p>This is useful for commands like diff that need more than one input file (and
+therefore can't just use the stdin), to use it with arbitrary stuff generated
+from other commands.</p>
+<p>I found this specially helpful for when I want to refactor a script: before I
+make changes, I store its original output in a file and then while refactoring
+I keep comparing the output of the script with the file to see if I'm not
+breaking anything:</p>
+<div class="highlight"><pre><span></span><code><span class="gh">diff &lt;(./my_script) original.txt</span>
+</code></pre></div>
+
+<p>It can also be useful to see differences between two different versions of
+the same web application or sites:</p>
+<div class="highlight"><pre><span></span><code><span class="gh">diff &lt;(curl -s http://somesite.com) &lt;(curl -s http://anothersite.com)</span>
+</code></pre></div>
+
+<h3>About vim:</h3>
+<p>It's nice to see people using vim well, because I can compare with my own
+habits and see things where I can improve. Gary seems to strive to keep a tight
+feedback loop in everything he's doing, so seeing him using vim and the shell
+to build things in this fashion is pretty cool. I see it as a nice validation
+for the choice of tools.</p>
+<p>I found myself using splits a bit more, after watching the screencasts.  I'm
+more used to using vim tabs, mostly because I'm not much comfortable with stuff
+happening outside my view. This is probably something I can work better if I
+grow some tolerance for it.</p>
+<p>Apart from this, I stole a bunch of vim functions and ideas from <a href="https://github.com/garybernhardt/dotfiles">Gary's
+dotfiles</a>, which I also share in <a href="https://github.com/eliasdorneles/dotfiles">my
+dotfiles</a>.</p>
+        </div>
+
+        <div class="taglist"><p>Tags:
+    <a href="../../../tag/das-screencasts.html">das-screencasts</a>
+</p>
+</div>
+
+    </article>
+</section>
+
+        <aside id="sidebar">
+                <div class="widget">
+                        <h2>Categories</h2>
+                        <ul>
+                           <li class="active"><a href="../../../category/blog.html">blog</a></li>
+                        </ul>
+                </div>
+        </aside><!-- /#sidebar -->
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+        </footer>
+</div>
+
+</body>
+</html>
