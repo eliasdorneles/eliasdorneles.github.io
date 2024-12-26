@@ -18,7 +18,10 @@ ARTICLE_URL = "{date:%Y}/{date:%m}/{date:%d}/{name}.html"
 
 ARTICLE_SAVE_AS = ARTICLE_URL
 
-MENUITEMS = [("Blog", "")]
+MENUITEMS = [
+    ("Blog", ""),
+    ("Today I Learned...", "/til"),
+]
 
 # I'm the only author
 AUTHOR_SAVE_AS = ""
