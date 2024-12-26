@@ -20,7 +20,7 @@ ARTICLE_SAVE_AS = ARTICLE_URL
 
 MENUITEMS = [
     ("Blog", ""),
-    ("Today I Learned...", "/til"),
+    ("Today I Learned...", "til"),
 ]
 
 # I'm the only author
