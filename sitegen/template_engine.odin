@@ -79,8 +79,7 @@ read_until :: proc(reader: ^strings.Reader, sentinel: string) -> (string, bool) 
     if found == -1 {
         return "", false
     }
-    // TODO: is this correct?? why do we need reader.i -1 here ??
-    result := reader.s[reader.i - 1:reader.i + i64(found)]
+    result := reader.s[reader.i:reader.i + i64(found)]
     strings.reader_seek(reader, i64(found + len(sentinel)), .Current)
     return result, true
 }
@@ -112,6 +111,9 @@ render_template :: proc(templ_str: string, ctx: ^Context) -> string {
             }
         // TODO: handle {% case
         case .Expression:
+            // unread current rune, let read_until + trim do all the work ;)
+            strings.reader_unread_rune(&reader)
+
             if expr_read, ok := read_until(&reader, "}}"); ok {
                 expr_read = strings.trim(expr_read, " ")
                 // log.infof("expr_read: [%s]", expr_read)

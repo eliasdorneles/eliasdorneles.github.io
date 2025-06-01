@@ -16,6 +16,8 @@ Template engine -- jinja2 syntax to support:
     [ ] if variable != another_variable
 [ ] Extends: {% extends "FILENAME" %}
 
+Learning:
+[ ] write TIL
 
 Site generator
 ##############

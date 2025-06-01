@@ -52,7 +52,7 @@ test_simple_expr_eval :: proc(t: ^testing.T) {
     ctx["first_name"] = "Sheldon"
     ctx["last_name"] = "Cooper"
 
-    result = render_template("hello {{ first_name }} bye {{ last_name   }} tchuss", &ctx)
+    result = render_template("hello {{ first_name }} bye {{last_name   }} tchuss", &ctx)
     expect_str(t, "hello Sheldon bye Cooper tchuss", result)
 }
 
