@@ -21,6 +21,7 @@ ARTICLE_SAVE_AS = ARTICLE_URL
 MENUITEMS = [
     ("Blog", ""),
     ("Today I Learned...", "til"),
+    ("About me", "pages/about.html"),
 ]
 
 # I'm the only author
