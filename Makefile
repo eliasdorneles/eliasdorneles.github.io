@@ -48,3 +48,6 @@ fix: require_pipenv
 deploy: clean compile require_pipenv
 	pipenv run ghp-import -m "Update site" output
 	git push origin gh-pages:master --force
+
+test:  # Run sitegen tests
+	odin test sitegen

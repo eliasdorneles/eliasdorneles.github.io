@@ -3,7 +3,12 @@ package sitegen
 import "core:log"
 import "core:strings"
 
-Context :: map[string]string
+Context :: distinct map[string]Value
+
+Value :: union {
+    string,
+    Context,
+}
 
 Expr :: string
 
@@ -13,15 +18,49 @@ ParsingState :: enum {
     Expression,
 }
 
-eval_expr :: proc(expr: Expr, ctx: Context) -> string {
-    if expr in ctx {
-        return ctx[expr]
+to_string :: proc(value: Value) -> string {
+    switch v in value {
+    case nil:
+        return ""
+    case string:
+        return v
+    case Context:
+        // TODO: consider building a repr of the object here
+        return "(object)"
     }
     return ""
 }
 
-read_expr :: proc(templ_str: string) -> (expr: Expr) {
-    return "TODO"
+// eval_context_path({"um": "1"}, ["um"]) -> "1"
+// eval_context_path({"um": "1"}, ["dois"]) -> nil
+// eval_context_path({"um": "1"}, ["um", "dois"]) -> nil
+// eval_context_path({"um": {"dois": "2"}}, ["um", "dois"]) -> "2"
+eval_context_path :: proc(value: ^Value, path: []string) -> Value {
+    if value == nil || value^ == nil {
+        return nil
+    }
+    switch &v in value^ {
+    case nil:
+        return nil
+    case string:
+        return nil // can't do lookups in strings
+    case Context:
+        if len(path) == 1 {
+            return v[path[0]]
+        } else {
+            next_val := v[path[0]]
+            return eval_context_path(&next_val, path[1:])
+        }
+    }
+    return "ERROR"
+}
+
+eval_expr :: proc(expr: Expr, ctx: ^Context) -> Value {
+    path := strings.split(expr, ".")
+    defer delete(path)
+
+    v: Value = ctx^
+    return eval_context_path(&v, path)
 }
 
 // input reading helpers:
@@ -46,7 +85,7 @@ read_until :: proc(reader: ^strings.Reader, sentinel: string) -> (string, bool) 
     return result, true
 }
 
-render_template :: proc(templ_str: string, ctx: Context) -> string {
+render_template :: proc(templ_str: string, ctx: ^Context) -> string {
     builder: strings.Builder
     defer strings.builder_destroy(&builder)
 
@@ -75,8 +114,8 @@ render_template :: proc(templ_str: string, ctx: Context) -> string {
         case .Expression:
             if expr_read, ok := read_until(&reader, "}}"); ok {
                 expr_read = strings.trim(expr_read, " ")
-                log.infof("expr_read: [%s]", expr_read)
-                strings.write_string(&builder, eval_expr(expr_read, ctx))
+                // log.infof("expr_read: [%s]", expr_read)
+                strings.write_string(&builder, to_string(eval_expr(expr_read, ctx)))
                 state = .Copying
             } else {
                 return "ERROR PARSING TEMPLATE"

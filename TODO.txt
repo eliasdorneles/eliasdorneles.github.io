@@ -1,9 +1,10 @@
 Template engine -- jinja2 syntax to support:
 
 [x] {{ variable }} replaces content in variable
-[ ] {{ variable.child }} replaces content in variable child
+[x] {{ variable.something.child }} replaces content in variable child
 [ ] {{ variable.isoformat() }} implements date isoformat
-[ ] {{ variable.strftime }} implements date strftime
+[ ] {{ variable.strftime(...) }} implements date strftime
+[ ] {{ variable.something|striptags }} implements striptags
 [ ] Blocks: {% block NAME %}  {% endblock %}
 [ ] Includes: {% include 'FILENAME' %}
 [ ] For: {% for it1, it2 in TUPLE_LIST %} {% endfor %}
@@ -40,7 +41,7 @@ generate index page
 [ ] Copy site/images/ OUTPUT/images/
 [ ] Copy theme static files ./mytheme/static/*/** to OUTPUT/theme/*/**
 
-
 [ ] Content feeds for aggregators
     [ ] RSS
     [ ] Atom
+[ ] implement translations
