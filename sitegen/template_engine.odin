@@ -79,17 +79,6 @@ eval_expr :: proc(expr: Expr, ctx: ^Context) -> Value {
     return eval_context_path(&v, path)
 }
 
-// input reading helpers:
-skip_spaces :: proc(reader: ^strings.Reader) {
-    r, _, err := strings.reader_read_rune(reader)
-    for r == ' ' && err == nil {
-        r, _, err = strings.reader_read_rune(reader)
-    }
-    if r != ' ' && err == nil {
-        strings.reader_unread_rune(reader)
-    }
-}
-
 read_until :: proc(reader: ^strings.Reader, sentinel: string) -> (string, bool) {
     found := strings.index_any(reader.s[reader.i:], sentinel)
     if found == -1 {
