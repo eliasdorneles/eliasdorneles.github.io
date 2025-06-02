@@ -2,13 +2,17 @@ Template engine -- jinja2 syntax to support:
 
 [x] {{ variable }} replaces content in variable
 [x] {{ variable.something.child }} replaces content in variable child
-[ ] {{ variable.isoformat() }} implements date isoformat
-[ ] {{ variable.strftime(...) }} implements date strftime
+[x] {{ variable.isoformat() }} implements date isoformat
+[x] {{ variable.strftime("%Y, %B %d") }} implements date strftime
+    [ ] fix memory leak using fmt.aprintf
 [ ] {{ variable.something|striptags }} implements striptags
+[ ] {{ lang_display_name(translation.lang) }}
 [ ] Blocks: {% block NAME %}  {% endblock %}
 [ ] Includes: {% include 'FILENAME' %}
 [ ] For: {% for it1, it2 in TUPLE_LIST %} {% endfor %}
-[ ] If: {% if CONDITION %} {% endif %}
+[ ] set: {% set rel_source_path = 'site/' + article.source_path.split('/site/')[1] %}
+    best to ignore the set command and set this in sitegen
+[ ] If: {% if CONDITION %} {% else %} {% endif %}
     Which expressions to allow in conditions??
     [ ] if variable is defined
     [ ] if variable

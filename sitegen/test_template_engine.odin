@@ -5,6 +5,22 @@ import "core:strings"
 import "core:testing"
 
 @(test)
+test_eval_expr_isoformat :: proc(t: ^testing.T) {
+    ctx := make(Context)
+    defer delete(ctx)
+    article := make(Context)
+    defer delete(article)
+
+    date_isoformat := "2025-06-03T00:01:00+02:00"
+    article["date"] = date_isoformat
+    ctx["article"] = article
+
+    v: Value = ctx
+    testing.expect_value(t, to_string(eval_expr("article.date.isoformat()", &ctx)), date_isoformat)
+    testing.expect_value(t, to_string(eval_expr("article.date.strftime(\"%Y, %B %d\")", &ctx)), "2025, June 03")
+}
+
+@(test)
 test_eval_context_path :: proc(t: ^testing.T) {
     ctx1 := make(Context)
     defer delete(ctx1)

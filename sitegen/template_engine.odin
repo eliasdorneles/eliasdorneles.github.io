@@ -1,7 +1,9 @@
 package sitegen
 
+import "core:fmt"
 import "core:log"
 import "core:strings"
+import "core:time"
 
 Context :: distinct map[string]Value
 
@@ -43,6 +45,20 @@ eval_context_path :: proc(value: ^Value, path: []string) -> Value {
     case nil:
         return nil
     case string:
+        // here we implement date formatting for datetime values represented in
+        // iso format
+        if path[0] == "isoformat()" {
+            return v
+        } else if path[0] == "strftime(\"%Y, %B %d\")" {
+            ts, utc_offset, _ := time.iso8601_to_time_and_offset(v)
+            // TODO: how to free this?? maybe learn how to use the temp allocator
+            return fmt.aprintf(
+                "%d, %s %02d",
+                time.year(ts),
+                time.month(ts),
+                time.day(ts),
+            )
+        }
         return nil // can't do lookups in strings
     case Context:
         if len(path) == 1 {
