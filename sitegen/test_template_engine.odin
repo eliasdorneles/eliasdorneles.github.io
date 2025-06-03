@@ -61,21 +61,6 @@ test_eval_expr :: proc(t: ^testing.T) {
 
 @(test)
 test_render_template_simple_expr :: proc(t: ^testing.T) {
-    ctx := make(Context)
-    defer delete(ctx)
-
-    result := render_template("simple content", &ctx)
-    expect_str(t, "simple content", result)
-
-    ctx["first_name"] = "Sheldon"
-    ctx["last_name"] = "Cooper"
-
-    result = render_template("hello {{ first_name }} bye {{last_name   }} tchuss", &ctx)
-    expect_str(t, "hello Sheldon bye Cooper tchuss", result)
-}
-
-@(test)
-test_render_template_context_dot_access :: proc(t: ^testing.T) {
     ctx1 := make(Context)
     defer delete(ctx1)
     ctx2 := make(Context)
@@ -89,6 +74,9 @@ test_render_template_context_dot_access :: proc(t: ^testing.T) {
 
 
     result: string
+    result = render_template("hello {{   city   }} bye", &ctx3)
+    expect_str(t, "hello Paris bye", result)
+
     result = render_template("hello {{ world.country.city }} bye", &ctx1)
     expect_str(t, "hello Paris bye", result)
 
@@ -119,3 +107,43 @@ test_render_template_translation_lang_display :: proc(t: ^testing.T) {
     result = render_template("Lang: {{ lang_display_name(translation.lang) }}", &ctx)
     expect_str(t, "Lang: Português (Brasil)", result)
 }
+
+@(test)
+test_render_template_if :: proc(t: ^testing.T) {
+    // given:
+    article := make(Context)
+    defer delete(article)
+    article["title"] = "One giga monkeys"
+
+    ctx := make(Context)
+    defer delete(ctx)
+    ctx["article"] = article
+
+    templ_str: string
+
+    // when:
+    templ_str = "{% if article %}{{ article.title }}{% endif %}"
+    // then:
+    expect_str(t, "One giga monkeys", render_template(templ_str, &ctx))
+
+    // when:
+    templ_str = "{% if nothing %}nothing{% endif %}Article: {% if article %}{{ article.title }}{% endif %}"
+    // then:
+    expect_str(t, "Article: One giga monkeys", render_template(templ_str, &ctx))
+
+    // when:
+    templ_str = "{% if nothing %}nothing{% else %}something{% endif %}"
+    // then:
+    expect_str(t, "something", render_template(templ_str, &ctx))
+
+    // when:
+    templ_str = "{% if nothing %}nothing{% else %}something{% endif %}"
+    // then:
+    expect_str(t, "something", render_template(templ_str, &ctx))
+
+    // when:
+    templ_str = "{% if article %}{{ article.title }}{% else %}no article{% endif %}"
+    // then:
+    expect_str(t, "One giga monkeys", render_template(templ_str, &ctx))
+}
+

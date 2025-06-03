@@ -16,8 +16,10 @@ Expr :: string
 
 ParsingState :: enum {
     Copying,
+    Skipping,
     MaybeExpressionOrCommand,
     Expression,
+    Command,
 }
 
 to_string :: proc(value: Value) -> string {
@@ -56,7 +58,7 @@ eval_context_path :: proc(value: ^Value, path: []string) -> Value {
                 time.year(ts),
                 time.month(ts),
                 time.day(ts),
-                allocator = context.temp_allocator
+                allocator = context.temp_allocator,
             )
         }
         return nil // can't do lookups in strings
@@ -65,7 +67,7 @@ eval_context_path :: proc(value: ^Value, path: []string) -> Value {
             key: string = path[0]
             // ignoring |striptags because none of my articles have tags in the title
             if strings.ends_with(key, "|striptags") {
-                key = key[:len(key)-len("|striptags")]
+                key = key[:len(key) - len("|striptags")]
             }
             return v[key]
         } else {
@@ -79,7 +81,7 @@ eval_context_path :: proc(value: ^Value, path: []string) -> Value {
 eval_expr :: proc(expr: Expr, ctx: ^Context) -> Value {
     // handle special case {{ lang_display_name(translation.lang) }}
     if strings.starts_with(expr, "lang_display_name(") {
-        lang := eval_expr(expr[len("lang_display_name("):len(expr)-1], ctx) 
+        lang := eval_expr(expr[len("lang_display_name("):len(expr) - 1], ctx)
         #partial switch v in lang {
         case string:
             if v == "en" {
@@ -116,10 +118,17 @@ render_template :: proc(templ_str: string, ctx: ^Context) -> string {
     reader: strings.Reader
     strings.reader_init(&reader, templ_str)
 
+    if_cond_stack: [dynamic]bool
+    defer delete(if_cond_stack)
+
     for char, size, read_err := strings.reader_read_rune(&reader);
         read_err == nil;
         char, size, read_err = strings.reader_read_rune(&reader) {
         switch state {
+        case .Skipping:
+            if char == '{' {
+                state = .MaybeExpressionOrCommand
+            }
         case .Copying:
             if char == '{' {
                 state = .MaybeExpressionOrCommand
@@ -129,11 +138,12 @@ render_template :: proc(templ_str: string, ctx: ^Context) -> string {
         case .MaybeExpressionOrCommand:
             if char == '{' {     // handle {{ case
                 state = .Expression
+            } else if char == '%' {
+                state = .Command
             } else {
                 state = .Copying
                 strings.write_rune(&builder, '{')
             }
-        // TODO: handle {% case
         case .Expression:
             // unread current rune, let read_until + trim do all the work ;)
             strings.reader_unread_rune(&reader)
@@ -146,6 +156,46 @@ render_template :: proc(templ_str: string, ctx: ^Context) -> string {
             } else {
                 return "ERROR PARSING TEMPLATE"
             }
+        case .Command:
+            // unread current rune, let read_until + trim do all the work ;)
+            strings.reader_unread_rune(&reader)
+
+            if stmt_read, ok := read_until(&reader, "%}"); ok {
+                stmt_read := strings.trim(stmt_read, " ")
+                stmt_split := strings.split(stmt_read, " ")
+                defer delete(stmt_split)
+                // log.info("stmt_split:", stmt_split)
+                if stmt_split[0] == "if" {
+                    // TODO: handle more complex expressions
+                    cond_expr_val := eval_expr(stmt_split[1], ctx)
+                    cond_val: bool
+                    switch v in cond_expr_val {
+                    case nil:
+                        cond_val = false
+                    case string:
+                        cond_val = len(v) > 0
+                    case Context:
+                        cond_val = true
+                    }
+                    append(&if_cond_stack, cond_val)
+                    if cond_val {
+                        state = .Copying
+                    } else {
+                        state = .Skipping
+                    }
+                } else if stmt_split[0] == "else" {
+                    if pop(&if_cond_stack) {
+                        state = .Skipping
+                    } else {
+                        state = .Copying
+                    }
+                } else {
+                    state = .Copying
+                }
+            } else {
+                return "ERROR PARSING TEMPLATE"
+            }
+
         }
     }
 
