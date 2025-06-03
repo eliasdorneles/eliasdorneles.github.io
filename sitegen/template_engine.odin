@@ -45,24 +45,29 @@ eval_context_path :: proc(value: ^Value, path: []string) -> Value {
     case nil:
         return nil
     case string:
-        // here we implement date formatting for datetime values represented in
-        // iso format
+        // here we implement date formatting for datetime values represented as
+        // strings in iso format
         if path[0] == "isoformat()" {
             return v
         } else if path[0] == "strftime(\"%Y, %B %d\")" {
             ts, utc_offset, _ := time.iso8601_to_time_and_offset(v)
-            // TODO: how to free this?? maybe learn how to use the temp allocator
             return fmt.aprintf(
                 "%d, %s %02d",
                 time.year(ts),
                 time.month(ts),
                 time.day(ts),
+                allocator = context.temp_allocator
             )
         }
         return nil // can't do lookups in strings
     case Context:
         if len(path) == 1 {
-            return v[path[0]]
+            key: string = path[0]
+            // ignoring |striptags because none of my articles have tags in the title
+            if strings.ends_with(key, "|striptags") {
+                key = key[:len(key)-len("|striptags")]
+            }
+            return v[key]
         } else {
             next_val := v[path[0]]
             return eval_context_path(&next_val, path[1:])
@@ -72,6 +77,20 @@ eval_context_path :: proc(value: ^Value, path: []string) -> Value {
 }
 
 eval_expr :: proc(expr: Expr, ctx: ^Context) -> Value {
+    // handle special case {{ lang_display_name(translation.lang) }}
+    if strings.starts_with(expr, "lang_display_name(") {
+        lang := eval_expr(expr[len("lang_display_name("):len(expr)-1], ctx) 
+        #partial switch v in lang {
+        case string:
+            if v == "en" {
+                return "English"
+            } else if v == "pt-br" {
+                return "Português (Brasil)"
+            }
+            return v
+        }
+    }
+
     path := strings.split(expr, ".")
     defer delete(path)
 

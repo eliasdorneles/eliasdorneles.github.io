@@ -4,6 +4,16 @@ import "core:log"
 import "core:strings"
 import "core:testing"
 
+expect_str :: proc(t: ^testing.T, expected: string, result: string) {
+    testing.expectf(
+        t,
+        strings.compare(result, expected) == 0,
+        "Expected: [%s] but got [%s]",
+        expected,
+        result,
+    )
+}
+
 @(test)
 test_eval_expr_isoformat :: proc(t: ^testing.T) {
     ctx := make(Context)
@@ -16,12 +26,16 @@ test_eval_expr_isoformat :: proc(t: ^testing.T) {
     ctx["article"] = article
 
     v: Value = ctx
-    testing.expect_value(t, to_string(eval_expr("article.date.isoformat()", &ctx)), date_isoformat)
-    testing.expect_value(t, to_string(eval_expr("article.date.strftime(\"%Y, %B %d\")", &ctx)), "2025, June 03")
+    expect_str(t, date_isoformat, to_string(eval_expr("article.date.isoformat()", &ctx)))
+    expect_str(
+        t,
+        "2025, June 03",
+        to_string(eval_expr("article.date.strftime(\"%Y, %B %d\")", &ctx)),
+    )
 }
 
 @(test)
-test_eval_context_path :: proc(t: ^testing.T) {
+test_eval_expr :: proc(t: ^testing.T) {
     ctx1 := make(Context)
     defer delete(ctx1)
     ctx2 := make(Context)
@@ -36,29 +50,17 @@ test_eval_context_path :: proc(t: ^testing.T) {
 
     ctx1["um"] = "1"
 
-    v: Value = ctx1
-    testing.expect_value(t, eval_context_path(&v, {"um"}).(string), "1")
-    testing.expect_value(
-        t,
-        eval_context_path(&v, {"world", "country", "city"}).(string),
-        "Paris",
-    )
-    testing.expect(t, eval_context_path(&v, {"nothing"}) == nil)
-    testing.expect(t, eval_context_path(&v, {"world", "nothing"}) == nil)
-}
+    expect_str(t, "1", to_string(eval_expr("um", &ctx1)))
+    expect_str(t, "Paris", to_string(eval_expr("world.country.city", &ctx1)))
+    expect_str(t, "", to_string(eval_expr("nothing", &ctx1)))
+    expect_str(t, "", to_string(eval_expr("world.nothing", &ctx1)))
 
-expect_str :: proc(t: ^testing.T, expected: string, result: string) {
-    testing.expectf(
-        t,
-        strings.compare(result, expected) == 0,
-        "Expected: [%s] but got [%s]",
-        expected,
-        result,
-    )
+    // check striptags doesn't break
+    expect_str(t, "Paris", to_string(eval_expr("world.country.city|striptags", &ctx1)))
 }
 
 @(test)
-test_simple_expr_eval :: proc(t: ^testing.T) {
+test_render_template_simple_expr :: proc(t: ^testing.T) {
     ctx := make(Context)
     defer delete(ctx)
 
@@ -73,7 +75,7 @@ test_simple_expr_eval :: proc(t: ^testing.T) {
 }
 
 @(test)
-test_context_dot_access :: proc(t: ^testing.T) {
+test_render_template_context_dot_access :: proc(t: ^testing.T) {
     ctx1 := make(Context)
     defer delete(ctx1)
     ctx2 := make(Context)
@@ -98,4 +100,22 @@ test_context_dot_access :: proc(t: ^testing.T) {
 
     result = render_template("hello {{ world.country.city.invalid }} bye", &ctx1)
     expect_str(t, "hello  bye", result)
+}
+
+@(test)
+test_render_template_translation_lang_display :: proc(t: ^testing.T) {
+    translation := make(Context)
+    translation["lang"] = "en"
+    defer delete(translation)
+    ctx := make(Context)
+    defer delete(ctx)
+    ctx["translation"] = translation
+
+    result: string
+    result = render_template("Lang: {{ lang_display_name(translation.lang) }}", &ctx)
+    expect_str(t, "Lang: English", result)
+
+    translation["lang"] = "pt-br"
+    result = render_template("Lang: {{ lang_display_name(translation.lang) }}", &ctx)
+    expect_str(t, "Lang: Português (Brasil)", result)
 }

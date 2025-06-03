@@ -4,9 +4,9 @@ Template engine -- jinja2 syntax to support:
 [x] {{ variable.something.child }} replaces content in variable child
 [x] {{ variable.isoformat() }} implements date isoformat
 [x] {{ variable.strftime("%Y, %B %d") }} implements date strftime
-    [ ] fix memory leak using fmt.aprintf
-[ ] {{ variable.something|striptags }} implements striptags
-[ ] {{ lang_display_name(translation.lang) }}
+[x] {{ variable.something|striptags }} implements striptags
+    => let's just bypass it for now, none of my articles have HTML on them
+[x] {{ lang_display_name(translation.lang) }}
 [ ] Blocks: {% block NAME %}  {% endblock %}
 [ ] Includes: {% include 'FILENAME' %}
 [ ] For: {% for it1, it2 in TUPLE_LIST %} {% endfor %}
