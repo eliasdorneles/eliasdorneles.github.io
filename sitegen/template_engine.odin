@@ -100,7 +100,27 @@ eval_expr :: proc(expr: Expr, ctx: ^Context) -> Value {
     return eval_context_path(&v, path)
 }
 
+eval_condition :: proc(token_list: []string, ctx: ^Context) -> bool {
+    if len(token_list) == 1 {
+        cond_expr_val := eval_expr(token_list[0], ctx)
+        switch v in cond_expr_val {
+        case nil:
+            return false
+        case string:
+            return len(v) > 0
+        case Context:
+            return true
+        }
+    }
+    // TODO: handle more complex expressions
+    log.info("Condition not yet supported:", token_list)
+    return false
+}
+
+// read_until(reader for "one two three", "three") -> "one two ", true
 read_until :: proc(reader: ^strings.Reader, sentinel: string) -> (string, bool) {
+    // advance reader until the sentinel string, return a slice of the string
+    // until just before the sentinel
     found := strings.index_any(reader.s[reader.i:], sentinel)
     if found == -1 {
         return "", false
@@ -166,17 +186,7 @@ render_template :: proc(templ_str: string, ctx: ^Context) -> string {
                 defer delete(stmt_split)
                 // log.info("stmt_split:", stmt_split)
                 if stmt_split[0] == "if" {
-                    // TODO: handle more complex expressions
-                    cond_expr_val := eval_expr(stmt_split[1], ctx)
-                    cond_val: bool
-                    switch v in cond_expr_val {
-                    case nil:
-                        cond_val = false
-                    case string:
-                        cond_val = len(v) > 0
-                    case Context:
-                        cond_val = true
-                    }
+                    cond_val := eval_condition(stmt_split[1:], ctx)
                     append(&if_cond_stack, cond_val)
                     if cond_val {
                         state = .Copying
