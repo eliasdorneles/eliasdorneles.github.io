@@ -186,6 +186,33 @@ parse_inner_for_template_str :: proc(reader: ^strings.Reader) -> (string, bool) 
     return "", false
 }
 
+render_for_loop :: proc(
+    builder: ^strings.Builder,
+    loop_list: List,
+    loop_var: string,
+    loop_inner_templ_str: string,
+    ctx: ^Context,
+) {
+    // for each item of the iterable value ...
+    for item in loop_list {
+        // we create its context,
+        loop_iter_ctx := clone_context(ctx^)
+        loop_iter_ctx[loop_var] = item
+        defer delete(loop_iter_ctx)
+
+        // render the inner loop template with it...
+        inner_render := render_template(loop_inner_templ_str, &loop_iter_ctx)
+
+        // and send to the output!
+        written := strings.write_string(builder, inner_render)
+        if written != len(inner_render) {
+            log.error(
+                "ERROR: couldn't write to the builder buffer -- not enough memory?",
+            )
+        }
+    }
+}
+
 render_template :: proc(templ_str: string, ctx: ^Context) -> string {
     builder: strings.Builder
     defer strings.builder_destroy(&builder)
@@ -262,17 +289,8 @@ render_template :: proc(templ_str: string, ctx: ^Context) -> string {
                         loop_iterable := eval_expr(stmt_split[3], ctx)
                         #partial switch v in loop_iterable {
                         case List:
-                            // ... and then, for each item of the iterable value ...
-                            for item in v {
-                                // we create its context,
-                                inner_ctx := clone_context(ctx^)
-                                inner_ctx[loop_var] = item
-                                defer delete(inner_ctx)
-                                // render the inner template with it...
-                                inner_render := render_template(inner_templ, &inner_ctx)
-                                // and send to the output!
-                                written := strings.write_string(&builder, inner_render)
-                            }
+                            // ... and rendering the inner template for each iterable item
+                            render_for_loop(&builder, v, loop_var, inner_templ, ctx)
                         case:
                             log.error("Trying to loop over non-list at:", stmt_read)
                             return "ERROR LOOPING OVER NON-LIST"
