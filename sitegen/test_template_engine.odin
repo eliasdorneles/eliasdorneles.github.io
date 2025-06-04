@@ -72,6 +72,8 @@ test_render_template_simple_expr :: proc(t: ^testing.T) {
     ctx2["country"] = ctx3
     ctx1["world"] = ctx2
 
+    list: []Value = {"um", "dois", "tres"}
+    ctx1["list"] = list
 
     result: string
     result = render_template("hello {{   city   }} bye", &ctx3)
@@ -81,7 +83,10 @@ test_render_template_simple_expr :: proc(t: ^testing.T) {
     expect_str(t, "hello Paris bye", result)
 
     result = render_template("hello {{ world }} bye", &ctx1)
-    expect_str(t, "hello (object) bye", result)
+    expect_str(t, "hello (OBJECT) bye", result)
+
+    result = render_template("hello {{ list }} bye", &ctx1)
+    expect_str(t, "hello (LIST) bye", result)
 
     result = render_template("hello [{{ not.valid }}] bye", &ctx1)
     expect_str(t, "hello [] bye", result)
@@ -127,7 +132,8 @@ test_render_template_if :: proc(t: ^testing.T) {
     expect_str(t, "One giga monkeys", render_template(templ_str, &ctx))
 
     // when:
-    templ_str = "{% if nothing %}nothing{% endif %}Article: {% if article %}{{ article.title }}{% endif %}"
+    templ_str =
+    "{% if nothing %}nothing{% endif %}Article: {% if article %}{{ article.title }}{% endif %}"
     // then:
     expect_str(t, "Article: One giga monkeys", render_template(templ_str, &ctx))
 
@@ -147,3 +153,39 @@ test_render_template_if :: proc(t: ^testing.T) {
     expect_str(t, "One giga monkeys", render_template(templ_str, &ctx))
 }
 
+@(test)
+test_render_template_for :: proc(t: ^testing.T) {
+    // given:
+    obj1, obj2, obj3 := make(Context), make(Context), make(Context)
+    defer delete(obj1)
+    defer delete(obj2)
+    defer delete(obj3)
+    obj1["name"] = "Apple"
+    obj2["name"] = "Banana"
+    obj3["name"] = "Kiwi"
+    list: []Value = {obj1, obj2, obj3}
+
+    ctx := make(Context)
+    defer delete(ctx)
+    ctx["items"] = list
+
+    templ_str: string
+
+    // when:
+    templ_str = "{% for it in items %}- {{ it.name }}{% endfor %}"
+    // then:
+    expect_str(t, "- Apple- Banana- Kiwi", render_template(templ_str, &ctx))
+
+    // and given:
+    row1: []Value = {"a", "b", "c"}
+    row2: []Value = {"d", "e", "f"}
+    row3: []Value = {"g", "h", "i"}
+    obj1["row"] = row1
+    obj2["row"] = row2
+    obj3["row"] = row3
+
+    // when:
+    templ_str = "BEGIN {% for it in items %}: {% for x in it.row %}{{ x }}_{% endfor %}\n{% endfor %} END"
+    // then:
+    expect_str(t, "BEGIN : a_b_c_: d_e_f_: g_h_i_ END", render_template(templ_str, &ctx))
+}

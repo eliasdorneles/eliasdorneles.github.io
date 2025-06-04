@@ -8,11 +8,13 @@ Template engine -- jinja2 syntax to support:
     => let's just bypass it for now, none of my articles have HTML on them
 [x] {{ lang_display_name(translation.lang) }}
 [x] If: {% if article.something %} {% else %} {% endif %}
-[ ] For: {% for it1, it2 in TUPLE_LIST %} {% endfor %}
+[x] For: {% for it1 in LIST %} {% endfor %}
+[x] Nested for: {% for li in LIST_of_lists %}{% for x in li}{{ x}}{% endfor %}{% endfor %}
 [ ] Add remaining if conditions
     [ ] if variable is defined
     [ ] if variable != another_variable
     [ ] {% if page is defined and url == page.url %}
+[ ] For w/ tuples: {% for it1, it2 in TUPLE_LIST %} {% endfor %}
 [ ] Blocks: {% block NAME %}  {% endblock %}
 [ ] Includes: {% include 'FILENAME' %}
 [ ] Extends: {% extends "FILENAME" %}

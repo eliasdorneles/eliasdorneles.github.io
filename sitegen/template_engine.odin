@@ -7,9 +7,12 @@ import "core:time"
 
 Context :: distinct map[string]Value
 
+List :: []Value
+
 Value :: union {
     string,
     Context,
+    List,
 }
 
 Expr :: string
@@ -28,17 +31,28 @@ to_string :: proc(value: Value) -> string {
         return ""
     case string:
         return v
+    // TODO: consider building a repr for object and list values
     case Context:
-        // TODO: consider building a repr of the object here
-        return "(object)"
+        return "(OBJECT)"
+    case List:
+        return "(LIST)"
     }
     return ""
 }
 
-// eval_context_path({"um": "1"}, ["um"]) -> "1"
-// eval_context_path({"um": "1"}, ["dois"]) -> nil
-// eval_context_path({"um": "1"}, ["um", "dois"]) -> nil
-// eval_context_path({"um": {"dois": "2"}}, ["um", "dois"]) -> "2"
+clone_context :: proc(src_ctx: Context) -> Context {
+    ctx := make(Context)
+    for key, val in src_ctx {
+        ctx[key] = val
+    }
+    return ctx
+}
+
+// ({"um": "1"}, ["um"]) -> "1"
+// ({"um": "1"}, ["dois"]) -> nil
+// ({"um": "1"}, ["um", "dois"]) -> nil
+// ({"um": {"dois": "2"}}, ["um", "dois"]) -> "2"
+// ({"list": ["1", "2"]}, ["list"]) -> ["1", "2"]
 eval_context_path :: proc(value: ^Value, path: []string) -> Value {
     if value == nil || value^ == nil {
         return nil
@@ -74,6 +88,8 @@ eval_context_path :: proc(value: ^Value, path: []string) -> Value {
             next_val := v[path[0]]
             return eval_context_path(&next_val, path[1:])
         }
+    case List:
+        return nil // can't do lookups in lists yet
     }
     return "ERROR"
 }
@@ -110,6 +126,8 @@ eval_condition :: proc(token_list: []string, ctx: ^Context) -> bool {
             return len(v) > 0
         case Context:
             return true
+        case List:
+            return len(v) > 0
         }
     }
     // TODO: handle more complex expressions
@@ -121,13 +139,51 @@ eval_condition :: proc(token_list: []string, ctx: ^Context) -> bool {
 read_until :: proc(reader: ^strings.Reader, sentinel: string) -> (string, bool) {
     // advance reader until the sentinel string, return a slice of the string
     // until just before the sentinel
-    found := strings.index_any(reader.s[reader.i:], sentinel)
+    found := strings.index(reader.s[reader.i:], sentinel)
     if found == -1 {
         return "", false
     }
     result := reader.s[reader.i:reader.i + i64(found)]
     strings.reader_seek(reader, i64(found + len(sentinel)), .Current)
     return result, true
+}
+
+read_until_next_stmt :: proc(reader: ^strings.Reader) -> (string, bool) {
+    if templ_read, ok := read_until(reader, "{%"); ok {
+        if expr_read, ok := read_until(reader, "%}"); ok {
+            return strings.trim(expr_read, " "), true
+        }
+        // if we couldn't find the end of the expression, let's put back the "{%"
+        // we read at first
+        strings.reader_unread_rune(reader) // %
+        strings.reader_unread_rune(reader) // {
+        return "", false
+    }
+    return "", false
+}
+
+parse_inner_for_template_str :: proc(reader: ^strings.Reader) -> (string, bool) {
+    start_index := reader.i
+
+    ok: bool
+    next_stmt: string
+    next_stmt, ok = read_until_next_stmt(reader)
+    for ok {
+        if next_stmt == "for" {
+            // we'll parse discarding the output for now, let the main loop
+            // of the recursive render_template call to parse it again
+            _, ok := parse_inner_for_template_str(reader)
+            if !ok {
+                return "", false
+            }
+        }
+        if next_stmt == "endfor" {
+            return reader.s[start_index:reader.i], true
+        }
+        next_stmt, ok = read_until_next_stmt(reader)
+    }
+
+    return "", false
 }
 
 render_template :: proc(templ_str: string, ctx: ^Context) -> string {
@@ -184,7 +240,6 @@ render_template :: proc(templ_str: string, ctx: ^Context) -> string {
                 stmt_read := strings.trim(stmt_read, " ")
                 stmt_split := strings.split(stmt_read, " ")
                 defer delete(stmt_split)
-                // log.info("stmt_split:", stmt_split)
                 if stmt_split[0] == "if" {
                     cond_val := eval_condition(stmt_split[1:], ctx)
                     append(&if_cond_stack, cond_val)
@@ -199,6 +254,35 @@ render_template :: proc(templ_str: string, ctx: ^Context) -> string {
                     } else {
                         state = .Copying
                     }
+                } else if stmt_split[0] == "for" {
+                    // we handle the for loop by fetching the inner template inside it...
+                    if inner_templ, ok := parse_inner_for_template_str(&reader); ok {
+                        loop_var := stmt_split[1]
+                        // ... evaluate the iterable expression
+                        loop_iterable := eval_expr(stmt_split[3], ctx)
+                        #partial switch v in loop_iterable {
+                        case List:
+                            // ... and then, for each item of the iterable value ...
+                            for item in v {
+                                // we create its context,
+                                inner_ctx := clone_context(ctx^)
+                                inner_ctx[loop_var] = item
+                                defer delete(inner_ctx)
+                                // render the inner template with it...
+                                inner_render := render_template(inner_templ, &inner_ctx)
+                                // and send to the output!
+                                written := strings.write_string(&builder, inner_render)
+                            }
+                        case:
+                            log.error("Trying to loop over non-list at:", stmt_read)
+                            return "ERROR LOOPING OVER NON-LIST"
+                        }
+                    } else {
+                        log.error("Error parsing for loop", stmt_read)
+                        return "ERROR PARSING FOR LOOP"
+                    }
+                } else if stmt_split[0] == "endfor" {
+                    continue
                 } else {
                     state = .Copying
                 }
@@ -209,5 +293,8 @@ render_template :: proc(templ_str: string, ctx: ^Context) -> string {
         }
     }
 
-    return strings.to_string(builder)
+    return strings.clone_from(
+        strings.to_string(builder),
+        allocator = context.temp_allocator,
+    )
 }
