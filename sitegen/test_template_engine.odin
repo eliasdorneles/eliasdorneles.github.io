@@ -185,7 +185,29 @@ test_render_template_for :: proc(t: ^testing.T) {
     obj3["row"] = row3
 
     // when:
-    templ_str = "BEGIN {% for it in items %}: {% for x in it.row %}{{ x }}_{% endfor %}\n{% endfor %} END"
+    templ_str = "BEGIN {% for it in items %}: {% for x in it.row %}{{ x }}_{% endfor %}{% endfor %} END"
     // then:
     expect_str(t, "BEGIN : a_b_c_: d_e_f_: g_h_i_ END", render_template(templ_str, &ctx))
+
+    // when:
+    templ_str = strings.trim_space(`
+<ul>
+{% for it in items %}
+    <li>{{ it.name }}</li>
+{% endfor %}
+</ul>
+    `)
+    expected := strings.trim_space(`
+<ul>
+
+    <li>Apple</li>
+
+    <li>Banana</li>
+
+    <li>Kiwi</li>
+
+</ul>
+    `)
+    // then:
+    expect_str(t, expected, render_template(templ_str, &ctx))
 }

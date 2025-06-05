@@ -33,6 +33,10 @@ to_string :: proc(value: Value) -> string {
         return v
     // TODO: consider building a repr for object and list values
     case Context:
+        repr := v["__repr__"]
+        if repr != nil {
+            return to_string(repr)
+        }
         return "(OBJECT)"
     case List:
         return "(LIST)"
@@ -257,7 +261,7 @@ render_template :: proc(templ_str: string, ctx: ^Context) -> string {
                 strings.write_string(&builder, to_string(eval_expr(expr_read, ctx)))
                 state = .Copying
             } else {
-                return "ERROR PARSING TEMPLATE"
+                return "ERROR PARSING TEMPLATE EXPRESSION"
             }
         case .Command:
             // unread current rune, let read_until + trim do all the work ;)
@@ -296,15 +300,23 @@ render_template :: proc(templ_str: string, ctx: ^Context) -> string {
                             return "ERROR LOOPING OVER NON-LIST"
                         }
                     } else {
-                        log.error("Error parsing for loop", stmt_read)
+                        log.error("Error parsing for-loop", stmt_read)
                         return "ERROR PARSING FOR LOOP"
                     }
-                } else if stmt_split[0] == "endfor" {
-                    continue
+                    state = .Copying
                 } else {
+                    // handle {% endfor %} and other unknown commands by
+                    // switching back to regular copying mode
                     state = .Copying
                 }
             } else {
+                // log.error(
+                //     "Error parsing template at:",
+                //     reader.s[max(reader.i - 12, 0):reader.i],
+                //     reader.i,
+                //     "state:",
+                //     state,
+                // )
                 return "ERROR PARSING TEMPLATE"
             }
 
