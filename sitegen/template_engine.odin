@@ -1,5 +1,6 @@
 package sitegen
 
+import "core:bytes"
 import "core:encoding/json"
 import "core:fmt"
 import "core:log"
@@ -123,6 +124,12 @@ eval_expr :: proc(expr: Expr, ctx: ^json.Object) -> Value {
     return eval_context_path(&v, path)
 }
 
+eql_values :: proc(val1: json.Value, val2: json.Value) -> bool {
+    val1_bytes, _ := json.marshal(val1, allocator = context.temp_allocator)
+    val2_bytes, _ := json.marshal(val2, allocator = context.temp_allocator)
+    return bytes.compare(val1_bytes, val2_bytes) == 0
+}
+
 eval_condition :: proc(token_list: []string, ctx: ^json.Object) -> bool {
     if len(token_list) == 1 {
         cond_expr_val := eval_expr(token_list[0], ctx)
@@ -145,6 +152,17 @@ eval_condition :: proc(token_list: []string, ctx: ^json.Object) -> bool {
         case json.Array:
             return len(v) > 0
         }
+    } else if len(token_list) == 3 {
+        op1, operator, op2 := token_list[0], token_list[1], token_list[2]
+        if operator == "is" && op2 == "defined" {
+            return ctx[op1] != nil
+        } else if operator == "==" {
+            return eql_values(eval_expr(op1, ctx), eval_expr(op2, ctx))
+        } else if operator == "!=" {
+            return !eql_values(eval_expr(op1, ctx), eval_expr(op2, ctx))
+        }
+    } else if len(token_list) == 7 && token_list[3] == "and" {
+        return eval_condition(token_list[:3], ctx) && eval_condition(token_list[4:], ctx)
     }
     // TODO: handle more complex expressions
     log.info("Condition not yet supported:", token_list)

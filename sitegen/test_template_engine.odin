@@ -19,7 +19,6 @@ expect_str :: proc(t: ^testing.T, expected: string, result: string) {
 test_eval_expr_isoformat :: proc(t: ^testing.T) {
     parsed, _ := json.parse_string(`{"article": {"date":  "2025-06-03T00:01:00+02:00"}}`)
     defer json.destroy_value(parsed)
-
     ctx := parsed.(json.Object)
 
     v: Value = ctx
@@ -37,96 +36,82 @@ test_eval_expr_isoformat :: proc(t: ^testing.T) {
 
 @(test)
 test_eval_expr :: proc(t: ^testing.T) {
-    ctx1 := make(json.Object)
-    defer delete(ctx1)
-    ctx2 := make(json.Object)
-    defer delete(ctx2)
-    ctx3 := make(json.Object)
-    defer delete(ctx3)
+    parsed, _ := json.parse_string(
+        `{"world": {"country": {"city": "Paris"}}, "um": "1"}`,
+    )
+    defer json.destroy_value(parsed)
+    ctx := parsed.(json.Object)
 
-    // NOTE: the order matters here, because the struct assignments are copying!
-    ctx3["city"] = "Paris"
-    ctx2["country"] = ctx3
-    ctx1["world"] = ctx2
-
-    ctx1["um"] = "1"
-
-    expect_str(t, "1", to_string(eval_expr("um", &ctx1)))
-    expect_str(t, "Paris", to_string(eval_expr("world.country.city", &ctx1)))
-    expect_str(t, "", to_string(eval_expr("nothing", &ctx1)))
-    expect_str(t, "", to_string(eval_expr("world.nothing", &ctx1)))
+    expect_str(t, "1", to_string(eval_expr("um", &ctx)))
+    expect_str(t, "Paris", to_string(eval_expr("world.country.city", &ctx)))
+    expect_str(t, "", to_string(eval_expr("nothing", &ctx)))
+    expect_str(t, "", to_string(eval_expr("world.nothing", &ctx)))
 
     // check striptags doesn't break
-    expect_str(t, "Paris", to_string(eval_expr("world.country.city|striptags", &ctx1)))
+    expect_str(t, "Paris", to_string(eval_expr("world.country.city|striptags", &ctx)))
 }
 
 @(test)
 test_render_template_simple_expr :: proc(t: ^testing.T) {
-    ctx1 := make(json.Object)
-    defer delete(ctx1)
-    ctx2 := make(json.Object)
-    defer delete(ctx2)
-    ctx3 := make(json.Object)
-    defer delete(ctx3)
+    parsed, _ := json.parse_string(
+        `{
+        "world": {"country": {"city": "Paris"}}, "um": "1",
+        "list": ["um", "dois", "tres"]
+    }
+    `,
+    )
+    defer json.destroy_value(parsed)
+    ctx := parsed.(json.Object)
 
-    ctx3["city"] = "Paris"
-    ctx2["country"] = ctx3
-    ctx1["world"] = ctx2
-
-    list: json.Array
-    append(&list, "um")
-    append(&list, "dois")
-    append(&list, "tres")
-    ctx1["list"] = list
+    country := ctx["world"].(json.Object)["country"].(json.Object)
 
     result: string
-    result = render_template("hello {{   city   }} bye", &ctx3)
+    result = render_template("hello {{   city   }} bye", &country)
     expect_str(t, "hello Paris bye", result)
 
-    result = render_template("hello {{ world.country.city }} bye", &ctx1)
+    result = render_template("hello {{ world.country.city }} bye", &ctx)
     expect_str(t, "hello Paris bye", result)
 
-    result = render_template("hello {{ world }} bye", &ctx1)
+    result = render_template("hello {{ world }} bye", &ctx)
     expect_str(t, `hello {"country":{"city":"Paris"}} bye`, result)
 
-    result = render_template("hello {{ list }} bye", &ctx1)
+    result = render_template("hello {{ list }} bye", &ctx)
     expect_str(t, `hello ["um","dois","tres"] bye`, result)
 
-    result = render_template("hello [{{ not.valid }}] bye", &ctx1)
+    result = render_template("hello [{{ not.valid }}] bye", &ctx)
     expect_str(t, "hello [] bye", result)
 
-    result = render_template("hello {{ world.country.city.invalid }} bye", &ctx1)
+    result = render_template("hello {{ world.country.city.invalid }} bye", &ctx)
     expect_str(t, "hello  bye", result)
 }
 
 @(test)
 test_render_template_translation_lang_display :: proc(t: ^testing.T) {
-    translation := make(json.Object)
-    translation["lang"] = "en"
-    defer delete(translation)
-    ctx := make(json.Object)
-    defer delete(ctx)
-    ctx["translation"] = translation
+    parsed, _ := json.parse_string(`{"translation": {"lang": "en"}, "lang2": "pt-br"}`)
+    defer json.destroy_value(parsed)
+    ctx := parsed.(json.Object)
 
     result: string
     result = render_template("Lang: {{ lang_display_name(translation.lang) }}", &ctx)
     expect_str(t, "Lang: English", result)
 
-    translation["lang"] = "pt-br"
-    result = render_template("Lang: {{ lang_display_name(translation.lang) }}", &ctx)
+    result = render_template("Lang: {{ lang_display_name(lang2) }}", &ctx)
     expect_str(t, "Lang: Português (Brasil)", result)
 }
 
 @(test)
 test_render_template_if :: proc(t: ^testing.T) {
     // given:
-    article := make(json.Object)
-    defer delete(article)
-    article["title"] = "One giga monkeys"
-
-    ctx := make(json.Object)
-    defer delete(ctx)
-    ctx["article"] = article
+    parsed, _ := json.parse_string(
+        `{
+            "article": {"title":  "One giga monkeys"},
+            "nothing": false,
+            "fruit": "Banana"
+            "banana": {"name": "Banana"}
+         }`,
+    )
+    defer json.destroy_value(parsed)
+    ctx := parsed.(json.Object)
 
     templ_str: string
 
@@ -152,9 +137,34 @@ test_render_template_if :: proc(t: ^testing.T) {
     expect_str(t, "something", render_template(templ_str, &ctx))
 
     // when:
+    templ_str = "{% if nothing is defined %}nothing{% else %}something{% endif %}"
+    // then:
+    expect_str(t, "nothing", render_template(templ_str, &ctx))
+
+    // when:
     templ_str = "{% if article %}{{ article.title }}{% else %}no article{% endif %}"
     // then:
     expect_str(t, "One giga monkeys", render_template(templ_str, &ctx))
+
+    // when:
+    templ_str = `{% if fruit == banana.name %}Bananas for all!{% endif %}`
+    // then:
+    expect_str(t, "Bananas for all!", render_template(templ_str, &ctx))
+
+    // when:
+    templ_str = `{% if fruit != banana.name %}Bananas for all!{% else %}No bananas{% endif %}`
+    // then:
+    expect_str(t, "No bananas", render_template(templ_str, &ctx))
+
+    // when:
+    templ_str = `{% if nothing is defined and fruit == banana.name %}Bananas for all!{% endif %}`
+    // then:
+    expect_str(t, "Bananas for all!", render_template(templ_str, &ctx))
+
+    // when:
+    templ_str = `{% if nothing is defined and fruit == something %}Bananas for all!{% endif %}`
+    // then:
+    expect_str(t, "", render_template(templ_str, &ctx))
 }
 
 @(test)
@@ -172,7 +182,6 @@ test_render_template_for :: proc(t: ^testing.T) {
         `,
     )
     defer json.destroy_value(parsed)
-
     ctx := parsed.(json.Object)
 
     templ_str: string
