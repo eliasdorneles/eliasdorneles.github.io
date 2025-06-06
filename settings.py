@@ -19,9 +19,9 @@ ARTICLE_URL = "{date:%Y}/{date:%m}/{date:%d}/{name}.html"
 ARTICLE_SAVE_AS = ARTICLE_URL
 
 MENUITEMS = [
-    ("Blog", ""),
-    ("Today I Learned...", "til"),
-    ("About me", "pages/about.html"),
+    {"title": "Blog", "url": ""},
+    {"title": "Today I Learned...", "url": "til"},
+    {"title": "About me", "url": "pages/about.html"},
 ]
 
 # I'm the only author

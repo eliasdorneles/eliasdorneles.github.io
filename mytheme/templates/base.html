@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <title>{% block title %}{{ SITENAME }}{% endblock %}</title>
+        <title>{% block title %}{{ SITENAME }}{% endblock%}</title>
         <link rel="shortcut icon" href="/images/favicon.ico">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -27,9 +27,9 @@ if (window.location.host == host && window.location.protocol != "https:") {
         <header id="banner" class="body">
                 <h1><a href="{{ SITEURL }}/index.html">{{ SITENAME }} {% if SITESUBTITLE %} <strong>{{ SITESUBTITLE }}</strong>{% endif %}</a></h1>
                 <nav><ul>
-                {% for title, url in MENUITEMS %}
-                    <li {% if page is defined and url == page.url %} class="active" {% endif %}>
-                        <a href="{{ SITEURL }}/{{ url }}">{{ title }}</a>
+                {% for it in MENUITEMS %}
+                    <li {% if page is defined and it.url == page.url %} class="active" {% endif %}>
+                        <a href="{{ SITEURL }}/{{ it.url }}">{{ it.title }}</a>
                     </li>
                 {% endfor %}
                 </ul></nav>
