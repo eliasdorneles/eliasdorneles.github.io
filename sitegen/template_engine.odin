@@ -1,19 +1,19 @@
 package sitegen
 
+import "core:encoding/json"
 import "core:fmt"
 import "core:log"
 import "core:strings"
 import "core:time"
 
-Context :: distinct map[string]Value
-
-List :: []Value
-
-Value :: union {
-    string,
-    Context,
-    List,
-}
+// Null    :: distinct rawptr
+// Integer :: i64
+// Float   :: f64
+// Boolean :: bool
+// String  :: string
+// Array   :: distinct [dynamic]Value
+// Object  :: distinct map[string]Value
+Value :: json.Value
 
 Expr :: string
 
@@ -25,27 +25,30 @@ ParsingState :: enum {
     Command,
 }
 
-to_string :: proc(value: Value) -> string {
-    switch v in value {
-    case nil:
+to_string :: proc(value: json.Value) -> string {
+    if value == nil {
         return ""
-    case string:
+    }
+    #partial switch v in value {
+    case json.Null:
+        return ""
+    case json.String:
         return v
-    // TODO: consider building a repr for object and list values
-    case Context:
+    case json.Object:
         repr := v["__repr__"]
         if repr != nil {
             return to_string(repr)
         }
-        return "(OBJECT)"
-    case List:
-        return "(LIST)"
     }
-    return ""
+    if json_str, err := json.marshal(value, allocator = context.temp_allocator);
+       err == nil {
+        return string(json_str)
+    }
+    return "ERROR"
 }
 
-clone_context :: proc(src_ctx: Context) -> Context {
-    ctx := make(Context)
+clone_context :: proc(src_ctx: json.Object) -> json.Object {
+    ctx := make(json.Object)
     for key, val in src_ctx {
         ctx[key] = val
     }
@@ -61,10 +64,10 @@ eval_context_path :: proc(value: ^Value, path: []string) -> Value {
     if value == nil || value^ == nil {
         return nil
     }
-    switch &v in value^ {
-    case nil:
+    #partial switch &v in value^ {
+    case json.Null:
         return nil
-    case string:
+    case json.String:
         // here we implement date formatting for datetime values represented as
         // strings in iso format
         if path[0] == "isoformat()" {
@@ -80,7 +83,7 @@ eval_context_path :: proc(value: ^Value, path: []string) -> Value {
             )
         }
         return nil // can't do lookups in strings
-    case Context:
+    case json.Object:
         if len(path) == 1 {
             key: string = path[0]
             // ignoring |striptags because none of my articles have tags in the title
@@ -92,13 +95,13 @@ eval_context_path :: proc(value: ^Value, path: []string) -> Value {
             next_val := v[path[0]]
             return eval_context_path(&next_val, path[1:])
         }
-    case List:
+    case json.Array:
         return nil // can't do lookups in lists yet
     }
-    return "ERROR"
+    return "ERROR, UNSUPPORTED TYPE LOOKUP"
 }
 
-eval_expr :: proc(expr: Expr, ctx: ^Context) -> Value {
+eval_expr :: proc(expr: Expr, ctx: ^json.Object) -> Value {
     // handle special case {{ lang_display_name(translation.lang) }}
     if strings.starts_with(expr, "lang_display_name(") {
         lang := eval_expr(expr[len("lang_display_name("):len(expr) - 1], ctx)
@@ -120,17 +123,26 @@ eval_expr :: proc(expr: Expr, ctx: ^Context) -> Value {
     return eval_context_path(&v, path)
 }
 
-eval_condition :: proc(token_list: []string, ctx: ^Context) -> bool {
+eval_condition :: proc(token_list: []string, ctx: ^json.Object) -> bool {
     if len(token_list) == 1 {
         cond_expr_val := eval_expr(token_list[0], ctx)
-        switch v in cond_expr_val {
-        case nil:
+        if cond_expr_val == nil {
             return false
-        case string:
+        }
+        switch v in cond_expr_val {
+        case json.Null:
+            return false
+        case json.Float:
+            return v != 0
+        case json.Integer:
+            return v != 0
+        case json.Boolean:
+            return v
+        case json.String:
             return len(v) > 0
-        case Context:
+        case json.Object:
             return true
-        case List:
+        case json.Array:
             return len(v) > 0
         }
     }
@@ -192,14 +204,14 @@ parse_inner_for_template_str :: proc(reader: ^strings.Reader) -> (string, bool) 
 
 render_for_loop :: proc(
     builder: ^strings.Builder,
-    loop_list: List,
+    loop_list: json.Array,
     loop_var: string,
     loop_inner_templ_str: string,
-    ctx: ^Context,
+    ctx: ^json.Object,
 ) {
     // for each item of the iterable value ...
     for item in loop_list {
-        // we create its context,
+        // we create its context object...
         loop_iter_ctx := clone_context(ctx^)
         loop_iter_ctx[loop_var] = item
         defer delete(loop_iter_ctx)
@@ -217,7 +229,7 @@ render_for_loop :: proc(
     }
 }
 
-render_template :: proc(templ_str: string, ctx: ^Context) -> string {
+render_template :: proc(templ_str: string, ctx: ^json.Object) -> string {
     builder: strings.Builder
     defer strings.builder_destroy(&builder)
 
@@ -292,7 +304,7 @@ render_template :: proc(templ_str: string, ctx: ^Context) -> string {
                         // ... evaluate the iterable expression
                         loop_iterable := eval_expr(stmt_split[3], ctx)
                         #partial switch v in loop_iterable {
-                        case List:
+                        case json.Array:
                             // ... and rendering the inner template for each iterable item
                             render_for_loop(&builder, v, loop_var, inner_templ, ctx)
                         case:

@@ -1,5 +1,6 @@
 package sitegen
 
+import "core:encoding/json"
 import "core:log"
 import "core:strings"
 import "core:testing"
@@ -16,17 +17,17 @@ expect_str :: proc(t: ^testing.T, expected: string, result: string) {
 
 @(test)
 test_eval_expr_isoformat :: proc(t: ^testing.T) {
-    ctx := make(Context)
-    defer delete(ctx)
-    article := make(Context)
-    defer delete(article)
+    parsed, _ := json.parse_string(`{"article": {"date":  "2025-06-03T00:01:00+02:00"}}`)
+    defer json.destroy_value(parsed)
 
-    date_isoformat := "2025-06-03T00:01:00+02:00"
-    article["date"] = date_isoformat
-    ctx["article"] = article
+    ctx := parsed.(json.Object)
 
     v: Value = ctx
-    expect_str(t, date_isoformat, to_string(eval_expr("article.date.isoformat()", &ctx)))
+    expect_str(
+        t,
+        "2025-06-03T00:01:00+02:00",
+        to_string(eval_expr("article.date.isoformat()", &ctx)),
+    )
     expect_str(
         t,
         "2025, June 03",
@@ -36,11 +37,11 @@ test_eval_expr_isoformat :: proc(t: ^testing.T) {
 
 @(test)
 test_eval_expr :: proc(t: ^testing.T) {
-    ctx1 := make(Context)
+    ctx1 := make(json.Object)
     defer delete(ctx1)
-    ctx2 := make(Context)
+    ctx2 := make(json.Object)
     defer delete(ctx2)
-    ctx3 := make(Context)
+    ctx3 := make(json.Object)
     defer delete(ctx3)
 
     // NOTE: the order matters here, because the struct assignments are copying!
@@ -61,18 +62,21 @@ test_eval_expr :: proc(t: ^testing.T) {
 
 @(test)
 test_render_template_simple_expr :: proc(t: ^testing.T) {
-    ctx1 := make(Context)
+    ctx1 := make(json.Object)
     defer delete(ctx1)
-    ctx2 := make(Context)
+    ctx2 := make(json.Object)
     defer delete(ctx2)
-    ctx3 := make(Context)
+    ctx3 := make(json.Object)
     defer delete(ctx3)
 
     ctx3["city"] = "Paris"
     ctx2["country"] = ctx3
     ctx1["world"] = ctx2
 
-    list: []Value = {"um", "dois", "tres"}
+    list: json.Array
+    append(&list, "um")
+    append(&list, "dois")
+    append(&list, "tres")
     ctx1["list"] = list
 
     result: string
@@ -83,10 +87,10 @@ test_render_template_simple_expr :: proc(t: ^testing.T) {
     expect_str(t, "hello Paris bye", result)
 
     result = render_template("hello {{ world }} bye", &ctx1)
-    expect_str(t, "hello (OBJECT) bye", result)
+    expect_str(t, `hello {"country":{"city":"Paris"}} bye`, result)
 
     result = render_template("hello {{ list }} bye", &ctx1)
-    expect_str(t, "hello (LIST) bye", result)
+    expect_str(t, `hello ["um","dois","tres"] bye`, result)
 
     result = render_template("hello [{{ not.valid }}] bye", &ctx1)
     expect_str(t, "hello [] bye", result)
@@ -97,10 +101,10 @@ test_render_template_simple_expr :: proc(t: ^testing.T) {
 
 @(test)
 test_render_template_translation_lang_display :: proc(t: ^testing.T) {
-    translation := make(Context)
+    translation := make(json.Object)
     translation["lang"] = "en"
     defer delete(translation)
-    ctx := make(Context)
+    ctx := make(json.Object)
     defer delete(ctx)
     ctx["translation"] = translation
 
@@ -116,11 +120,11 @@ test_render_template_translation_lang_display :: proc(t: ^testing.T) {
 @(test)
 test_render_template_if :: proc(t: ^testing.T) {
     // given:
-    article := make(Context)
+    article := make(json.Object)
     defer delete(article)
     article["title"] = "One giga monkeys"
 
-    ctx := make(Context)
+    ctx := make(json.Object)
     defer delete(ctx)
     ctx["article"] = article
 
@@ -156,18 +160,20 @@ test_render_template_if :: proc(t: ^testing.T) {
 @(test)
 test_render_template_for :: proc(t: ^testing.T) {
     // given:
-    obj1, obj2, obj3 := make(Context), make(Context), make(Context)
-    defer delete(obj1)
-    defer delete(obj2)
-    defer delete(obj3)
-    obj1["name"] = "Apple"
-    obj2["name"] = "Banana"
-    obj3["name"] = "Kiwi"
-    list: []Value = {obj1, obj2, obj3}
+    parsed, _ := json.parse_string(
+        `
+        {
+            "items": [
+                {"name": "Apple",   "row": ["a", "b", "c"]},
+                {"name": "Banana",  "row": ["d", "e", "f"]},
+                {"name": "Kiwi",    "row": ["g", "h", "i"]}
+            ]
+        }
+        `,
+    )
+    defer json.destroy_value(parsed)
 
-    ctx := make(Context)
-    defer delete(ctx)
-    ctx["items"] = list
+    ctx := parsed.(json.Object)
 
     templ_str: string
 
@@ -176,28 +182,24 @@ test_render_template_for :: proc(t: ^testing.T) {
     // then:
     expect_str(t, "- Apple- Banana- Kiwi", render_template(templ_str, &ctx))
 
-    // and given:
-    row1: []Value = {"a", "b", "c"}
-    row2: []Value = {"d", "e", "f"}
-    row3: []Value = {"g", "h", "i"}
-    obj1["row"] = row1
-    obj2["row"] = row2
-    obj3["row"] = row3
-
-    // when:
-    templ_str = "BEGIN {% for it in items %}: {% for x in it.row %}{{ x }}_{% endfor %}{% endfor %} END"
+    // and when:
+    templ_str =
+    "BEGIN {% for it in items %}: {% for x in it.row %}{{ x }}_{% endfor %}{% endfor %} END"
     // then:
     expect_str(t, "BEGIN : a_b_c_: d_e_f_: g_h_i_ END", render_template(templ_str, &ctx))
 
-    // when:
-    templ_str = strings.trim_space(`
+    // and when:
+    templ_str = strings.trim_space(
+        `
 <ul>
 {% for it in items %}
     <li>{{ it.name }}</li>
 {% endfor %}
 </ul>
-    `)
-    expected := strings.trim_space(`
+    `,
+    )
+    expected := strings.trim_space(
+        `
 <ul>
 
     <li>Apple</li>
@@ -207,7 +209,8 @@ test_render_template_for :: proc(t: ^testing.T) {
     <li>Kiwi</li>
 
 </ul>
-    `)
+    `,
+    )
     // then:
     expect_str(t, expected, render_template(templ_str, &ctx))
 }

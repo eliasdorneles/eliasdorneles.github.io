@@ -10,7 +10,7 @@ Template engine -- jinja2 syntax to support:
 [x] If: {% if article.something %} {% else %} {% endif %}
 [x] For: {% for it1 in LIST %} {% endfor %}
 [x] Nested for: {% for li in LIST_of_lists %}{% for x in li}{{ x}}{% endfor %}{% endfor %}
-[ ] refactor: use json.Value and json.Object instead of custom Value and Context types
+[x] refactor: use json.Value and json.Object instead of custom Value and Context types
 [ ] Add remaining if conditions
     [ ] if variable is defined
     [ ] if variable != another_variable
