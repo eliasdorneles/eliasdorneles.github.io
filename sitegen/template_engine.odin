@@ -7,16 +7,6 @@ import "core:log"
 import "core:strings"
 import "core:time"
 
-// Null    :: distinct rawptr
-// Integer :: i64
-// Float   :: f64
-// Boolean :: bool
-// String  :: string
-// Array   :: distinct [dynamic]Value
-// Object  :: distinct map[string]Value
-Value :: json.Value
-
-Expr :: string
 
 ParsingState :: enum {
     Copying,
@@ -61,7 +51,7 @@ clone_context :: proc(src_ctx: json.Object) -> json.Object {
 // ({"um": "1"}, ["um", "dois"]) -> nil
 // ({"um": {"dois": "2"}}, ["um", "dois"]) -> "2"
 // ({"list": ["1", "2"]}, ["list"]) -> ["1", "2"]
-eval_context_path :: proc(value: ^Value, path: []string) -> Value {
+eval_context_path :: proc(value: ^json.Value, path: []string) -> json.Value {
     if value == nil || value^ == nil {
         return nil
     }
@@ -102,7 +92,7 @@ eval_context_path :: proc(value: ^Value, path: []string) -> Value {
     return "ERROR, UNSUPPORTED TYPE LOOKUP"
 }
 
-eval_expr :: proc(expr: Expr, ctx: ^json.Object) -> Value {
+eval_expr :: proc(expr: string, ctx: ^json.Object) -> json.Value {
     // handle special case {{ lang_display_name(translation.lang) }}
     if strings.starts_with(expr, "lang_display_name(") {
         lang := eval_expr(expr[len("lang_display_name("):len(expr) - 1], ctx)
@@ -120,7 +110,7 @@ eval_expr :: proc(expr: Expr, ctx: ^json.Object) -> Value {
     path := strings.split(expr, ".")
     defer delete(path)
 
-    v: Value = ctx^
+    v: json.Value = ctx^
     return eval_context_path(&v, path)
 }
 

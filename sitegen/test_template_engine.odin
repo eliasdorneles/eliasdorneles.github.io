@@ -21,7 +21,7 @@ test_eval_expr_isoformat :: proc(t: ^testing.T) {
     defer json.destroy_value(parsed)
     ctx := parsed.(json.Object)
 
-    v: Value = ctx
+    v: json.Value = ctx
     expect_str(
         t,
         "2025-06-03T00:01:00+02:00",
