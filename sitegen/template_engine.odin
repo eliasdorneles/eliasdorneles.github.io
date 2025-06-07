@@ -373,7 +373,7 @@ resolve_template_blocks :: proc(env: ^Environment, template_name: string) -> (st
 
 
 load_template :: proc(env: ^Environment, template_name: string) -> bool {
-    if templ_exists := template_name in env.raw_templates; !templ_exists {
+    if template_name not_in env.raw_templates {
         // template not found
         return false
     }
@@ -424,17 +424,13 @@ load_template :: proc(env: ^Environment, template_name: string) -> bool {
                         return false
                     }
                     to_include := strings.trim(stmt_split[1], `"`)
-                    if templ_exists := to_include in env.raw_templates; !templ_exists {
+                    if to_include not_in env.raw_templates {
                         // "ERROR INCLUDING TEMPLATE -- NOT FOUND"
                         return false
                     }
-                    if ok := load_template(env, to_include); ok {
-                        strings.write_string(&builder, env.loaded_templates[to_include])
-                        state = .Copying
-                    } else {
-                        // ERROR INCLUDING TEMPLATE -- ERROR WHILE LOADING
-                        return false
-                    }
+                    load_template(env, to_include) or_return
+                    strings.write_string(&builder, env.loaded_templates[to_include])
+                    state = .Copying
                 } else {
                     strings.write_string(&builder, "{% ")
                     strings.write_string(&builder, stmt_read)
