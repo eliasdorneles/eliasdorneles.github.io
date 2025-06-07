@@ -20,6 +20,7 @@ Template evaluation:
     best to ignore the set command and set this in sitegen
 Template loading:
 [x] Includes: {% include 'FILENAME' %}
+    [x] support nested includes
 [ ] Blocks: {% block NAME %}  {% endblock %}
 [ ] Extends: {% extends "FILENAME" %}
 

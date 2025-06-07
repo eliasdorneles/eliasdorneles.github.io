@@ -232,12 +232,23 @@ test_load_template_include :: proc(t: ^testing.T) {
     // given:
     env: Environment
     env.raw_templates["article.html"] = `<article>{% include "info.html" %}</article>`
-    env.raw_templates["info.html"] = `{% block article %}ARTICLE{% endblock %}`
+    env.raw_templates["info.html"] = "{% block article %}ARTICLE{% endblock %}"
     defer destroy_env(&env)
 
     // when:
-    result, ok := load_template(&env, "article.html")
+    ok := load_template(&env, "article.html")
+
+    // then:
     testing.expect(t, ok)
-    expected := `<article>{% block article %}ARTICLE{% endblock %}</article>`
-    expect_str(t, expected, result)
+    expected := "<article>{% block article %}ARTICLE{% endblock %}</article>"
+    expect_str(t, expected, env.loaded_templates["article.html"])
+
+    // and when:
+    env.raw_templates["page.html"] = `<page>{% include "article.html" %}</page>`
+    ok = load_template(&env, "page.html")
+
+    // then:
+    testing.expect(t, ok)
+    expected = "<page><article>{% block article %}ARTICLE{% endblock %}</article></page>"
+    expect_str(t, expected, env.loaded_templates["page.html"])
 }

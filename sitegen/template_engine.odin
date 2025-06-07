@@ -371,9 +371,10 @@ render_template :: proc(templ_str: string, ctx: ^json.Object) -> string {
 // }
 
 
-load_template :: proc(env: ^Environment, template_name: string) -> (string, bool) {
+load_template :: proc(env: ^Environment, template_name: string) -> bool {
     if templ_exists := template_name in env.raw_templates; !templ_exists {
-        return "TEMPLATE_NOT_FOUND", false
+        // template not found
+        return false
     }
 
     builder: strings.Builder
@@ -412,26 +413,42 @@ load_template :: proc(env: ^Environment, template_name: string) -> (string, bool
 
             before_index := reader.i
             if stmt_read, ok := read_until(&reader, "%}"); ok {
-                stmt_split := strings.split(strings.trim_space(stmt_read), " ")
+                stmt_read := strings.trim_space(stmt_read)
+                stmt_split := strings.split(stmt_read, " ")
                 defer delete(stmt_split)
 
-                if len(stmt_split) == 2 && stmt_split[0] == "include" {
+                if stmt_split[0] == "include" {
+                    if len(stmt_split) != 2 {
+                        // "ERROR INCLUDING TEMPLATE -- too many params"
+                        return false
+                    }
                     to_include := strings.trim(stmt_split[1], `"`)
                     if templ_exists := to_include in env.raw_templates; !templ_exists {
-                        return "ERROR INCLUDING TEMPLATE -- NOT FOUND", false
+                        // "ERROR INCLUDING TEMPLATE -- NOT FOUND"
+                        return false
                     }
-                    raw_templ_to_include := env.raw_templates[to_include]
-                    strings.write_string(&builder, raw_templ_to_include)
+                    if ok := load_template(env, to_include); ok {
+                        strings.write_string(&builder, env.loaded_templates[to_include])
+                        state = .Copying
+                    } else {
+                        // ERROR INCLUDING TEMPLATE -- ERROR WHILE LOADING
+                        return false
+                    }
+                } else {
+                    strings.write_string(&builder, "{% ")
+                    strings.write_string(&builder, stmt_read)
+                    strings.write_string(&builder, " %}")
                     state = .Copying
                 }
             } else {
-                return "ERROR LOADING TEMPLATE -- PARSING STATEMENTS", false
+                // error when parsing statements
+                return false
             }
         }
     }
-    return strings.clone_from(
-            strings.to_string(builder),
-            allocator = context.temp_allocator,
-        ),
-        true
+    env.loaded_templates[template_name] = strings.clone_from(
+        strings.to_string(builder),
+        allocator = context.temp_allocator,
+    )
+    return true
 }
