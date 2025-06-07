@@ -367,8 +367,9 @@ render_template :: proc(templ_str: string, ctx: ^json.Object) -> string {
     )
 }
 
-// load_raw_template :: proc(env: ^Environment, template_name: string) -> string {
-// }
+resolve_template_blocks :: proc(env: ^Environment, template_name: string) -> (string, bool) {
+    return "", false
+}
 
 
 load_template :: proc(env: ^Environment, template_name: string) -> bool {

@@ -252,3 +252,27 @@ test_load_template_include :: proc(t: ^testing.T) {
     expected = "<page><article>{% block article %}ARTICLE{% endblock %}</article></page>"
     expect_str(t, expected, env.loaded_templates["page.html"])
 }
+
+@(test)
+test_resolve_template_blocks :: proc(t: ^testing.T) {
+    // given:
+    env: Environment
+    env.raw_templates["base.html"] = strings.trim_space(
+        `
+<html>{% block title %}BASE TITLE{% endblock %}<article>{% block article %}{% endblock %}</article></html>
+    `,
+    )
+    env.raw_templates["article.html"] = strings.trim_space(
+        `
+{% extends "base.html" %}
+{% block article %}ARTICLE{% endblock %}
+    `,
+    )
+    defer destroy_env(&env)
+
+    // when:
+    result, ok := resolve_template_blocks(&env, "article.html")
+    expected := "<html>BASE TITLE<article>ARTICLE</article></page>"
+    testing.expect(t, ok)
+    expect_str(t, expected, result)
+}
