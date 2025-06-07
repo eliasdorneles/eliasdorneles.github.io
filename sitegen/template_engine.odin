@@ -7,6 +7,19 @@ import "core:log"
 import "core:strings"
 import "core:time"
 
+TEMPLATE_DIR :: "mytheme/templates/"
+
+Environment :: struct {
+    raw_templates:    map[string]string,
+    loaded_templates: map[string]string,
+}
+
+LoadingState :: enum {
+    Copying,
+    Skipping,
+    MaybeStatement,
+    Statement,
+}
 
 ParsingState :: enum {
     Copying,
@@ -14,6 +27,11 @@ ParsingState :: enum {
     MaybeExpressionOrCommand,
     Expression,
     Command,
+}
+
+destroy_env :: proc(env: ^Environment) {
+    delete(env.raw_templates)
+    delete(env.loaded_templates)
 }
 
 to_string :: proc(value: json.Value) -> string {
@@ -288,7 +306,7 @@ render_template :: proc(templ_str: string, ctx: ^json.Object) -> string {
             strings.reader_unread_rune(&reader)
 
             if stmt_read, ok := read_until(&reader, "%}"); ok {
-                stmt_read := strings.trim(stmt_read, " ")
+                stmt_read := strings.trim_space(stmt_read)
                 stmt_split := strings.split(stmt_read, " ")
                 defer delete(stmt_split)
                 if stmt_split[0] == "if" {
@@ -347,4 +365,73 @@ render_template :: proc(templ_str: string, ctx: ^json.Object) -> string {
         strings.to_string(builder),
         allocator = context.temp_allocator,
     )
+}
+
+// load_raw_template :: proc(env: ^Environment, template_name: string) -> string {
+// }
+
+
+load_template :: proc(env: ^Environment, template_name: string) -> (string, bool) {
+    if templ_exists := template_name in env.raw_templates; !templ_exists {
+        return "TEMPLATE_NOT_FOUND", false
+    }
+
+    builder: strings.Builder
+    defer strings.builder_destroy(&builder)
+
+    state: LoadingState
+    reader: strings.Reader
+    strings.reader_init(&reader, env.raw_templates[template_name])
+
+    for char, size, read_err := strings.reader_read_rune(&reader);
+        read_err == nil;
+        char, size, read_err = strings.reader_read_rune(&reader) {
+        switch state {
+        case .Skipping:
+            if char == '{' {
+                state = .MaybeStatement
+            }
+        case .Copying:
+            if char == '{' {
+                state = .MaybeStatement
+            } else {
+                strings.write_rune(&builder, char)
+            }
+        case .MaybeStatement:
+            if char == '%' {
+                state = .Statement
+            } else {
+                state = .Copying
+                strings.write_rune(&builder, '{')
+                strings.write_rune(&builder, char)
+            }
+        case .Statement:
+            state = .Copying
+            // unread current rune, let read_until + trim do all the work ;)
+            strings.reader_unread_rune(&reader)
+
+            before_index := reader.i
+            if stmt_read, ok := read_until(&reader, "%}"); ok {
+                stmt_split := strings.split(strings.trim_space(stmt_read), " ")
+                defer delete(stmt_split)
+
+                if len(stmt_split) == 2 && stmt_split[0] == "include" {
+                    to_include := strings.trim(stmt_split[1], `"`)
+                    if templ_exists := to_include in env.raw_templates; !templ_exists {
+                        return "ERROR INCLUDING TEMPLATE -- NOT FOUND", false
+                    }
+                    raw_templ_to_include := env.raw_templates[to_include]
+                    strings.write_string(&builder, raw_templ_to_include)
+                    state = .Copying
+                }
+            } else {
+                return "ERROR LOADING TEMPLATE -- PARSING STATEMENTS", false
+            }
+        }
+    }
+    return strings.clone_from(
+            strings.to_string(builder),
+            allocator = context.temp_allocator,
+        ),
+        true
 }

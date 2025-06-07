@@ -4,3 +4,4 @@ output
 *.pyc
 .mypy_cache
 .ropeproject
+sitegen.bin

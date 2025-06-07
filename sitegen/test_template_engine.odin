@@ -152,17 +152,20 @@ test_render_template_if :: proc(t: ^testing.T) {
     expect_str(t, "Bananas for all!", render_template(templ_str, &ctx))
 
     // when:
-    templ_str = `{% if fruit != banana.name %}Bananas for all!{% else %}No bananas{% endif %}`
+    templ_str =
+    `{% if fruit != banana.name %}Bananas for all!{% else %}No bananas{% endif %}`
     // then:
     expect_str(t, "No bananas", render_template(templ_str, &ctx))
 
     // when:
-    templ_str = `{% if nothing is defined and fruit == banana.name %}Bananas for all!{% endif %}`
+    templ_str =
+    `{% if nothing is defined and fruit == banana.name %}Bananas for all!{% endif %}`
     // then:
     expect_str(t, "Bananas for all!", render_template(templ_str, &ctx))
 
     // when:
-    templ_str = `{% if nothing is defined and fruit == something %}Bananas for all!{% endif %}`
+    templ_str =
+    `{% if nothing is defined and fruit == something %}Bananas for all!{% endif %}`
     // then:
     expect_str(t, "", render_template(templ_str, &ctx))
 }
@@ -222,4 +225,19 @@ test_render_template_for :: proc(t: ^testing.T) {
     )
     // then:
     expect_str(t, expected, render_template(templ_str, &ctx))
+}
+
+@(test)
+test_load_template_include :: proc(t: ^testing.T) {
+    // given:
+    env: Environment
+    env.raw_templates["article.html"] = `<article>{% include "info.html" %}</article>`
+    env.raw_templates["info.html"] = `{% block article %}ARTICLE{% endblock %}`
+    defer destroy_env(&env)
+
+    // when:
+    result, ok := load_template(&env, "article.html")
+    testing.expect(t, ok)
+    expected := `<article>{% block article %}ARTICLE{% endblock %}</article>`
+    expect_str(t, expected, result)
 }

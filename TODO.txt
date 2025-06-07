@@ -1,5 +1,6 @@
 Template engine -- jinja2 syntax to support:
 
+Template evaluation:
 [x] {{ variable }} replaces content in variable
 [x] {{ variable.something.child }} replaces content in variable child
 [x] {{ variable.isoformat() }} implements date isoformat
@@ -15,11 +16,13 @@ Template engine -- jinja2 syntax to support:
     [x] {% if page is defined and url == page.url %}
     [x] {% if article.content != article._summary %}
     [x] {% if page is defined and it.url == page.url %}
-[ ] Blocks: {% block NAME %}  {% endblock %}
-[ ] Includes: {% include 'FILENAME' %}
-[ ] Extends: {% extends "FILENAME" %}
 [ ] set: {% set rel_source_path = 'site/' + article.source_path.split('/site/')[1] %}
     best to ignore the set command and set this in sitegen
+Template loading:
+[x] Includes: {% include 'FILENAME' %}
+[ ] Blocks: {% block NAME %}  {% endblock %}
+[ ] Extends: {% extends "FILENAME" %}
+
 
 Useful shell commands
 ---------------------
