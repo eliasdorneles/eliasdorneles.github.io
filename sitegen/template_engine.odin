@@ -14,14 +14,14 @@ Environment :: struct {
     loaded_templates: map[string]string,
 }
 
-LoadingState :: enum {
+ParsingStatementsState :: enum {
     Copying,
     Skipping,
     MaybeStatement,
     Statement,
 }
 
-ParsingState :: enum {
+ParsingTemplateState :: enum {
     Copying,
     Skipping,
     MaybeExpressionOrCommand,
@@ -211,7 +211,9 @@ parse_inner_for_template_str :: proc(reader: ^strings.Reader) -> (string, bool) 
     next_stmt: string
     next_stmt, ok = read_until_next_stmt(reader)
     for ok {
-        if next_stmt == "for" {
+        next_stmt_split := strings.split(next_stmt, " ")
+        defer delete(next_stmt_split)
+        if next_stmt_split[0] == "for" {
             // we'll parse discarding the output for now, let the main loop
             // of the recursive render_template call to parse it again
             _, ok := parse_inner_for_template_str(reader)
@@ -259,7 +261,7 @@ render_template :: proc(templ_str: string, ctx: ^json.Object) -> string {
     builder: strings.Builder
     defer strings.builder_destroy(&builder)
 
-    state: ParsingState
+    state: ParsingTemplateState
     reader: strings.Reader
     strings.reader_init(&reader, templ_str)
 
@@ -367,8 +369,81 @@ render_template :: proc(templ_str: string, ctx: ^json.Object) -> string {
     )
 }
 
-resolve_template_blocks :: proc(env: ^Environment, template_name: string) -> (string, bool) {
-    return "", false
+resolve_template_blocks :: proc(
+    env: ^Environment,
+    template_name: string,
+) -> (
+    result: string,
+    ok: bool,
+) {
+    if template_name not_in env.loaded_templates {
+        load_template(env, template_name) or_return
+    }
+    loaded_templ_str := env.loaded_templates[template_name]
+    if !strings.starts_with(loaded_templ_str, "{% extends") {
+        return loaded_templ_str, true
+    }
+    builder: strings.Builder
+    defer strings.builder_destroy(&builder)
+
+    state: ParsingStatementsState
+    reader: strings.Reader
+    strings.reader_init(&reader, loaded_templ_str)
+    strings.reader_seek(&reader, 2, .Current)
+
+    extended_template_name: string
+    if stmt_read, ok := read_until(&reader, "%}"); ok {
+        stmt_read := strings.trim_space(stmt_read)
+        stmt_split := strings.split(stmt_read, " ")
+        defer delete(stmt_split)
+
+        if stmt_split[0] != "extends" || len(stmt_split) != 2 {
+            log.error("stmt_split:", stmt_split)
+            return "ERROR: WRONG EXTEND TEMPLATE SYNTAX", false
+        }
+        extended_template_name = strings.trim(stmt_split[1], `"`)
+        if extended_template_name not_in env.loaded_templates {
+            load_template(env, extended_template_name) or_return
+        }
+    }
+
+    // for char, size, read_err := strings.reader_read_rune(&reader);
+    //     read_err == nil;
+    //     char, size, read_err = strings.reader_read_rune(&reader) {
+    //     switch state {
+    //     case .Skipping:
+    //         if char == '{' {
+    //             state = .MaybeStatement
+    //         }
+    //     case .Copying:
+    //         if char == '{' {
+    //             state = .MaybeStatement
+    //         } else {
+    //             strings.write_rune(&builder, char)
+    //         }
+    //     case .MaybeStatement:
+    //         if char == '%' {
+    //             state = .Statement
+    //         } else {
+    //             state = .Copying
+    //             strings.write_rune(&builder, '{')
+    //             strings.write_rune(&builder, char)
+    //         }
+    //     case .Statement:
+    //         state = .Copying
+    //         // unread current rune, let read_until + trim do all the work ;)
+    //         strings.reader_unread_rune(&reader)
+    //
+    //         before_index := reader.i
+    //         if stmt_read, ok := read_until(&reader, "%}"); ok {
+    //             stmt_read := strings.trim_space(stmt_read)
+    //             stmt_split := strings.split(stmt_read, " ")
+    //             defer delete(stmt_split)
+    //         }
+    //     }
+    // }
+
+    return "TODO", false
 }
 
 
@@ -381,7 +456,7 @@ load_template :: proc(env: ^Environment, template_name: string) -> bool {
     builder: strings.Builder
     defer strings.builder_destroy(&builder)
 
-    state: LoadingState
+    state: ParsingStatementsState
     reader: strings.Reader
     strings.reader_init(&reader, env.raw_templates[template_name])
 

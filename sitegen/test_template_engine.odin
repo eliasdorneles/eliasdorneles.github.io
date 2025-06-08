@@ -196,9 +196,9 @@ test_render_template_for :: proc(t: ^testing.T) {
 
     // and when:
     templ_str =
-    "BEGIN {% for it in items %}: {% for x in it.row %}{{ x }}_{% endfor %}{% endfor %} END"
+    "BEGIN {% for it in items %}: {% for x in it.row %}{{ x }}_{% endfor %} AND{% endfor %} END"
     // then:
-    expect_str(t, "BEGIN : a_b_c_: d_e_f_: g_h_i_ END", render_template(templ_str, &ctx))
+    expect_str(t, "BEGIN : a_b_c_ AND: d_e_f_ AND: g_h_i_ AND END", render_template(templ_str, &ctx))
 
     // and when:
     templ_str = strings.trim_space(
