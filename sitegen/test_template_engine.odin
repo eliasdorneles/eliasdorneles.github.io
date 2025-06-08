@@ -66,22 +66,22 @@ test_render_template_simple_expr :: proc(t: ^testing.T) {
     country := ctx["world"].(json.Object)["country"].(json.Object)
 
     result: string
-    result = render_template("hello {{   city   }} bye", &country)
+    result = render_template_string("hello {{   city   }} bye", &country)
     expect_str(t, "hello Paris bye", result)
 
-    result = render_template("hello {{ world.country.city }} bye", &ctx)
+    result = render_template_string("hello {{ world.country.city }} bye", &ctx)
     expect_str(t, "hello Paris bye", result)
 
-    result = render_template("hello {{ world }} bye", &ctx)
+    result = render_template_string("hello {{ world }} bye", &ctx)
     expect_str(t, `hello {"country":{"city":"Paris"}} bye`, result)
 
-    result = render_template("hello {{ list }} bye", &ctx)
+    result = render_template_string("hello {{ list }} bye", &ctx)
     expect_str(t, `hello ["um","dois","tres"] bye`, result)
 
-    result = render_template("hello [{{ not.valid }}] bye", &ctx)
+    result = render_template_string("hello [{{ not.valid }}] bye", &ctx)
     expect_str(t, "hello [] bye", result)
 
-    result = render_template("hello {{ world.country.city.invalid }} bye", &ctx)
+    result = render_template_string("hello {{ world.country.city.invalid }} bye", &ctx)
     expect_str(t, "hello  bye", result)
 }
 
@@ -92,10 +92,10 @@ test_render_template_translation_lang_display :: proc(t: ^testing.T) {
     ctx := parsed.(json.Object)
 
     result: string
-    result = render_template("Lang: {{ lang_display_name(translation.lang) }}", &ctx)
+    result = render_template_string("Lang: {{ lang_display_name(translation.lang) }}", &ctx)
     expect_str(t, "Lang: English", result)
 
-    result = render_template("Lang: {{ lang_display_name(lang2) }}", &ctx)
+    result = render_template_string("Lang: {{ lang_display_name(lang2) }}", &ctx)
     expect_str(t, "Lang: Português (Brasil)", result)
 }
 
@@ -118,56 +118,56 @@ test_render_template_if :: proc(t: ^testing.T) {
     // when:
     templ_str = "{% if article %}{{ article.title }}{% endif %}"
     // then:
-    expect_str(t, "One giga monkeys", render_template(templ_str, &ctx))
+    expect_str(t, "One giga monkeys", render_template_string(templ_str, &ctx))
 
     // when:
     templ_str =
     "{% if nothing %}nothing{% endif %}Article: {% if article %}{{ article.title }}{% endif %}"
     // then:
-    expect_str(t, "Article: One giga monkeys", render_template(templ_str, &ctx))
+    expect_str(t, "Article: One giga monkeys", render_template_string(templ_str, &ctx))
 
     // when:
     templ_str = "{% if nothing %}nothing{% else %}something{% endif %}"
     // then:
-    expect_str(t, "something", render_template(templ_str, &ctx))
+    expect_str(t, "something", render_template_string(templ_str, &ctx))
 
     // when:
     templ_str = "{% if nothing %}nothing{% else %}something{% endif %}"
     // then:
-    expect_str(t, "something", render_template(templ_str, &ctx))
+    expect_str(t, "something", render_template_string(templ_str, &ctx))
 
     // when:
     templ_str = "{% if nothing is defined %}nothing{% else %}something{% endif %}"
     // then:
-    expect_str(t, "nothing", render_template(templ_str, &ctx))
+    expect_str(t, "nothing", render_template_string(templ_str, &ctx))
 
     // when:
     templ_str = "{% if article %}{{ article.title }}{% else %}no article{% endif %}"
     // then:
-    expect_str(t, "One giga monkeys", render_template(templ_str, &ctx))
+    expect_str(t, "One giga monkeys", render_template_string(templ_str, &ctx))
 
     // when:
     templ_str = `{% if fruit == banana.name %}Bananas for all!{% endif %}`
     // then:
-    expect_str(t, "Bananas for all!", render_template(templ_str, &ctx))
+    expect_str(t, "Bananas for all!", render_template_string(templ_str, &ctx))
 
     // when:
     templ_str =
     `{% if fruit != banana.name %}Bananas for all!{% else %}No bananas{% endif %}`
     // then:
-    expect_str(t, "No bananas", render_template(templ_str, &ctx))
+    expect_str(t, "No bananas", render_template_string(templ_str, &ctx))
 
     // when:
     templ_str =
     `{% if nothing is defined and fruit == banana.name %}Bananas for all!{% endif %}`
     // then:
-    expect_str(t, "Bananas for all!", render_template(templ_str, &ctx))
+    expect_str(t, "Bananas for all!", render_template_string(templ_str, &ctx))
 
     // when:
     templ_str =
     `{% if nothing is defined and fruit == something %}Bananas for all!{% endif %}`
     // then:
-    expect_str(t, "", render_template(templ_str, &ctx))
+    expect_str(t, "", render_template_string(templ_str, &ctx))
 }
 
 @(test)
@@ -219,7 +219,7 @@ test_render_template_for :: proc(t: ^testing.T) {
     // when:
     templ_str = "{% for it in items %}- {{ it.name }}{% endfor %}"
     // then:
-    expect_str(t, "- Apple- Banana- Kiwi", render_template(templ_str, &ctx))
+    expect_str(t, "- Apple- Banana- Kiwi", render_template_string(templ_str, &ctx))
 
     // and when:
     templ_str =
@@ -228,7 +228,7 @@ test_render_template_for :: proc(t: ^testing.T) {
     expect_str(
         t,
         "BEGIN : a_b_c_ AND: d_e_f_ AND: g_h_i_ AND END",
-        render_template(templ_str, &ctx),
+        render_template_string(templ_str, &ctx),
     )
 
     // and when:
@@ -255,7 +255,7 @@ test_render_template_for :: proc(t: ^testing.T) {
     `,
     )
     // then:
-    expect_str(t, expected, render_template(templ_str, &ctx))
+    expect_str(t, expected, render_template_string(templ_str, &ctx))
 }
 
 @(test)

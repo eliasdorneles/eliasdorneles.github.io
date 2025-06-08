@@ -220,7 +220,7 @@ parse_inner_for_template_str :: proc(reader: ^strings.Reader) -> (string, bool) 
         defer delete(next_stmt_split)
         if next_stmt_split[0] == "for" {
             // we'll parse discarding the output for now, let the main loop
-            // of the recursive render_template call to parse it again
+            // of the recursive render_template_string call to parse it again
             _, ok := parse_inner_for_template_str(reader)
             if !ok {
                 return "", false
@@ -250,7 +250,7 @@ render_for_loop :: proc(
         defer delete(loop_iter_ctx)
 
         // render the inner loop template with it...
-        inner_render := render_template(loop_inner_templ_str, &loop_iter_ctx)
+        inner_render := render_template_string(loop_inner_templ_str, &loop_iter_ctx)
 
         // and send to the output!
         written := strings.write_string(builder, inner_render)
@@ -262,7 +262,7 @@ render_for_loop :: proc(
     }
 }
 
-render_template :: proc(templ_str: string, ctx: ^json.Object) -> string {
+render_template_string :: proc(templ_str: string, ctx: ^json.Object) -> string {
     builder: strings.Builder
     defer strings.builder_destroy(&builder)
 
@@ -438,7 +438,7 @@ resolve_template_blocks :: proc(
     defer delete(block_name_stack)
     defer delete(block_index_stack)
 
-    state: ParsingStatementsState
+    state: ParsingStatementsState = .Copying
     for char, size, read_err := strings.reader_read_rune(&reader);
         read_err == nil;
         char, size, read_err = strings.reader_read_rune(&reader) {
@@ -544,6 +544,9 @@ resolve_extends_template :: proc(
             return "ERROR: WRONG EXTEND TEMPLATE SYNTAX", false
         }
         parent_template_name = unquote(stmt_split[1])
+        if parent_template_name not_in env.raw_templates {
+            load_template(env, parent_template_name) or_return
+        }
         if parent_template_name not_in env.loaded_templates {
             resolve_template_includes(env, parent_template_name) or_return
         }
@@ -553,7 +556,9 @@ resolve_extends_template :: proc(
     defer delete(template_blocks)
 
     parse_template_blocks(&reader, &template_blocks) or_return
+    log.info("template_blocks", template_blocks)
 
+    log.info("will now render parent template", parent_template_name)
     result = resolve_template_blocks(
         env,
         env.loaded_templates[parent_template_name],
@@ -646,5 +651,22 @@ load_template :: proc(env: ^Environment, template_name: string) -> bool {
     defer delete(template_path)
     template_data := os.read_entire_file(template_path) or_return
     env.raw_templates[template_name] = string(template_data)
+    resolve_template_includes(env, template_name) or_return
     return true
+}
+
+
+render_template :: proc(
+    env: ^Environment,
+    template_name: string,
+    ctx: ^json.Object,
+) -> (
+    result: string,
+    ok: bool,
+) {
+    load_template(env, template_name) or_return
+    template_str := resolve_extends_template(env, template_name) or_return
+    result = render_template_string(template_str, ctx)
+    // TODO: improve render_template_string error handling
+    return result, true
 }
