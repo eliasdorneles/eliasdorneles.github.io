@@ -1,7 +1,6 @@
 Title: Aventuras apresentando Java EE a mim mesmo
 Date: 2013-01-15 07:45
 Author: Elias Dorneles
-Slug: Aventuras-apresentando-Java-EE-a-mim-mesmo
 
 > **Cuidado:** o texto a seguir contém níveis perigosos de nerdice,
 > acrônimos e javeiragem em geral.

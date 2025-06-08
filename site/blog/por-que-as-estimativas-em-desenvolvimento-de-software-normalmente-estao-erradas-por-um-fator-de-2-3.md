@@ -1,7 +1,6 @@
 Title: Por que as estimativas em desenvolvimento de software normalmente estão erradas por um fator de 2-3?
 Date: 2013-02-26 06:34
 Author: Elias Dorneles
-Slug: Por-que-as-estimativas-em-desenvolvimento-de-software-normalmente-estão erradas-por-um-fator-de-2-3?
 
 > Aviso 1: Esta é uma tradução livre de uma das melhores histórias sobre
 > estimativas de software já escritas. O original em inglês é uma

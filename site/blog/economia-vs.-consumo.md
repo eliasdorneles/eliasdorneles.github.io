@@ -1,7 +1,6 @@
 Title: Economia vs. Consumo
 Date: 2011-02-03 12:53
 Author: Elias Dorneles
-Slug: Economia-vs.-Consumo
 
 Dias atrás estava debatendo com alguns amigos, tentando demonstrar como não era
 muito intuitivo o jeito que acostumamos a pensar sobre consumo de combustível,

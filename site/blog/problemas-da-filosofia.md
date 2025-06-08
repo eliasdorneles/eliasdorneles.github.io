@@ -1,7 +1,6 @@
 Title: Problemas da Filosofia
 Date: 2013-11-20 08:16
 Author: Elias Dorneles
-Slug: Problemas-da-Filosofia
 
 Um amigo indicou-me a leitura de [The Problems of
 Philosophy](https://en.wikipedia.org/wiki/The_Problems_of_Philosophy)

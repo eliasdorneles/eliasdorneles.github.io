@@ -1,7 +1,6 @@
 Title: Learning from DAS screencasts - season 2
 Date: 2015-08-17 01:41
 Author: Elias Dorneles
-Slug: learning-from-das-screencasts-season-2
 Tags: das-screencasts
 
 These are my notes for [season 2 of Destroy All Software

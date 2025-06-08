@@ -1,7 +1,6 @@
 Title: The Visual Display of Quantitative Information, or How to Make Better Graphs
 Date: 2014-10-12 17:42
 Author: Elias Dorneles
-Slug: The-Visual-Display-of-Quantitative-Information,-or-How-to-Make-Better-Graphs
 
 
 

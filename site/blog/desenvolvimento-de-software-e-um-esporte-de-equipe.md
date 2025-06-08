@@ -1,7 +1,6 @@
 Title: Desenvolvimento de software é um esporte de equipe
 Date: 2013-04-27 20:22
 Author: Elias Dorneles
-Slug: Desenvolvimento-de-software-é-um-esporte-de-equipe
 
 
 

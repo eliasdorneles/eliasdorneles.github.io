@@ -1,7 +1,6 @@
 Title: Idéias e execução
 Date: 2012-03-09 07:38
 Author: Elias Dorneles
-Slug: Idéias-e-execução
 
 Uma vez ou outra a gente topa com um cara que acha que ter uma idéia é
 uma coisa tremendamente importante. Execução, isto é para noviços

@@ -1,7 +1,6 @@
 Title: Aprendendo Thumbpicking
 Date: 2011-12-11 23:12
 Author: Elias Dorneles
-Slug: Aprendendo-Thumbpicking
 
 <center>
   [![Eu, tocando violão]({static}/images/ahogado.jpg "Eu, fominha, tocando violão em Punta del Este")](https://eljunior.files.wordpress.com/2011/12/ahogado.png)

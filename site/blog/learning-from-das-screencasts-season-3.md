@@ -1,7 +1,6 @@
 Title: Learning from DAS screencasts - season 3
 Date: 2015-12-30 12:36
 Author: Elias Dorneles
-Slug: learning-from-das-screencasts-season-3
 Tags: das-screencasts
 
 Here is a summary of my learning from watching [season 3 of Destroy All

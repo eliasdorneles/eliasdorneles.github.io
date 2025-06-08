@@ -1,7 +1,6 @@
 Title: Coisas sobre o VIM que gostaria de ter sabido antes
 Date: 2013-04-07 15:41
 Author: Elias Dorneles
-Slug: Coisas-sobre-o-VIM-que-gostaria-de-ter-sabido-antes
 
 O [Vim](http://www.vim.org) ainda é o meu editor predileto. Tentei substituí-lo
 várias vezes, e as únicas alternativas que chegaram perto de ameaçá-lo foram

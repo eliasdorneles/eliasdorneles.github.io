@@ -35,7 +35,6 @@ GITHUB_URL = "https://github.com/eliasdorneles"
 
 STATIC_PATHS = [
     "images",
-    "static",
     "extra/CNAME",
 ]
 

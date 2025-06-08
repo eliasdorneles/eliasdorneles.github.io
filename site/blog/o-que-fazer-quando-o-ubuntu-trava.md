@@ -1,7 +1,6 @@
 Title: O que fazer quando o Ubuntu trava
 Date: 2012-06-30 21:11
 Author: Elias Dorneles
-Slug: O-que-fazer-quando-o-Ubuntu-trava
 
 Um amigo meu costumava dizer que tudo no Linux é com malabarismos no
 teclado, porque certa vez ele conseguiu rebootar um sistema que estava

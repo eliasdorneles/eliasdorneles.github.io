@@ -1,7 +1,6 @@
 Title: The power of a good template
 Date: 2015-10-18 14:25
 Author: Elias Dorneles
-Slug: the-power-of-a-good-template
 
 Almost ten years ago, I was an intern helping to maintain a PHP application and
 attempting to write a little framework to create the new version of that

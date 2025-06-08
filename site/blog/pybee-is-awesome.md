@@ -1,7 +1,6 @@
 Title: Pybee is awesome
 Date: 2016-10-28 14:28
 Author: Elias Dorneles
-Slug: pybee-is-awesome
 
 I've recently discovered the [BeeWare project, also known as pybee][1], and
 it's bloody awesome.

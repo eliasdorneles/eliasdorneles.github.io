@@ -1,7 +1,6 @@
 Title: Vivendo alienado
 Date: 2011-09-21 11:48
 Author: Elias Dorneles
-Slug: Vivendo-alienado
 
 Não tem problema!
 

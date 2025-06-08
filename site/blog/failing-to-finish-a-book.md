@@ -1,7 +1,6 @@
 Title: Failing to finish a book
 Date: 2014-05-31 23:08
 Author: Elias Dorneles
-Slug: Failing-to-finish-a-book
 
 
 Okay, here is a book I've been trying to read for almost two months already and
