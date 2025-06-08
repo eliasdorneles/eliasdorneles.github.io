@@ -34,6 +34,9 @@ rg -o '[{][{][^{]*[}]' mytheme/ | cut -d: -f2 | sort | uniq
 Find all commands:
 rg -o '[{][%][^{]*[}]' mytheme/ | cut -d: -f2 | sort | uniq
 
+Find all variables:
+rg -o '[{][{%][^{]*[}]' mytheme/ | cut -d: -f2 | sort | uniq | grep -v include | grep -v extends | grep -v block | grep -v endfor | grep -v endif | grep -v else
+
 Site generator
 ##############
 
@@ -41,12 +44,15 @@ output dir: OUTPUT
 
 main logic:
 -----------
+build global context
 articles := sort articles in site/blog/* by date
 load article template
 for each article, in date desc order:
+    load article metadata and MD source
     render article content from MD to HTML
         https://pkg.odin-lang.org/vendor/commonmark/#markdown_to_html
-    render into HTML content using the HTML template
+    create local context
+    render into HTML content using the Jinja template
     update feed files (better than requiring memory everytime)
     save to output file
         create dir output tree as needed
