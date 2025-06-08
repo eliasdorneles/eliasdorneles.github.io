@@ -109,8 +109,8 @@ test_render_template_if :: proc(t: ^testing.T) {
             "fruit": "Banana"
             "banana": {"name": "Banana"}
          }`,
+         allocator = context.temp_allocator
     )
-    defer json.destroy_value(parsed)
     ctx := parsed.(json.Object)
 
     templ_str: string
@@ -168,6 +168,42 @@ test_render_template_if :: proc(t: ^testing.T) {
     `{% if nothing is defined and fruit == something %}Bananas for all!{% endif %}`
     // then:
     expect_str(t, "", render_template_string(templ_str, &ctx))
+
+    // when:
+    templ_str = `<h1><a href="{{ SITEURL }}/index.html">{{ SITENAME }} {% if SITESUBTITLE %} <strong>{{ SITESUBTITLE }}</strong>{% endif %}</a></h1>`
+    // then:
+    expect_str(t, `<h1><a href="/index.html"> </a></h1>`, render_template_string(templ_str, &ctx))
+
+    // and given:
+    ctx["SITEURL"] = "http://example.com"
+
+    // when:
+    templ_str = `<h1><a href="{{ SITEURL }}/index.html">{{ SITENAME }} {% if SITESUBTITLE %} <strong>{{ SITESUBTITLE }}</strong>{% endif %}</a></h1>`
+    // then:
+    expect_str(t, `<h1><a href="http://example.com/index.html"> </a></h1>`, render_template_string(templ_str, &ctx))
+
+    // when:
+    templ_str = `{% if FEED_RSS %}<link href="{{ SITEURL }}/{{ FEED_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} RSS Feed" />{% endif %}`
+    // then:
+    expect_str(t, "", render_template_string(templ_str, &ctx))
+}
+
+@(test)
+test_render_template_javascript :: proc(t: ^testing.T) {
+    ctx: json.Object
+    templ_str: string
+
+    // when:
+    templ_str = strings.trim_space(`
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+        `)
+    // then:
+    expect_str(t, templ_str, render_template_string(templ_str, &ctx))
 }
 
 @(test)

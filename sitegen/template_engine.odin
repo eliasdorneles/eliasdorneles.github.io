@@ -57,13 +57,6 @@ to_string :: proc(value: json.Value) -> string {
     return "ERROR"
 }
 
-top :: proc(stack: []string) -> Maybe(string) {
-    if len(stack) == 0 {
-        return nil
-    }
-    return stack[len(stack) - 1]
-}
-
 unquote :: proc(s: string) -> string {
     return strings.trim(s, `"`)
 }
@@ -272,6 +265,14 @@ render_template_string :: proc(templ_str: string, ctx: ^json.Object) -> string {
     if_cond_stack: [dynamic]bool
     defer delete(if_cond_stack)
 
+    copying_or_skipping :: proc(if_cond_stack: ^[dynamic]bool) -> ParsingTemplateState {
+        // if we're not inside an if-block, or if the condition is true, we should copy
+        if len(if_cond_stack) == 0 {
+            return .Copying
+        }
+        return .Copying if if_cond_stack[len(if_cond_stack) - 1] else .Skipping
+    }
+
     for char, size, read_err := strings.reader_read_rune(&reader);
         read_err == nil;
         char, size, read_err = strings.reader_read_rune(&reader) {
@@ -294,16 +295,21 @@ render_template_string :: proc(templ_str: string, ctx: ^json.Object) -> string {
             } else {
                 state = .Copying
                 strings.write_rune(&builder, '{')
+                strings.reader_unread_rune(&reader)
             }
         case .Expression:
             // unread current rune, let read_until + trim do all the work ;)
             strings.reader_unread_rune(&reader)
 
             if expr_read, ok := read_until(&reader, "}}"); ok {
-                expr_read = strings.trim_space(expr_read)
-                // log.infof("expr_read: [%s]", expr_read)
-                strings.write_string(&builder, to_string(eval_expr(expr_read, ctx)))
-                state = .Copying
+                // next_state := ParsingTemplateState.Copying
+                next_state := copying_or_skipping(&if_cond_stack)
+                if next_state == .Copying {
+                    expr_read = strings.trim_space(expr_read)
+                    // log.infof("expr_read: [%s]", expr_read)
+                    strings.write_string(&builder, to_string(eval_expr(expr_read, ctx)))
+                }
+                state = next_state
             } else {
                 return "ERROR PARSING TEMPLATE EXPRESSION"
             }
@@ -324,11 +330,11 @@ render_template_string :: proc(templ_str: string, ctx: ^json.Object) -> string {
                         state = .Skipping
                     }
                 } else if stmt_split[0] == "else" {
-                    if pop(&if_cond_stack) {
-                        state = .Skipping
-                    } else {
-                        state = .Copying
-                    }
+                    state =
+                        .Skipping if copying_or_skipping(&if_cond_stack) == .Copying else .Copying
+                } else if stmt_split[0] == "endif" {
+                    pop(&if_cond_stack)
+                    state = copying_or_skipping(&if_cond_stack)
                 } else if stmt_split[0] == "for" {
                     // we handle the for loop by fetching the inner template inside it...
                     if inner_templ, ok := parse_inner_for_template_str(&reader); ok {
@@ -340,9 +346,12 @@ render_template_string :: proc(templ_str: string, ctx: ^json.Object) -> string {
                             // ... and rendering the inner template for each iterable item
                             render_for_loop(&builder, v, loop_var, inner_templ, ctx)
                         case nil, json.Null:
-                            // let's just ignore the content
+                        // let's just ignore the content
                         case:
-                            log.error("Looping over non-list value not yet supported -- loop expression was:", stmt_read)
+                            log.error(
+                                "Looping over non-list value not yet supported -- loop expression was:",
+                                stmt_read,
+                            )
                             return "ERROR LOOPING OVER NON-LIST"
                         }
                     } else {
@@ -509,8 +518,8 @@ resolve_template_blocks :: proc(
                 // we want to skip if we're inside a block that's been
                 // overriden, which corresponds to when the stack is not empty
                 // and the top of the stack is in child_blocks
-                stack_top := top(block_name_stack[:])
-                if stack_top != nil && stack_top.(string) in child_blocks {
+                if len(block_name_stack) > 0 &&
+                   block_name_stack[len(block_name_stack) - 1] in child_blocks {
                     state = .Skipping
                 } else {
                     state = .Copying
