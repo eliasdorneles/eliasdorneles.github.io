@@ -44,21 +44,21 @@ output dir: OUTPUT
 
 main logic:
 -----------
-build global context
-articles := sort articles in site/blog/* by date
-load article template
-for each article, in date desc order:
-    load article metadata and MD source
-    render article content from MD to HTML
-        https://pkg.odin-lang.org/vendor/commonmark/#markdown_to_html
-    create local context
-    render into HTML content using the Jinja template
-    update feed files (better than requiring memory everytime)
-    save to output file
-        create dir output tree as needed
-generate pages w/ similar logic, except no feed
-generate index page
-    generate summary for every article
+[x] build global context
+[x] articles := sort articles in site/blog/* by date
+[ ] load article template
+[x] for each article, in date desc order:
+[x]     load article metadata and MD source
+[ ]     render article content from MD to HTML
+[ ]         https://pkg.odin-lang.org/vendor/commonmark/#markdown_to_html
+[ ]     create local context
+[ ]     render into HTML content using the Jinja template
+[ ]     update feed files (better than requiring memory everytime)
+[ ]     save to output file
+[ ]         create dir output tree as needed
+[ ] generate pages w/ similar logic, except no feed
+[ ] generate index page
+[ ]     generate summary for every article
 ----------------------
 
 [ ] Copy site/images/ OUTPUT/images/
@@ -68,3 +68,5 @@ generate index page
     [ ] RSS
     [ ] Atom
 [ ] implement translations
+
+[ ] implement relative urls, for better local preview
