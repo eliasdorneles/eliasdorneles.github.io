@@ -339,8 +339,10 @@ render_template_string :: proc(templ_str: string, ctx: ^json.Object) -> string {
                         case json.Array:
                             // ... and rendering the inner template for each iterable item
                             render_for_loop(&builder, v, loop_var, inner_templ, ctx)
+                        case nil, json.Null:
+                            // let's just ignore the content
                         case:
-                            log.error("Trying to loop over non-list at:", stmt_read)
+                            log.error("Looping over non-list value not yet supported -- loop expression was:", stmt_read)
                             return "ERROR LOOPING OVER NON-LIST"
                         }
                     } else {
