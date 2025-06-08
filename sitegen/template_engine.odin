@@ -4,14 +4,15 @@ import "core:bytes"
 import "core:encoding/json"
 import "core:fmt"
 import "core:log"
+import "core:os"
 import "core:strings"
 import "core:time"
 
 TEMPLATE_DIR :: "mytheme/templates/"
 
 Environment :: struct {
-    raw_templates:    map[string]string,
-    loaded_templates: map[string]string,
+    raw_templates:    map[string]string, // raw template text as-is on disk
+    loaded_templates: map[string]string, // templates with resolved includes
 }
 
 ParsingStatementsState :: enum {
@@ -518,7 +519,7 @@ resolve_extends_template :: proc(
     ok: bool,
 ) {
     if template_name not_in env.loaded_templates {
-        load_template(env, template_name) or_return
+        resolve_template_includes(env, template_name) or_return
     }
     loaded_templ_str := env.loaded_templates[template_name]
     if !strings.starts_with(loaded_templ_str, "{% extends") {
@@ -544,7 +545,7 @@ resolve_extends_template :: proc(
         }
         parent_template_name = unquote(stmt_split[1])
         if parent_template_name not_in env.loaded_templates {
-            load_template(env, parent_template_name) or_return
+            resolve_template_includes(env, parent_template_name) or_return
         }
     }
 
@@ -562,7 +563,7 @@ resolve_extends_template :: proc(
 }
 
 
-load_template :: proc(env: ^Environment, template_name: string) -> bool {
+resolve_template_includes :: proc(env: ^Environment, template_name: string) -> bool {
     if template_name not_in env.raw_templates {
         // template not found
         return false
@@ -618,7 +619,7 @@ load_template :: proc(env: ^Environment, template_name: string) -> bool {
                         // "ERROR INCLUDING TEMPLATE -- NOT FOUND"
                         return false
                     }
-                    load_template(env, to_include) or_return
+                    resolve_template_includes(env, to_include) or_return
                     strings.write_string(&builder, env.loaded_templates[to_include])
                     state = .Copying
                 } else {
@@ -637,5 +638,13 @@ load_template :: proc(env: ^Environment, template_name: string) -> bool {
         strings.to_string(builder),
         allocator = context.temp_allocator,
     )
+    return true
+}
+
+load_template :: proc(env: ^Environment, template_name: string) -> bool {
+    template_path := strings.join({TEMPLATE_DIR, template_name}, "")
+    defer delete(template_path)
+    template_data := os.read_entire_file(template_path) or_return
+    env.raw_templates[template_name] = string(template_data)
     return true
 }

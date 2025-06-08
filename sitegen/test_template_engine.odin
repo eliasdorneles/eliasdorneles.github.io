@@ -259,7 +259,7 @@ test_render_template_for :: proc(t: ^testing.T) {
 }
 
 @(test)
-test_load_template_include :: proc(t: ^testing.T) {
+test_resolve_template_includes :: proc(t: ^testing.T) {
     // given:
     env: Environment
     env.raw_templates["article.html"] = `<article>{% include "info.html" %}</article>`
@@ -267,7 +267,7 @@ test_load_template_include :: proc(t: ^testing.T) {
     defer destroy_env(&env)
 
     // when:
-    ok := load_template(&env, "article.html")
+    ok := resolve_template_includes(&env, "article.html")
 
     // then:
     testing.expect(t, ok)
@@ -276,7 +276,7 @@ test_load_template_include :: proc(t: ^testing.T) {
 
     // and when:
     env.raw_templates["page.html"] = `<page>{% include "article.html" %}</page>`
-    ok = load_template(&env, "page.html")
+    ok = resolve_template_includes(&env, "page.html")
 
     // then:
     testing.expect(t, ok)
