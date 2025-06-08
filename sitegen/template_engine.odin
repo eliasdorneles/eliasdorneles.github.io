@@ -57,16 +57,15 @@ to_string :: proc(value: json.Value) -> string {
     return "ERROR"
 }
 
-unquote :: proc(s: string) -> string {
-    return strings.trim(s, `"`)
+top :: proc(stack: []string) -> Maybe(string) {
+    if len(stack) == 0 {
+        return nil
+    }
+    return stack[len(stack) - 1]
 }
 
-clone_context :: proc(src_ctx: json.Object) -> json.Object {
-    ctx := make(json.Object)
-    for key, val in src_ctx {
-        ctx[key] = val
-    }
-    return ctx
+unquote :: proc(s: string) -> string {
+    return strings.trim(s, `"`)
 }
 
 // ({"um": "1"}, ["um"]) -> "1"
@@ -178,7 +177,7 @@ eval_condition :: proc(token_list: []string, ctx: ^json.Object) -> bool {
         return eval_condition(token_list[:3], ctx) && eval_condition(token_list[4:], ctx)
     }
     // TODO: handle more complex expressions
-    log.info("Condition not yet supported:", token_list)
+    log.error("Condition not yet supported:", token_list)
     return false
 }
 
@@ -245,9 +244,9 @@ render_for_loop :: proc(
     // for each item of the iterable value ...
     for item in loop_list {
         // we create its context object...
-        loop_iter_ctx := clone_context(ctx^)
+        clone_ctx := json.clone_value(ctx^, allocator = context.temp_allocator)
+        loop_iter_ctx := clone_ctx.(json.Object)
         loop_iter_ctx[loop_var] = item
-        defer delete(loop_iter_ctx)
 
         // render the inner loop template with it...
         inner_render := render_template_string(loop_inner_templ_str, &loop_iter_ctx)
@@ -439,6 +438,7 @@ resolve_template_blocks :: proc(
     defer delete(block_index_stack)
 
     state: ParsingStatementsState = .Copying
+    prev_state := state
     for char, size, read_err := strings.reader_read_rune(&reader);
         read_err == nil;
         char, size, read_err = strings.reader_read_rune(&reader) {
@@ -457,7 +457,7 @@ resolve_template_blocks :: proc(
             if char == '%' {
                 state = .Statement
             } else {
-                state = .Copying
+                state = prev_state
                 strings.write_rune(&builder, '{')
                 strings.write_rune(&builder, char)
             }
@@ -468,11 +468,12 @@ resolve_template_blocks :: proc(
 
             before_index := reader.i
             if stmt_read, ok := read_until(&reader, "%}"); ok {
-                stmt_read := strings.trim_space(stmt_read)
-                stmt_split := strings.split(stmt_read, " ")
+                stmt_split := strings.split(strings.trim_space(stmt_read), " ")
                 defer delete(stmt_split)
 
+                unhandled_statement := true
                 if stmt_split[0] == "block" {
+                    unhandled_statement = false
                     if len(stmt_split) != 2 {
                         log.error("Template syntax error: missing block name")
                         return "", false
@@ -486,6 +487,7 @@ resolve_template_blocks :: proc(
                         state = .Copying
                     }
                 } else if stmt_split[0] == "endblock" {
+                    unhandled_statement = false
                     block_name := pop(&block_name_stack)
                     if block_name in child_blocks {
                         start_index := pop(&block_index_stack)
@@ -501,7 +503,24 @@ resolve_template_blocks :: proc(
                         }
                     }
                 }
+
+                // we want to skip if we're inside a block that's been
+                // overriden, which corresponds to when the stack is not empty
+                // and the top of the stack is in child_blocks
+                stack_top := top(block_name_stack[:])
+                if stack_top != nil && stack_top.(string) in child_blocks {
+                    state = .Skipping
+                } else {
+                    state = .Copying
+                }
+
+                if state == .Copying && unhandled_statement {
+                    strings.write_string(&builder, "{%")
+                    strings.write_string(&builder, stmt_read)
+                    strings.write_string(&builder, "%}")
+                }
             }
+            prev_state = state
         }
     }
     return strings.clone_from(
@@ -556,9 +575,7 @@ resolve_extends_template :: proc(
     defer delete(template_blocks)
 
     parse_template_blocks(&reader, &template_blocks) or_return
-    log.info("template_blocks", template_blocks)
 
-    log.info("will now render parent template", parent_template_name)
     result = resolve_template_blocks(
         env,
         env.loaded_templates[parent_template_name],
