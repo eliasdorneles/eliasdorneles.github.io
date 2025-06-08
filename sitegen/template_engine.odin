@@ -56,6 +56,10 @@ to_string :: proc(value: json.Value) -> string {
     return "ERROR"
 }
 
+unquote :: proc(s: string) -> string {
+    return strings.trim(s, `"`)
+}
+
 clone_context :: proc(src_ctx: json.Object) -> json.Object {
     ctx := make(json.Object)
     for key, val in src_ctx {
@@ -193,7 +197,7 @@ read_until :: proc(reader: ^strings.Reader, sentinel: string) -> (string, bool) 
 read_until_next_stmt :: proc(reader: ^strings.Reader) -> (string, bool) {
     if templ_read, ok := read_until(reader, "{%"); ok {
         if expr_read, ok := read_until(reader, "%}"); ok {
-            return strings.trim(expr_read, " "), true
+            return strings.trim_space(expr_read), true
         }
         // if we couldn't find the end of the expression, let's put back the "{%"
         // we read at first
@@ -296,7 +300,7 @@ render_template :: proc(templ_str: string, ctx: ^json.Object) -> string {
             strings.reader_unread_rune(&reader)
 
             if expr_read, ok := read_until(&reader, "}}"); ok {
-                expr_read = strings.trim(expr_read, " ")
+                expr_read = strings.trim_space(expr_read)
                 // log.infof("expr_read: [%s]", expr_read)
                 strings.write_string(&builder, to_string(eval_expr(expr_read, ctx)))
                 state = .Copying
@@ -369,7 +373,144 @@ render_template :: proc(templ_str: string, ctx: ^json.Object) -> string {
     )
 }
 
+parse_template_blocks :: proc(
+    reader: ^strings.Reader,
+    templ_blocks: ^map[string]string,
+) -> bool {
+    block_name_stack: [dynamic]string
+    block_index_stack: [dynamic]i64
+    defer delete(block_name_stack)
+    defer delete(block_index_stack)
+
+    read_ok: bool
+    next_stmt: string
+    next_stmt, read_ok = read_until_next_stmt(reader)
+    for read_ok {
+        next_stmt_split := strings.split(next_stmt, " ")
+        defer delete(next_stmt_split)
+
+        if next_stmt_split[0] == "block" {
+            if len(next_stmt_split) != 2 {
+                log.error("Template syntax error: missing block name")
+                return false
+            }
+            block_name := unquote(next_stmt_split[1])
+            append(&block_name_stack, block_name)
+            append(&block_index_stack, reader.i)
+        } else if next_stmt_split[0] == "endblock" {
+            block_name := pop(&block_name_stack)
+            start_index := pop(&block_index_stack)
+            block_content := reader.s[start_index:(reader.i - len("{% endblock %}"))]
+            templ_blocks[block_name] = block_content
+        }
+        next_stmt, read_ok = read_until_next_stmt(reader)
+    }
+
+    if len(block_name_stack) != 0 || len(block_index_stack) != 0 {
+        log.error(
+            "Template syntax error: missing endblock somewhere -- block stack was:",
+            block_name_stack,
+        )
+        return false
+    }
+
+    return true
+}
+
+@(private = "file")
 resolve_template_blocks :: proc(
+    env: ^Environment,
+    templ_str: string,
+    child_blocks: map[string]string,
+) -> (
+    string,
+    bool,
+) {
+    builder: strings.Builder
+    defer strings.builder_destroy(&builder)
+
+    reader: strings.Reader
+    strings.reader_init(&reader, templ_str)
+
+    block_name_stack: [dynamic]string
+    block_index_stack: [dynamic]i64
+    defer delete(block_name_stack)
+    defer delete(block_index_stack)
+
+    state: ParsingStatementsState
+    for char, size, read_err := strings.reader_read_rune(&reader);
+        read_err == nil;
+        char, size, read_err = strings.reader_read_rune(&reader) {
+        switch state {
+        case .Skipping:
+            if char == '{' {
+                state = .MaybeStatement
+            }
+        case .Copying:
+            if char == '{' {
+                state = .MaybeStatement
+            } else {
+                strings.write_rune(&builder, char)
+            }
+        case .MaybeStatement:
+            if char == '%' {
+                state = .Statement
+            } else {
+                state = .Copying
+                strings.write_rune(&builder, '{')
+                strings.write_rune(&builder, char)
+            }
+        case .Statement:
+            state = .Copying
+            // unread current rune, let read_until + trim do all the work ;)
+            strings.reader_unread_rune(&reader)
+
+            before_index := reader.i
+            if stmt_read, ok := read_until(&reader, "%}"); ok {
+                stmt_read := strings.trim_space(stmt_read)
+                stmt_split := strings.split(stmt_read, " ")
+                defer delete(stmt_split)
+
+                if stmt_split[0] == "block" {
+                    if len(stmt_split) != 2 {
+                        log.error("Template syntax error: missing block name")
+                        return "", false
+                    }
+                    block_name := unquote(stmt_split[1])
+                    append(&block_name_stack, block_name)
+                    if block_name in child_blocks {
+                        state = .Skipping
+                        append(&block_index_stack, reader.i)
+                    } else {
+                        state = .Copying
+                    }
+                } else if stmt_split[0] == "endblock" {
+                    block_name := pop(&block_name_stack)
+                    if block_name in child_blocks {
+                        start_index := pop(&block_index_stack)
+                        block_content, ok := resolve_template_blocks(
+                            env,
+                            child_blocks[block_name],
+                            child_blocks,
+                        )
+                        if ok {
+                            strings.write_string(&builder, block_content)
+                        } else {
+                            return "", false
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return strings.clone_from(
+            strings.to_string(builder),
+            allocator = context.temp_allocator,
+        ),
+        true
+}
+
+resolve_extends_template :: proc(
     env: ^Environment,
     template_name: string,
 ) -> (
@@ -386,12 +527,12 @@ resolve_template_blocks :: proc(
     builder: strings.Builder
     defer strings.builder_destroy(&builder)
 
-    state: ParsingStatementsState
     reader: strings.Reader
     strings.reader_init(&reader, loaded_templ_str)
-    strings.reader_seek(&reader, 2, .Current)
 
-    extended_template_name: string
+    // read parent template name from extends statement
+    strings.reader_seek(&reader, 2, .Current)
+    parent_template_name: string
     if stmt_read, ok := read_until(&reader, "%}"); ok {
         stmt_read := strings.trim_space(stmt_read)
         stmt_split := strings.split(stmt_read, " ")
@@ -401,49 +542,23 @@ resolve_template_blocks :: proc(
             log.error("stmt_split:", stmt_split)
             return "ERROR: WRONG EXTEND TEMPLATE SYNTAX", false
         }
-        extended_template_name = strings.trim(stmt_split[1], `"`)
-        if extended_template_name not_in env.loaded_templates {
-            load_template(env, extended_template_name) or_return
+        parent_template_name = unquote(stmt_split[1])
+        if parent_template_name not_in env.loaded_templates {
+            load_template(env, parent_template_name) or_return
         }
     }
 
-    // for char, size, read_err := strings.reader_read_rune(&reader);
-    //     read_err == nil;
-    //     char, size, read_err = strings.reader_read_rune(&reader) {
-    //     switch state {
-    //     case .Skipping:
-    //         if char == '{' {
-    //             state = .MaybeStatement
-    //         }
-    //     case .Copying:
-    //         if char == '{' {
-    //             state = .MaybeStatement
-    //         } else {
-    //             strings.write_rune(&builder, char)
-    //         }
-    //     case .MaybeStatement:
-    //         if char == '%' {
-    //             state = .Statement
-    //         } else {
-    //             state = .Copying
-    //             strings.write_rune(&builder, '{')
-    //             strings.write_rune(&builder, char)
-    //         }
-    //     case .Statement:
-    //         state = .Copying
-    //         // unread current rune, let read_until + trim do all the work ;)
-    //         strings.reader_unread_rune(&reader)
-    //
-    //         before_index := reader.i
-    //         if stmt_read, ok := read_until(&reader, "%}"); ok {
-    //             stmt_read := strings.trim_space(stmt_read)
-    //             stmt_split := strings.split(stmt_read, " ")
-    //             defer delete(stmt_split)
-    //         }
-    //     }
-    // }
+    template_blocks: map[string]string
+    defer delete(template_blocks)
 
-    return "TODO", false
+    parse_template_blocks(&reader, &template_blocks) or_return
+
+    result = resolve_template_blocks(
+        env,
+        env.loaded_templates[parent_template_name],
+        template_blocks,
+    ) or_return
+    return result, true
 }
 
 
@@ -498,7 +613,7 @@ load_template :: proc(env: ^Environment, template_name: string) -> bool {
                         // "ERROR INCLUDING TEMPLATE -- too many params"
                         return false
                     }
-                    to_include := strings.trim(stmt_split[1], `"`)
+                    to_include := unquote(stmt_split[1])
                     if to_include not_in env.raw_templates {
                         // "ERROR INCLUDING TEMPLATE -- NOT FOUND"
                         return false

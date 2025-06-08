@@ -21,18 +21,8 @@ Template evaluation:
 Template loading:
 [x] Includes: {% include 'FILENAME' %}
     [x] support nested includes
-[ ] implement get_template_blocks(&env, loaded_template) which will return a map
-    block_name -> raw_template_data, ignoring anything outside blocks
-[ ] implement resolve_template(&env, template_name) which will:
-    if template extends another, i.e. if starts with {% extends ...
-        - blocks_map := load_template_blocks(&env, template_name)
-        - load template being extended, parse through it replacing the blocks
-          by the ones in present in blocks_map or returning them verbatim if not present
-        return the result
-    else:
-        return template verbatim
-[ ] Blocks: {% block NAME %}  {% endblock %}
-[ ] Extends: {% extends "FILENAME" %}
+[x] Blocks: {% block NAME %}  {% endblock %}
+[x] Extends: {% extends "FILENAME" %}
 
 
 Useful shell commands

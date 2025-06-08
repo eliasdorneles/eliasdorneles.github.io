@@ -171,6 +171,33 @@ test_render_template_if :: proc(t: ^testing.T) {
 }
 
 @(test)
+test_parse_template_blocks :: proc(t: ^testing.T) {
+    // given:
+    templ_str := strings.trim_space(
+        `
+    {% extends "base.html" %}
+    {% block um %}um {% block inner-um %}inner-um{% endblock %} and um{% endblock %}
+    {% block dois %}{% if hola %}dois{% endif %}{% endblock %}
+    `,
+    )
+    reader: strings.Reader
+    strings.reader_init(&reader, templ_str)
+
+    // when:
+    templ_blocks: map[string]string
+    defer delete(templ_blocks)
+
+    testing.expect(t, parse_template_blocks(&reader, &templ_blocks))
+    expect_str(
+        t,
+        "um {% block inner-um %}inner-um{% endblock %} and um",
+        templ_blocks["um"],
+    )
+    expect_str(t, "inner-um", templ_blocks["inner-um"])
+    expect_str(t, "{% if hola %}dois{% endif %}", templ_blocks["dois"])
+}
+
+@(test)
 test_render_template_for :: proc(t: ^testing.T) {
     // given:
     parsed, _ := json.parse_string(
@@ -198,7 +225,11 @@ test_render_template_for :: proc(t: ^testing.T) {
     templ_str =
     "BEGIN {% for it in items %}: {% for x in it.row %}{{ x }}_{% endfor %} AND{% endfor %} END"
     // then:
-    expect_str(t, "BEGIN : a_b_c_ AND: d_e_f_ AND: g_h_i_ AND END", render_template(templ_str, &ctx))
+    expect_str(
+        t,
+        "BEGIN : a_b_c_ AND: d_e_f_ AND: g_h_i_ AND END",
+        render_template(templ_str, &ctx),
+    )
 
     // and when:
     templ_str = strings.trim_space(
@@ -254,7 +285,7 @@ test_load_template_include :: proc(t: ^testing.T) {
 }
 
 @(test)
-test_resolve_template_blocks :: proc(t: ^testing.T) {
+test_resolve_extends_template :: proc(t: ^testing.T) {
     // given:
     env: Environment
     env.raw_templates["base.html"] = strings.trim_space(
@@ -266,13 +297,27 @@ test_resolve_template_blocks :: proc(t: ^testing.T) {
         `
 {% extends "base.html" %}
 {% block article %}ARTICLE{% endblock %}
+{% block footer %}NOT USED IN BASE, SHALL BE IGNORED{% endblock %}
+    `,
+    )
+    env.raw_templates["other.html"] = strings.trim_space(
+        `
+{% extends "base.html" %}
+{% block article %}ARTICLE{% endblock %}
+{% block title %}HELLO{% endblock %}
     `,
     )
     defer destroy_env(&env)
 
     // when:
-    result, ok := resolve_template_blocks(&env, "article.html")
-    expected := "<html>BASE TITLE<article>ARTICLE</article></page>"
+    result, ok := resolve_extends_template(&env, "article.html")
+    // then:
     testing.expect(t, ok)
-    expect_str(t, expected, result)
+    expect_str(t, "<html>BASE TITLE<article>ARTICLE</article></html>", result)
+
+    // and when:
+    result, ok = resolve_extends_template(&env, "other.html")
+    // then:
+    testing.expect(t, ok)
+    expect_str(t, "<html>HELLO<article>ARTICLE</article></html>", result)
 }
