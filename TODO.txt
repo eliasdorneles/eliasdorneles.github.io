@@ -59,7 +59,10 @@ main logic:
     [x] add relative source path variable
     [ ] add highlightjs to replace pygments: https://highlightjs.org/
 [ ] generate index page
-[ ]     generate summary for every article
+    [ ] build articles_page object, with object_list with list of articles
+    [ ] generate summary for every article
+        [ ] either stop at PELICAN_END_SUMMARY, or SUMMARY_MAX_LENGTH
+        [ ] clean summary: remove any images (need an html parser, which to use?)
 [ ]     update feed files (better than requiring memory everytime)
 [ ]     save to output file
 [ ]         create dir output tree as needed
