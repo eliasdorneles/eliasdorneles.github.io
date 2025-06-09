@@ -10,7 +10,7 @@ import "core:path/filepath"
 import "core:slice"
 import "core:strings"
 import "core:time"
-import "vendor:commonmark"
+import "./vendor/cmark"
 
 BLOG_ARTICLES_DIR :: "site/blog/"
 PAGES_DIR :: "site/pages/"
@@ -123,8 +123,7 @@ load_articles :: proc() -> (blog_articles: [dynamic]Article, load_ok: bool) {
 }
 
 render_article_content :: proc(article: ^Article) -> string {
-    // TODO: how to support github markdown? link to cmark-ghb?
-    return commonmark.markdown_to_html_from_string(article.md_content, {.Unsafe})
+    return cmark.markdown_to_html_from_string(article.md_content, {.Unsafe})
 }
 
 Args :: struct {
