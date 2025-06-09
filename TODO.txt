@@ -46,7 +46,7 @@ main logic:
 -----------
 [x] build global context
 [x] articles := sort articles in site/blog/* by date
-[ ] load article template
+[x] setup template env to load any template
 [x] for each article, in date desc order:
 [x]     load article metadata and MD source
 [x]     render article content from MD to HTML
@@ -54,7 +54,7 @@ main logic:
     [ ] fix image MD synta inside <center> tag (post: ideias e execucao)
 [x]     create local context
 [x]     render into HTML content using the Jinja template
-    [ ] fix bug expression inside child block w/ double {{{{
+    [x] fix bug expression inside child block w/ double {{{{
     [x] fix bug dates incorrect format and TZ
     [x] add relative source path variable
     [ ] add highlightjs to replace pygments: https://highlightjs.org/

@@ -126,38 +126,39 @@ render_article_content :: proc(article: ^Article) -> string {
     return cmark.markdown_to_html_from_string(article.md_content, {.Unsafe})
 }
 
-Args :: struct {
-    // pos_arg1: string `args:"pos=0,required" usage:"Positional arg 1"`,
-    // pos_arg2: string `args:"pos=1,required" usage:"Positional arg 2"`,
+Options :: struct {
     output: string `usage:"Output directory"`,
+    config_file: string `usage:"Config file"`,
 }
 
 main :: proc() {
-    args: Args
+    args: Options
     flags.parse_or_exit(&args, os.args, style = .Unix)
     if args.output == "" {
         args.output = "odin_output"
+    }
+    if args.config_file == "" {
+        args.config_file = "config_sitegen.json"
     }
     output_dir := args.output
     fmt.println(args)
 
     context.logger = log.create_console_logger()
 
-    parsed, _ := json.parse_string(
-        `{
-            "SITEURL": "https://eliasdorneles.com",
-            "SITENAME": "Elias Dorneles",
-            "MENUITEMS": [
-                {"title": "Blog", "url": ""},
-                {"title": "Today I Learned...", "url": "til"},
-                {"title": "About me", "url": "pages/about.html"},
-            ]
-        }`,
-    )
-    defer json.destroy_value(parsed)
-    ctx := parsed.(json.Object)
-    // ctx["FEED_RSS"] = "feed.xml"
-    // ctx["FEED_ATOM"] = "atom.xml"
+    config_parsed: json.Value
+    if config_data, ok := os.read_entire_file(args.config_file); ok {
+        err: json.Error
+        if config_parsed, err = json.parse(config_data); err != nil {
+            fmt.eprintf("Couldn't load JSON from file %s, exiting", args.config_file)
+            os.exit(1)
+        }
+    } else {
+        fmt.eprintf("Couldn't read file %s, exiting", args.config_file)
+        os.exit(1)
+    }
+    defer json.destroy_value(config_parsed)
+
+    ctx := config_parsed.(json.Object)
 
     env: Environment
 

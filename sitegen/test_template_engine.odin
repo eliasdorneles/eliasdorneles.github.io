@@ -326,7 +326,7 @@ test_resolve_extends_template :: proc(t: ^testing.T) {
     env: Environment
     env.raw_templates["base.html"] = strings.trim_space(
         `
-<html>{% block title %}{% if title %}BASE TITLE{% endif %}{% endblock %}<article>{% block article %}{% endblock %}</article></html>
+<html>{% block title %}{% if title %}title={{ SITENAME }}{% endif %}{% endblock %}<article>{% block article %}{% endblock %}</article></html>
     `,
     )
     env.raw_templates["article.html"] = strings.trim_space(
@@ -340,7 +340,7 @@ test_resolve_extends_template :: proc(t: ^testing.T) {
         `
 {% extends "base.html" %}
 {% block article %}ARTICLE{% endblock %}
-{% block title %}HELLO{% endblock %}
+{% block title %}hello={{ hello }}{% endblock %}
     `,
     )
     defer destroy_env(&env)
@@ -349,11 +349,11 @@ test_resolve_extends_template :: proc(t: ^testing.T) {
     result, ok := resolve_extends_template(&env, "article.html")
     // then:
     testing.expect(t, ok)
-    expect_str(t, "<html>{% if title %}BASE TITLE{% endif %}<article>ARTICLE</article></html>", result)
+    expect_str(t, "<html>{% if title %}title={{ SITENAME }}{% endif %}<article>ARTICLE</article></html>", result)
 
     // and when:
     result, ok = resolve_extends_template(&env, "other.html")
     // then:
     testing.expect(t, ok)
-    expect_str(t, "<html>HELLO<article>ARTICLE</article></html>", result)
+    expect_str(t, "<html>hello={{ hello }}<article>ARTICLE</article></html>", result)
 }

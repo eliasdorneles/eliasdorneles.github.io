@@ -35,6 +35,26 @@ destroy_env :: proc(env: ^Environment) {
     delete(env.loaded_templates)
 }
 
+// helpers to get the top of the stack
+@(private = "file")
+top_slice :: proc(li: []$T) -> Maybe(T) {
+    if len(li) == 0 {
+        return nil
+    }
+    return li[len(li) - 1]
+}
+
+@(private = "file")
+top_dyn_arr :: proc(li: [dynamic]$T) -> Maybe(T) {
+    return top_slice(li[:])
+}
+
+@(private = "file")
+top :: proc {
+    top_slice,
+    top_dyn_arr,
+}
+
 to_string :: proc(value: json.Value) -> string {
     if value == nil {
         return ""
@@ -271,11 +291,14 @@ render_template_string :: proc(templ_str: string, ctx: ^json.Object) -> string {
     defer delete(if_cond_stack)
 
     copying_or_skipping :: proc(if_cond_stack: ^[dynamic]bool) -> ParsingTemplateState {
-        // if we're not inside an if-block, or if the condition is true, we should copy
-        if len(if_cond_stack) == 0 {
+        top_if_cond_stack := top(if_cond_stack^)
+        if top_if_cond_stack == nil {     // if we're not inside an if-block
             return .Copying
         }
-        return .Copying if if_cond_stack[len(if_cond_stack) - 1] else .Skipping
+        if top_if_cond_stack.? {     // if the current if-condition is true
+            return .Copying
+        }
+        return .Skipping
     }
 
     for char, size, read_err := strings.reader_read_rune(&reader);
@@ -452,14 +475,25 @@ resolve_template_blocks :: proc(
     strings.reader_init(&reader, templ_str)
 
     block_name_stack: [dynamic]string
-    block_index_stack: [dynamic]i64
     defer delete(block_name_stack)
-    defer delete(block_index_stack)
 
     // log.info("child_blocks", child_blocks)
 
+    copying_or_skipping :: proc(
+        block_name_stack: [dynamic]string,
+        child_blocks: map[string]string,
+    ) -> ParsingStatementsState {
+        top_block_stack := top(block_name_stack)
+        if top_block_stack == nil {     // if we're not inside a block
+            return .Copying
+        }
+        if top_block_stack.? not_in child_blocks {     // if the current block is not overriden
+            return .Copying
+        }
+        return .Skipping
+    }
+
     state: ParsingStatementsState = .Copying
-    prev_state := state
     for char, size, read_err := strings.reader_read_rune(&reader);
         read_err == nil;
         char, size, read_err = strings.reader_read_rune(&reader) {
@@ -478,16 +512,14 @@ resolve_template_blocks :: proc(
             if char == '%' {
                 state = .Statement
             } else {
-                state = prev_state
+                state = copying_or_skipping(block_name_stack, child_blocks)
 
-                strings.write_rune(&builder, '{')
-                // TODO: write a test case for {{ }} inside childe blocks
-                // if char != '{' {
+                if state == .Copying {
+                    strings.write_rune(&builder, '{')
                     strings.write_rune(&builder, char)
-                // }
+                }
             }
         case .Statement:
-            state = .Copying
             // unread current rune, let read_until + trim do all the work ;)
             strings.reader_unread_rune(&reader)
 
@@ -507,7 +539,6 @@ resolve_template_blocks :: proc(
                     append(&block_name_stack, block_name)
                     if block_name in child_blocks {
                         state = .Skipping
-                        append(&block_index_stack, reader.i)
                     } else {
                         state = .Copying
                     }
@@ -515,7 +546,6 @@ resolve_template_blocks :: proc(
                     unhandled_statement = false
                     block_name := pop(&block_name_stack)
                     if block_name in child_blocks {
-                        start_index := pop(&block_index_stack)
                         block_content, ok := resolve_template_blocks(
                             env,
                             child_blocks[block_name],
@@ -529,15 +559,7 @@ resolve_template_blocks :: proc(
                     }
                 }
 
-                // we want to skip if we're inside a block that's been
-                // overriden, which corresponds to when the stack is not empty
-                // and the top of the stack is in child_blocks
-                if len(block_name_stack) > 0 &&
-                   block_name_stack[len(block_name_stack) - 1] in child_blocks {
-                    state = .Skipping
-                } else {
-                    state = .Copying
-                }
+                state = copying_or_skipping(block_name_stack, child_blocks)
 
                 if state == .Copying && unhandled_statement {
                     strings.write_string(&builder, "{%")
@@ -545,7 +567,6 @@ resolve_template_blocks :: proc(
                     strings.write_string(&builder, "%}")
                 }
             }
-            prev_state = state
         }
     }
     return strings.clone_from(
