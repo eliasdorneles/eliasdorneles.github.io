@@ -57,6 +57,12 @@ to_string :: proc(value: json.Value) -> string {
     return "ERROR"
 }
 
+clone_context :: proc(ctx: ^json.Object) -> json.Object {
+    cloned_obj := json.clone_value(ctx^, allocator = context.temp_allocator)
+    cloned_ctx := cloned_obj.(json.Object)
+    return cloned_ctx
+}
+
 unquote :: proc(s: string) -> string {
     return strings.trim(s, `"`)
 }
@@ -237,8 +243,7 @@ render_for_loop :: proc(
     // for each item of the iterable value ...
     for item in loop_list {
         // we create its context object...
-        clone_ctx := json.clone_value(ctx^, allocator = context.temp_allocator)
-        loop_iter_ctx := clone_ctx.(json.Object)
+        loop_iter_ctx := clone_context(ctx)
         loop_iter_ctx[loop_var] = item
 
         // render the inner loop template with it...
@@ -337,32 +342,35 @@ render_template_string :: proc(templ_str: string, ctx: ^json.Object) -> string {
                     state = copying_or_skipping(&if_cond_stack)
                 } else if stmt_split[0] == "for" {
                     // we handle the for loop by fetching the inner template inside it...
+                    next_state := copying_or_skipping(&if_cond_stack)
                     if inner_templ, ok := parse_inner_for_template_str(&reader); ok {
-                        loop_var := stmt_split[1]
-                        // ... evaluate the iterable expression
-                        loop_iterable := eval_expr(stmt_split[3], ctx)
-                        #partial switch v in loop_iterable {
-                        case json.Array:
-                            // ... and rendering the inner template for each iterable item
-                            render_for_loop(&builder, v, loop_var, inner_templ, ctx)
-                        case nil, json.Null:
-                        // let's just ignore the content
-                        case:
-                            log.error(
-                                "Looping over non-list value not yet supported -- loop expression was:",
-                                stmt_read,
-                            )
-                            return "ERROR LOOPING OVER NON-LIST"
+                        if next_state == .Copying {
+                            loop_var := stmt_split[1]
+                            // ... evaluate the iterable expression
+                            loop_iterable := eval_expr(stmt_split[3], ctx)
+                            #partial switch v in loop_iterable {
+                            case json.Array:
+                                // ... and rendering the inner template for each iterable item
+                                render_for_loop(&builder, v, loop_var, inner_templ, ctx)
+                            case nil, json.Null:
+                            // let's just ignore the content
+                            case:
+                                log.error(
+                                    "Looping over non-list value not yet supported -- loop expression was:",
+                                    stmt_read,
+                                )
+                                return "ERROR LOOPING OVER NON-LIST"
+                            }
                         }
                     } else {
                         log.error("Error parsing for-loop", stmt_read)
                         return "ERROR PARSING FOR LOOP"
                     }
-                    state = .Copying
+                    state = next_state
                 } else {
                     // handle {% endfor %} and other unknown commands by
-                    // switching back to regular copying mode
-                    state = .Copying
+                    // switching back to copying or skipping mode
+                    state = copying_or_skipping(&if_cond_stack)
                 }
             } else {
                 // log.error(
@@ -448,6 +456,8 @@ resolve_template_blocks :: proc(
     defer delete(block_name_stack)
     defer delete(block_index_stack)
 
+    log.info("child_blocks", child_blocks)
+
     state: ParsingStatementsState = .Copying
     prev_state := state
     for char, size, read_err := strings.reader_read_rune(&reader);
@@ -469,8 +479,12 @@ resolve_template_blocks :: proc(
                 state = .Statement
             } else {
                 state = prev_state
+
                 strings.write_rune(&builder, '{')
-                strings.write_rune(&builder, char)
+                // TODO: write a test case for {{ }} inside childe blocks
+                // if char != '{' {
+                    strings.write_rune(&builder, char)
+                // }
             }
         case .Statement:
             state = .Copying
@@ -649,8 +663,7 @@ resolve_template_includes :: proc(env: ^Environment, template_name: string) -> b
                     }
                     to_include := unquote(stmt_split[1])
                     if to_include not_in env.raw_templates {
-                        // "ERROR INCLUDING TEMPLATE -- NOT FOUND"
-                        return false
+                        load_template(env, to_include)
                     }
                     resolve_template_includes(env, to_include) or_return
                     strings.write_string(&builder, env.loaded_templates[to_include])
@@ -675,6 +688,9 @@ resolve_template_includes :: proc(env: ^Environment, template_name: string) -> b
 }
 
 load_template :: proc(env: ^Environment, template_name: string) -> bool {
+    if template_name in env.loaded_templates {
+        return true
+    }
     template_path := strings.join({TEMPLATE_DIR, template_name}, "")
     defer delete(template_path)
     template_data := os.read_entire_file(template_path) or_return
@@ -694,6 +710,7 @@ render_template :: proc(
 ) {
     load_template(env, template_name) or_return
     template_str := resolve_extends_template(env, template_name) or_return
+    log.debug("final template is\n", template_str)
     result = render_template_string(template_str, ctx)
     // TODO: improve render_template_string error handling
     return result, true

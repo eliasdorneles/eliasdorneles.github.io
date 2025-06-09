@@ -49,10 +49,15 @@ main logic:
 [ ] load article template
 [x] for each article, in date desc order:
 [x]     load article metadata and MD source
-[ ]     render article content from MD to HTML
-[ ]         https://pkg.odin-lang.org/vendor/commonmark/#markdown_to_html
-[ ]     create local context
-[ ]     render into HTML content using the Jinja template
+[x]     render article content from MD to HTML
+    [ ] fix missing GH syntax
+    [ ] fix image MD synta inside <center> tag (post: ideias e execucao)
+[x]     create local context
+[x]     render into HTML content using the Jinja template
+    [ ] fix bug expression inside child block w/ double {{{{
+    [ ] fix bug dates incorrect format and TZ
+    [ ] add relative source path variable
+    [ ] add pygment source code highlight or alternative (use a JS lib?)
 [ ]     update feed files (better than requiring memory everytime)
 [ ]     save to output file
 [ ]         create dir output tree as needed
@@ -70,3 +75,6 @@ main logic:
 [ ] implement translations
 
 [ ] implement relative urls, for better local preview
+
+TO INVESTIGATE:
+[ ] why does commonmark need to link w/ libcmark ? shouldn't it use a vendor thing?

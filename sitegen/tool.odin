@@ -10,11 +10,12 @@ import "core:path/filepath"
 import "core:slice"
 import "core:strings"
 import "core:time"
+import "vendor:commonmark"
 
 BLOG_ARTICLES_DIR :: "site/blog/"
 PAGES_DIR :: "site/pages/"
 IMAGES_DIR :: "site/images/"
-EXTRA_DIR :: "site/images/"
+THEME_STATIC_DIR :: "mytheme/static/"
 
 DEFAULT_LANG :: "en"
 
@@ -25,7 +26,28 @@ Article :: struct {
     slug:       string,
     lang:       string,
     md_content: string,
-    // author: string, // we can hardcode this one
+    author:     string,
+}
+
+extract_ymd :: proc(date: string) -> (string, string, string) {
+    return date[:4], date[5:][:2], date[8:][:2]
+}
+
+makedirs :: proc(dir_path: string) -> bool {
+    if os.exists(dir_path) && os.is_dir(dir_path) {
+        return true
+    }
+    if dir_path == "" {
+        return false
+    }
+    base_dir, _basename := filepath.split(strings.trim_right(dir_path, "/"))
+    if !os.exists(base_dir) {
+        makedirs(base_dir)
+    }
+    if os.make_directory(dir_path) != nil {
+        return false
+    }
+    return true
 }
 
 load_article_from_string :: proc(article: ^Article, raw_content: string) -> bool {
@@ -61,6 +83,8 @@ load_article_from_string :: proc(article: ^Article, raw_content: string) -> bool
                 article.slug = value
             } else if key == "Lang" {
                 article.lang = value
+            } else if key == "Author" {
+                article.author = value
             }
             line_start_index = index + 1
             eol = true
@@ -98,6 +122,11 @@ load_articles :: proc() -> (blog_articles: [dynamic]Article, load_ok: bool) {
     return blog_articles, true
 }
 
+render_article_content :: proc(article: ^Article) -> string {
+    // TODO: how to support github markdown? link to cmark-ghb?
+    return commonmark.markdown_to_html_from_string(article.md_content, {.Unsafe})
+}
+
 Args :: struct {
     // pos_arg1: string `args:"pos=0,required" usage:"Positional arg 1"`,
     // pos_arg2: string `args:"pos=1,required" usage:"Positional arg 2"`,
@@ -108,7 +137,7 @@ main :: proc() {
     args: Args
     flags.parse_or_exit(&args, os.args, style = .Unix)
     if args.output == "" {
-        args.output = "output"
+        args.output = "odin_output"
     }
     output_dir := args.output
     fmt.println(args)
@@ -118,6 +147,7 @@ main :: proc() {
     parsed, _ := json.parse_string(
         `{
             "SITEURL": "https://eliasdorneles.com",
+            "SITENAME": "Elias Dorneles",
             "MENUITEMS": [
                 {"title": "Blog", "url": ""},
                 {"title": "Today I Learned...", "url": "til"},
@@ -129,23 +159,51 @@ main :: proc() {
     ctx := parsed.(json.Object)
     // ctx["FEED_RSS"] = "feed.xml"
     // ctx["FEED_ATOM"] = "atom.xml"
+
+    env: Environment
+
+    // let's now render the blog articles
     articles, ok := load_articles()
     slice.reverse_sort_by(
         articles[:],
         proc(a: Article, b: Article) -> bool {return a.date < b.date},
     )
     if ok {
-        fmt.println("Loaded articles:")
-        for article in articles {
-            fmt.printfln(
-                " -> Title: %s, Slug: %s, Date: %s, Lang: %s",
-                article.title,
-                article.slug,
-                article.date,
-                article.lang,
-            )
+        for &article in articles {
+            temp_ctx := clone_context(&ctx)
+            year, month, day := extract_ymd(article.date)
+            article_obj: json.Object
+            article_obj["title"] = article.title
+            article_obj["slug"] = article.slug
+            article_obj["date"] = article.date
+            article_obj["author"] = article.author
+            html_filename := fmt.aprintf("%s.html", article.slug)
+            article_obj["url"] = fmt.aprintf("../../../%s", html_filename)
+            article_obj["content"] = render_article_content(&article)
+            temp_ctx["article"] = article_obj
+
+            // TODO: populate .translations based on articles sharing
+            // same slug but with different lang
+
+            out_dir_path := filepath.join({args.output, year, month, day})
+            if !makedirs(out_dir_path) {
+                fmt.eprintln("Error attempting to create dir:", out_dir_path)
+            }
+            target_path := filepath.join({out_dir_path, html_filename})
+            rendered, ok := render_template(&env, "article.html", &temp_ctx)
+            if ok {
+                bytes_to_write := transmute([]u8)rendered
+                if !os.write_entire_file(target_path, bytes_to_write) {
+                    fmt.eprintln("Error writing file:", target_path)
+                }
+                fmt.println("Wrote", target_path)
+            } else {
+                log.error("error rendering template", rendered)
+            }
+            // break // DEBUG: uncomment to stop at the first article
         }
     } else {
         fmt.eprintln("error loading articles")
     }
+    fmt.println("All done")
 }
