@@ -168,6 +168,7 @@ main :: proc() {
         articles[:],
         proc(a: Article, b: Article) -> bool {return a.date < b.date},
     )
+    count_files_written: int
     if ok {
         for &article in articles {
             temp_ctx := clone_context(&ctx)
@@ -198,7 +199,7 @@ main :: proc() {
                 if !os.write_entire_file(target_path, bytes_to_write) {
                     fmt.eprintln("Error writing file:", target_path)
                 }
-                fmt.println("Wrote", target_path)
+                count_files_written += 1
             } else {
                 log.error("error rendering template", rendered)
             }
@@ -207,5 +208,5 @@ main :: proc() {
     } else {
         fmt.eprintln("error loading articles")
     }
-    fmt.println("All done")
+    fmt.printfln("\nAll done, wrote %d files", count_files_written)
 }

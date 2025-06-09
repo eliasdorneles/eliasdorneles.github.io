@@ -49,5 +49,11 @@ deploy: clean compile require_pipenv
 	pipenv run ghp-import -m "Update site" output
 	git push origin gh-pages:master --force
 
+sitegen.bin: sitegen
+	odin build sitegen
+
+run-sitegen: sitegen.bin
+	./sitegen.bin --output output_sitegen --config-file config_sitegen.json
+
 test:  # Run sitegen tests
 	odin test sitegen
