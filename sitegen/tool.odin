@@ -1,5 +1,6 @@
 package sitegen
 
+import "./vendor/cmark"
 import "core:encoding/json"
 import "core:flags"
 import "core:fmt"
@@ -10,7 +11,6 @@ import "core:path/filepath"
 import "core:slice"
 import "core:strings"
 import "core:time"
-import "./vendor/cmark"
 
 BLOG_ARTICLES_DIR :: "site/blog/"
 PAGES_DIR :: "site/pages/"
@@ -174,12 +174,14 @@ main :: proc() {
             article_obj: json.Object
             article_obj["title"] = article.title
             article_obj["slug"] = article.slug
-            article_obj["date"] = article.date
+            // this is a hack to add timezone info to complete the timestamp:
+            article_obj["date"] = fmt.aprintf("%s:00+02:00", article.date)
             article_obj["author"] = article.author
             html_filename := fmt.aprintf("%s.html", article.slug)
             article_obj["url"] = fmt.aprintf("../../../%s", html_filename)
             article_obj["content"] = render_article_content(&article)
             temp_ctx["article"] = article_obj
+            temp_ctx["rel_source_path"] = fmt.aprintf("site/blog/%s.md", article.slug)
 
             // TODO: populate .translations based on articles sharing
             // same slug but with different lang

@@ -84,7 +84,7 @@ eval_context_path :: proc(value: ^json.Value, path: []string) -> json.Value {
         // strings in iso format
         if path[0] == "isoformat()" {
             return v
-        } else if path[0] == "strftime(\"%Y, %B %d\")" {
+        } else if path[0] == `strftime("%Y, %B %d")` {
             ts, utc_offset, _ := time.iso8601_to_time_and_offset(v)
             return fmt.aprintf(
                 "%d, %s %02d",
@@ -456,7 +456,7 @@ resolve_template_blocks :: proc(
     defer delete(block_name_stack)
     defer delete(block_index_stack)
 
-    log.info("child_blocks", child_blocks)
+    // log.info("child_blocks", child_blocks)
 
     state: ParsingStatementsState = .Copying
     prev_state := state
@@ -710,7 +710,7 @@ render_template :: proc(
 ) {
     load_template(env, template_name) or_return
     template_str := resolve_extends_template(env, template_name) or_return
-    log.debug("final template is\n", template_str)
+    // log.debug("final template is\n", template_str)
     result = render_template_string(template_str, ctx)
     // TODO: improve render_template_string error handling
     return result, true
