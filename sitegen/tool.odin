@@ -1,6 +1,7 @@
 package sitegen
 
 import "./vendor/cmark"
+import "core:c/libc"
 import "core:encoding/json"
 import "core:flags"
 import "core:fmt"
@@ -123,11 +124,12 @@ load_articles :: proc() -> (blog_articles: [dynamic]Article, load_ok: bool) {
 }
 
 render_article_content :: proc(article: ^Article) -> string {
-    return cmark.markdown_to_html_from_string(article.md_content, {.Unsafe})
+    md_content, _ := strings.replace_all(article.md_content, "{static}", "../../../")
+    return cmark.markdown_to_html_from_string(md_content, {.Unsafe})
 }
 
 Options :: struct {
-    output: string `usage:"Output directory"`,
+    output:      string `usage:"Output directory"`,
     config_file: string `usage:"Config file"`,
 }
 
@@ -208,5 +210,20 @@ main :: proc() {
     } else {
         fmt.eprintln("error loading articles")
     }
-    fmt.printfln("\nAll done, wrote %d files", count_files_written)
+    fmt.printfln("\nWrote %d files!\n", count_files_written)
+
+    makedirs(filepath.join({args.output, "theme"}))
+
+    run_cmdf :: proc(cmdf: string, cmdf_args: ..any) {
+        cmd := fmt.aprintf(cmdf, ..cmdf_args)
+        libc.system(strings.clone_to_cstring(cmd))
+    }
+
+    // TODO: consider writing a portable version of these:
+    fmt.println("Copying assets...")
+    run_cmdf("cp --recursive ./site/images %s/", args.output)
+    run_cmdf("cp --recursive mytheme/static/* %s/theme/", args.output)
+    run_cmdf("cp ./site/extra/CNAME %s/CNAME", args.output)
+
+    fmt.printfln("\nAll done!")
 }

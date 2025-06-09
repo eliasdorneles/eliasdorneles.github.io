@@ -40,8 +40,6 @@ rg -o '[{][{%][^{]*[}]' mytheme/ | cut -d: -f2 | sort | uniq | grep -v include |
 Site generator
 ##############
 
-output dir: OUTPUT
-
 main logic:
 -----------
 [x] build global context
@@ -51,7 +49,9 @@ main logic:
 [x]     load article metadata and MD source
 [x]     render article content from MD to HTML
     [x] fix missing GH syntax
-    [ ] fix image MD synta inside <center> tag (post: ideias e execucao)
+    [.] fix image MD syntax inside <center> tag
+        found a WORKAROUND: add blank line after <center> tag
+            => this breaks in Pelican though
 [x]     create local context
 [x]     render into HTML content using the Jinja template
     [x] fix bug expression inside child block w/ double {{{{
@@ -66,15 +66,16 @@ main logic:
 [ ] generate pages w/ similar logic, except no feed
 ----------------------
 
-[ ] Copy site/images/ OUTPUT/images/
-[ ] Copy theme static files ./mytheme/static/*/** to OUTPUT/theme/*/**
+[x] Copy site/images/ OUTPUT_DIR/images/
+[x] Copy theme static files ./mytheme/static/*/** to OUTPUT_DIR/theme/*/**
+[x] Copy CNAME file
 
 [ ] Content feeds for aggregators
     [ ] RSS
     [ ] Atom
-[ ] implement translations
+[ ] implement translations: should group articles w/ same slug
 
-[ ] implement relative urls, for better local preview
+[ ] implement proper relative urls, for better local preview
 
-TO INVESTIGATE:
-[ ] why does commonmark need to link w/ libcmark ? shouldn't it use a vendor thing?
+TODO before deploying:
+[ ] apply WORKAROUND for <center> tag wrapping images (see above)
