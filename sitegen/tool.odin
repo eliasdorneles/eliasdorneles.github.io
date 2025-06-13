@@ -299,6 +299,8 @@ main :: proc() {
             target_path := filepath.join({out_dir_path, html_filename})
             rendered, ok := render_template(&env, "article.html", &temp_ctx)
             if ok {
+                // Replace {static} with relative path for articles
+                rendered, _ = strings.replace_all(rendered, "{static}", "../../../")
                 bytes_to_write := transmute([]u8)rendered
                 if !os.write_entire_file(target_path, bytes_to_write) {
                     fmt.eprintln("Error writing file:", target_path)
@@ -321,6 +323,8 @@ main :: proc() {
     index_ctx["articles"] = object_list // for backwards compatibility
 
     if rendered, ok := render_template(&env, "index.html", &index_ctx); ok {
+        // Remove {static} for index page
+        rendered, _ = strings.replace_all(rendered, "{static}", "")
         target_path := filepath.join({args.output, "index.html"})
         bytes_to_write := transmute([]u8)rendered
         if !os.write_entire_file(target_path, bytes_to_write) {
