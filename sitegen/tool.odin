@@ -130,15 +130,63 @@ render_article_content :: proc(article: ^Article) -> string {
     return cmark.markdown_to_html_from_string(md_content, {.Unsafe})
 }
 
+clean_html_summary :: proc(html: string) -> string {
+    builder: strings.Builder
+    defer strings.builder_destroy(&builder)
+
+    in_tag := false
+    tag_buffer: strings.Builder
+    defer strings.builder_destroy(&tag_buffer)
+
+    seen_image := false
+
+    for char in html {
+        if char == '<' {
+            in_tag = true
+            strings.write_rune(&tag_buffer, char)
+            continue
+        }
+        if char == '>' {
+            in_tag = false
+            tag := strings.to_string(tag_buffer)
+            if strings.has_prefix(tag, "<img") {
+                if !seen_image {
+                    strings.write_string(&builder, tag)
+                    strings.write_rune(&builder, '>')
+                    seen_image = true
+                }
+            } else {
+                strings.write_string(&builder, tag)
+                strings.write_rune(&builder, '>')
+            }
+            strings.builder_reset(&tag_buffer)
+            continue
+        }
+        if in_tag {
+            strings.write_rune(&tag_buffer, char)
+        } else {
+            strings.write_rune(&builder, char)
+        }
+    }
+
+    result := strings.to_string(builder)
+    result = strings.trim_space(result)
+    if strings.has_suffix(result, "<p></p>") {
+        result = result[:len(result) - 7]
+    }
+    return strings.clone_from(result, allocator = context.temp_allocator)
+}
+
 generate_article_summary :: proc(article: ^Article) -> string {
     // First try to find PELICAN_END_SUMMARY marker
     if end_marker := strings.index(article.md_content, "PELICAN_END_SUMMARY");
        end_marker != -1 {
         summary_md := article.md_content[:end_marker]
-        return cmark.markdown_to_html_from_string(summary_md, {.Unsafe})
+        html := cmark.markdown_to_html_from_string(summary_md, {.Unsafe})
+        return clean_html_summary(html)
     }
 
-    // Otherwise take first SUMMARY_MAX_LENGTH paragraphs
+    // Otherwise take first SUMMARY_MAX_LENGTH paragraphs and first image
     paragraphs := strings.split(
         article.md_content,
         "\n\n",
@@ -148,13 +196,34 @@ generate_article_summary :: proc(article: ^Article) -> string {
         return ""
     }
 
-    summary_paragraphs := paragraphs[:min(SUMMARY_MAX_LENGTH, len(paragraphs))]
+    // Find the first image paragraph
+    first_image_idx := -1
+    for paragraph, idx in paragraphs {
+        if strings.has_prefix(strings.trim_space(paragraph), "![") {
+            first_image_idx = idx
+            break
+        }
+    }
+
+    // Take first SUMMARY_MAX_LENGTH paragraphs
+    summary_paragraphs: [dynamic]string
+    defer delete(summary_paragraphs)
+    for i in 0 ..< min(SUMMARY_MAX_LENGTH, len(paragraphs)) {
+        append(&summary_paragraphs, paragraphs[i])
+    }
+
+    // If we found an image and it's not already included in the summary, add it
+    if first_image_idx != -1 && first_image_idx >= SUMMARY_MAX_LENGTH {
+        append(&summary_paragraphs, paragraphs[first_image_idx])
+    }
+
     summary_md := strings.join(
-        summary_paragraphs,
+        summary_paragraphs[:],
         "\n\n",
         allocator = context.temp_allocator,
     )
-    return cmark.markdown_to_html_from_string(summary_md, {.Unsafe})
+    html := cmark.markdown_to_html_from_string(summary_md, {.Unsafe})
+    return clean_html_summary(html)
 }
 
 Options :: struct {
