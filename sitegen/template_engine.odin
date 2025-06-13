@@ -524,48 +524,52 @@ resolve_template_blocks :: proc(
             strings.reader_unread_rune(&reader)
 
             before_index := reader.i
-            if stmt_read, ok := read_until(&reader, "%}"); ok {
-                stmt_split := strings.split(strings.trim_space(stmt_read), " ")
-                defer delete(stmt_split)
+            stmt_read, stmt_read_ok := read_until(&reader, "%}")
+            if !stmt_read_ok {
+                state = copying_or_skipping(block_name_stack, child_blocks)
+                continue
+            }
+            stmt_split := strings.split(strings.trim_space(stmt_read), " ")
+            defer delete(stmt_split)
 
-                unhandled_statement := true
-                if stmt_split[0] == "block" {
-                    unhandled_statement = false
-                    if len(stmt_split) != 2 {
-                        log.error("Template syntax error: missing block name")
+            unhandled_statement := true
+            if stmt_split[0] == "block" {
+                unhandled_statement = false
+                if len(stmt_split) != 2 {
+                    log.error("Template syntax error: missing block name")
+                    return "", false
+                }
+                block_name := unquote(stmt_split[1])
+                append(&block_name_stack, block_name)
+                if block_name in child_blocks {
+                    state = .Skipping
+                } else {
+                    state = .Copying
+                }
+            } else if stmt_split[0] == "endblock" {
+                unhandled_statement = false
+                block_name := pop(&block_name_stack)
+                if block_name in child_blocks {
+                    block_content, ok := resolve_template_blocks(
+                        env,
+                        child_blocks[block_name],
+                        child_blocks,
+                    )
+                    if ok {
+                        strings.write_string(&builder, block_content)
+                    } else {
                         return "", false
                     }
-                    block_name := unquote(stmt_split[1])
-                    append(&block_name_stack, block_name)
-                    if block_name in child_blocks {
-                        state = .Skipping
-                    } else {
-                        state = .Copying
-                    }
-                } else if stmt_split[0] == "endblock" {
-                    unhandled_statement = false
-                    block_name := pop(&block_name_stack)
-                    if block_name in child_blocks {
-                        block_content, ok := resolve_template_blocks(
-                            env,
-                            child_blocks[block_name],
-                            child_blocks,
-                        )
-                        if ok {
-                            strings.write_string(&builder, block_content)
-                        } else {
-                            return "", false
-                        }
-                    }
                 }
+            }
 
-                state = copying_or_skipping(block_name_stack, child_blocks)
+            state = copying_or_skipping(block_name_stack, child_blocks)
 
-                if state == .Copying && unhandled_statement {
-                    strings.write_string(&builder, "{%")
-                    strings.write_string(&builder, stmt_read)
-                    strings.write_string(&builder, "%}")
-                }
+            if state == .Copying && unhandled_statement {
+                sli := reader.s[before_index:reader.i]
+                strings.write_string(&builder, "{%")
+                strings.write_string(&builder, stmt_read)
+                strings.write_string(&builder, "%}")
             }
         }
     }
@@ -671,7 +675,6 @@ resolve_template_includes :: proc(env: ^Environment, template_name: string) -> b
             // unread current rune, let read_until + trim do all the work ;)
             strings.reader_unread_rune(&reader)
 
-            before_index := reader.i
             if stmt_read, ok := read_until(&reader, "%}"); ok {
                 stmt_read := strings.trim_space(stmt_read)
                 stmt_split := strings.split(stmt_read, " ")

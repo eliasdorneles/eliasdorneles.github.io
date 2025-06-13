@@ -92,7 +92,10 @@ test_render_template_translation_lang_display :: proc(t: ^testing.T) {
     ctx := parsed.(json.Object)
 
     result: string
-    result = render_template_string("Lang: {{ lang_display_name(translation.lang) }}", &ctx)
+    result = render_template_string(
+        "Lang: {{ lang_display_name(translation.lang) }}",
+        &ctx,
+    )
     expect_str(t, "Lang: English", result)
 
     result = render_template_string("Lang: {{ lang_display_name(lang2) }}", &ctx)
@@ -109,7 +112,7 @@ test_render_template_if :: proc(t: ^testing.T) {
             "fruit": "Banana"
             "banana": {"name": "Banana"}
          }`,
-         allocator = context.temp_allocator
+        allocator = context.temp_allocator,
     )
     ctx := parsed.(json.Object)
 
@@ -170,20 +173,31 @@ test_render_template_if :: proc(t: ^testing.T) {
     expect_str(t, "", render_template_string(templ_str, &ctx))
 
     // when:
-    templ_str = `<h1><a href="{{ SITEURL }}/index.html">{{ SITENAME }} {% if SITESUBTITLE %} <strong>{{ SITESUBTITLE }}</strong>{% endif %}</a></h1>`
+    templ_str =
+    `<h1><a href="{{ SITEURL }}/index.html">{{ SITENAME }} {% if SITESUBTITLE %} <strong>{{ SITESUBTITLE }}</strong>{% endif %}</a></h1>`
     // then:
-    expect_str(t, `<h1><a href="/index.html"> </a></h1>`, render_template_string(templ_str, &ctx))
+    expect_str(
+        t,
+        `<h1><a href="/index.html"> </a></h1>`,
+        render_template_string(templ_str, &ctx),
+    )
 
     // and given:
     ctx["SITEURL"] = "http://example.com"
 
     // when:
-    templ_str = `<h1><a href="{{ SITEURL }}/index.html">{{ SITENAME }} {% if SITESUBTITLE %} <strong>{{ SITESUBTITLE }}</strong>{% endif %}</a></h1>`
+    templ_str =
+    `<h1><a href="{{ SITEURL }}/index.html">{{ SITENAME }} {% if SITESUBTITLE %} <strong>{{ SITESUBTITLE }}</strong>{% endif %}</a></h1>`
     // then:
-    expect_str(t, `<h1><a href="http://example.com/index.html"> </a></h1>`, render_template_string(templ_str, &ctx))
+    expect_str(
+        t,
+        `<h1><a href="http://example.com/index.html"> </a></h1>`,
+        render_template_string(templ_str, &ctx),
+    )
 
     // when:
-    templ_str = `{% if FEED_RSS %}<link href="{{ SITEURL }}/{{ FEED_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} RSS Feed" />{% endif %}`
+    templ_str =
+    `{% if FEED_RSS %}<link href="{{ SITEURL }}/{{ FEED_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} RSS Feed" />{% endif %}`
     // then:
     expect_str(t, "", render_template_string(templ_str, &ctx))
 }
@@ -194,14 +208,16 @@ test_render_template_javascript :: proc(t: ^testing.T) {
     templ_str: string
 
     // when:
-    templ_str = strings.trim_space(`
+    templ_str = strings.trim_space(
+        `
 <script>
 var host = "eliasdorneles.github.io";
 if (window.location.host == host && window.location.protocol != "https:") {
   window.location.protocol = "https:";
 }
 </script>
-        `)
+        `,
+    )
     // then:
     expect_str(t, templ_str, render_template_string(templ_str, &ctx))
 }
@@ -349,7 +365,11 @@ test_resolve_extends_template :: proc(t: ^testing.T) {
     result, ok := resolve_extends_template(&env, "article.html")
     // then:
     testing.expect(t, ok)
-    expect_str(t, "<html>{% if title %}title={{ SITENAME }}{% endif %}<article>ARTICLE</article></html>", result)
+    expect_str(
+        t,
+        "<html>{% if title %}title={{ SITENAME }}{% endif %}<article>ARTICLE</article></html>",
+        result,
+    )
 
     // and when:
     result, ok = resolve_extends_template(&env, "other.html")

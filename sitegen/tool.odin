@@ -20,6 +20,8 @@ THEME_STATIC_DIR :: "mytheme/static/"
 
 DEFAULT_LANG :: "en"
 
+SUMMARY_MAX_LENGTH :: 1 // number of paragraphs to include in summary
+
 Article :: struct {
     title:      string,
     date:       string,
@@ -128,6 +130,33 @@ render_article_content :: proc(article: ^Article) -> string {
     return cmark.markdown_to_html_from_string(md_content, {.Unsafe})
 }
 
+generate_article_summary :: proc(article: ^Article) -> string {
+    // First try to find PELICAN_END_SUMMARY marker
+    if end_marker := strings.index(article.md_content, "PELICAN_END_SUMMARY");
+       end_marker != -1 {
+        summary_md := article.md_content[:end_marker]
+        return cmark.markdown_to_html_from_string(summary_md, {.Unsafe})
+    }
+
+    // Otherwise take first SUMMARY_MAX_LENGTH paragraphs
+    paragraphs := strings.split(
+        article.md_content,
+        "\n\n",
+        allocator = context.temp_allocator,
+    )
+    if len(paragraphs) == 0 {
+        return ""
+    }
+
+    summary_paragraphs := paragraphs[:min(SUMMARY_MAX_LENGTH, len(paragraphs))]
+    summary_md := strings.join(
+        summary_paragraphs,
+        "\n\n",
+        allocator = context.temp_allocator,
+    )
+    return cmark.markdown_to_html_from_string(summary_md, {.Unsafe})
+}
+
 Options :: struct {
     output:      string `usage:"Output directory"`,
     config_file: string `usage:"Config file"`,
@@ -171,6 +200,7 @@ main :: proc() {
         proc(a: Article, b: Article) -> bool {return a.date < b.date},
     )
     count_files_written: int
+    object_list: json.Array
     if ok {
         for &article in articles {
             temp_ctx := clone_context(&ctx)
@@ -184,8 +214,11 @@ main :: proc() {
             html_filename := fmt.aprintf("%s.html", article.slug)
             article_obj["url"] = fmt.aprintf("../../../%s", html_filename)
             article_obj["content"] = render_article_content(&article)
+            article_obj["_summary"] = generate_article_summary(&article)
             temp_ctx["article"] = article_obj
             temp_ctx["rel_source_path"] = fmt.aprintf("site/blog/%s.md", article.slug)
+
+            append(&object_list, article_obj)
 
             // TODO: populate .translations based on articles sharing
             // same slug but with different lang
@@ -210,6 +243,26 @@ main :: proc() {
     } else {
         fmt.eprintln("error loading articles")
     }
+
+    // Generate index page
+    index_ctx := clone_context(&ctx)
+    articles_page: json.Object
+    articles_page["object_list"] = object_list
+    index_ctx["articles_page"] = articles_page
+    index_ctx["articles"] = object_list // for backwards compatibility
+
+    if rendered, ok := render_template(&env, "index.html", &index_ctx); ok {
+        target_path := filepath.join({args.output, "index.html"})
+        bytes_to_write := transmute([]u8)rendered
+        if !os.write_entire_file(target_path, bytes_to_write) {
+            fmt.eprintln("Error writing index file:", target_path)
+        } else {
+            count_files_written += 1
+        }
+    } else {
+        log.error("error rendering index template", rendered)
+    }
+
     fmt.printfln("\nWrote %d files!\n", count_files_written)
 
     makedirs(filepath.join({args.output, "theme"}))
