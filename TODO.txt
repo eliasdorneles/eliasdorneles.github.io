@@ -58,15 +58,18 @@ main logic:
     [x] fix bug dates incorrect format and TZ
     [x] add relative source path variable
     [ ] add highlightjs to replace pygments: https://highlightjs.org/
-[ ] generate index page
-    [ ] build articles_page object, with object_list with list of articles
-    [ ] generate summary for every article
-        [ ] either stop at PELICAN_END_SUMMARY, or SUMMARY_MAX_LENGTH
-        [ ] clean summary: remove any images (need an html parser, which to use?)
+[x] generate index page
+    [x] build articles_page object, with object_list with list of articles
+    [x] generate summary for every article
+        [x] either stop at PELICAN_END_SUMMARY, or SUMMARY_MAX_LENGTH
+        [x] clean summary: remove any images after the 1st one
 [ ]     update feed files (better than requiring memory everytime)
 [ ]     save to output file
 [ ]         create dir output tree as needed
 [ ] generate pages w/ similar logic, except no feed
+[x] implement translations: should group articles w/ same slug, display
+    only articles in English by default and in each article, display a link
+    to the alternative translations
 ----------------------
 
 [x] Copy site/images/ OUTPUT_DIR/images/
@@ -76,7 +79,6 @@ main logic:
 [ ] Content feeds for aggregators
     [ ] RSS
     [ ] Atom
-[ ] implement translations: should group articles w/ same slug
 
 [ ] implement proper relative urls, for better local preview
 

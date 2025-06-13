@@ -231,6 +231,43 @@ Options :: struct {
     config_file: string `usage:"Config file"`,
 }
 
+
+get_article_url :: proc(article: ^Article) -> string {
+    year, month, day := extract_ymd(article.date)
+    html_filename := fmt.aprintf("%s.html", article.slug)
+    return fmt.aprintf("%s/%s/%s/%s", year, month, day, html_filename)
+}
+
+// Group articles by slug to find translations
+group_articles_by_slug :: proc(articles: []Article) -> map[string][dynamic]Article {
+    groups := make(map[string][dynamic]Article)
+    for article in articles {
+        if articles, exists := groups[article.slug]; exists {
+            append(&articles, article)
+            groups[article.slug] = articles
+        } else {
+            articles := make([dynamic]Article)
+            append(&articles, article)
+            groups[article.slug] = articles
+        }
+    }
+    return groups
+}
+
+// Create translations list for an article
+create_translations :: proc(article: ^Article, translations: []Article) -> json.Array {
+    result := make(json.Array)
+    for &translation in translations {
+        if translation.lang != article.lang {
+            translation_obj: json.Object
+            translation_obj["lang"] = translation.lang
+            translation_obj["url"] = get_article_url(translation)
+            append(&result, translation_obj)
+        }
+    }
+    return result
+}
+
 main :: proc() {
     args: Options
     flags.parse_or_exit(&args, os.args, style = .Unix)
@@ -271,6 +308,15 @@ main :: proc() {
     count_files_written: int
     object_list: json.Array
     if ok {
+        // Group articles by slug to find translations
+        article_groups := group_articles_by_slug(articles[:])
+        defer {
+            for _, group in article_groups {
+                delete(group)
+            }
+            delete(article_groups)
+        }
+
         for &article in articles {
             temp_ctx := clone_context(&ctx)
             year, month, day := extract_ymd(article.date)
@@ -280,23 +326,28 @@ main :: proc() {
             // this is a hack to add timezone info to complete the timestamp:
             article_obj["date"] = fmt.aprintf("%s:00+02:00", article.date)
             article_obj["author"] = article.author
-            html_filename := fmt.aprintf("%s.html", article.slug)
-            article_obj["url"] = fmt.aprintf("../../../%s", html_filename)
+            article_obj["url"] = get_article_url(&article)
             article_obj["content"] = render_article_content(&article)
             article_obj["_summary"] = generate_article_summary(&article)
+
+            // Add translations if any exist
+            if translations, exists := article_groups[article.slug]; exists {
+                article_obj["translations"] = create_translations(&article, translations[:])
+            }
+
             temp_ctx["article"] = article_obj
             temp_ctx["rel_source_path"] = fmt.aprintf("site/blog/%s.md", article.slug)
 
-            append(&object_list, article_obj)
-
-            // TODO: populate .translations based on articles sharing
-            // same slug but with different lang
+            // Only add default language articles to the index page
+            if article.lang == DEFAULT_LANG {
+                append(&object_list, article_obj)
+            }
 
             out_dir_path := filepath.join({args.output, year, month, day})
             if !makedirs(out_dir_path) {
                 fmt.eprintln("Error attempting to create dir:", out_dir_path)
             }
-            target_path := filepath.join({out_dir_path, html_filename})
+            target_path := filepath.join({out_dir_path, fmt.aprintf("%s.html", article.slug)})
             rendered, ok := render_template(&env, "article.html", &temp_ctx)
             if ok {
                 // Replace {static} with relative path for articles
@@ -309,7 +360,6 @@ main :: proc() {
             } else {
                 log.error("error rendering template", rendered)
             }
-            // break // DEBUG: uncomment to stop at the first article
         }
     } else {
         fmt.eprintln("error loading articles")
