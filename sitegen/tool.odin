@@ -229,13 +229,45 @@ generate_article_summary :: proc(article: ^Article) -> string {
 Options :: struct {
     output:      string `usage:"Output directory"`,
     config_file: string `usage:"Config file"`,
+    local:       bool `usage:"Use localhost:8000 as SITEURL"`,
 }
 
+load_config :: proc(config_file: string, args: ^Options) -> (json.Object, bool) {
+    if bytes_content, ok := os.read_entire_file(config_file); ok {
+        if parsed, err := json.parse_string(string(bytes_content)); err == nil {
+            config := parsed.(json.Object)
 
+            cloned_config := json.clone_value(
+                config,
+                allocator = context.temp_allocator,
+            ).(json.Object)
+
+            if args.local {
+                cloned_config["SITEURL"] = "http://localhost:8000"
+            }
+
+            return cloned_config, true
+        } else {
+            log.error("Error parsing config file:", config_file)
+        }
+    }
+    log.error("Error loading config file:", config_file)
+    return nil, false
+}
+
+// Get the filename for an article based on its slug and language
+get_article_filename :: proc(article: ^Article) -> string {
+    if article.lang == DEFAULT_LANG {
+        return fmt.aprintf("%s.html", article.slug)
+    } else {
+        return fmt.aprintf("%s-%s.html", article.slug, article.lang)
+    }
+}
+
+// Get the URL for an article based on its date, slug and language
 get_article_url :: proc(article: ^Article) -> string {
     year, month, day := extract_ymd(article.date)
-    html_filename := fmt.aprintf("%s.html", article.slug)
-    return fmt.aprintf("%s/%s/%s/%s", year, month, day, html_filename)
+    return fmt.aprintf("%s/%s/%s/%s", year, month, day, get_article_filename(article))
 }
 
 // Group articles by slug to find translations
@@ -261,7 +293,7 @@ create_translations :: proc(article: ^Article, translations: []Article) -> json.
         if translation.lang != article.lang {
             translation_obj: json.Object
             translation_obj["lang"] = translation.lang
-            translation_obj["url"] = get_article_url(translation)
+            translation_obj["url"] = get_article_url(&translation)
             append(&result, translation_obj)
         }
     }
@@ -271,33 +303,28 @@ create_translations :: proc(article: ^Article, translations: []Article) -> json.
 main :: proc() {
     args: Options
     flags.parse_or_exit(&args, os.args, style = .Unix)
+
     if args.output == "" {
-        args.output = "odin_output"
+        args.output = "output_sitegen"
     }
     if args.config_file == "" {
         args.config_file = "config_sitegen.json"
     }
-    output_dir := args.output
-    fmt.println(args)
 
+    fmt.println(args)
     context.logger = log.create_console_logger()
 
-    config_parsed: json.Value
-    if config_data, ok := os.read_entire_file(args.config_file); ok {
-        err: json.Error
-        if config_parsed, err = json.parse(config_data); err != nil {
-            fmt.eprintf("Couldn't load JSON from file %s, exiting", args.config_file)
-            os.exit(1)
-        }
-    } else {
-        fmt.eprintf("Couldn't read file %s, exiting", args.config_file)
-        os.exit(1)
+    // Load configuration
+    config, config_ok := load_config(args.config_file, &args)
+    if !config_ok {
+        fmt.eprintln("Error loading config file:", args.config_file)
+        fmt.eprintfln("config: %s config_ok: %v", args.config_file, config_ok)
+        return
     }
-    defer json.destroy_value(config_parsed)
 
-    ctx := config_parsed.(json.Object)
-
+    ctx := config
     env: Environment
+    defer destroy_env(&env)
 
     // let's now render the blog articles
     articles, ok := load_articles()
@@ -332,7 +359,10 @@ main :: proc() {
 
             // Add translations if any exist
             if translations, exists := article_groups[article.slug]; exists {
-                article_obj["translations"] = create_translations(&article, translations[:])
+                article_obj["translations"] = create_translations(
+                    &article,
+                    translations[:],
+                )
             }
 
             temp_ctx["article"] = article_obj
@@ -347,7 +377,9 @@ main :: proc() {
             if !makedirs(out_dir_path) {
                 fmt.eprintln("Error attempting to create dir:", out_dir_path)
             }
-            target_path := filepath.join({out_dir_path, fmt.aprintf("%s.html", article.slug)})
+            target_path := filepath.join(
+                {out_dir_path, get_article_filename(&article)},
+            )
             rendered, ok := render_template(&env, "article.html", &temp_ctx)
             if ok {
                 // Replace {static} with relative path for articles

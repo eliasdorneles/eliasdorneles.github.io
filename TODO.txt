@@ -70,6 +70,7 @@ main logic:
 [x] implement translations: should group articles w/ same slug, display
     only articles in English by default and in each article, display a link
     to the alternative translations
+[ ] fix issue with incorrect image and weird path for "post pycon blues" article
 ----------------------
 
 [x] Copy site/images/ OUTPUT_DIR/images/
@@ -80,7 +81,7 @@ main logic:
     [ ] RSS
     [ ] Atom
 
-[ ] implement proper relative urls, for better local preview
+[x] implement proper relative urls, for better local preview
 
 TODO before deploying:
 [ ] apply WORKAROUND for <center> tag wrapping images (see above)

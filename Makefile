@@ -53,7 +53,7 @@ sitegen.bin: sitegen
 	odin build sitegen
 
 run-sitegen: sitegen.bin
-	./sitegen.bin --output output_sitegen --config-file config_sitegen.json
+	./sitegen.bin --local --output output_sitegen --config-file config_sitegen.json
 
 serve-sitegen: output_sitegen
 	cd output_sitegen && python3 -m webbrowser http://localhost:8000 && python3 -m http.server
