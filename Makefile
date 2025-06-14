@@ -1,62 +1,48 @@
 SHELL := /bin/bash
-SITE_DIR := site
-THEME_DIR := ./mytheme
 OUTPUT_DIR := ./output
 
-COMPILE := pelican ${SITE_DIR} -t ${THEME_DIR} -o ${OUTPUT_DIR} -s settings.py
-
-.PHONY: clean compile post require_pipenv
-
-help:
-	@echo Quick help:
-	@echo
-	@echo "compile  generate site"
-	@echo "server   generate site watching for changes and start server"
-	@echo "clean    removes output and cache directories"
-	@echo "post     start writing new post (alias: make new)"
-	@echo "fix      fix draft file names, after updating a title"
-	@echo "deploy   deploy to Github pages from local content"
-
-require_pipenv:
-	(which pipenv || pip install pipenv)
-
-compile: require_pipenv
-	pipenv run ${COMPILE}
-
-debug: require_pipenv
-	pipenv run pudb3 ${COMPILE}
-
-clean:
-	rm -rf ${OUTPUT_DIR} cache
-
-install: require_pipenv
-	pipenv sync
-
-server: install compile
-	(cd ${OUTPUT_DIR} && python3 -m webbrowser http://localhost:8000 && python3 -m http.server &)
-	pipenv run ${COMPILE} --autoreload
-
-post: require_pipenv
-	pipenv run ./posts new
-
-new:
-	make post
-
-fix: require_pipenv
-	pipenv run ./posts rename-drafts
-
-deploy: clean compile require_pipenv
-	pipenv run ghp-import -m "Update site" output
-	git push origin gh-pages:master --force
+.DEFAULT_GOAL := help
 
 sitegen.bin: sitegen/tool.odin sitegen/template_engine.odin config_sitegen.json
 	odin build sitegen
 
-run-sitegen: sitegen.bin
-	./sitegen.bin --local --output output_sitegen --config-file config_sitegen.json
+.PHONY: compile-dev
+compile-dev: clean sitegen.bin  ## Run the site generator for local testing
+	./sitegen.bin --local --output output --config-file config_sitegen.json
 
-serve-sitegen: output_sitegen
-	cd output_sitegen && python3 -m webbrowser http://localhost:8000 && python3 -m http.server
+.PHONY: compile-prod
+compile-prod: clean sitegen.bin  ## Run the site generator for production
+	./sitegen.bin --output output --config-file config_sitegen.json
 
-test:  # Run sitegen tests
+.PHONY: clean
+clean:  ## Clean up generated files
+	rm -rf ${OUTPUT_DIR} cache
+
+.PHONY: server
+server: compile-dev  ## Start a local server to view the site
+	(cd ${OUTPUT_DIR} && python3 -m webbrowser http://localhost:8000 && python3 -m http.server &)
+
+.PHONY: posts
+post:  ## Create a new post
+	./posts new
+
+.PHONY: fix
+fix: 
+	uv run ./posts rename-drafts
+
+.PHONY: deploy
+deploy: clean compile-prod  ## Deploy the site to GitHub Pages
+	uv run ghp-import -m "Update site" ${OUTPUT_DIR}
+	git push origin gh-pages:master --force
+
+.PHONY: sitegen.bin
+test:  ## Run sitegen tests
 	odin test sitegen
+
+# Implements this pattern for autodocumenting Makefiles:
+# https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
+#
+# Picks up all comments that start with a ## and are at the end of a target definition line.
+.PHONY: help
+help:  ## Display command usage
+	@grep -E '^[0-9a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

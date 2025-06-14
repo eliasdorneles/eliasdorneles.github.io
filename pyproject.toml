@@ -1,0 +1,8 @@
+[project]
+name = "eliasdorneles-github-io"
+version = "0.1.0"
+description = "Elias Dorneles' website"
+requires-python = ">=3.11.0"
+dependencies = [
+    "ghp-import>=2.1.0",
+]
