@@ -30,6 +30,7 @@ Article :: struct {
     lang:       string,
     md_content: string,
     author:     string,
+    template:   string,
 }
 
 extract_ymd :: proc(date: string) -> (string, string, string) {
@@ -88,6 +89,8 @@ load_article_from_string :: proc(article: ^Article, raw_content: string) -> bool
                 article.lang = value
             } else if key == "Author" {
                 article.author = value
+            } else if key == "Template" {
+                article.template = value
             }
             line_start_index = index + 1
             eol = true
@@ -226,6 +229,26 @@ generate_article_summary :: proc(article: ^Article) -> string {
     return clean_html_summary(html)
 }
 
+load_pages :: proc() -> (pages: [dynamic]Article, load_ok: bool) {
+    page_path_list, err := filepath.glob("site/pages/*.md")
+    if err != nil {
+        return nil, false
+    }
+    for page_path in page_path_list {
+        bytes_content := os.read_entire_file(page_path) or_return
+        page: Article
+        page.filepath = page_path
+        page.slug = slug_from_path(page_path)
+        load_article_from_string(&page, string(bytes_content)) or_return
+        append(&pages, page)
+    }
+    return pages, true
+}
+
+get_page_url :: proc(page: ^Article) -> string {
+    return fmt.aprintf("pages/%s.html", page.slug)
+}
+
 Options :: struct {
     output:      string `usage:"Output directory"`,
     config_file: string `usage:"Config file"`,
@@ -326,13 +349,56 @@ main :: proc() {
     env: Environment
     defer destroy_env(&env)
 
+    count_files_written := 0
+
+    // Process pages first
+    pages, pages_ok := load_pages()
+    if pages_ok {
+        for &page in pages {
+            temp_ctx := clone_context(&ctx)
+            page_obj: json.Object
+            page_obj["title"] = page.title
+            page_obj["slug"] = page.slug
+            page_obj["date"] = page.date
+            page_obj["author"] = page.author
+            page_obj["url"] = get_page_url(&page)
+            page_obj["content"] = render_article_content(&page)
+
+            temp_ctx["page"] = page_obj
+            temp_ctx["rel_source_path"] = fmt.aprintf("site/pages/%s.md", page.slug)
+
+            out_dir_path := filepath.join({args.output, "pages"})
+            if !makedirs(out_dir_path) {
+                fmt.eprintln("Error attempting to create dir:", out_dir_path)
+            }
+            target_path := filepath.join(
+                {out_dir_path, fmt.aprintf("%s.html", page.slug)},
+            )
+
+            template_name := page.template if page.template != "" else "page.html"
+            if template_name != "page.html" && !strings.has_suffix(template_name, ".html") {
+                template_name = fmt.aprintf("%s.html", template_name)
+            }
+            rendered, ok := render_template(&env, template_name, &temp_ctx)
+            if !ok {
+                fmt.eprintln("Error rendering page:", page.slug)
+                continue
+            }
+            if !os.write_entire_file(target_path, transmute([]u8)rendered) {
+                fmt.eprintln("Error writing page:", target_path)
+                continue
+            }
+            count_files_written += 1
+        }
+    }
+    fmt.printfln("Rendered %d pages", count_files_written)
+
     // let's now render the blog articles
     articles, ok := load_articles()
     slice.reverse_sort_by(
         articles[:],
         proc(a: Article, b: Article) -> bool {return a.date < b.date},
     )
-    count_files_written: int
     object_list: json.Array
     if ok {
         // Group articles by slug to find translations
@@ -377,10 +443,14 @@ main :: proc() {
             if !makedirs(out_dir_path) {
                 fmt.eprintln("Error attempting to create dir:", out_dir_path)
             }
-            target_path := filepath.join(
-                {out_dir_path, get_article_filename(&article)},
-            )
-            rendered, ok := render_template(&env, "article.html", &temp_ctx)
+            target_path := filepath.join({out_dir_path, get_article_filename(&article)})
+
+            template_name :=
+                article.template if article.template != "" else "article.html"
+            if template_name != "article.html" && !strings.has_suffix(template_name, ".html") {
+                template_name = fmt.aprintf("%s.html", template_name)
+            }
+            rendered, ok := render_template(&env, template_name, &temp_ctx)
             if ok {
                 // Replace {static} with relative path for articles
                 rendered, _ = strings.replace_all(rendered, "{static}", "../../../")

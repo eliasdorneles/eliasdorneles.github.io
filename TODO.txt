@@ -63,13 +63,11 @@ main logic:
     [x] generate summary for every article
         [x] either stop at PELICAN_END_SUMMARY, or SUMMARY_MAX_LENGTH
         [x] clean summary: remove any images after the 1st one
-[ ]     update feed files (better than requiring memory everytime)
-[ ]     save to output file
-[ ]         create dir output tree as needed
-[ ] generate pages w/ similar logic, except no feed
+[x] generate pages w/ similar logic, except no feed
 [x] implement translations: should group articles w/ same slug, display
     only articles in English by default and in each article, display a link
     to the alternative translations
+[ ] generate ATOM and RSS files
 [ ] fix issue with incorrect image and weird path for "post pycon blues" article
 ----------------------
 
