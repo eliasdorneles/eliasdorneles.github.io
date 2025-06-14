@@ -2,7 +2,6 @@ Title: About me
 Date: 2015-07-12 19:59
 Author: Elias Dorneles
 Slug: about
-Alias: /pages/about-me.html
 
 Hello, I'm Elias Dorneles, a human originally from Brazil 🇧🇷️, living in France 🇫🇷️.
 

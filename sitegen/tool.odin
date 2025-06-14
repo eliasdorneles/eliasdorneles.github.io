@@ -20,7 +20,7 @@ THEME_STATIC_DIR :: "mytheme/static/"
 
 DEFAULT_LANG :: "en"
 
-SUMMARY_MAX_LENGTH :: 1 // number of paragraphs to include in summary
+SUMMARY_MAX_LENGTH :: 2 // number of paragraphs to include in summary
 
 Article :: struct {
     title:      string,
