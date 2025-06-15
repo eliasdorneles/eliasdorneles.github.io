@@ -76,7 +76,7 @@ markdown_to_html_from_string :: proc(text: string, options: Options = DEFAULT_OP
 
     // Render to HTML
     html_cstr := render_html(document, options, c.NULL)
-    // defer runtime.free(rawptr(html_cstr)) <- it's segfaulting here =/
+    // defer runtime.free(rawptr(html_cstr)) // <-- not sure why it's segfaulting here =/
 
-    return string(html_cstr)
+    return strings.clone_from_cstring(html_cstr)
 }
