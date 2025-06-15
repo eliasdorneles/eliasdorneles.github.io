@@ -31,6 +31,7 @@ Article :: struct {
     md_content: string,
     author:     string,
     template:   string,
+    status:     string,
 }
 
 extract_ymd :: proc(date: string) -> (string, string, string) {
@@ -91,6 +92,8 @@ load_article_from_string :: proc(article: ^Article, raw_content: string) -> bool
                 article.author = value
             } else if key == "Template" {
                 article.template = value
+            } else if key == "Status" {
+                article.status = value
             }
             line_start_index = index + 1
             eol = true
@@ -436,8 +439,8 @@ main :: proc() {
             temp_ctx["article"] = article_obj
             temp_ctx["rel_source_path"] = fmt.aprintf("site/blog/%s.md", article.slug)
 
-            // Only add default language articles to the index page
-            if article.lang == DEFAULT_LANG {
+            // Only add default language articles that are not drafts to the index page
+            if article.lang == DEFAULT_LANG && article.status != "draft" {
                 append(&object_list, article_obj)
             }
 
