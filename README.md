@@ -12,6 +12,8 @@ Install system dependencies:
 
 Install [uv](https://docs.astral.sh/uv/) (currently only used for deploying).
 
+Install [Odin](https://odin-lang.org/).
+
 Run `make` to see the help.
 
 ## History
