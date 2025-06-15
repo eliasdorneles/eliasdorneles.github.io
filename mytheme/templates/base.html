@@ -5,7 +5,6 @@
         <link rel="shortcut icon" href="/images/favicon.ico">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="{{ SITEURL }}/theme/css/pygments.css" type="text/css" />
         <link rel="stylesheet" href="{{ SITEURL }}/theme/css/main.css" type="text/css" />
         <link href="{{ SITEURL }}/{{ FEED_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} ATOM Feed" />
         {% if FEED_RSS %}
@@ -45,5 +44,9 @@ if (window.location.host == host && window.location.protocol != "https:") {
         </footer>
 </div>
 
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/default.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
 </body>
 </html>
