@@ -244,7 +244,12 @@ and tweak them to your needs:
 
 ```
 edit_modified_files(){
-    $EDITOR $( (git ls-files -m -o --exclude-standard; git diff --cached --name-only --relative .) | sort | uniq)
+    $EDITOR $(
+        (
+            git ls-files -m -o --exclude-standard
+            git diff --cached --name-only --relative .
+        )  | sort | uniq
+    )
 }
 edit_files_with_conflicts(){
     $EDITOR $(git diff --name-only --diff-filter=U)

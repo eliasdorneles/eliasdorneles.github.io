@@ -24,7 +24,8 @@ watch: compile-dev  ## Start a local server and watch for changes
 	uv run watchmedo auto-restart \
 		--directory=site \
 		--directory=sitegen \
-		--patterns="*.odin;*.md" \
+		--directory=mytheme \
+		--patterns="*.odin;*.md;*.css;*.html" \
 		--recursive -- \
 		make server
 

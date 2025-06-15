@@ -1,49 +1,39 @@
 @import url('//fonts.googleapis.com/css?family=Covered+By+Your+Grace');
 
-@media all and (min-width: 960px) {
+@media all and (min-width: 1024px) {
     body {
-        width: 960px;
+        max-width: 960px;
+        width: 90%;
         margin: 0 auto;
-    }
-    .highlight pre {
-        font-size: 1.1rem;
-        padding: 10px;
     }
 }
 
-@media all and (min-width: 800px) and (max-width:959px) {
+@media all and (min-width: 768px) and (max-width: 1023px) {
     body {
-        width: 700px;
+        max-width: 720px;
+        width: 90%;
         margin: 0 auto;
-    }
-    .highlight pre {
-        padding: 8px;
     }
 }
 
-@media all and (min-width: 500px) and (max-width:799px) {
+@media all and (min-width: 480px) and (max-width: 767px) {
     body {
-        width: 480px;
+        max-width: 450px;
+        width: 90%;
         margin: 0 auto;
-    }
-    .highlight pre {
-        padding: 5px;
     }
 }
 
-@media all and (max-width:499px) {
+@media all and (max-width: 479px) {
     body {
-        width: 380px;
+        max-width: 100%;
+        width: 95%;
         margin: 0 auto;
-    }
-    .highlight pre {
-        font-size: 1rem;
-        padding: 2px;
     }
 }
 
 body {
-    font: 20px arial, sans-serif;
+    font: 18px arial, sans-serif;
     color: #111;
     /* palette: https://coolors.co/d9ed92-b5e48c-99d98c-76c893-52b69a-34a0a4-168aad-1a759f-1e6091-184e77 */
     background-color: #1E6091; /* site background */
@@ -222,9 +212,8 @@ img.align-right {
     padding: 10px;
 }
 
-code {
-    background-color: #ddd;
-    padding: 1px 2px;
+pre code {
+    font-size: 80%;
 }
 
 .taglist {
