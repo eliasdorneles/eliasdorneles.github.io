@@ -67,17 +67,13 @@ main logic:
 [x] implement translations: should group articles w/ same slug, display
     only articles in English by default and in each article, display a link
     to the alternative translations
-[ ] generate ATOM and RSS files
+[x] fix CMark GFM usage to use table extension
 [ ] fix issue with incorrect image and weird path for "post pycon blues" article
 ----------------------
 
 [x] Copy site/images/ OUTPUT_DIR/images/
 [x] Copy theme static files ./mytheme/static/*/** to OUTPUT_DIR/theme/*/**
 [x] Copy CNAME file
-
-[ ] Content feeds for aggregators
-    [ ] RSS
-    [ ] Atom
 
 [x] implement proper relative urls, for better local preview
 

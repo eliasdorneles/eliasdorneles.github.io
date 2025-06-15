@@ -20,7 +20,7 @@ THEME_STATIC_DIR :: "mytheme/static/"
 
 DEFAULT_LANG :: "en"
 
-SUMMARY_MAX_LENGTH :: 2 // number of paragraphs to include in summary
+SUMMARY_MAX_LENGTH :: 1 // number of paragraphs to include in summary
 
 Article :: struct {
     title:      string,
@@ -180,7 +180,7 @@ clean_html_summary :: proc(html: string) -> string {
     return strings.clone_from(result, allocator = context.temp_allocator)
 }
 
-generate_article_summary :: proc(article: ^Article) -> string {
+generate_article_summary :: proc(article: ^Article, summary_max_length: int = 1) -> string {
     // First try to find PELICAN_END_SUMMARY marker
     if end_marker := strings.index(article.md_content, "PELICAN_END_SUMMARY");
        end_marker != -1 {
@@ -421,7 +421,7 @@ main :: proc() {
             article_obj["author"] = article.author
             article_obj["url"] = get_article_url(&article)
             article_obj["content"] = render_article_content(&article)
-            article_obj["_summary"] = generate_article_summary(&article)
+            article_obj["_summary"] = generate_article_summary(&article, SUMMARY_MAX_LENGTH)
 
             // Add translations if any exist
             if translations, exists := article_groups[article.slug]; exists {
