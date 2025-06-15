@@ -186,6 +186,7 @@ generate_article_summary :: proc(article: ^Article, summary_max_length: int = 1)
        end_marker != -1 {
         summary_md := article.md_content[:end_marker]
         html := cmark.markdown_to_html_from_string(summary_md, {.Unsafe})
+        defer delete(html)
         return clean_html_summary(html)
     }
 
@@ -226,6 +227,7 @@ generate_article_summary :: proc(article: ^Article, summary_max_length: int = 1)
         allocator = context.temp_allocator,
     )
     html := cmark.markdown_to_html_from_string(summary_md, {.Unsafe})
+    defer delete(html)
     return clean_html_summary(html)
 }
 

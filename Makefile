@@ -57,7 +57,7 @@ clean:  ## Clean up generated files
 
 .PHONY: sitegen.bin
 test:  ## Run sitegen tests
-	odin test sitegen
+	odin test sitegen -all-packages
 
 # Implements this pattern for autodocumenting Makefiles:
 # https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html

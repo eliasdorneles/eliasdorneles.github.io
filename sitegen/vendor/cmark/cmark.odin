@@ -4,10 +4,10 @@ Minimal wrapper for CMark-GFM (https://github.com/github/cmark-gfm)
 This is adapted from the Odin-vendored CMark bindings available here:
 https://github.com/odin-lang/Odin/blob/master/vendor/commonmark/
 */
-package vendor_commonmark
+package vendor_cmark_gfm
 
-import "base:runtime"
 import "core:c"
+import "core:c/libc"
 import "core:log"
 import "core:strings"
 
@@ -60,7 +60,12 @@ enable_extension :: proc(parser: rawptr, ext_name: cstring) -> bool {
     return true
 }
 
-markdown_to_html_from_string :: proc(text: string, options: Options = DEFAULT_OPTIONS) -> (html: string) {
+markdown_to_html_from_string :: proc(
+    text: string,
+    options: Options = DEFAULT_OPTIONS,
+) -> (
+    html: string,
+) {
     gfm_core_extensions_ensure_registered()
 
     parser := parser_new(options)
@@ -76,7 +81,7 @@ markdown_to_html_from_string :: proc(text: string, options: Options = DEFAULT_OP
 
     // Render to HTML
     html_cstr := render_html(document, options, c.NULL)
-    // defer runtime.free(rawptr(html_cstr)) // <-- not sure why it's segfaulting here =/
+    defer libc.free(rawptr(html_cstr)) // <-- not sure why it's segfaulting here =/
 
     return strings.clone_from_cstring(html_cstr)
 }
