@@ -5,10 +5,12 @@
         <link rel="shortcut icon" href="/images/favicon.ico">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="../../../theme/css/pygments.css" type="text/css" />
-        <link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
-        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
-        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/pygments.css" type="text/css" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+        <link href="https://eliasdorneles.com/atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
+        
+        <link href="https://eliasdorneles.com/feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        
 <script>
 var host = "eliasdorneles.github.io";
 if (window.location.host == host && window.location.protocol != "https:") {
@@ -21,16 +23,28 @@ if (window.location.host == host && window.location.protocol != "https:") {
     <a name="top"></a>
 
 <div class="site-container">
+        
         <header id="banner" class="body">
-                <h1><a href="../../../index.html">Elias Dorneles </a></h1>
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
                 <nav><ul>
+                
                     <li >
-                        <a href="../../../">Blog</a>
+                        <a href="https://eliasdorneles.com/">Blog</a>
                     </li>
-                    <li ><a href="../../../pages/about.html">About me</a></li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
                 </ul></nav>
         </header><!-- /#banner -->
+        
 
+        
 <section id="content" class="body">
     <article>
         <header>
@@ -41,14 +55,21 @@ if (window.location.host == host && window.location.protocol != "https:") {
         </header>
 
         <div class="entry-content">
+            
 <footer class="post-info">
+        
         <address class="vcard author">
             posted by
-            <a href="../../../pages/about-me.html">Elias Dorneles</a>
-            on <abbr class="published" title="2016-06-19T00:29:00+02:00">2016, juin 19</abbr>
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2016-06-19 00:29:00+02:00">2016, June 19</abbr>
             <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/on-getting-productive-with-git.md">Edit</a>
         </address>
-</footer>            <p>I remember the first time I submitted a pull request in GitHub and some
+        
+
+
+</footer>
+
+            <p>I remember the first time I submitted a pull request in GitHub and some
 reviewer asked me to <a href="https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History#Squashing-Commits">squash the
 commits</a>.
 I had no idea what they were talking about. I didn't have any friends who knew
@@ -56,19 +77,17 @@ Git, I was pretty much a noob on Git and GitHub. It's easy to forget how scary
 this stuff can be for someone just starting out with their first open source
 contribution.</p>
 <div class="figure align-right" style="width: 250px">
-<img src="../../../images/confused.png">
+<img src="../../..//images/confused.png">
 <p class="caption">
     First-timer OSS contributor asked to rebase and squash commits
 </p>
 </div>
-
 <p>It took me several weeks to figure out the whole thing because I was so afraid
 of messing up. And in the end the code didn't even get merged.</p>
 <p>I never forgot my frustration during this, which is why today I avoid as much
 as possible to ask for someone to rebase their code in a pull request, unless I
 can pair with them and show how to do it.</p>
-
-
+<!-- PELICAN_END_SUMMARY -->
 <p>Well, nowadays <a href="https://help.github.com/articles/about-pull-request-merge-squashing/">GitHub allows a maintainer to squash commits when
 merging</a>,
 which is pretty cool. However, this isn't a task that's particularly hard to
@@ -80,9 +99,9 @@ find hard to use any other thing.</p>
 <p>However, there is all this learning curve you must go through until you're
 finally actually productive with it. When you're just starting to use it, this
 XKCD comic is very real:</p>
-<p><a href="https://xkcd.com/1597">
+<a href="https://xkcd.com/1597">
 <img src="https://imgs.xkcd.com/comics/git.png" class="align-center">
-</a></p>
+</a>
 <p>You want to get stuff done, you don't want to be spending cognition on your
 version control tool. With Git, it takes a little while to get to a point where
 you don't need to think much about it, at least when you're collaborating on a
@@ -94,7 +113,7 @@ productive quicker. This won't be a Git tutorial, it's more like a booster of
 your own Git learning. These are things that helped me to learn and use Git
 better. If you want a tutorial, <a href="https://try.github.io">this is a cool one</a>.</p>
 <p>I'm far from a Git expert, most of what I learned was while trying to get stuff
-done, usually after googling for <em>"how to do X in Git"</em>. I have trouble
+done, usually after googling for <em>&quot;how to do X in Git&quot;</em>. I have trouble
 understanding Git's help because it seems to be written for people that know Git
 internals, using all this unfamiliar vocabulary. But I can get stuff done, and
 you can too.</p>
@@ -110,17 +129,15 @@ back to a previous state.</p>
 <h3>Undo a commit</h3>
 <p>If you've committed and then realized that you didn't mean to,
 don't worry, you can undo it with the following command:</p>
-<div class="highlight"><pre><span></span><code>git undo-commit
-</code></pre></div>
-
+<pre><code>git undo-commit
+</code></pre>
 <p>This will undo the last commit, but will keep your files intact
 so you won't lose any work.</p>
 <p>Now, if you've just tried running that and it didn't work it's because I've
 lied to you -- sorry! That command doesn't exist by default in Git, but it
 should! In order to add it, run the following command:</p>
-<div class="highlight"><pre><span></span><code>git config --global alias.undo-commit &#39;reset HEAD~1 --mixed&#39;
-</code></pre></div>
-
+<pre><code>git config --global alias.undo-commit 'reset HEAD~1 --mixed'
+</code></pre>
 <p>This adds an alias, which is essentially a shortcut to another command.
 Git aliases are very helpful, because that's how you tweak Git's complicated
 command line interface to something that's actually usable. Aliases (and
@@ -138,52 +155,47 @@ there. Personally, I use just <code>undo</code> for this one.</p>
 <h3>Undo adding a file to commit</h3>
 <p>If you've added a file with <code>git add</code> that you didn't mean to,
 you can undo it with:</p>
-<div class="highlight"><pre><span></span><code>git undo-add
-</code></pre></div>
-
+<pre><code>git undo-add
+</code></pre>
 <p>Again, this is only after you've added the proper alias with the following command:</p>
-<div class="highlight"><pre><span></span><code>git config --global alias.undo-add &#39;reset --keep&#39;
-</code></pre></div>
-
+<pre><code>git config --global alias.undo-add 'reset --keep'
+</code></pre>
 <h3>Undo a rebase that went wrong</h3>
 <p>If you've tried doing a rebase or some other command that rewrote the commit history
 and you want to undo it, you can use something called the reference log (or, <code>reflog</code>).
 Try running <code>git reflog</code> in a Git repository, you'll see something like this:</p>
-<div class="highlight"><pre><span></span><code><span class="mf">26</span><span class="n">e15cf</span><span class="w"> </span><span class="n">HEAD</span><span class="err">@{</span><span class="mf">0</span><span class="err">}</span><span class="p">:</span><span class="w"> </span><span class="n">rebase</span><span class="w"> </span><span class="n">finished</span><span class="p">:</span><span class="w"> </span><span class="kr">return</span><span class="n">ing</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="n">refs</span><span class="o">/</span><span class="n">heads</span><span class="o">/</span><span class="n">master</span>
-<span class="mf">26</span><span class="n">e15cf</span><span class="w"> </span><span class="n">HEAD</span><span class="err">@{</span><span class="mf">1</span><span class="err">}</span><span class="p">:</span><span class="w"> </span><span class="n">pull</span><span class="w"> </span><span class="o">--</span><span class="n">rebase</span><span class="p">:</span><span class="w"> </span><span class="n">moving</span><span class="w"> </span><span class="n">basic</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="err">~</span><span class="o">/</span><span class="mf">.</span><span class="n">profile</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="n">work</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">gnome</span><span class="w"> </span><span class="n">apps</span>
-<span class="n">f993d5c</span><span class="w"> </span><span class="n">HEAD</span><span class="err">@{</span><span class="mf">2</span><span class="err">}</span><span class="p">:</span><span class="w"> </span><span class="n">pull</span><span class="w"> </span><span class="o">--</span><span class="n">rebase</span><span class="p">:</span><span class="w"> </span><span class="n">checkout</span><span class="w"> </span><span class="n">f993d5cc3d6df6ce9f5c083ebf17d45b9c7e9130</span>
-<span class="n">b517509</span><span class="w"> </span><span class="n">HEAD</span><span class="err">@{</span><span class="mf">3</span><span class="err">}</span><span class="p">:</span><span class="w"> </span><span class="n">pull</span><span class="p">:</span><span class="w"> </span><span class="n">Merge</span><span class="w"> </span><span class="n">made</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="err">&#39;</span><span class="n">recursive</span><span class="err">&#39;</span><span class="w"> </span><span class="n">strategy</span><span class="mf">.</span>
-<span class="mf">29438</span><span class="n">f2</span><span class="w"> </span><span class="n">HEAD</span><span class="err">@{</span><span class="mf">4</span><span class="err">}</span><span class="p">:</span><span class="w"> </span><span class="n">commit</span><span class="p">:</span><span class="w"> </span><span class="n">moving</span><span class="w"> </span><span class="n">basic</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="err">~</span><span class="o">/</span><span class="mf">.</span><span class="n">profile</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="n">work</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">gnome</span><span class="w"> </span><span class="n">apps</span>
-<span class="n">a000618</span><span class="w"> </span><span class="n">HEAD</span><span class="err">@{</span><span class="mf">5</span><span class="err">}</span><span class="p">:</span><span class="w"> </span><span class="n">clone</span><span class="p">:</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">git</span><span class="err">@</span><span class="n">github</span><span class="mf">.</span><span class="n">com</span><span class="p">:</span><span class="n">eliasdorneles</span><span class="o">/</span><span class="n">dotfiles</span><span class="mf">.</span><span class="n">git</span>
-</code></pre></div>
-
+<pre><code>26e15cf HEAD@{0}: rebase finished: returning to refs/heads/master
+26e15cf HEAD@{1}: pull --rebase: moving basic path config to ~/.profile to work with gnome apps
+f993d5c HEAD@{2}: pull --rebase: checkout f993d5cc3d6df6ce9f5c083ebf17d45b9c7e9130
+b517509 HEAD@{3}: pull: Merge made by the 'recursive' strategy.
+29438f2 HEAD@{4}: commit: moving basic path config to ~/.profile to work with gnome apps
+a000618 HEAD@{5}: clone: from git@github.com:eliasdorneles/dotfiles.git
+</code></pre>
 <p>This is a log of every state of your files that is stored, which includes
 when you commit changes, checkout branches, do rebases (with separate states
 for every step of the rebase), merges and etc.</p>
 <p>You can get back to any of those states, using the command below, replacing
 <code>REFLOG_ENTRY</code> by the <code>HEAD@{index}</code> from the reflog for the state
 you want to go back:</p>
-<div class="highlight"><pre><span></span><code>git reset --hard REFLOG_ENTRY
-</code></pre></div>
-
+<pre><code>git reset --hard REFLOG_ENTRY
+</code></pre>
 <p>Note that those numbers are counting backwards, they change every time you make
 a change in the repo. You want to always run <code>git reflog</code> before going back,
 to be sure you'll use the up-to-date reference.</p>
 <p>Also, note that these logs are only stored locally, you'll lose them if you delete
 your local repo.</p>
-<hr>
+<hr />
 <p>Alright, we're done covering undoing stuff. I hope now that you know how to
 undo, you will feel more comfortable trying more stuff without the fear of
 breaking things. The next tips will be a bit more random.</p>
 <h2>Enable colors</h2>
 <p>Your brain can parse this:</p>
-<p><img src="https://i.imgur.com/OBOFz7A.png" width="400" class="align-center"></p>
+<img src="https://i.imgur.com/OBOFz7A.png" width="400" class="align-center">
 <p>Much easier than this:</p>
-<p><img src="https://i.imgur.com/ajXQxbA.png" width="400" class="align-center"></p>
+<img src="https://i.imgur.com/ajXQxbA.png" width="400" class="align-center">
 <p>In case your Git output isn't showing colored output, configure it to do so:</p>
-<div class="highlight"><pre><span></span><code>git config --global color.ui auto
-</code></pre></div>
-
+<pre><code>git config --global color.ui auto
+</code></pre>
 <p>Also, if you end up needing to do this, consider upgrading Git, this has been
 the default for some time, together with many other nice usability
 improvements.</p>
@@ -194,41 +206,35 @@ improvements.</p>
 <p>When you want to commit all files that you have edited,
 ignoring any new files that may now be inside the repo
 directory, do:</p>
-<div class="highlight"><pre><span></span><code>git add -u
-</code></pre></div>
-
+<pre><code>git add -u
+</code></pre>
 <p>This is a shortcut to <code>git add --update</code>, which is the equivalent
 of doing a <code>git add</code> on every modified file that were previously
 committed.</p>
 <p>It can also take a directory, you can ask Git to add only
 files that were edited inside a directory:</p>
-<div class="highlight"><pre><span></span><code>git add -u tests/
-</code></pre></div>
-
+<pre><code>git add -u tests/
+</code></pre>
 <h3>Add all files, detecting file renames and deletes</h3>
 <p>Git expects you to tell it when you rename or delete files. You can ask Git to
 add all changes to be committed, including adding, deleting and renaming
 files, using the command:</p>
-<div class="highlight"><pre><span></span><code>git add --all
-</code></pre></div>
-
+<pre><code>git add --all
+</code></pre>
 <p>You can also give it a directory, so that Git only does this for the stuff under it:</p>
-<div class="highlight"><pre><span></span><code>git add --all some_dir/
-</code></pre></div>
-
+<pre><code>git add --all some_dir/
+</code></pre>
 <p>I use this so often that it deserved an alias:</p>
-<div class="highlight"><pre><span></span><code>git config --global alias.aa &#39;add --all&#39;
-</code></pre></div>
-
+<pre><code>git config --global alias.aa 'add --all'
+</code></pre>
 <h2>Solve conflicts only once</h2>
 <p>When you're merging or rebasing often, some conflicts keep reappearing,
 specially when you're working temporarily on a branch. Instead of solving them
 again manually every time, ask Git to do it automatically, by enabling
 <a href="https://git-scm.com/docs/git-rerere"><code>rerere</code></a>:</p>
-<div class="highlight"><pre><span></span><code>git config --global rerere.enabled true
-</code></pre></div>
-
-<p>The name <code>rerere</code> stands for "reuse recorded resolution", and that's exactly what
+<pre><code>git config --global rerere.enabled true
+</code></pre>
+<p>The name <code>rerere</code> stands for &quot;reuse recorded resolution&quot;, and that's exactly what
 it does: it will record how you solved previous conflicts and next time it finds
 the same conflict it will just apply your previous fix. This way, you won't need to
 keep solving the same conflicts again and again and save a few brain cycles.</p>
@@ -237,20 +243,19 @@ keep solving the same conflicts again and again and save a few brain cycles.</p>
 <p>But even if you don't, you might find useful these Bash functions and aliases
 (taken from <a href="https://github.com/eliasdorneles/dotfiles/blob/master/bashrc">my <code>~/.bashrc</code> file</a>)
 and tweak them to your needs:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">edit_modified_files</span><span class="ss">()</span>{
-<span class="w">    </span><span class="mh">$ED</span><span class="nv">ITOR</span><span class="w"> </span>$<span class="ss">(</span><span class="w"> </span><span class="ss">(</span><span class="nv">git</span><span class="w"> </span><span class="nv">ls</span><span class="o">-</span><span class="nv">files</span><span class="w"> </span><span class="o">-</span><span class="nv">m</span><span class="w"> </span><span class="o">-</span><span class="nv">o</span><span class="w"> </span><span class="o">--</span><span class="nv">exclude</span><span class="o">-</span><span class="nv">standard</span><span class="c1">; git diff --cached --name-only --relative .) | sort | uniq)</span>
+<pre><code>edit_modified_files(){
+    $EDITOR $( (git ls-files -m -o --exclude-standard; git diff --cached --name-only --relative .) | sort | uniq)
 }
-<span class="nv">edit_files_with_conflicts</span><span class="ss">()</span>{
-<span class="w">    </span><span class="mh">$ED</span><span class="nv">ITOR</span><span class="w"> </span>$<span class="ss">(</span><span class="nv">git</span><span class="w"> </span><span class="nv">diff</span><span class="w"> </span><span class="o">--</span><span class="nv">name</span><span class="o">-</span><span class="nv">only</span><span class="w"> </span><span class="o">--</span><span class="nv">diff</span><span class="o">-</span><span class="nv">filter</span><span class="o">=</span><span class="nv">U</span><span class="ss">)</span>
+edit_files_with_conflicts(){
+    $EDITOR $(git diff --name-only --diff-filter=U)
 }
-<span class="nv">edit_recently_committed</span><span class="ss">()</span>{
-<span class="w">    </span><span class="mh">$ED</span><span class="nv">ITOR</span><span class="w"> </span>$<span class="ss">(</span><span class="nv">git</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="o">--</span><span class="nv">name</span><span class="o">-</span><span class="nv">only</span><span class="w"> </span><span class="o">--</span><span class="nv">oneline</span><span class="w"> </span><span class="o">--</span><span class="nv">relative</span><span class="w"> </span>.<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nv">egrep</span><span class="w"> </span><span class="o">-</span><span class="nv">v</span><span class="w"> </span><span class="s2">&quot;^[a-z0-9]+ &quot;</span><span class="ss">)</span>
+edit_recently_committed(){
+    $EDITOR $(git show --name-only --oneline --relative . | egrep -v &quot;^[a-z0-9]+ &quot;)
 }
-<span class="nv">alias</span><span class="w"> </span><span class="nv">em</span><span class="o">=</span><span class="nv">edit_modified_files</span>
-<span class="nv">alias</span><span class="w"> </span><span class="nv">ec</span><span class="o">=</span><span class="nv">edit_files_with_conflicts</span>
-<span class="nv">alias</span><span class="w"> </span><span class="nv">er</span><span class="o">=</span><span class="nv">edit_recently_committed</span>
-</code></pre></div>
-
+alias em=edit_modified_files
+alias ec=edit_files_with_conflicts
+alias er=edit_recently_committed
+</code></pre>
 <p>I came up with these functions when I realized how often I wanted to do open
 the editor and load one of these set of files:</p>
 <ol>
@@ -273,34 +278,29 @@ a pull request, in vanilla Git it's a bit of work (you have to add
 a new remote, fetch from it and then checkout the branch). GitHub
 allows you to skip adding a new remote, you can fetch the code
 from a pull request into a new branch with only one command:</p>
-<div class="highlight"><pre><span></span><code>git fetch origin pull/$PULL_REQUEST_ID/head:BRANCH_NAME
-</code></pre></div>
-
+<pre><code>git fetch origin pull/$PULL_REQUEST_ID/head:BRANCH_NAME
+</code></pre>
 <p>If you're like me, you'll be lazy to type (and memorize) all that too,
 so here is an alias for doing that, paste it under the <code>[alias]</code> section
 in your <code>~/.gitconfig</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="s s-Atom">fetch</span><span class="o">-</span><span class="s s-Atom">pr</span> <span class="o">=</span> <span class="err">&quot;</span><span class="p">!</span><span class="nf">f</span><span class="p">(){</span><span class="s s-Atom">\</span>
-    <span class="p">[</span> <span class="o">-</span><span class="s s-Atom">z</span> <span class="s s-Atom">\</span><span class="err">&quot;$</span><span class="mi">1</span><span class="s s-Atom">\</span><span class="err">&quot;</span> <span class="p">]</span> <span class="s s-Atom">&amp;&amp;</span> <span class="p">{</span> <span class="s s-Atom">echo</span> <span class="nv">Usage</span><span class="o">:</span> <span class="s s-Atom">git</span> <span class="s s-Atom">fetch</span><span class="o">-</span><span class="s s-Atom">pr</span> <span class="nv">PULL_REQUEST_ID</span> <span class="p">[</span><span class="s s-Atom">new_branch_name</span><span class="p">];</span> <span class="s s-Atom">exit</span> <span class="mi">1</span><span class="p">;</span> <span class="p">};</span> <span class="s s-Atom">\</span>
-    <span class="s s-Atom">branch=</span><span class="err">$</span><span class="p">{</span><span class="mi">2</span><span class="o">:-</span><span class="s s-Atom">pr-</span><span class="err">$</span><span class="mi">1</span><span class="p">};</span> <span class="s s-Atom">\</span>
-    <span class="s s-Atom">git</span> <span class="s s-Atom">fetch</span> <span class="s s-Atom">origin</span> <span class="s s-Atom">\</span><span class="err">&quot;</span><span class="s s-Atom">pull/</span><span class="err">$</span><span class="mi">1</span><span class="o">/</span><span class="s s-Atom">head</span><span class="p">:</span><span class="err">$</span><span class="s s-Atom">branch\</span><span class="err">&quot;</span><span class="p">;</span> <span class="s s-Atom">\</span>
-    <span class="p">};</span> <span class="s s-Atom">f</span> <span class="err">&quot;</span>
-</code></pre></div>
-
+<pre><code>fetch-pr = &quot;!f(){\
+    [ -z \&quot;$1\&quot; ] &amp;&amp; { echo Usage: git fetch-pr PULL_REQUEST_ID [new_branch_name]; exit 1; }; \
+    branch=${2:-pr-$1}; \
+    git fetch origin \&quot;pull/$1/head:$branch\&quot;; \
+    }; f &quot;
+</code></pre>
 <p>This alias is using a shell function to parameterize it.
 If you run <code>git fetch-pr</code> it will show the help:</p>
-<div class="highlight"><pre><span></span><code><span class="err">$</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="k">fetch</span><span class="o">-</span><span class="n">pr</span>
-<span class="k">Usage</span><span class="err">:</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="k">fetch</span><span class="o">-</span><span class="n">pr</span><span class="w"> </span><span class="n">PULL_REQUEST_ID</span><span class="w"> </span><span class="o">[</span><span class="n">new_branch_name</span><span class="o">]</span>
-</code></pre></div>
-
+<pre><code>$ git fetch-pr
+Usage: git fetch-pr PULL_REQUEST_ID [new_branch_name]
+</code></pre>
 <p>Using this, to fetch the code from pull request #1234, you can do simply:</p>
-<div class="highlight"><pre><span></span><code>git fetch-pr 1234
-</code></pre></div>
-
+<pre><code>git fetch-pr 1234
+</code></pre>
 <p>This will create a branch called <code>pr-1234</code> with the checked-out code.
 If you want to name the branch, just provide yet another parameter:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">git</span><span class="w"> </span><span class="nv">fetch</span><span class="o">-</span><span class="nv">pr</span><span class="w"> </span><span class="mi">1234</span><span class="w"> </span><span class="nv">new</span><span class="o">-</span><span class="nv">branch</span><span class="o">-</span><span class="k">for</span><span class="o">-</span><span class="nv">pull</span><span class="o">-</span><span class="nv">request</span><span class="o">-</span><span class="mi">1234</span>
-</code></pre></div>
-
+<pre><code>git fetch-pr 1234 new-branch-for-pull-request-1234
+</code></pre>
 <h2>Other things that might be helpful</h2>
 <p><code>git stash</code> is an useful command to know: it sets aside your current changes,
 so you can work in other stuff. Use <code>git stash pop</code> to get back the changes.
@@ -317,8 +317,7 @@ in the next commit or not.</p>
 <p>You will also like the <code>git diff --cached</code> command, which shows the diff for
 the stuff added to the index, i.e., the changes you're about to commit.</p>
 <p>One tool that I've been meaning to learn is <a href="http://jonas.nitro.dk/tig/">tig</a>,
-a console interface for Git. It has some nice features, like you can do <code>tig
-grep</code> to search files and then hit <code>e</code> on top of a search result to open the
+a console interface for Git. It has some nice features, like you can do <code>tig grep</code> to search files and then hit <code>e</code> on top of a search result to open the
 file in your editor in that exact place. I haven't adopted this tool fully
 in my workflow, though, I'm still evaluating.</p>
 <p>There is also this thing called <a href="http://www.git-legit.org">Legit</a>, a set of
@@ -331,21 +330,14 @@ use it, let me know how you like it.</p>
 <p>Finally, you may also like this <a href="https://stackoverflow.com/questions/315911/git-for-beginners-the-definitive-practical-guide">StackOverflow thread with Git questions and
 answers</a>.</p>
 <p>That's all I had for now, folks!</p>
+
         </div>
 
-        <div class="taglist"></div>
-
+        <div class="taglist">
+</div>
     </article>
 </section>
 
-        <aside id="sidebar">
-                <div class="widget">
-                        <h2>Categories</h2>
-                        <ul>
-                           <li class="active"><a href="../../../category/blog.html">blog</a></li>
-                        </ul>
-                </div>
-        </aside><!-- /#sidebar -->
 
         <hr />
         <footer class="footer-menu">

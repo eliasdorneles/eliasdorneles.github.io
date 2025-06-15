@@ -5,10 +5,12 @@
         <link rel="shortcut icon" href="/images/favicon.ico">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="../../../theme/css/pygments.css" type="text/css" />
-        <link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
-        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
-        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/pygments.css" type="text/css" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+        <link href="https://eliasdorneles.com/atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
+        
+        <link href="https://eliasdorneles.com/feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        
 <script>
 var host = "eliasdorneles.github.io";
 if (window.location.host == host && window.location.protocol != "https:") {
@@ -21,16 +23,28 @@ if (window.location.host == host && window.location.protocol != "https:") {
     <a name="top"></a>
 
 <div class="site-container">
+        
         <header id="banner" class="body">
-                <h1><a href="../../../index.html">Elias Dorneles </a></h1>
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
                 <nav><ul>
+                
                     <li >
-                        <a href="../../../">Blog</a>
+                        <a href="https://eliasdorneles.com/">Blog</a>
                     </li>
-                    <li ><a href="../../../pages/about.html">About me</a></li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
                 </ul></nav>
         </header><!-- /#banner -->
+        
 
+        
 <section id="content" class="body">
     <article>
         <header>
@@ -41,14 +55,21 @@ if (window.location.host == host && window.location.protocol != "https:") {
         </header>
 
         <div class="entry-content">
+            
 <footer class="post-info">
+        
         <address class="vcard author">
             posted by
-            <a href="../../../pages/about-me.html">Elias Dorneles</a>
-            on <abbr class="published" title="2015-01-18T10:07:00+01:00">2015, janvier 18</abbr>
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2015-01-18 10:07:00+02:00">2015, January 18</abbr>
             <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/things-i-learned-from-destroy-all-software---season-1.md">Edit</a>
         </address>
-</footer>            <p>So, a few weeks ago I purchased and watched the first season of <a href="https://www.destroyallsoftware.com/">Destroy All
+        
+
+
+</footer>
+
+            <p>So, a few weeks ago I purchased and watched the first season of <a href="https://www.destroyallsoftware.com/">Destroy All
 Software screencasts</a> (from <a href="https://twitter.com/garybernhardt">Gary
 Bernhard</a>), and it was awesome. I'd say
 there are different kinds of stuff to learn from it, depending on your personal
@@ -62,17 +83,16 @@ each commit in the repo.  You can, for example, check the evolution of line
 counts over the course of the project (or any other statistic like number of
 tests, number of files, etc). You can also run the tests for every commit in
 the history:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>rev-list<span class="w"> </span>HEAD<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>rev<span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">   </span>git<span class="w"> </span>checkout<span class="w"> </span><span class="nv">$rev</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>clean-fd<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>make<span class="w"> </span><span class="nb">test</span>
-<span class="k">done</span>
-</code></pre></div>
-
+<pre><code>:::shell
+git rev-list HEAD | while read rev; do
+   git checkout $rev &amp;&amp; git clean-fd &amp;&amp; make test
+done
+</code></pre>
 <p>Gary has a script ready for this:
 <a href="https://github.com/garybernhardt/dotfiles/blob/master/bin/run-command-on-git-revisions">run-command-on-git-revisions</a></p>
 <p>Git tracks everything that happens in the local repo, even stuff that is not
 shared when you push (like when you rewrite history doing a rebase). You can
-use <code>git reflog</code> to see the history of local changes and <code>git reset --hard
-REFLOG_ENTRY</code> to go back to where you were.</p>
+use <code>git reflog</code> to see the history of local changes and <code>git reset --hard REFLOG_ENTRY</code> to go back to where you were.</p>
 <h3>About design:</h3>
 <ul>
 <li>
@@ -104,20 +124,18 @@ my work.</p>
 where N is the job number reported by the command jobs.</p>
 <p>You can use the output of a command as if it were a filename, using
 <code>&lt;(COMMAND)</code>, like so:</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>diff<span class="w"> </span>&lt;<span class="o">(</span><span class="nb">echo</span><span class="o">)</span><span class="w"> </span>&lt;<span class="o">(</span>date<span class="o">)</span>
+<pre><code>$ diff &lt;(echo) &lt;(date)
 1c1
-&lt;<span class="w"> </span>
+&lt; 
 ---
-&gt;<span class="w"> </span>Sat<span class="w"> </span>Jan<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">18</span>:47:48<span class="w"> </span>BRST<span class="w"> </span><span class="m">2015</span>
-</code></pre></div>
-
+&gt; Sat Jan 17 18:47:48 BRST 2015
+</code></pre>
 <p>The shell will run the commands and pass to the program file descriptors
 with the proper contents, which you can verify doing:</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>&lt;<span class="o">(</span>ls<span class="w"> </span>-l<span class="o">)</span><span class="w"> </span>&lt;<span class="o">(</span>ls<span class="w"> </span>-l<span class="o">)</span>
+<pre><code>$ echo &lt;(ls -l) &lt;(ls -l)
 /dev/fd/63
 /dev/fd/62
-</code></pre></div>
-
+</code></pre>
 <p>This is useful for commands like diff that need more than one input file (and
 therefore can't just use the stdin), to use it with arbitrary stuff generated
 from other commands.</p>
@@ -125,14 +143,12 @@ from other commands.</p>
 make changes, I store its original output in a file and then while refactoring
 I keep comparing the output of the script with the file to see if I'm not
 breaking anything:</p>
-<div class="highlight"><pre><span></span><code><span class="gh">diff &lt;(./my_script) original.txt</span>
-</code></pre></div>
-
+<pre><code>diff &lt;(./my_script) original.txt
+</code></pre>
 <p>It can also be useful to see differences between two different versions of
 the same web application or sites:</p>
-<div class="highlight"><pre><span></span><code><span class="gh">diff &lt;(curl -s http://somesite.com) &lt;(curl -s http://anothersite.com)</span>
-</code></pre></div>
-
+<pre><code>diff &lt;(curl -s http://somesite.com) &lt;(curl -s http://anothersite.com)
+</code></pre>
 <h3>About vim:</h3>
 <p>It's nice to see people using vim well, because I can compare with my own
 habits and see things where I can improve. Gary seems to strive to keep a tight
@@ -146,24 +162,14 @@ grow some tolerance for it.</p>
 <p>Apart from this, I stole a bunch of vim functions and ideas from <a href="https://github.com/garybernhardt/dotfiles">Gary's
 dotfiles</a>, which I also share in <a href="https://github.com/eliasdorneles/dotfiles">my
 dotfiles</a>.</p>
+
         </div>
 
-        <div class="taglist"><p>Tags:
-    <a href="../../../tag/das-screencasts.html">das-screencasts</a>
-</p>
+        <div class="taglist">
 </div>
-
     </article>
 </section>
 
-        <aside id="sidebar">
-                <div class="widget">
-                        <h2>Categories</h2>
-                        <ul>
-                           <li class="active"><a href="../../../category/blog.html">blog</a></li>
-                        </ul>
-                </div>
-        </aside><!-- /#sidebar -->
 
         <hr />
         <footer class="footer-menu">

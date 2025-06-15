@@ -5,10 +5,12 @@
         <link rel="shortcut icon" href="/images/favicon.ico">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="../../../theme/css/pygments.css" type="text/css" />
-        <link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
-        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
-        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/pygments.css" type="text/css" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+        <link href="https://eliasdorneles.com/atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
+        
+        <link href="https://eliasdorneles.com/feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        
 <script>
 var host = "eliasdorneles.github.io";
 if (window.location.host == host && window.location.protocol != "https:") {
@@ -21,16 +23,28 @@ if (window.location.host == host && window.location.protocol != "https:") {
     <a name="top"></a>
 
 <div class="site-container">
+        
         <header id="banner" class="body">
-                <h1><a href="../../../index.html">Elias Dorneles </a></h1>
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
                 <nav><ul>
+                
                     <li >
-                        <a href="../../../">Blog</a>
+                        <a href="https://eliasdorneles.com/">Blog</a>
                     </li>
-                    <li ><a href="../../../pages/about.html">About me</a></li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
                 </ul></nav>
         </header><!-- /#banner -->
+        
 
+        
 <section id="content" class="body">
     <article>
         <header>
@@ -41,14 +55,21 @@ if (window.location.host == host && window.location.protocol != "https:") {
         </header>
 
         <div class="entry-content">
+            
 <footer class="post-info">
+        
         <address class="vcard author">
             posted by
-            <a href="../../../pages/about-me.html">Elias Dorneles</a>
-            on <abbr class="published" title="2015-08-17T01:41:00+02:00">2015, août 17</abbr>
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2015-08-17 01:41:00+02:00">2015, August 17</abbr>
             <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/learning-from-das-screencasts-season-2.md">Edit</a>
         </address>
-</footer>            <p>These are my notes for <a href="https://www.destroyallsoftware.com/screencasts/catalog">season 2 of Destroy All Software
+        
+
+
+</footer>
+
+            <p>These are my notes for <a href="https://www.destroyallsoftware.com/screencasts/catalog">season 2 of Destroy All Software
 screencasts</a>.</p>
 <h2>The command line, Unix, git and Vim</h2>
 <p>In the first episode Gary teaches how to compose a complex Unix command line:
@@ -57,29 +78,27 @@ step of the way. This becomes common sense pretty quickly after you acquire the
 habit of doing this kind of thing for a while.</p>
 <p>For example, say you want to remove the untracked files from a git repo.
 Instead of trying to write all of this in one go:</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>status<span class="w"> </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;??&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{ print $2 }&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>rm<span class="w"> </span>-f
-</code></pre></div>
-
+<pre><code>$ git status -s | grep '??' | awk '{ print $2 }' | xargs rm -f
+</code></pre>
 <p>Since you don't want to delete any files by mistake, you will check every step
 along the way, until arriving at the safe command:</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>git<span class="w"> </span>status<span class="w"> </span>-s
-<span class="w"> </span>M<span class="w"> </span>README.rst
-??<span class="w"> </span>anotherfile.txt
-??<span class="w"> </span>file.txt
-$<span class="w"> </span>git<span class="w"> </span>status<span class="w"> </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;^??&#39;</span>
-??<span class="w"> </span>anotherfile.txt
-??<span class="w"> </span>file.txt
-$<span class="w"> </span>git<span class="w"> </span>status<span class="w"> </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;^??&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{ print $2 }&#39;</span>
+<pre><code>$ git status -s
+ M README.rst
+?? anotherfile.txt
+?? file.txt
+$ git status -s | grep '^??'
+?? anotherfile.txt
+?? file.txt
+$ git status -s | grep '^??' | awk '{ print $2 }'
 anotherfile.txt
 file.txt
-$<span class="w"> </span><span class="c1"># great, got right the list of files now!</span>
-$<span class="w"> </span><span class="c1"># now let&#39;s pipe it to xargs and print the delete command:</span>
-$<span class="w"> </span>git<span class="w"> </span>status<span class="w"> </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;^??&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{ print $2 }&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>rm<span class="w"> </span>-f
-rm<span class="w"> </span>-f<span class="w"> </span>anotherfile.txt<span class="w"> </span>file.txt
-$<span class="w"> </span><span class="c1"># looks safe, let&#39;s remove the echo and do it for real:</span>
-$<span class="w"> </span>git<span class="w"> </span>status<span class="w"> </span>-s<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;^??&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{ print $2 }&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>rm<span class="w"> </span>-f
-</code></pre></div>
-
+$ # great, got right the list of files now!
+$ # now let's pipe it to xargs and print the delete command:
+$ git status -s | grep '^??' | awk '{ print $2 }' | xargs echo rm -f
+rm -f anotherfile.txt file.txt
+$ # looks safe, let's remove the echo and do it for real:
+$ git status -s | grep '^??' | awk '{ print $2 }' | xargs rm -f
+</code></pre>
 <p>His example is more complicated and more interesting than this, but you get the gist of it.</p>
 <p>The second episode is about the tar pipe, you can read <a href="http://blog.extracheese.org/2010/05/the-tar-pipe.html">Gary's own post about
 it here</a>. I was already
@@ -95,24 +114,23 @@ Here is a summary:</p>
 <li>Learn the motions (<code>:help motions</code>)</li>
 <li>Don't repeat yourself</li>
 <li>When automating stuff, you usually start with something that you <em>read</em> (a
-  message in a buffer), then with something that you <em>scan</em> (a list of things),
-  then finally with something that you <em>do</em> (an action or command).</li>
+message in a buffer), then with something that you <em>scan</em> (a list of things),
+then finally with something that you <em>do</em> (an action or command).</li>
 <li>An action is better than scanning over a list which is better than having to
-  read an interpret a message. Choose plugins that are more of the former than
-  the latter.</li>
+read an interpret a message. Choose plugins that are more of the former than
+the latter.</li>
 </ul>
 <p>The thing about Vim is that it feels like practicing a sport or playing an
 instrument, you can often do edit work with your eyes closed.</p>
 <p>In another episode Gary builds a command-line to look at evolution of the
 execution time of the test suite, and then demonstrates using <code>git bisect</code> to
 find out which change was responsible for a nice performance boost. He used a
-few tricks which I thought were pretty neat. </p>
+few tricks which I thought were pretty neat.</p>
 <p>First trick was, while building a command line for a long list of commits, he
 used awk to filter the input to get only every 50th line, before getting the
 rest of the command line right for the full output, like this:</p>
-<div class="highlight"><pre><span></span><code>some command generating many lines | awk &#39;NR % 50 == 0&#39;
-</code></pre></div>
-
+<pre><code>some command generating many lines | awk 'NR % 50 == 0'
+</code></pre>
 <p>I can see myself using this in the future, it’s a good way of previewing the results of a command. :)</p>
 <p>The other trick I liked was getting a quick histogram in the command-line using
 <a href="http://www.unix.com/man-page/freebsd/1/jot/">a command utility called jot</a>
@@ -120,31 +138,28 @@ present in Mac OS X and other BSD based systems. The <code>jot</code> command is
 similar to seq in Linux-based distros, only it allows to print a string
 repeatedly (<code>-b</code> argument) while <code>seq</code> does not allow printing things other
 than numbers. This is nice, because you can do things like this:</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>jot<span class="w"> </span>-s<span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span>-b<span class="s1">&#39;#&#39;</span><span class="w"> </span><span class="m">10</span>
-<span class="c1">##########</span>
-</code></pre></div>
-
+<pre><code>$ jot -s '' -b'#' 10
+##########
+</code></pre>
 <p>Now for an example plotting some numbers:</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>seq<span class="w"> </span><span class="m">15</span><span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-R<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>num<span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="sb">`</span>jot<span class="w"> </span>-s<span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span>-b<span class="s1">&#39;#&#39;</span><span class="w"> </span><span class="nv">$num</span><span class="sb">`</span><span class="w"> </span><span class="nv">$num</span><span class="p">;</span><span class="w"> </span><span class="k">done</span>
-<span class="c1">################ 16</span>
-<span class="c1">################### 19</span>
-<span class="c1">################# 17</span>
-<span class="c1">################## 18</span>
-<span class="c1">#################### 20</span>
-<span class="c1">############### 15</span>
-</code></pre></div>
-
+<pre><code>$ seq 15 20 | sort -R | while read num; do echo `jot -s '' -b'#' $num` $num; done
+################ 16
+################### 19
+################# 17
+################## 18
+#################### 20
+############### 15
+</code></pre>
 <p>While we don’t have <code>jot</code> distributed by default in Linux distros, we can do the
 same thing in Linux using python:</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>seq<span class="w"> </span><span class="m">15</span><span class="w"> </span><span class="m">20</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-R<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>num<span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="sb">`</span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;print(&#39;#&#39;*</span><span class="nv">$num</span><span class="s2">)&quot;</span><span class="sb">`</span><span class="w"> </span><span class="nv">$num</span><span class="p">;</span><span class="w"> </span><span class="k">done</span>
-<span class="c1">################# 17</span>
-<span class="c1">############### 15</span>
-<span class="c1">################### 19</span>
-<span class="c1">#################### 20</span>
-<span class="c1">################## 18</span>
-<span class="c1">################ 16</span>
-</code></pre></div>
-
+<pre><code>$ seq 15 20 | sort -R | while read num; do echo `python -c &quot;print('#'*$num)&quot;` $num; done
+################# 17
+############### 15
+################### 19
+#################### 20
+################## 18
+################ 16
+</code></pre>
 <p>There are <a href="http://superuser.com/questions/86340/linux-command-to-repeat-a-string-n-times">a bunch of other ways of doing it in the shell
 itself</a>,
 but I like the conciseness and readability of this one.</p>
@@ -199,9 +214,9 @@ fast (20 scenarios with 104 tests in total, finish under ten seconds). I don’t
 have much experience with <a href="https://en.wikipedia.org/wiki/Acceptance_test-driven_development">acceptance test-driven
 development</a>,
 but one good point I took from from this is that it’s better to come up with
-meaningful short names for user actions ("when user creates a monthly coupon")
-instead of long names that describe the input ("when user enters X into field Y
-and selects option Z").</p>
+meaningful short names for user actions (&quot;when user creates a monthly coupon&quot;)
+instead of long names that describe the input (&quot;when user enters X into field Y
+and selects option Z&quot;).</p>
 <p>In another video he investigates the performance of tests testing the same
 feature but from different levels for a Rails app: two acceptance tests using a
 browser engine to simulate an user, two tests running the controller method
@@ -219,24 +234,14 @@ around a conditional). A good point he makes is that if you see a test that
 it’s mostly talking about dependencies of the things it claims to be testing,
 then it’s probably not testing at the right level.</p>
 <p>And that's it for season 2, a pretty cool experience -- thanks for reading! =)</p>
+
         </div>
 
-        <div class="taglist"><p>Tags:
-    <a href="../../../tag/das-screencasts.html">das-screencasts</a>
-</p>
+        <div class="taglist">
 </div>
-
     </article>
 </section>
 
-        <aside id="sidebar">
-                <div class="widget">
-                        <h2>Categories</h2>
-                        <ul>
-                           <li class="active"><a href="../../../category/blog.html">blog</a></li>
-                        </ul>
-                </div>
-        </aside><!-- /#sidebar -->
 
         <hr />
         <footer class="footer-menu">

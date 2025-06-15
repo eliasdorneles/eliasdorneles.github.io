@@ -5,10 +5,12 @@
         <link rel="shortcut icon" href="/images/favicon.ico">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="../../../theme/css/pygments.css" type="text/css" />
-        <link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
-        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
-        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/pygments.css" type="text/css" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+        <link href="https://eliasdorneles.com/atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
+        
+        <link href="https://eliasdorneles.com/feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        
 <script>
 var host = "eliasdorneles.github.io";
 if (window.location.host == host && window.location.protocol != "https:") {
@@ -21,16 +23,28 @@ if (window.location.host == host && window.location.protocol != "https:") {
     <a name="top"></a>
 
 <div class="site-container">
+        
         <header id="banner" class="body">
-                <h1><a href="../../../index.html">Elias Dorneles </a></h1>
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
                 <nav><ul>
+                
                     <li >
-                        <a href="../../../">Blog</a>
+                        <a href="https://eliasdorneles.com/">Blog</a>
                     </li>
-                    <li ><a href="../../../pages/about.html">About me</a></li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
                 </ul></nav>
         </header><!-- /#banner -->
+        
 
+        
 <section id="content" class="body">
     <article>
         <header>
@@ -41,14 +55,21 @@ if (window.location.host == host && window.location.protocol != "https:") {
         </header>
 
         <div class="entry-content">
+            
 <footer class="post-info">
+        
         <address class="vcard author">
             posted by
-            <a href="../../../pages/about-me.html">Elias Dorneles</a>
-            on <abbr class="published" title="2015-10-18T14:25:00+02:00">2015, octobre 18</abbr>
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2015-10-18 14:25:00+02:00">2015, October 18</abbr>
             <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/the-power-of-a-good-template.md">Edit</a>
         </address>
-</footer>            <p>Almost ten years ago, I was an intern helping to maintain a PHP application and
+        
+
+
+</footer>
+
+            <p>Almost ten years ago, I was an intern helping to maintain a PHP application and
 attempting to write a little framework to create the new version of that
 application. My little framework generated PHP classes from some templates and
 a description you’d write in a DSL language I came up with.</p>
@@ -75,54 +96,51 @@ noticed that I was being lazy to write argument parsing code properly for my
 Python scripts. I knew the script would be much better parsing arguments with
 argparse, but as I wasn’t sure if the script would be useful when I started
 writing it, I would be lazy and write something like:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span>
+<pre><code>import sys
 
-<span class="n">inputfile</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please provide an input file&quot;</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">process</span><span class="p">(</span><span class="n">inputfile</span><span class="p">)</span>
-</code></pre></div>
-
+inputfile = sys.argv[1]
+if len(sys.argv) &lt; 2:
+    print(&quot;Please provide an input file&quot;)
+else:
+    process(inputfile)
+</code></pre>
 <p>And this is just awful, for a variety of reasons:</p>
 <ol>
 <li>it doesn't have a nice help, so people would often need to read the code to
-   understand what it does</li>
+understand what it does</li>
 <li>the code isn’t obvious, one has to keep in mind details about sys.argv</li>
 <li>it is hard to change when you have more arguments</li>
 </ol>
 <p>After thinking about this laziness, I decided this was a good use case for a
 code snippet, so I grabbed a vim plugin for code snippets and came up with the
 following snippet:</p>
-<div class="highlight"><pre><span></span><code><span class="p">:::</span><span class="n">python</span>
-<span class="c1">#!/usr/bin/env python</span>
-<span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;Script description here</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<pre><code>:::python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+&quot;&quot;&quot;Script description here
+&quot;&quot;&quot;
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
-
-
-<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
-    <span class="k">pass</span>
+from __future__ import print_function
 
 
-<span class="k">if</span> <span class="s1">&#39;__main__&#39;</span> <span class="o">==</span> <span class="vm">__name__</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">argparse</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="vm">__doc__</span><span class="p">)</span>
+def run(args):
+    pass
 
-    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
-    <span class="n">run</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-</code></pre></div>
 
+if '__main__' == __name__:
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+
+    args = parser.parse_args()
+    run(args)
+</code></pre>
 <p>Well, as you can see, there is not that much going on here, just simple
 boilerplate stuff: a docstring, a shebang, a docstring, and an argparse
 initialization inside the if main block.</p>
 <p>However, now every time I started a script, even if I <em>really</em> wanted to be
 lazy, I could just add to the if main block:</p>
-<div class="highlight"><pre><span></span><code>parser.add_argument(&#39;my_argument_name&#39;)
-</code></pre></div>
-
+<pre><code>parser.add_argument('my_argument_name')
+</code></pre>
 <p>Then, I could code my script inside the <code>run()</code> function, ending up with a neat
 code with help for free. Plus, it was easy to change, I could use the <code>argparse</code>
 features for providing defaults, argument help text and maybe validate and type
@@ -157,8 +175,7 @@ gave it a try.</p>
 minutes, wrapping some lame script I had around. It had gorgeous docs published
 on <a href="http://readthedocs.org">ReadTheDocs</a>, tests running in
 <a href="http://travis-ci.org">Travis-CI</a>, and last but not least, it was published in
-<a href="http://pypi.python.org">PyPI</a>! Now anyone can install it with <code>pip install
-my_lame_package</code> -- this is awesome!</p>
+<a href="http://pypi.python.org">PyPI</a>! Now anyone can install it with <code>pip install my_lame_package</code> -- this is awesome!</p>
 <p>As the months went by, I got involved in splitting some code bases into smaller
 packages. I used the cookiecutter-pypackage template for some of the new small
 packages, and for others that needed more custom packaging I would get
@@ -174,21 +191,14 @@ with the template sources, quickly turning the generated code into legacy.</p>
 <p>But for code that can stand on its own, don’t require updates when the template
 source changes, and specially for things that are a bit awkward to get started,
 templates are awesome.</p>
+
         </div>
 
-        <div class="taglist"></div>
-
+        <div class="taglist">
+</div>
     </article>
 </section>
 
-        <aside id="sidebar">
-                <div class="widget">
-                        <h2>Categories</h2>
-                        <ul>
-                           <li class="active"><a href="../../../category/blog.html">blog</a></li>
-                        </ul>
-                </div>
-        </aside><!-- /#sidebar -->
 
         <hr />
         <footer class="footer-menu">

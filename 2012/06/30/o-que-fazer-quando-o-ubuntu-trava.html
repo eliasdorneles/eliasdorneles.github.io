@@ -5,10 +5,12 @@
         <link rel="shortcut icon" href="/images/favicon.ico">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="../../../theme/css/pygments.css" type="text/css" />
-        <link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
-        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
-        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/pygments.css" type="text/css" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+        <link href="https://eliasdorneles.com/atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
+        
+        <link href="https://eliasdorneles.com/feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        
 <script>
 var host = "eliasdorneles.github.io";
 if (window.location.host == host && window.location.protocol != "https:") {
@@ -21,16 +23,28 @@ if (window.location.host == host && window.location.protocol != "https:") {
     <a name="top"></a>
 
 <div class="site-container">
+        
         <header id="banner" class="body">
-                <h1><a href="../../../index.html">Elias Dorneles </a></h1>
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
                 <nav><ul>
+                
                     <li >
-                        <a href="../../../">Blog</a>
+                        <a href="https://eliasdorneles.com/">Blog</a>
                     </li>
-                    <li ><a href="../../../pages/about.html">About me</a></li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
                 </ul></nav>
         </header><!-- /#banner -->
+        
 
+        
 <section id="content" class="body">
     <article>
         <header>
@@ -41,17 +55,24 @@ if (window.location.host == host && window.location.protocol != "https:") {
         </header>
 
         <div class="entry-content">
+            
 <footer class="post-info">
+        
         <address class="vcard author">
             posted by
-            <a href="../../../pages/about-me.html">Elias Dorneles</a>
-            on <abbr class="published" title="2012-06-30T21:11:00+02:00">2012, juin 30</abbr>
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2012-06-30 21:11:00+02:00">2012, June 30</abbr>
             <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/o-que-fazer-quando-o-ubuntu-trava.md">Edit</a>
         </address>
-</footer>            <p>Um amigo meu costumava dizer que tudo no Linux é com malabarismos no
+        
+
+
+</footer>
+
+            <p>Um amigo meu costumava dizer que tudo no Linux é com malabarismos no
 teclado, porque certa vez ele conseguiu rebootar um sistema que estava
 travado, apertando várias teclas aleatórias ao mesmo tempo
-("Alt+Shift+Ctrl+Del+K+Enter", narrava). Tempos depois, ele acabou
+(&quot;Alt+Shift+Ctrl+Del+K+Enter&quot;, narrava). Tempos depois, ele acabou
 adotando o <a href="http://www.ubuntu.com">Linux Ubuntu</a> no desktop, e embora
 ainda tenha problemas de vez em quando, tenho a impressão que ele já se
 adaptou bem... Este post é uma homenagem a ele, uma versão em Português
@@ -76,15 +97,14 @@ podem ser parados com as combinações <kbd>Ctrl</kbd> + <kbd>C</kbd> ou
 <kbd>Ctrl</kbd> + <kbd>/</kbd>. Se nenhum funcionar, você pode abrir
 outro terminal (ou tentar recuperar o controle do mesmo com
 <kbd>Ctrl</kbd> + <kbd>Z</kbd>), e tentar descobrir o número do processo
-para matar "na mão", usando <code>ps ax | grep COMANDO</code> onde COMANDO é o nome
+para matar &quot;na mão&quot;, usando <code>ps ax | grep COMANDO</code> onde COMANDO é o nome
 do programa que não está respondendo. Isso deve resultar numa saída
-parecida com essa:  </p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>ps<span class="w"> </span>ax<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>firefox
-<span class="m">2110</span><span class="w"> </span>?<span class="w">        </span>Sl<span class="w">    </span><span class="m">30</span>:32<span class="w"> </span>/usr/lib/firefox/firefox
-<span class="m">2192</span><span class="w"> </span>?<span class="w">        </span>Sl<span class="w">    </span><span class="m">21</span>:19<span class="w"> </span>/usr/lib/firefox/plugin-container<span class="w"> </span>/usr/lib/flashplugin-installer/libflashplayer.so<span class="w"> </span>-greomni<span class="w"> </span>/usr/lib/firefox/omni.ja
-<span class="m">2110</span><span class="w"> </span><span class="nb">true</span><span class="w"> </span>plugin<span class="w"> </span><span class="m">4584</span><span class="w"> </span>pts/0<span class="w">    </span>S+<span class="w">     </span><span class="m">0</span>:00<span class="w"> </span>grep<span class="w"> </span>--color<span class="o">=</span>auto<span class="w"> </span>firefox
-</code></pre></div>
-
+parecida com essa:</p>
+<pre><code>$ ps ax | grep firefox
+2110 ?        Sl    30:32 /usr/lib/firefox/firefox
+2192 ?        Sl    21:19 /usr/lib/firefox/plugin-container /usr/lib/flashplugin-installer/libflashplayer.so -greomni /usr/lib/firefox/omni.ja
+2110 true plugin 4584 pts/0    S+     0:00 grep --color=auto firefox
+</code></pre>
 <p>O primeiro campo de cada linha é o número do processo (PID, de <em>Process
 ID</em>) dos programas que o <code>grep</code> encontrou na busca (você pode ignorar o
 último, que representa o próprio <code>grep</code>). Para matar o processo, use o
@@ -99,8 +119,7 @@ simplesmente abra o <em>Monitor do Sistema</em> (vá em <code>Sistema</code> →
 escolha o processo que você precisa matar (talvez o que está usando 90%
 da CPU?), clique com o direito nele e escolha a opção
 <code>Finalizar Processo</code> ou <code>Matar Processo</code>:</p>
-<p><a href="https://eljunior.files.wordpress.com/2012/06/matar_processo.png"><img alt="Terminando um processo usando o Monitor do Sistema do
-GNOME" src="https://eljunior.files.wordpress.com/2012/06/matar_processo.png" title="GNOME - Monitor do Sistema"></a></p>
+<p><a href="https://eljunior.files.wordpress.com/2012/06/matar_processo.png"><img src="https://eljunior.files.wordpress.com/2012/06/matar_processo.png" alt="Terminando um processo usando o Monitor do Sistema do GNOME" title="GNOME - Monitor do Sistema" /></a></p>
 <h2>Quando o mouse pára de funcionar:</h2>
 <p>Se o teclado ainda funciona, você pode tentar reiniciar o ambiente
 gráfico com a combinação <kbd>Alt</kbd> + <kbd>SysReq (Print
@@ -130,21 +149,14 @@ executam as operações:</p>
 <p><strong>Nota:</strong> Na época que aprendi essa sequência de comandos, lembro que me ajudou a decorar como <em>BUSIER</em> ao contrário...</p>
 </blockquote>
 <p>Se isso não funcionar, então está na hora de reiniciar o computador no dedão!</p>
+
         </div>
 
-        <div class="taglist"></div>
-
+        <div class="taglist">
+</div>
     </article>
 </section>
 
-        <aside id="sidebar">
-                <div class="widget">
-                        <h2>Categories</h2>
-                        <ul>
-                           <li class="active"><a href="../../../category/blog.html">blog</a></li>
-                        </ul>
-                </div>
-        </aside><!-- /#sidebar -->
 
         <hr />
         <footer class="footer-menu">

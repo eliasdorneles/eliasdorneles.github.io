@@ -5,10 +5,12 @@
         <link rel="shortcut icon" href="/images/favicon.ico">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="../../../theme/css/pygments.css" type="text/css" />
-        <link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
-        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
-        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/pygments.css" type="text/css" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+        <link href="https://eliasdorneles.com/atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
+        
+        <link href="https://eliasdorneles.com/feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        
 <script>
 var host = "eliasdorneles.github.io";
 if (window.location.host == host && window.location.protocol != "https:") {
@@ -21,16 +23,28 @@ if (window.location.host == host && window.location.protocol != "https:") {
     <a name="top"></a>
 
 <div class="site-container">
+        
         <header id="banner" class="body">
-                <h1><a href="../../../index.html">Elias Dorneles </a></h1>
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
                 <nav><ul>
+                
                     <li >
-                        <a href="../../../">Blog</a>
+                        <a href="https://eliasdorneles.com/">Blog</a>
                     </li>
-                    <li ><a href="../../../pages/about.html">About me</a></li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
                 </ul></nav>
         </header><!-- /#banner -->
+        
 
+        
 <section id="content" class="body">
     <article>
         <header>
@@ -41,14 +55,21 @@ if (window.location.host == host && window.location.protocol != "https:") {
         </header>
 
         <div class="entry-content">
+            
 <footer class="post-info">
+        
         <address class="vcard author">
             posted by
-            <a href="../../../pages/about-me.html">Elias Dorneles</a>
-            on <abbr class="published" title="2013-07-28T10:12:00+02:00">2013, juillet 28</abbr>
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2013-07-28 10:12:00+02:00">2013, July 28</abbr>
             <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/programming-grails----a-aventura-continua.md">Edit</a>
         </address>
-</footer>            <p>Alguns dias atrás terminei de ler o <em><a href="http://shop.oreilly.com/product/0636920024750.do" title="Programming Grails - OReilly">Programming
+        
+
+
+</footer>
+
+            <p>Alguns dias atrás terminei de ler o <em><a href="http://shop.oreilly.com/product/0636920024750.do" title="Programming Grails - OReilly">Programming
 Grails</a> (<a href="https://www.amazon.com/Programming-Grails-Burt-Beckwith/dp/1449323936">Amazon</a>)</em>,
 um livro sobre <a href="http://www.grails.org/">o framework Grails</a> voltado para
 desenvolvedores experientes, que explica como funcionam várias coisas do
@@ -60,7 +81,7 @@ StackOverflow</a>,
 <a href="http://www.infoq.com/author/Burt-Beckwith">palestrar</a> em
 <a href="http://gr8conf.eu/Speakers/Burt-Beckwith">conferências</a> e
 também colaborar no desenvolvimento do próprio Grails.</p>
-<p><a href="http://shop.oreilly.com/product/0636920024750.do"><img alt="Programming Grails -- Best Practices for Experienced Grails Developers" src="https://eljunior.files.wordpress.com/2013/07/cat.gif"></a></p>
+<p><a href="http://shop.oreilly.com/product/0636920024750.do"><img src="https://eljunior.files.wordpress.com/2013/07/cat.gif" alt="Programming Grails -- Best Practices for Experienced Grails Developers" /></a></p>
 <p>Comprei o livro na Amazon ainda antes do lançamento oficial porque sabia
 que sendo material do Burt seria muito bom. Não me decepcionei: o livro
 é excelente! Na mesma semana que comecei a ler já pude aplicar as idéias
@@ -81,10 +102,10 @@ tempo, mas essa introdução esclareceu algumas coisas sobre a linguagem.</p>
 <p>Um destaque dessa parte é a explicação sobre <a href="http://groovy.codehaus.org/Closures" title="Groovy Closures -- documentação oficial"><em>owner</em>, <em>delegate</em> e
 <em>this</em> nas closures em
 Groovy</a>.
-Basicamente, numa closure em Groovy, <strong><em>this</em></strong> se refere à instância da
-classe que contém a Closure, <strong><em>owner</em></strong> se refere ou a essa instância
+Basicamente, numa closure em Groovy, <em><strong>this</strong></em> se refere à instância da
+classe que contém a Closure, <em><strong>owner</strong></em> se refere ou a essa instância
 ou a outra closure que esteja envolvendo a closure atual, e
-<strong><em>delegate</em></strong> é uma variável mutável que por padrão aponta pra owner. O
+<em><strong>delegate</strong></em> é uma variável mutável que por padrão aponta pra owner. O
 interessante aqui é que você pode alterar o valor de <em>delegate</em> em tempo
 de execução, e redefinir todo o comportamento da closure. Essa técnica é
 bastante utilizada para criar as <a href="https://pt.wikipedia.org/wiki/Linguagem_de_dom%C3%ADnio_espec%C3%ADfico">mini-linguagens
@@ -92,32 +113,31 @@ bastante utilizada para criar as <a href="https://pt.wikipedia.org/wiki/Linguage
 em Grails, tipo as que você usa nos blocos <em>mapping</em> e <em>constraints</em>
 numa classe de domínio.</p>
 <p>Segue um exemplo pra ajudar a entender:</p>
-<div class="highlight"><pre><span></span><code><span class="kd">class</span><span class="w"> </span><span class="nc">OutraClasse</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span><span class="kt">def</span><span class="w"> </span><span class="n">metodoDaOutraClasse</span><span class="o">()</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="n">println</span><span class="w"> </span><span class="s2">&quot;metodoDaOutraClasse()&quot;</span>
-<span class="w">        </span><span class="o">}</span>
-<span class="w">    </span><span class="o">}</span>
-<span class="w">    </span><span class="kd">class</span><span class="w"> </span><span class="nc">ClasseMae</span><span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="kt">def</span><span class="w"> </span><span class="n">minhaClosure</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="kt">def</span><span class="w"> </span><span class="n">subClosure</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">{</span>
-<span class="w">                </span><span class="n">println</span><span class="w"> </span><span class="s2">&quot;this: ${this.class}&quot;</span>
-<span class="w">                </span><span class="n">println</span><span class="w"> </span><span class="s2">&quot;owner: ${owner.class}&quot;</span>
-<span class="w">                </span><span class="n">println</span><span class="w"> </span><span class="s2">&quot;delegate: ${delegate.class}&quot;</span>
-<span class="w">                </span><span class="n">metodoDaOutraClasse</span><span class="o">()</span>
-<span class="w">            </span><span class="o">}</span>
-<span class="w">        </span><span class="n">subClosure</span><span class="o">.</span><span class="na">delegate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">OutraClasse</span><span class="o">()</span>
-<span class="w">        </span><span class="n">subClosure</span><span class="o">()</span>
-<span class="w">    </span><span class="o">}</span>
-<span class="o">}</span>
-<span class="k">new</span><span class="w"> </span><span class="n">ClasseMae</span><span class="o">().</span><span class="na">minhaClosure</span><span class="o">()</span>
-</code></pre></div>
-
+<pre><code>:::groovy
+class OutraClasse {
+    def metodoDaOutraClasse() {
+        println &quot;metodoDaOutraClasse()&quot;
+        }
+    }
+    class ClasseMae {
+        def minhaClosure = {
+            def subClosure = {
+                println &quot;this: ${this.class}&quot;
+                println &quot;owner: ${owner.class}&quot;
+                println &quot;delegate: ${delegate.class}&quot;
+                metodoDaOutraClasse()
+            }
+        subClosure.delegate = new OutraClasse()
+        subClosure()
+    }
+}
+new ClasseMae().minhaClosure()
+</code></pre>
 <p>Nesse exemplo, por causa da redefinição do delegate da <em>subClosure()</em>,
 podemos chamar métodos da <em>OutraClasse</em> dentro dele. O resultado de
 rodar esse código é:</p>
-<div class="highlight"><pre><span></span><code><span class="k">this</span><span class="o">:</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="n">ClasseMaeowner</span><span class="o">:</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="n">ClasseMae$_closure1delegate</span><span class="o">:</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="n">OutraClassemetodoDaOutraClasse</span><span class="o">()</span>
-</code></pre></div>
-
+<pre><code>this: class ClasseMaeowner: class ClasseMae$_closure1delegate: class OutraClassemetodoDaOutraClasse()
+</code></pre>
 <p>Recomendo assistir a palestra <a href="http://gr8conf.eu/Presentations/Functional-Programming-in-Groo">Functional Programming in
 Groovy</a>,
 para ver um exemplo legal de uso do <em>delegate</em> simplificando uma API de
@@ -164,10 +184,8 @@ isso.</p>
 <p>Aliás, apesar de conter vários pontos excelentes, esse capítulo sobre Spring
 foi uma leitura um tanto árida -- em alguns momentos o texto descreve detalhes
 de implementação de maneira complicada de entender, coisas tipo: “pra fazer
-<code>&lt;algum recurso&gt;</code>, Grails instancia a classe <code>&lt;fully qualified name da classe
-aqui&gt;</code>, que implementa a interface <code>&lt;outro fully qualified name aqui&gt;</code> e usa o
-adapter <code>&lt;ainda outro fully qualified name&gt;</code>, registrando um bean <code>&lt;nome do
-bean&gt;</code> ...“!</p>
+<code>&lt;algum recurso&gt;</code>, Grails instancia a classe <code>&lt;fully qualified name da classe aqui&gt;</code>, que implementa a interface <code>&lt;outro fully qualified name aqui&gt;</code> e usa o
+adapter <code>&lt;ainda outro fully qualified name&gt;</code>, registrando um bean <code>&lt;nome do bean&gt;</code> ...“!</p>
 <p>Ficou um pouco difícil de acompanhar, especialmente por eu não estar na
 frente da IDE, sem poder conferir facilmente as definições das classes.
 Bem, eu sabia onde estava me metendo quando peguei um livro avançado,
@@ -193,8 +211,8 @@ conferir.</p>
 <p>Bem, ainda nesse capítulo (eu falei que era o maior do livro =P), vem
 uma série de dicas sobre o uso do GORM com Hibernate, incluindo um
 configurador de nomes para as chaves estrangeiras (porque os
-        <em>FK1236718237</em> que o Hibernate gera por padrão são crípticos demais na
-        hora de depurar), como mapear views e subclasses, diferenças entre
+<em>FK1236718237</em> que o Hibernate gera por padrão são crípticos demais na
+hora de depurar), como mapear views e subclasses, diferenças entre
 <a href="http://grails.org/doc/latest/ref/Domain%20Classes/get.html">get</a>/<a href="http://grails.org/doc/latest/ref/Domain%20Classes/load.html">load</a>/<a href="http://grails.org/doc/latest/ref/Domain%20Classes/read.html">read</a>
 e algumas dicas sobre performance. Sobre esse assunto, também recomendo
 ler os posts do Peter Ledbrook da série GORM Gotchas, seguem os links:</p>
@@ -265,9 +283,9 @@ dizer aqui alguns pontos muito importantes que todo mundo usando Grails
 precisa ficar ligado:</p>
 <p><strong>1)</strong> Considere configurar o codec de HTML por padrão para as páginas
 GSP, no <em>Config.groovy</em>:</p>
-<div class="highlight"><pre><span></span><code><span class="n">grails</span><span class="o">.</span><span class="na">views</span><span class="o">.</span><span class="na">default</span><span class="o">.</span><span class="na">codec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;html&#39;</span>
-</code></pre></div>
-
+<pre><code>:::groovy
+grails.views.default.codec = 'html'
+</code></pre>
 <p>Dessa forma, as variáveis usadas nas páginas GSP serão escapadas com
 HTML por padrão -- a configuração (<em>'none'</em>) não escapa nada, uma
 escolha infeliz que tem sido mantida pra não quebrar compatibilidade.</p>
@@ -328,21 +346,14 @@ começar com Grails pode ser mais adequado usar outro material antes, mas
 logo depois de pegar o jeito já pode partir para o <em>Programming Grails</em>
 -- a satisfação é garantida.</p>
 <p><em>That’s all, folks! =)</em></p>
+
         </div>
 
-        <div class="taglist"></div>
-
+        <div class="taglist">
+</div>
     </article>
 </section>
 
-        <aside id="sidebar">
-                <div class="widget">
-                        <h2>Categories</h2>
-                        <ul>
-                           <li class="active"><a href="../../../category/blog.html">blog</a></li>
-                        </ul>
-                </div>
-        </aside><!-- /#sidebar -->
 
         <hr />
         <footer class="footer-menu">

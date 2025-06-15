@@ -5,10 +5,12 @@
         <link rel="shortcut icon" href="/images/favicon.ico">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="../../../theme/css/pygments.css" type="text/css" />
-        <link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
-        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
-        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/pygments.css" type="text/css" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+        <link href="https://eliasdorneles.com/atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
+        
+        <link href="https://eliasdorneles.com/feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        
 <script>
 var host = "eliasdorneles.github.io";
 if (window.location.host == host && window.location.protocol != "https:") {
@@ -21,16 +23,28 @@ if (window.location.host == host && window.location.protocol != "https:") {
     <a name="top"></a>
 
 <div class="site-container">
+        
         <header id="banner" class="body">
-                <h1><a href="../../../index.html">Elias Dorneles </a></h1>
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
                 <nav><ul>
+                
                     <li >
-                        <a href="../../../">Blog</a>
+                        <a href="https://eliasdorneles.com/">Blog</a>
                     </li>
-                    <li ><a href="../../../pages/about.html">About me</a></li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
                 </ul></nav>
         </header><!-- /#banner -->
+        
 
+        
 <section id="content" class="body">
     <article>
         <header>
@@ -41,14 +55,21 @@ if (window.location.host == host && window.location.protocol != "https:") {
         </header>
 
         <div class="entry-content">
+            
 <footer class="post-info">
+        
         <address class="vcard author">
             posted by
-            <a href="../../../pages/about-me.html">Elias Dorneles</a>
-            on <abbr class="published" title="2014-04-05T23:35:00+02:00">2014, avril 05</abbr>
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2014-04-05 23:35:00+02:00">2014, April 05</abbr>
             <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/programando-erlang---1-de-any.md">Edit</a>
         </address>
-</footer>            <p>Na virada do ano, uma das minhas resoluções para 2014 foi a de que este ano
+        
+
+
+</footer>
+
+            <p>Na virada do ano, uma das minhas resoluções para 2014 foi a de que este ano
 aprenderia <a href="http://www.erlang.org/">Erlang</a>.  Eu queria brincar com alguma
 linguagem que usasse ideias diferentes das que uso no trabalho e que me
 ensinasse mais do que simplesmente outro jeito de escrever os programas que já
@@ -95,7 +116,7 @@ rapidão. Para acompanhar, <a href="http://www.erlang.org/download.html">instale
 (no Ubuntu: <code>sudo apt-get install erlang</code>).</p>
 <h3>Super-quick-little-taste-of-Erlang</h3>
 <p>Veja o seguinte esqueleto de um programa concorrente em Erlang:</p>
-<p><a href="https://2.bp.blogspot.com/-HmS5hqh97EA/U0D7Y5iIeII/AAAAAAAAAtk/SVLNHGSIVHk/s1600/erlang-loop-menor.png"><img alt="&quot;Esqueleto de programa Erlang&quot;" src="https://2.bp.blogspot.com/-HmS5hqh97EA/U0D7Y5iIeII/AAAAAAAAAtk/SVLNHGSIVHk/s1600/erlang-loop-menor.png"></a></p>
+<p><a href="https://2.bp.blogspot.com/-HmS5hqh97EA/U0D7Y5iIeII/AAAAAAAAAtk/SVLNHGSIVHk/s1600/erlang-loop-menor.png"><img src="https://2.bp.blogspot.com/-HmS5hqh97EA/U0D7Y5iIeII/AAAAAAAAAtk/SVLNHGSIVHk/s1600/erlang-loop-menor.png" alt="&quot;Esqueleto de programa Erlang&quot;" /></a></p>
 <p>Note a recursão na função <code>loop</code>: é assim que se faz processos iterativos
 (loops) em Erlang, que não tem sintaxe especial para isso. O compilador
 implementa a otimização de “<a href="https://pt.wikipedia.org/wiki/Recursividade_(ci%C3%AAncia_da_computa%C3%A7%C3%A3o)#Fun.C3.A7.C3.B5es_recursivas_em_cauda">recursão de
@@ -104,30 +125,29 @@ cauda</a>”
 função escrita de maneira recursiva executar de forma iterativa  -- isto é, sem
 re-chamar a função aumentando a<a href="https://pt.wikipedia.org/wiki/Pilha_de_chamada">pilha de
 chamada</a> (<a href="https://en.wikipedia.org/wiki/Call_stack">call
-stack</a>).  </p>
+stack</a>).</p>
 <p>Você pode testar esse código colocando-o em um arquivo <code>esqueleto.erl</code> e chamá-lo
 do shell Erlang, conforme a sessão abaixo:</p>
-<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="err">$</span><span class="w"> </span><span class="n">erl</span>
-<span class="w"> </span><span class="n">Erlang</span><span class="w"> </span><span class="n">R16B01</span><span class="w"> </span><span class="p">(</span><span class="n">erts</span><span class="o">-</span><span class="mf">5.10.2</span><span class="p">)</span><span class="w"> </span><span class="o">[</span><span class="n">source</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">64-bit</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">smp:4:4</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">async-threads:10</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">kernel-poll:false</span><span class="o">]</span>
-
-
-<span class="w"> </span><span class="n">Eshell</span><span class="w"> </span><span class="n">V5</span><span class="mf">.10.2</span><span class="w">  </span><span class="p">(</span><span class="n">abort</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="o">^</span><span class="n">G</span><span class="p">)</span>
-<span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">c</span><span class="p">(</span><span class="n">esqueleto</span><span class="p">).</span>
-<span class="w"> </span><span class="err">{</span><span class="n">ok</span><span class="p">,</span><span class="n">esqueleto</span><span class="err">}</span>
-<span class="w"> </span><span class="mi">2</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Pid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nl">esqueleto</span><span class="p">:</span><span class="k">start</span><span class="p">().</span>
-<span class="w"> </span><span class="o">&lt;</span><span class="mf">0.41.0</span><span class="o">&gt;</span>
-<span class="w"> </span><span class="mi">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Pid</span><span class="w"> </span><span class="err">!</span><span class="w"> </span><span class="ss">&quot;alo!&quot;</span><span class="p">.</span>
-<span class="w"> </span><span class="nl">Received</span><span class="p">:</span><span class="w"> </span><span class="ss">&quot;alo!&quot;</span>
-<span class="w"> </span><span class="ss">&quot;alo!&quot;</span>
-<span class="w"> </span><span class="mi">4</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Pid</span><span class="w"> </span><span class="err">!</span><span class="w"> </span><span class="mf">1234.</span>
-<span class="w"> </span><span class="nl">Received</span><span class="p">:</span><span class="w"> </span><span class="mi">1234</span>
-<span class="w"> </span><span class="mi">1234</span>
-<span class="w"> </span><span class="mi">5</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Pid</span><span class="w"> </span><span class="err">!</span><span class="w"> </span><span class="err">{</span><span class="n">teste</span><span class="p">,</span><span class="w"> </span><span class="n">com</span><span class="p">,</span><span class="w"> </span><span class="n">uma</span><span class="p">,</span><span class="w"> </span><span class="n">tupla</span><span class="p">,</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;ola&quot;</span><span class="err">}</span><span class="p">.</span>
-<span class="w"> </span><span class="nl">Received</span><span class="p">:</span><span class="w"> </span><span class="err">{</span><span class="n">teste</span><span class="p">,</span><span class="n">com</span><span class="p">,</span><span class="n">uma</span><span class="p">,</span><span class="n">tupla</span><span class="p">,</span><span class="mi">123</span><span class="p">,</span><span class="ss">&quot;ola&quot;</span><span class="err">}</span>
-<span class="w"> </span><span class="err">{</span><span class="n">teste</span><span class="p">,</span><span class="n">com</span><span class="p">,</span><span class="n">uma</span><span class="p">,</span><span class="n">tupla</span><span class="p">,</span><span class="mi">123</span><span class="p">,</span><span class="ss">&quot;ola&quot;</span><span class="err">}</span>
-<span class="w"> </span><span class="mi">6</span><span class="o">&gt;</span>
-</code></pre></div>
-
+<pre><code> $ erl
+ Erlang R16B01 (erts-5.10.2) [source] [64-bit] [smp:4:4] [async-threads:10] [kernel-poll:false]
+ 
+ 
+ Eshell V5.10.2  (abort with ^G)
+ 1&gt; c(esqueleto).
+ {ok,esqueleto}
+ 2&gt; Pid = esqueleto:start().
+ &lt;0.41.0&gt;
+ 3&gt; Pid ! &quot;alo!&quot;.
+ Received: &quot;alo!&quot;
+ &quot;alo!&quot;
+ 4&gt; Pid ! 1234.
+ Received: 1234
+ 1234
+ 5&gt; Pid ! {teste, com, uma, tupla, 123, &quot;ola&quot;}.
+ Received: {teste,com,uma,tupla,123,&quot;ola&quot;}
+ {teste,com,uma,tupla,123,&quot;ola&quot;}
+ 6&gt;
+</code></pre>
 <p>Note os pontos finais no fim de cada comando: o comando não roda se você
 esquecer deles. Em Erlang, o ponto <code>.</code> separa comandos e declarações, o
 ponto-e-vírgula <code>;</code> separacláusulas, e a vírgula <code>,</code> separa expressões.</p>
@@ -135,7 +155,7 @@ ponto-e-vírgula <code>;</code> separacláusulas, e a vírgula <code>,</code> se
 <code>esqueleto.erl</code>.</p>
 <p>Na segunda linha, <code>Pid = esqueleto:start().</code> aciona a função <code>start()</code> do módulo
 <code>esqueleto</code>, que vai gerar um novo processo e retornar o identificador do
-processo (em inglês, process identifier), que armazenamos na variável <code>Pid</code>. </p>
+processo (em inglês, process identifier), que armazenamos na variável <code>Pid</code>.</p>
 <p>A seguir, na terceira linha usamos o comando!  para envio de mensagens em
 Erlang, enviando a mensagem“alo!” para o processo criado na linha anterior,
 identificado porPid.  O comando <code>receive</code> da função <code>loop()</code>  vai receber a
@@ -152,39 +172,37 @@ timeout  definido), ele pode selecionar o bloco de código a ser executado
 dependendo da forma ou conteúdo da mensagem, com o mecanismo chamado de
 <a href="https://en.wikipedia.org/wiki/Pattern_matching">pattern matching</a> (ou,
 <a href="https://pt.wikipedia.org/wiki/Casamento_de_padr%C3%B5es">casamento de
-padrões</a>). </p>
+padrões</a>).</p>
 <p>Por exemplo, usando pattern matching, podemos alterar o comando  <code>receive</code> da
 função  <code>loop()</code>   para executar um código diferente caso receba a mensagem
-<code>"alo!"</code>: </p>
-<div class="highlight"><pre><span></span><code><span class="n">loop</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span>
-<span class="w">    </span><span class="n">receive</span>
-<span class="w">        </span><span class="ss">&quot;alo!&quot;</span><span class="w"> </span><span class="o">-&gt;</span>
-<span class="w">            </span><span class="nl">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="ss">&quot;Alooooow, galerinha da paaishhh!&quot;</span><span class="p">),</span>
-<span class="w">            </span><span class="n">loop</span><span class="p">();</span>
-<span class="w">        </span><span class="ow">Any</span><span class="w"> </span><span class="o">-&gt;</span>
-<span class="w">            </span><span class="nl">io</span><span class="p">:</span><span class="nf">format</span><span class="p">(</span><span class="ss">&quot;Received: ~p~n&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">[</span><span class="n">Any</span><span class="o">]</span><span class="p">),</span>
-<span class="w">            </span><span class="n">loop</span><span class="p">()</span>
-<span class="w">    </span><span class="k">end</span><span class="p">.</span>
-</code></pre></div>
-
+<code>&quot;alo!&quot;</code>:</p>
+<pre><code>loop() -&gt;
+    receive
+        &quot;alo!&quot; -&gt;
+            io:format(&quot;Alooooow, galerinha da paaishhh!&quot;),
+            loop();
+        Any -&gt;
+            io:format(&quot;Received: ~p~n&quot;, [Any]),
+            loop()
+    end.
+</code></pre>
 <p>Se você repetir os passos anteriores com esse novo código, receberá uma
-resposta mais animada quando enviar a mensagem <code>"alo!"</code>. =)</p>
+resposta mais animada quando enviar a mensagem <code>&quot;alo!&quot;</code>. =)</p>
 <p>Nesse exemplo, o padrão casado foi o conteúdo da mensagem, isto é, a string
-<code>"alo!"</code>. Mas o mecanismo permite fazer vários tipos de verificações: você
+<code>&quot;alo!&quot;</code>. Mas o mecanismo permite fazer vários tipos de verificações: você
 pode, por exemplo, verificar se a mensagem é um número ou uma tupla, se é uma
 tupla contendo um determinado elemento, se é uma lista com tantos elementos,
 etc.</p>
 <p>Quando alguém mais acostumado ao paradigma imperativo se depara com a ideia de
 pattern matching (que existe em outras linguagens além de Erlang), usualmente
-acha útil <a href="http://stackoverflow.com/questions/2502354/what-is-pattern-matching-in-functional-languages">pensar nele como um "switch-case em
-esteróides"</a>,
+acha útil <a href="http://stackoverflow.com/questions/2502354/what-is-pattern-matching-in-functional-languages">pensar nele como um &quot;switch-case em
+esteróides&quot;</a>,
 uma espécie de Super Estrutura Condicional.</p>
 <p>Em Erlang, todavia,pattern matching (ou casamento de padrões) aparece em mais
 do que estruturas condicionais.</p>
 <p>De fato, na expressão:</p>
-<div class="highlight"><pre><span></span><code>X = 1.
-</code></pre></div>
-
+<pre><code>X = 1.
+</code></pre>
 <p>o <code>=</code> (igual) é um acionamento do operador depattern matching de Erlang --
 diferente de outras linguagens em que o igual é um operador de
 <a href="https://pt.wikipedia.org/wiki/Atribui%C3%A7%C3%A3o_(computa%C3%A7%C3%A3o)">atribuição</a>.
@@ -196,25 +214,23 @@ valor a uma variável quando esta ainda não tem nenhum valor associado (isto é
 quando se trata de uma <a href="https://pt.wikipedia.org/wiki/Vari%C3%A1veis_livres_e_ligadas">variável
 livre</a>, ou
 <em>unbound variable</em>).</p>
-<p>Na próxima vez que a variável for referenciada, ela terá o valor "casado"
+<p>Na próxima vez que a variável for referenciada, ela terá o valor &quot;casado&quot;
 (matched) anteriormente, veja:</p>
-<div class="highlight"><pre><span></span><code><span class="mf">1</span><span class="o">&gt;</span><span class="w"> </span><span class="n">A</span><span class="mf">.</span>
-<span class="o">*</span><span class="w"> </span><span class="mf">1</span><span class="p">:</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="err">&#39;</span><span class="n">A</span><span class="err">&#39;</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">unbound</span>
-<span class="mf">2</span><span class="o">&gt;</span><span class="w"> </span><span class="n">A</span><span class="o">=</span><span class="s">&quot;oi&quot;</span><span class="mf">.</span>
-<span class="s">&quot;oi&quot;</span>
-<span class="mf">3</span><span class="o">&gt;</span><span class="w"> </span><span class="n">A</span><span class="mf">.</span>
-<span class="s">&quot;oi&quot;</span>
-<span class="mf">4</span><span class="o">&gt;</span>
-</code></pre></div>
-
+<pre><code>1&gt; A.
+* 1: variable 'A' is unbound
+2&gt; A=&quot;oi&quot;.
+&quot;oi&quot;
+3&gt; A.
+&quot;oi&quot;
+4&gt;
+</code></pre>
 <p>Uma vez ligada, a variável só casará com o valor original, e nunca mais com
 outro. Caso tente casar a variável com outro valor (pensando que funcionaria
 como atribuição), você obterá um erro avisando que falhou o casamento do
 padrão:</p>
-<div class="highlight"><pre><span></span><code><span class="mf">4</span><span class="o">&gt;</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;alô&quot;</span><span class="mf">.</span><span class="w"> </span>
-<span class="o">**</span><span class="w"> </span><span class="n">exception</span><span class="w"> </span><span class="n">error</span><span class="p">:</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">match</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="n">hand</span><span class="w"> </span><span class="n">side</span><span class="w"> </span><span class="nb">val</span><span class="n">ue</span><span class="w"> </span><span class="s">&quot;alô&quot;</span>
-</code></pre></div>
-
+<pre><code>4&gt; A = &quot;alô&quot;. 
+** exception error: no match of right hand side value &quot;alô&quot;
+</code></pre>
 <p>Isto porque em Erlang, as variáveis são imutáveis para o contexto local.  Outra
 forma de dizer é: em Erlang, as variáveis são de atribuição única (single
 assignment variables).  Uma vez atribuído um valor a uma variável, você não
@@ -229,17 +245,17 @@ interessantes:</p>
 <ul>
 <li>
 <p>força você a criar novas variáveis em algumas situações, mesmo que esteja com
-  pouca criatividade para dar um nome decente (no livro mesmo tem alguns
-  exemplos com <code>Word1</code>, <code>Word2</code> -- o que é meio feio)</p>
+pouca criatividade para dar um nome decente (no livro mesmo tem alguns
+exemplos com <code>Word1</code>, <code>Word2</code> -- o que é meio feio)</p>
 </li>
 <li>
 <p>evita alguns tipos debugs e simplifica a depuração, pois aumenta a
-  previsibilidade da execução do código (isto é, você pode confiar que o valor
-  de uma variável não vai mudar)</p>
+previsibilidade da execução do código (isto é, você pode confiar que o valor
+de uma variável não vai mudar)</p>
 </li>
 <li>
 <p>facilita a escrita de programas concorrentes e permite que sejam rodados em
-  paralelo, pois evita uma cacetada de problemas de memória compartilhada</p>
+paralelo, pois evita uma cacetada de problemas de memória compartilhada</p>
 </li>
 </ul>
 <p>E esta última consequência compensa as dificuldades de dar nomes às variáveis.
@@ -259,33 +275,31 @@ com Erlang.</p>
 facilmente iniciar nós de um cluster em algumas máquinas e disparar chamadas
 remotas de um nó para outro.</p>
 <p>Para um exemplo rápido, inicie um nó do cluster em um terminal, dando um nome:</p>
-<div class="highlight"><pre><span></span><code><span class="err">$</span><span class="w"> </span><span class="n">erl</span><span class="w"> </span><span class="o">-</span><span class="n">sname</span><span class="w"> </span><span class="n">lennon</span><span class="nv">@localhost</span>
-<span class="n">Erlang</span><span class="w"> </span><span class="n">R16B01</span><span class="w"> </span><span class="p">(</span><span class="n">erts</span><span class="o">-</span><span class="mf">5.10.2</span><span class="p">)</span><span class="w"> </span><span class="o">[</span><span class="n">source</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">64-bit</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">smp:4:4</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">async-threads:10</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">kernel-poll:false</span><span class="o">]</span>
+<pre><code>$ erl -sname lennon@localhost
+Erlang R16B01 (erts-5.10.2) [source] [64-bit] [smp:4:4] [async-threads:10] [kernel-poll:false]
 
 
-<span class="n">Eshell</span><span class="w"> </span><span class="n">V5</span><span class="mf">.10.2</span><span class="w">  </span><span class="p">(</span><span class="n">abort</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="o">^</span><span class="n">G</span><span class="p">)</span>
-<span class="p">(</span><span class="n">lennon</span><span class="nv">@localhost</span><span class="p">)</span><span class="mi">1</span><span class="o">&gt;</span>
-</code></pre></div>
-
+Eshell V5.10.2  (abort with ^G)
+(lennon@localhost)1&gt; 
+</code></pre>
 <p>Em outro terminal, inicie outro nó e faça uma chamada remota ao nó anterior:</p>
-<div class="highlight"><pre><span></span><code><span class="err">$</span><span class="w"> </span><span class="n">erl</span><span class="w"> </span><span class="o">-</span><span class="n">sname</span><span class="w"> </span><span class="n">mccartney</span><span class="nv">@localhost</span>
-<span class="n">Erlang</span><span class="w"> </span><span class="n">R16B01</span><span class="w"> </span><span class="p">(</span><span class="n">erts</span><span class="o">-</span><span class="mf">5.10.2</span><span class="p">)</span><span class="w"> </span><span class="o">[</span><span class="n">source</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">64-bit</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">smp:4:4</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">async-threads:10</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">kernel-poll:false</span><span class="o">]</span>
+<pre><code>$ erl -sname mccartney@localhost
+Erlang R16B01 (erts-5.10.2) [source] [64-bit] [smp:4:4] [async-threads:10] [kernel-poll:false]
 
 
-<span class="n">Eshell</span><span class="w"> </span><span class="n">V5</span><span class="mf">.10.2</span><span class="w">  </span><span class="p">(</span><span class="n">abort</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="o">^</span><span class="n">G</span><span class="p">)</span>
-<span class="p">(</span><span class="n">mccartney</span><span class="nv">@localhost</span><span class="p">)</span><span class="mi">1</span><span class="o">&gt;</span><span class="w"> </span><span class="nl">rpc</span><span class="p">:</span><span class="k">call</span><span class="p">(</span><span class="n">lennon</span><span class="nv">@localhost</span><span class="p">,</span><span class="w"> </span><span class="k">file</span><span class="p">,</span><span class="w"> </span><span class="n">list_dir</span><span class="p">,</span><span class="w"> </span><span class="o">[</span><span class="n">&quot;/&quot;</span><span class="o">]</span><span class="p">).</span>
-<span class="err">{</span><span class="n">ok</span><span class="p">,</span><span class="o">[</span><span class="n">&quot;var&quot;,&quot;tmp&quot;,&quot;mnt&quot;,&quot;lib&quot;,&quot;boot&quot;,&quot;lib32&quot;,&quot;vmlinuz&quot;,</span>
-<span class="n">     &quot;proc&quot;,&quot;media&quot;,&quot;bin&quot;,&quot;lib64&quot;,&quot;sys&quot;,&quot;opt&quot;,&quot;sbin&quot;,&quot;srv&quot;,</span>
-<span class="n">     &quot;root&quot;,&quot;dev&quot;,&quot;usr&quot;,&quot;initrd.img&quot;,&quot;lost+found&quot;,&quot;cdrom&quot;,&quot;home&quot;,</span>
-<span class="n">     &quot;vmlinuz.old&quot;,&quot;run&quot;,&quot;etc&quot;,&quot;initrd.img.old&quot;</span><span class="o">]</span><span class="err">}</span>
-<span class="p">(</span><span class="n">mccartney</span><span class="nv">@localhost</span><span class="p">)</span><span class="mi">2</span><span class="o">&gt;</span>
-</code></pre></div>
-
+Eshell V5.10.2  (abort with ^G)
+(mccartney@localhost)1&gt; rpc:call(lennon@localhost, file, list_dir, [&quot;/&quot;]).
+{ok,[&quot;var&quot;,&quot;tmp&quot;,&quot;mnt&quot;,&quot;lib&quot;,&quot;boot&quot;,&quot;lib32&quot;,&quot;vmlinuz&quot;,
+     &quot;proc&quot;,&quot;media&quot;,&quot;bin&quot;,&quot;lib64&quot;,&quot;sys&quot;,&quot;opt&quot;,&quot;sbin&quot;,&quot;srv&quot;,
+     &quot;root&quot;,&quot;dev&quot;,&quot;usr&quot;,&quot;initrd.img&quot;,&quot;lost+found&quot;,&quot;cdrom&quot;,&quot;home&quot;,
+     &quot;vmlinuz.old&quot;,&quot;run&quot;,&quot;etc&quot;,&quot;initrd.img.old&quot;]}
+(mccartney@localhost)2&gt;
+</code></pre>
 <p>O argumento <code>-sname</code> faz com que Erlang inicie um nó com o nome passado (note
 como o nome do nó é mostrado no prompt). No comando que executamos no segundo
 nó (<code>mccartney@localhost</code>) usamos a função <a href="http://erlang.org/doc/man/rpc.html">call do módulo
 <code>rpc</code></a> para acionar uma função remotamente
-em outro nó e obter o resultado -- neste caso, a função <code>os:listdir("/")</code> para
+em outro nó e obter o resultado -- neste caso, a função <code>os:listdir(&quot;/&quot;)</code> para
 retornar a lista de arquivos do diretório raiz.</p>
 <p>E tudo com código da distribuição padrão. (Try that in Java, biátch!)</p>
 <p>Bom, tentei mostrar algumas coisas interessantes da linguagem aqui, mas Erlang
@@ -309,22 +323,22 @@ distribuídas</a>.</p>
 <ul>
 <li>
 <p>Nem todos os comandos ou exemplos de código funcionam no shell. Algumas
-  funcionalidades só estão disponíveis no shell, e outras apenas em módulos
-  compilados (<a href="http://stackoverflow.com/questions/2065990/defining-erlang-functions-in-the-shell">criar funções no
-  shell</a>,
-  por exemplo). Isso é uma espécie de “bug conhecido”: <a href="http://joearms.github.io/2013/05/31/a-week-with-elixir.html">Joe Armstrong, o criador
-  da linguagem, conta que seus cabelos embranqueceram de tanto explicar por que
-  a implementação ficou desse
-  jeito</a>.</p>
+funcionalidades só estão disponíveis no shell, e outras apenas em módulos
+compilados (<a href="http://stackoverflow.com/questions/2065990/defining-erlang-functions-in-the-shell">criar funções no
+shell</a>,
+por exemplo). Isso é uma espécie de “bug conhecido”: <a href="http://joearms.github.io/2013/05/31/a-week-with-elixir.html">Joe Armstrong, o criador
+da linguagem, conta que seus cabelos embranqueceram de tanto explicar por que
+a implementação ficou desse
+jeito</a>.</p>
 </li>
 <li>
 <p>O shell não tem histórico persistente, e não suporta atalhos comuns em
-  aplicações da linha de comando que usam a <a href="https://en.wikipedia.org/wiki/GNU_Readline">GNU
-  Readline</a>.  Parece que o esquema
-  de IO do shell Erlang é meio complicado de manter -- no GitHub tem <a href="https://github.com/ferd/erlang-history">um
-  projeto que adiciona um histórico persistente
-  básico</a>, mas o FAQ não é muito
-  encorajador.</p>
+aplicações da linha de comando que usam a <a href="https://en.wikipedia.org/wiki/GNU_Readline">GNU
+Readline</a>.  Parece que o esquema
+de IO do shell Erlang é meio complicado de manter -- no GitHub tem <a href="https://github.com/ferd/erlang-history">um
+projeto que adiciona um histórico persistente
+básico</a>, mas o FAQ não é muito
+encorajador.</p>
 </li>
 </ul>
 <p>O resto é fantástico. =)</p>
@@ -332,21 +346,14 @@ distribuídas</a>.</p>
 Erlang</a> -- não li, mas já tirei algumas dúvidas
 nele caindo de buscas do Google e pareceu muito bom. Have a nice journey!  :)</p>
 <p>Valeu pela revisão, Fredi e Denise.</p>
+
         </div>
 
-        <div class="taglist"></div>
-
+        <div class="taglist">
+</div>
     </article>
 </section>
 
-        <aside id="sidebar">
-                <div class="widget">
-                        <h2>Categories</h2>
-                        <ul>
-                           <li class="active"><a href="../../../category/blog.html">blog</a></li>
-                        </ul>
-                </div>
-        </aside><!-- /#sidebar -->
 
         <hr />
         <footer class="footer-menu">

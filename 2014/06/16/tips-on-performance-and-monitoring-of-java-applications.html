@@ -5,10 +5,12 @@
         <link rel="shortcut icon" href="/images/favicon.ico">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="../../../theme/css/pygments.css" type="text/css" />
-        <link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
-        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
-        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/pygments.css" type="text/css" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+        <link href="https://eliasdorneles.com/atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
+        
+        <link href="https://eliasdorneles.com/feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        
 <script>
 var host = "eliasdorneles.github.io";
 if (window.location.host == host && window.location.protocol != "https:") {
@@ -21,16 +23,28 @@ if (window.location.host == host && window.location.protocol != "https:") {
     <a name="top"></a>
 
 <div class="site-container">
+        
         <header id="banner" class="body">
-                <h1><a href="../../../index.html">Elias Dorneles </a></h1>
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
                 <nav><ul>
+                
                     <li >
-                        <a href="../../../">Blog</a>
+                        <a href="https://eliasdorneles.com/">Blog</a>
                     </li>
-                    <li ><a href="../../../pages/about.html">About me</a></li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
                 </ul></nav>
         </header><!-- /#banner -->
+        
 
+        
 <section id="content" class="body">
     <article>
         <header>
@@ -41,14 +55,21 @@ if (window.location.host == host && window.location.protocol != "https:") {
         </header>
 
         <div class="entry-content">
+            
 <footer class="post-info">
+        
         <address class="vcard author">
             posted by
-            <a href="../../../pages/about-me.html">Elias Dorneles</a>
-            on <abbr class="published" title="2014-06-16T20:06:00+02:00">2014, juin 16</abbr>
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2014-06-16 20:06:00+02:00">2014, June 16</abbr>
             <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/tips-on-performance-and-monitoring-of-java-applications.md">Edit</a>
         </address>
-</footer>            <p>I cleaned up my desk this weekend and ended up finding some notes I wrote down
+        
+
+
+</footer>
+
+            <p>I cleaned up my desk this weekend and ended up finding some notes I wrote down
 some time ago when I attended a course about monitoring JBoss application
 servers. I haven't been doing much related to Java Web development lately, but
 I'm going to try to make a quick summary here because: 1) then I can safely
@@ -75,7 +96,7 @@ in Java available, it's a fairly big topic and I don't know much beyond the
 basics to survive. You definitely want to know that full GC stops are bad and,
 although you can't avoid them completely, you want to keep them to a minimum so
 your application won't keep slogging.</p>
-<p>Full GC stops happen when the area of memory reserved to objects that are "old"
+<p>Full GC stops happen when the area of memory reserved to objects that are &quot;old&quot;
 (namely, objects that have been around for most of the time and therefore are
 probably going to be around in the future) reaches its size limit. That means
 that whatever application code was running will be stopped and only the GC will
@@ -89,7 +110,7 @@ works best. For your typical Java Web application, it's usually better to run
 several machines with moderate memory in a cluster than run all in one big
 machine with several GiB of memory due to how the GC works. However, your
 mileage may vary, so your best bet is to measure and monitor what's happening
-with the heap.    </p>
+with the heap.</p>
 <h3>The number of threads vs backlog tradeoff</h3>
 <p>Now, in the case of Web applications, the second most important thing you want
 to watch is the busy threads count. Usually, it represents the number of
@@ -108,10 +129,10 @@ really happens is that each new request always goes to the backlog queue and
 there are some threads responsible for request processing that keep getting
 work from the backlog, but I thought it would be a bit easier to explain that
 way.</p>
-<p><center>
+<center>
 <img width="500" alt="I think my Tomcat can handle more work... Now, should I increase maxThreads or the backlog?"
 src="https://3.bp.blogspot.com/-1Op2WBzfGno/U5928NTAtqI/AAAAAAAAAwQ/d1lxWxNcmHY/s1600/doubt-maxThreads_vs_backlog.jpg"/>
-</center></p>
+</center>
 <p>But here is the little secret: it's usually much easier for the operating
 system to manage queues than attend threads. So, often enough it's better to
 let the queue get big than to increase the maximum number of threads for your
@@ -129,21 +150,14 @@ of busy threads to see the patterns in request handling (in the case of Web
 applications) is a good start.</p>
 <p>Thanks for the review, José Ricardo and Valdir Stumm!</p>
 <p><a href="https://www.flickr.com/photos/24141546@N06/8097784516/in/photostream/">Image credits (CCBY)</a></p>
+
         </div>
 
-        <div class="taglist"></div>
-
+        <div class="taglist">
+</div>
     </article>
 </section>
 
-        <aside id="sidebar">
-                <div class="widget">
-                        <h2>Categories</h2>
-                        <ul>
-                           <li class="active"><a href="../../../category/blog.html">blog</a></li>
-                        </ul>
-                </div>
-        </aside><!-- /#sidebar -->
 
         <hr />
         <footer class="footer-menu">

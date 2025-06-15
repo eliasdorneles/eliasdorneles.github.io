@@ -5,10 +5,12 @@
         <link rel="shortcut icon" href="/images/favicon.ico">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="../../../theme/css/pygments.css" type="text/css" />
-        <link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
-        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
-        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/pygments.css" type="text/css" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+        <link href="https://eliasdorneles.com/atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
+        
+        <link href="https://eliasdorneles.com/feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        
 <script>
 var host = "eliasdorneles.github.io";
 if (window.location.host == host && window.location.protocol != "https:") {
@@ -21,16 +23,28 @@ if (window.location.host == host && window.location.protocol != "https:") {
     <a name="top"></a>
 
 <div class="site-container">
+        
         <header id="banner" class="body">
-                <h1><a href="../../../index.html">Elias Dorneles </a></h1>
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
                 <nav><ul>
+                
                     <li >
-                        <a href="../../../">Blog</a>
+                        <a href="https://eliasdorneles.com/">Blog</a>
                     </li>
-                    <li ><a href="../../../pages/about.html">About me</a></li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
                 </ul></nav>
         </header><!-- /#banner -->
+        
 
+        
 <section id="content" class="body">
     <article>
         <header>
@@ -41,14 +55,21 @@ if (window.location.host == host && window.location.protocol != "https:") {
         </header>
 
         <div class="entry-content">
+            
 <footer class="post-info">
+        
         <address class="vcard author">
             posted by
-            <a href="../../../pages/about-me.html">Elias Dorneles</a>
-            on <abbr class="published" title="2017-04-21T22:09:00+02:00">2017, avril 21</abbr>
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2017-04-21 22:09:00+02:00">2017, April 21</abbr>
             <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/urwid-is-great.md">Edit</a>
         </address>
-</footer>            <p>Ever since I started using the awesome <a href="https://pypi.python.org/pypi/pudb">pudb debugger for Python
+        
+
+
+</footer>
+
+            <p>Ever since I started using the awesome <a href="https://pypi.python.org/pypi/pudb">pudb debugger for Python
 programs</a> I've been curious about the <a href="http://urwid.org/">urwid
 library</a>, an user interface library for console-based
 applications that the debugger uses. The <a href="http://urwid.org/examples/index.html">examples in the
@@ -57,7 +78,7 @@ gallery</a> are just gorgeous!</p>
 I decided to implement a <a href="https://en.wikipedia.org/wiki/Patience_(game)">Solitaire clone (specifically, the Klondike form)</a>.
 I thought it would be fun to draw the cards using the <a href="https://en.wikipedia.org/wiki/Box-drawing_character">box-drawing characters</a> and <a href="https://en.wikipedia.org/wiki/Playing_cards_in_Unicode">card symbols</a> available in Unicode.</p>
 <p>Here is a screenshot of the final game:</p>
-<p><img alt="Screenshot showing usolitaire" src="https://raw.githubusercontent.com/eliasdorneles/usolitaire/master/screenshot-usolitaire.png"></p>
+<p><img src="https://raw.githubusercontent.com/eliasdorneles/usolitaire/master/screenshot-usolitaire.png" alt="Screenshot showing usolitaire" /></p>
 <p>Before starting to code, I explored the library a bit in the shell, following <a href="http://urwid.org/tutorial/index.html">the examples from the tutorial</a>.
 I also did <a href="https://raw.githubusercontent.com/eliasdorneles/usolitaire/c18b4643bcd20cf53705a16de6072f2d1e766a43/PLAN.txt">some planning</a>, working out how to draw the game elements so that it would fit a 40x80 characters terminal window.</p>
 <p>Then it was time to start coding, I started by trying to write something that I could put in the screen, a <a href="http://urwid.org/manual/widgets.html">custom widget</a> to represent a card.</p>
@@ -67,25 +88,17 @@ I also did <a href="https://raw.githubusercontent.com/eliasdorneles/usolitaire/c
 <p>I kept running into those errors related to the sizing mode later on, so I had to become a bit more acquainted with the widgets I was using to know if they were box-sizing or flow-sizing mode. I wonder if there is an easier way of dealing with those.</p>
 <p>I'm really liking to play with this library, I think I'll try more stuff with it soon.</p>
 <p>If you want to play the game, you can install it with:</p>
-<div class="highlight"><pre><span></span><code>pip install usolitaire
-</code></pre></div>
-
+<pre><code>pip install usolitaire
+</code></pre>
 <p>The <a href="https://github.com/eliasdorneles/usolitaire">source code is on Github</a>.</p>
+
         </div>
 
-        <div class="taglist"></div>
-
+        <div class="taglist">
+</div>
     </article>
 </section>
 
-        <aside id="sidebar">
-                <div class="widget">
-                        <h2>Categories</h2>
-                        <ul>
-                           <li class="active"><a href="../../../category/blog.html">blog</a></li>
-                        </ul>
-                </div>
-        </aside><!-- /#sidebar -->
 
         <hr />
         <footer class="footer-menu">

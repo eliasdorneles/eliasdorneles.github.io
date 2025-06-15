@@ -5,10 +5,12 @@
         <link rel="shortcut icon" href="/images/favicon.ico">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="../theme/css/pygments.css" type="text/css" />
-        <link rel="stylesheet" href="../theme/css/main.css" type="text/css" />
-        <link href="../atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
-        <link href="../feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/pygments.css" type="text/css" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+        <link href="https://eliasdorneles.com/atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
+        
+        <link href="https://eliasdorneles.com/feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        
 <script>
 var host = "eliasdorneles.github.io";
 if (window.location.host == host && window.location.protocol != "https:") {
@@ -21,16 +23,28 @@ if (window.location.host == host && window.location.protocol != "https:") {
     <a name="top"></a>
 
 <div class="site-container">
+        
         <header id="banner" class="body">
-                <h1><a href="../index.html">Elias Dorneles </a></h1>
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
                 <nav><ul>
+                
                     <li >
-                        <a href="../">Blog</a>
+                        <a href="https://eliasdorneles.com/">Blog</a>
                     </li>
-                    <li ><a href="../pages/about.html">About me</a></li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
                 </ul></nav>
         </header><!-- /#banner -->
+        
 
+        
 <section id="content" class="body">
     <header>
         <h1 class="entry-title">Material do Tutorial: Web Scraping na Nuvem</h1>
@@ -57,12 +71,10 @@ e-mail scrapy-users</a>.</p>
 <p><a href="http://scrapy.org/">Scrapy</a> é um framework para crawlear web sites e extrair dados estruturados que
 podem ser usados para uma gama de aplicações úteis (data mining, arquivamento,
 etc).</p>
-<dl>
-<dt><em>Scraping:</em></dt>
-<dd>extrair dados do conteúdo da página</dd>
-<dt><em>Crawling:</em></dt>
-<dd>seguir links de uma página a outra</dd>
-</dl>
+<p><em>Scraping:</em>
+: extrair dados do conteúdo da página</p>
+<p><em>Crawling:</em>
+: seguir links de uma página a outra</p>
 <p>Se você já fez extração de dados de páginas Web antes em Python, são grandes as
 chances de você ter usado algo como requests + beautifulsoup. Essas tecnologias
 ajudam a fazer <em>scraping</em>.</p>
@@ -77,89 +89,81 @@ evita requisições duplicadas, etc.</p>
 componentes e crescer um projeto de maneira gerenciável.</p>
 <h3>Instalando o Scrapy</h3>
 <p>Recomendamos usar virtualenv, e instalar o Scrapy com:</p>
-<div class="highlight"><pre><span></span><code>pip install scrapy
-</code></pre></div>
-
+<pre><code>pip install scrapy
+</code></pre>
 <p>A dependência chatinha é normalmente o <a href="http://lxml.de/">lxml</a> (que precisa de
 algumas bibliotecas C instaladas). Caso tenha dificuldade, <a href="http://doc.scrapy.org/en/latest/intro/install.html#intro-install-platform-notes">consulte as
 instruções específicas por
 plataforma</a>
 ou peça ajuda nos canais citados acima.</p>
 <p>Para verificar se o Scrapy está instalado corretamente, rode o comando:</p>
-<div class="highlight"><pre><span></span><code>scrapy version
-</code></pre></div>
-
+<pre><code>scrapy version
+</code></pre>
 <p>A saída que obtenho rodando este comando no meu computador é:</p>
-<div class="highlight"><pre><span></span><code><span class="err">$</span><span class="w"> </span><span class="n">scrapy</span><span class="w"> </span><span class="n">version</span>
-<span class="mi">2015</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">14</span><span class="w"> </span><span class="mi">19</span><span class="err">:</span><span class="mi">58</span><span class="err">:</span><span class="mi">56</span><span class="w"> </span><span class="o">[</span><span class="n">scrapy</span><span class="o">]</span><span class="w"> </span><span class="nl">INFO</span><span class="p">:</span><span class="w"> </span><span class="n">Scrapy</span><span class="w"> </span><span class="mf">1.0.3</span><span class="w"> </span><span class="n">started</span><span class="w"> </span><span class="p">(</span><span class="nl">bot</span><span class="p">:</span><span class="w"> </span><span class="n">scrapybot</span><span class="p">)</span>
-<span class="mi">2015</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">14</span><span class="w"> </span><span class="mi">19</span><span class="err">:</span><span class="mi">58</span><span class="err">:</span><span class="mi">56</span><span class="w"> </span><span class="o">[</span><span class="n">scrapy</span><span class="o">]</span><span class="w"> </span><span class="nl">INFO</span><span class="p">:</span><span class="w"> </span><span class="n">Optional</span><span class="w"> </span><span class="n">features</span><span class="w"> </span><span class="nl">available</span><span class="p">:</span><span class="w"> </span><span class="n">ssl</span><span class="p">,</span><span class="w"> </span><span class="n">http11</span>
-<span class="mi">2015</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">14</span><span class="w"> </span><span class="mi">19</span><span class="err">:</span><span class="mi">58</span><span class="err">:</span><span class="mi">56</span><span class="w"> </span><span class="o">[</span><span class="n">scrapy</span><span class="o">]</span><span class="w"> </span><span class="nl">INFO</span><span class="p">:</span><span class="w"> </span><span class="n">Overridden</span><span class="w"> </span><span class="nl">settings</span><span class="p">:</span><span class="w"> </span><span class="err">{}</span>
-<span class="n">Scrapy</span><span class="w"> </span><span class="mf">1.0.3</span>
-</code></pre></div>
-
+<pre><code>$ scrapy version
+2015-11-14 19:58:56 [scrapy] INFO: Scrapy 1.0.3 started (bot: scrapybot)
+2015-11-14 19:58:56 [scrapy] INFO: Optional features available: ssl, http11
+2015-11-14 19:58:56 [scrapy] INFO: Overridden settings: {}
+Scrapy 1.0.3
+</code></pre>
 <h3>Rodando um spider</h3>
 <p>Para ter uma noção inicial de como usar o Scrapy, vamos começar rodando um
 spider de exemplo.</p>
 <p>Crie um arquivo <strong>youtube_spider.py</strong> com o seguinte conteúdo:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
+<pre><code>import scrapy
 
 
-<span class="k">def</span> <span class="nf">first</span><span class="p">(</span><span class="n">sel</span><span class="p">,</span> <span class="n">xpath</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span><span class="o">.</span><span class="n">extract_first</span><span class="p">()</span>
+def first(sel, xpath):
+    return sel.xpath(xpath).extract_first()
 
 
-<span class="k">class</span> <span class="nc">YoutubeChannelLister</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;channel-lister&#39;</span>
-    <span class="n">youtube_channel</span> <span class="o">=</span> <span class="s1">&#39;portadosfundos&#39;</span>
-    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;https://www.youtube.com/user/</span><span class="si">%s</span><span class="s1">/videos&#39;</span> <span class="o">%</span> <span class="n">youtube_channel</span><span class="p">]</span>
+class YoutubeChannelLister(scrapy.Spider):
+    name = 'channel-lister'
+    youtube_channel = 'portadosfundos'
+    start_urls = ['https://www.youtube.com/user/%s/videos' % youtube_channel]
 
-    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">sel</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s2">&quot;ul#channels-browse-content-grid &gt; li&quot;</span><span class="p">):</span>
-            <span class="k">yield</span> <span class="p">{</span>
-                <span class="s1">&#39;link&#39;</span><span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">first</span><span class="p">(</span><span class="n">sel</span><span class="p">,</span> <span class="s1">&#39;.//h3/a/@href&#39;</span><span class="p">)),</span>
-                <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="n">first</span><span class="p">(</span><span class="n">sel</span><span class="p">,</span> <span class="s1">&#39;.//h3/a/text()&#39;</span><span class="p">),</span>
-                <span class="s1">&#39;views&#39;</span><span class="p">:</span> <span class="n">first</span><span class="p">(</span><span class="n">sel</span><span class="p">,</span> <span class="s2">&quot;.//ul/li[1]/text()&quot;</span><span class="p">),</span>
-            <span class="p">}</span>
-</code></pre></div>
-
+    def parse(self, response):
+        for sel in response.css(&quot;ul#channels-browse-content-grid &gt; li&quot;):
+            yield {
+                'link': response.urljoin(first(sel, './/h3/a/@href')),
+                'title': first(sel, './/h3/a/text()'),
+                'views': first(sel, &quot;.//ul/li[1]/text()&quot;),
+            }
+</code></pre>
 <p>Agora, rode o spider com o comando:</p>
-<div class="highlight"><pre><span></span><code>scrapy runspider youtube_spider.py -o portadosfundos.csv
-</code></pre></div>
-
+<pre><code>scrapy runspider youtube_spider.py -o portadosfundos.csv
+</code></pre>
 <p>O scrapy vai procurar um spider no arquivo <strong>youtube_spider.py</strong> e
 escrever os dados no arquivo CSV <strong>portadosfundos.csv</strong>.</p>
 <p>Caso tudo deu certo, você verá o log da página sendo baixada, os dados sendo
 extraídos, e umas estatísticas resumindo o processo no final, algo como:</p>
-<div class="highlight"><pre><span></span><code><span class="p">...</span>
-<span class="mi">2015</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">14</span><span class="w"> </span><span class="mi">20</span><span class="err">:</span><span class="mi">14</span><span class="err">:</span><span class="mi">21</span><span class="w"> </span><span class="o">[</span><span class="n">scrapy</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">Crawled</span><span class="w"> </span><span class="p">(</span><span class="mi">200</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="k">GET</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">youtube</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="k">user</span><span class="o">/</span><span class="n">portadosfundos</span><span class="o">/</span><span class="n">videos</span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="nl">referer</span><span class="p">:</span><span class="w"> </span><span class="k">None</span><span class="p">)</span>
-<span class="mi">2015</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">14</span><span class="w"> </span><span class="mi">20</span><span class="err">:</span><span class="mi">14</span><span class="err">:</span><span class="mi">22</span><span class="w"> </span><span class="o">[</span><span class="n">scrapy</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">Scraped</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">200</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">youtube</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="k">user</span><span class="o">/</span><span class="n">portadosfundos</span><span class="o">/</span><span class="n">videos</span><span class="o">&gt;</span>
-<span class="err">{</span><span class="s1">&#39;views&#39;</span><span class="err">:</span><span class="w"> </span><span class="n">u</span><span class="s1">&#39;323,218 views&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;link&#39;</span><span class="err">:</span><span class="w"> </span><span class="n">u</span><span class="s1">&#39;https://www.youtube.com/watch?v=qSqPkRi-UiE&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;title&#39;</span><span class="err">:</span><span class="w"> </span><span class="n">u</span><span class="s1">&#39;GAR\xc7ONS&#39;</span><span class="err">}</span>
-<span class="mi">2015</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">14</span><span class="w"> </span><span class="mi">20</span><span class="err">:</span><span class="mi">14</span><span class="err">:</span><span class="mi">22</span><span class="w"> </span><span class="o">[</span><span class="n">scrapy</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">Scraped</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">200</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">youtube</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="k">user</span><span class="o">/</span><span class="n">portadosfundos</span><span class="o">/</span><span class="n">videos</span><span class="o">&gt;</span>
-<span class="err">{</span><span class="s1">&#39;views&#39;</span><span class="err">:</span><span class="w"> </span><span class="n">u</span><span class="s1">&#39;1,295,054 views&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;link&#39;</span><span class="err">:</span><span class="w"> </span><span class="n">u</span><span class="s1">&#39;https://www.youtube.com/watch?v=yXc8KCxyEyQ&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;title&#39;</span><span class="err">:</span><span class="w"> </span><span class="n">u</span><span class="s1">&#39;SUCESSO&#39;</span><span class="err">}</span>
-<span class="mi">2015</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">14</span><span class="w"> </span><span class="mi">20</span><span class="err">:</span><span class="mi">14</span><span class="err">:</span><span class="mi">22</span><span class="w"> </span><span class="o">[</span><span class="n">scrapy</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">Scraped</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">200</span><span class="w"> </span><span class="nl">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">youtube</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="k">user</span><span class="o">/</span><span class="n">portadosfundos</span><span class="o">/</span><span class="n">videos</span><span class="o">&gt;</span>
-<span class="err">{</span><span class="s1">&#39;views&#39;</span><span class="err">:</span><span class="w"> </span><span class="n">u</span><span class="s1">&#39;1,324,448 views&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;link&#39;</span><span class="err">:</span><span class="w"> </span><span class="n">u</span><span class="s1">&#39;https://www.youtube.com/watch?v=k9CbDcOT1e8&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;title&#39;</span><span class="err">:</span><span class="w"> </span><span class="n">u</span><span class="s1">&#39;BIBLIOTECA&#39;</span><span class="err">}</span>
-<span class="p">...</span>
-<span class="err">{</span><span class="s1">&#39;downloader/request_bytes&#39;</span><span class="err">:</span><span class="w"> </span><span class="mi">239</span><span class="p">,</span>
-<span class="w"> </span><span class="s1">&#39;downloader/request_count&#39;</span><span class="err">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w"> </span><span class="s1">&#39;downloader/request_method_count/GET&#39;</span><span class="err">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w"> </span><span class="s1">&#39;downloader/response_bytes&#39;</span><span class="err">:</span><span class="w"> </span><span class="mi">27176</span><span class="p">,</span>
-<span class="w"> </span><span class="s1">&#39;downloader/response_count&#39;</span><span class="err">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w"> </span><span class="s1">&#39;downloader/response_status_count/200&#39;</span><span class="err">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w"> </span><span class="s1">&#39;item_scraped_count&#39;</span><span class="err">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span>
-<span class="p">...</span>
-<span class="mi">2015</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">14</span><span class="w"> </span><span class="mi">20</span><span class="err">:</span><span class="mi">14</span><span class="err">:</span><span class="mi">22</span><span class="w"> </span><span class="o">[</span><span class="n">scrapy</span><span class="o">]</span><span class="w"> </span><span class="nl">INFO</span><span class="p">:</span><span class="w"> </span><span class="n">Spider</span><span class="w"> </span><span class="n">closed</span><span class="w"> </span><span class="p">(</span><span class="n">finished</span><span class="p">)</span>
-</code></pre></div>
-
+<pre><code>...
+2015-11-14 20:14:21 [scrapy] DEBUG: Crawled (200) &lt;GET https://www.youtube.com/user/portadosfundos/videos&gt; (referer: None)
+2015-11-14 20:14:22 [scrapy] DEBUG: Scraped from &lt;200 https://www.youtube.com/user/portadosfundos/videos&gt;
+{'views': u'323,218 views', 'link': u'https://www.youtube.com/watch?v=qSqPkRi-UiE', 'title': u'GAR\xc7ONS'}
+2015-11-14 20:14:22 [scrapy] DEBUG: Scraped from &lt;200 https://www.youtube.com/user/portadosfundos/videos&gt;
+{'views': u'1,295,054 views', 'link': u'https://www.youtube.com/watch?v=yXc8KCxyEyQ', 'title': u'SUCESSO'}
+2015-11-14 20:14:22 [scrapy] DEBUG: Scraped from &lt;200 https://www.youtube.com/user/portadosfundos/videos&gt;
+{'views': u'1,324,448 views', 'link': u'https://www.youtube.com/watch?v=k9CbDcOT1e8', 'title': u'BIBLIOTECA'}
+...
+{'downloader/request_bytes': 239,
+ 'downloader/request_count': 1,
+ 'downloader/request_method_count/GET': 1,
+ 'downloader/response_bytes': 27176,
+ 'downloader/response_count': 1,
+ 'downloader/response_status_count/200': 1,
+ 'item_scraped_count': 30,
+...
+2015-11-14 20:14:22 [scrapy] INFO: Spider closed (finished)
+</code></pre>
 <p>Ao final, verifique os resultados abrindo o arquivo CSV no seu editor de
 planilhas favorito.</p>
 <p>Se você quiser os dados em JSON, basta mudar a extensão do arquivo de saída:</p>
-<div class="highlight"><pre><span></span><code>scrapy runspider youtube_spider.py -o portadosfundos.json
-</code></pre></div>
-
+<pre><code>scrapy runspider youtube_spider.py -o portadosfundos.json
+</code></pre>
 <p>Outro formato interessante que o Scrapy suporta é <a href="http://jsonlines.org">JSON lines</a>:</p>
-<div class="highlight"><pre><span></span><code>scrapy runspider youtube_spider.py -o portadosfundos.jl
-</code></pre></div>
-
+<pre><code>scrapy runspider youtube_spider.py -o portadosfundos.jl
+</code></pre>
 <p>Esse formato usa um item JSON em cada linha -- isso é muito útil para arquivos
 grandes, porque fica fácil de concatenar dois arquivos ou acrescentar novas
 entradas a um arquivo já existente.</p>
@@ -172,37 +176,34 @@ herdam de
 definindo de alguma maneira as requisições iniciais do crawl e como proceder
 para tratar os resultados dessas requisições.</p>
 <p>Um exemplo simples de spider é:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
+<pre><code>import scrapy
 
-<span class="k">class</span> <span class="nc">SpiderSimples</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;meuspider&#39;</span>
+class SpiderSimples(scrapy.Spider):
+    name = 'meuspider'
 
-    <span class="k">def</span> <span class="nf">start_requests</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="s1">&#39;http://example.com&#39;</span><span class="p">)]</span>
+    def start_requests(self):
+        return [scrapy.Request('http://example.com')]
 
-    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;Visitei o site: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
-</code></pre></div>
-
+    def parse(self, response):
+        self.log('Visitei o site: %s' % response.url)
+</code></pre>
 <p>Se você rodar o spider acima com o comando <code>scrapy runspider</code>, deverá ver no
 log as mensagens:</p>
-<div class="highlight"><pre><span></span><code><span class="mi">2015</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">14</span><span class="w"> </span><span class="mi">21</span><span class="err">:</span><span class="mi">11</span><span class="err">:</span><span class="mi">13</span><span class="w"> </span><span class="o">[</span><span class="n">scrapy</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">Crawled</span><span class="w"> </span><span class="p">(</span><span class="mi">200</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="k">GET</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="nl">referer</span><span class="p">:</span><span class="w"> </span><span class="k">None</span><span class="p">)</span>
-<span class="mi">2015</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">14</span><span class="w"> </span><span class="mi">21</span><span class="err">:</span><span class="mi">11</span><span class="err">:</span><span class="mi">13</span><span class="w"> </span><span class="o">[</span><span class="n">meuspider</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">Visitei</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="nl">site</span><span class="p">:</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="p">.</span><span class="n">com</span>
-</code></pre></div>
-
+<pre><code>2015-11-14 21:11:13 [scrapy] DEBUG: Crawled (200) &lt;GET http://example.com&gt; (referer: None)
+2015-11-14 21:11:13 [meuspider] DEBUG: Visitei o site: http://example.com
+</code></pre>
 <p>Como iniciar um crawl a partir de uma lista de URLs é uma tarefa comum,
 o Scrapy permite você usar o atribute de classe <code>start_urls</code> em vez de
 definir o método <code>start_requests()</code> a cada vez:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
+<pre><code>import scrapy
 
-<span class="k">class</span> <span class="nc">SpiderSimples</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;meuspider&#39;</span>
-    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;http://example.com&#39;</span><span class="p">]</span>
+class SpiderSimples(scrapy.Spider):
+    name = 'meuspider'
+    start_urls = ['http://example.com']
 
-    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;Visitei o site: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
-</code></pre></div>
-
+    def parse(self, response):
+        self.log('Visitei o site: %s' % response.url)
+</code></pre>
 <h2>Callbacks e próximas requisições</h2>
 <p>Repare o método <code>parse()</code>, ele recebe um objeto <em>response</em> que representa uma
 resposta HTTP, é o que chamamos de um <strong>callback</strong>. Os métodos <strong>callbacks</strong> no
@@ -217,38 +218,36 @@ Scrapy são
 encaminha para o pipeline de dados ou para a fila de próximas requisições a
 serem feitas.</p>
 <p>Exemplo:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
+<pre><code>import scrapy
 
-<span class="k">class</span> <span class="nc">SpiderSimples</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;meuspider&#39;</span>
-    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;http://example.com&#39;</span><span class="p">]</span>
+class SpiderSimples(scrapy.Spider):
+    name = 'meuspider'
+    start_urls = ['http://example.com']
 
-    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;Visitei o site: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
-        <span class="k">yield</span> <span class="p">{</span><span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="s1">&#39;tamanho&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">)}</span>
+    def parse(self, response):
+        self.log('Visitei o site: %s' % response.url)
+        yield {'url': response.url, 'tamanho': len(response.body)}
 
-        <span class="n">proxima_url</span> <span class="o">=</span> <span class="s1">&#39;http://www.google.com.br&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;Agora vou para: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">proxima_url</span><span class="p">)</span>
-        <span class="k">yield</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">proxima_url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_google</span><span class="p">)</span>
+        proxima_url = 'http://www.google.com.br'
+        self.log('Agora vou para: %s' % proxima_url)
+        yield scrapy.Request(proxima_url, self.handle_google)
 
-    <span class="k">def</span> <span class="nf">handle_google</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;Visitei o google via URL: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
-</code></pre></div>
-
+    def handle_google(self, response):
+        self.log('Visitei o google via URL: %s' % response.url)
+</code></pre>
 <p>Antes de rodar o código acima, experimente ler o código e prever
 o que ele vai fazer. Depois, rode e verifique se ele fez mesmo
 o que você esperava.</p>
 <p>Você deverá ver no log algo como:</p>
-<div class="highlight"><pre><span></span><code><span class="mi">2015</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">14</span><span class="w"> </span><span class="mi">21</span><span class="err">:</span><span class="mi">32</span><span class="err">:</span><span class="mi">53</span><span class="w"> </span><span class="o">[</span><span class="n">scrapy</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">Crawled</span><span class="w"> </span><span class="p">(</span><span class="mi">200</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="k">GET</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="nl">referer</span><span class="p">:</span><span class="w"> </span><span class="k">None</span><span class="p">)</span>
-<span class="mi">2015</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">14</span><span class="w"> </span><span class="mi">21</span><span class="err">:</span><span class="mi">32</span><span class="err">:</span><span class="mi">53</span><span class="w"> </span><span class="o">[</span><span class="n">meuspider</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">Visitei</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="nl">site</span><span class="p">:</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="p">.</span><span class="n">com</span>
-<span class="mi">2015</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">14</span><span class="w"> </span><span class="mi">21</span><span class="err">:</span><span class="mi">32</span><span class="err">:</span><span class="mi">53</span><span class="w"> </span><span class="o">[</span><span class="n">scrapy</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">Scraped</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">200</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">&gt;</span>
-<span class="err">{</span><span class="s1">&#39;url&#39;</span><span class="err">:</span><span class="w"> </span><span class="s1">&#39;http://example.com&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;tamanho&#39;</span><span class="err">:</span><span class="w"> </span><span class="mi">1270</span><span class="err">}</span>
-<span class="mi">2015</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">14</span><span class="w"> </span><span class="mi">21</span><span class="err">:</span><span class="mi">32</span><span class="err">:</span><span class="mi">53</span><span class="w"> </span><span class="o">[</span><span class="n">meuspider</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">Agora</span><span class="w"> </span><span class="n">vou</span><span class="w"> </span><span class="nl">para</span><span class="p">:</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">google</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">br</span>
-<span class="mi">2015</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">14</span><span class="w"> </span><span class="mi">21</span><span class="err">:</span><span class="mi">32</span><span class="err">:</span><span class="mi">53</span><span class="w"> </span><span class="o">[</span><span class="n">scrapy</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">Crawled</span><span class="w"> </span><span class="p">(</span><span class="mi">200</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="k">GET</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">google</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">br</span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="nl">referer</span><span class="p">:</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="p">)</span>
-<span class="mi">2015</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">14</span><span class="w"> </span><span class="mi">21</span><span class="err">:</span><span class="mi">32</span><span class="err">:</span><span class="mi">54</span><span class="w"> </span><span class="o">[</span><span class="n">meuspider</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">Visitei</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="n">google</span><span class="w"> </span><span class="n">via</span><span class="w"> </span><span class="nl">URL</span><span class="p">:</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">google</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">br</span>
-<span class="mi">2015</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">14</span><span class="w"> </span><span class="mi">21</span><span class="err">:</span><span class="mi">32</span><span class="err">:</span><span class="mi">54</span><span class="w"> </span><span class="o">[</span><span class="n">scrapy</span><span class="o">]</span><span class="w"> </span><span class="nl">INFO</span><span class="p">:</span><span class="w"> </span><span class="n">Closing</span><span class="w"> </span><span class="n">spider</span><span class="w"> </span><span class="p">(</span><span class="n">finished</span><span class="p">)</span>
-</code></pre></div>
-
+<pre><code>2015-11-14 21:32:53 [scrapy] DEBUG: Crawled (200) &lt;GET http://example.com&gt; (referer: None)
+2015-11-14 21:32:53 [meuspider] DEBUG: Visitei o site: http://example.com
+2015-11-14 21:32:53 [scrapy] DEBUG: Scraped from &lt;200 http://example.com&gt;
+{'url': 'http://example.com', 'tamanho': 1270}
+2015-11-14 21:32:53 [meuspider] DEBUG: Agora vou para: http://www.google.com.br
+2015-11-14 21:32:53 [scrapy] DEBUG: Crawled (200) &lt;GET http://www.google.com.br&gt; (referer: http://example.com)
+2015-11-14 21:32:54 [meuspider] DEBUG: Visitei o google via URL: http://www.google.com.br
+2015-11-14 21:32:54 [scrapy] INFO: Closing spider (finished)
+</code></pre>
 <h3>Settings</h3>
 <p>Outro conceito importante do Scrapy são as <strong>settings</strong> (isto é, configurações).
 As <strong>settings</strong> oferecem uma maneira de configurar componentes do Scrapy, podendo
@@ -257,19 +256,17 @@ em um arquivo <strong>settings.py</strong> no caso de você estar usando um proj
 diretamente no spider definindo um atributo de classe <code>custom_settings</code>.</p>
 <p>Exemplo setando no código do spider um delay de 1.5 segundos entre cada
 requisição:</p>
-<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="n">MeuSpider</span>(<span class="n">scrapy</span>.<span class="n">Spider</span>):
-    <span class="nb">name</span> = <span class="s">&#39;meuspider&#39;</span>
+<pre><code>class MeuSpider(scrapy.Spider):
+    name = 'meuspider'
 
-    <span class="n">custom_settings</span> = {
-        <span class="s">&#39;DOWNLOAD_DELAY&#39;</span>: <span class="mf">1.5</span>,
+    custom_settings = {
+        'DOWNLOAD_DELAY': 1.5,
     }
-</code></pre></div>
-
+</code></pre>
 <p>Para setar uma setting diretamente na linha de comando com <code>scrapy runspider</code>,
 use opção <code>-s</code>:</p>
-<div class="highlight"><pre><span></span><code>scrapy runspider meuspider.py -s DOWNLOAD_DELAY=1.5
-</code></pre></div>
-
+<pre><code>scrapy runspider meuspider.py -s DOWNLOAD_DELAY=1.5
+</code></pre>
 <p>Uma setting útil durante o desenvolvimento é a <em>HTTPCACHE_ENABLED</em>, que
 habilita uma cache das requisições HTTP -- útil para evitar baixar as
 mesmas páginas várias vezes enquanto você refina o código de extração.</p>
@@ -277,7 +274,7 @@ mesmas páginas várias vezes enquanto você refina o código de extração.</p>
 <p><strong>Dica:</strong> na versão atual do Scrapy, a cache por padrão só funciona caso você
 esteja dentro de um projeto, que é onde ele coloca um diretório
 <code>.scrapy/httpcache</code> para os arquivos de cache. Caso você queira usar a cache
-rodando o spider com <code>scrapy runspider</code>, você pode usar um truque "enganar" o
+rodando o spider com <code>scrapy runspider</code>, você pode usar um truque &quot;enganar&quot; o
 Scrapy criando um arquivo vazio com o nome <code>scrapy.cfg</code> no diretório atual, e
 o Scrapy criará a estrutura de diretórios <code>.scrapy/httpcache</code> no diretório
 atual.</p>
@@ -302,13 +299,13 @@ autores e lista de tags.</p>
 <li>Versão com os dados dentro do código Javascript: <a href="http://spidyquotes.herokuapp.com/js/">http://spidyquotes.herokuapp.com/js/</a></li>
 <li>Versão com AJAX e scroll infinito: <a href="http://spidyquotes.herokuapp.com/scroll">http://spidyquotes.herokuapp.com/scroll</a></li>
 </ul>
-<p>Para ver as diferenças entre cada versão do site, acione a opção "Exibir
-código-fonte" (<kbd>Ctrl</kbd>-<kbd>U</kbd>) do menu de contexto do seu
+<p>Para ver as diferenças entre cada versão do site, acione a opção &quot;Exibir
+código-fonte&quot; (<kbd>Ctrl</kbd>-<kbd>U</kbd>) do menu de contexto do seu
 browser.</p>
 <blockquote>
-<p><strong>Nota:</strong> cuidado com a opção "Inspecionar elemento" do browser para inspecionar
-a estrutura do markup. Diferentemente do resultado da opção "Exibir
-código-fonte" Usando essa ferramenta, o código que você vê representa as
+<p><strong>Nota:</strong> cuidado com a opção &quot;Inspecionar elemento&quot; do browser para inspecionar
+a estrutura do markup. Diferentemente do resultado da opção &quot;Exibir
+código-fonte&quot; Usando essa ferramenta, o código que você vê representa as
 estruturas que o browser cria para a página, e nem sempre mapeiam diretamente
 ao código HTML que veio na requisição HTTP (que é o que você obtém quando usa
 o Scrapy), especialmente se a página estiver usando Javascript ou AJAX. Outro
@@ -318,127 +315,119 @@ browsers em todas as tabelas, mesmo quando não declarado no markup.</p>
 <h3>Spider para a versão com HTML semântico</h3>
 <p>Para explorar a página (e a API de scraping do Scrapy), você pode usar
 o comando <code>scrapy shell URL</code>:</p>
-<div class="highlight"><pre><span></span><code>scrapy shell http://spidyquotes.herokuapp.com/
-</code></pre></div>
-
+<pre><code>scrapy shell http://spidyquotes.herokuapp.com/
+</code></pre>
 <p>Esse comando abre um shell Python (ou <a href="http://ipython.org">IPython</a>, se você o
 tiver instalado no mesmo virtualenv) com o objeto <code>response</code>, o mesmo que você
 obteria num método <strong>callback</strong>. Recomendo usar o IPython porque fica mais fácil
 de explorar as APIs sem precisar ter que abrir a documentação a cada vez.</p>
 <p>Exemplo de exploração com o shell:</p>
-<div class="highlight"><pre><span></span><code>&gt;&gt;&gt;<span class="w"> </span>#<span class="w"> </span>olhando<span class="w"> </span>o<span class="w"> </span>fonte<span class="w"> </span>HTML,<span class="w"> </span>percebi<span class="w"> </span>que<span class="w"> </span>cada<span class="w"> </span>citação<span class="w"> </span>está<span class="w"> </span>num<span class="w"> </span><span class="nt">&lt;div</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;quote&quot;</span><span class="nt">&gt;</span>
-&gt;&gt;&gt;<span class="w"> </span>#<span class="w"> </span>vamos<span class="w"> </span>pegar<span class="w"> </span>o<span class="w"> </span>primeiro<span class="w"> </span>dele,<span class="w"> </span>e<span class="w"> </span>ver<span class="w"> </span>como<span class="w"> </span>extrair<span class="w"> </span>o<span class="w"> </span>texto:
-&gt;&gt;&gt;<span class="w"> </span>quote<span class="w"> </span>=<span class="w"> </span>response.css(&#39;.quote&#39;)[0]
-&gt;&gt;&gt;<span class="w"> </span>quote
-<span class="w">    </span><span class="nt">&lt;Selector</span><span class="w"> </span><span class="na">xpath=</span><span class="s">u&quot;descendant-or-self::*[@class</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">contains(concat(&#39;</span><span class="w"> </span><span class="err">&#39;,</span><span class="w"> </span><span class="err">normalize-space(@class),</span><span class="w"> </span><span class="err">&#39;</span><span class="w"> </span><span class="err">&#39;),</span><span class="w"> </span><span class="err">&#39;</span><span class="w"> </span><span class="err">quote</span><span class="w"> </span><span class="err">&#39;)]&quot;</span><span class="w"> </span><span class="na">data=</span><span class="s">u&#39;&lt;div</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;quote&quot;</span><span class="w"> </span><span class="err">itemscope</span><span class="w"> </span><span class="na">itemtype=</span><span class="s">&quot;h&#39;&gt;</span>
-<span class="s">&gt;&gt;&gt; print quote.extract()</span>
-<span class="s">&lt;div class=&quot;</span><span class="err">quote&quot;</span><span class="w"> </span><span class="err">itemscope</span><span class="w"> </span><span class="na">itemtype=</span><span class="s">&quot;http://schema.org/CreativeWork&quot;</span><span class="nt">&gt;</span>
-<span class="w">        </span><span class="nt">&lt;span</span><span class="w"> </span><span class="na">itemprop=</span><span class="s">&quot;text&quot;</span><span class="nt">&gt;</span>“We<span class="w"> </span>accept<span class="w"> </span>the<span class="w"> </span>love<span class="w"> </span>we<span class="w"> </span>think<span class="w"> </span>we<span class="w"> </span>deserve.”<span class="nt">&lt;/span&gt;</span>
-<span class="w">        </span><span class="nt">&lt;small</span><span class="w"> </span><span class="na">itemprop=</span><span class="s">&quot;author&quot;</span><span class="nt">&gt;</span>Stephen<span class="w"> </span>Chbosky<span class="nt">&lt;/small&gt;</span>
-<span class="w">        </span><span class="nt">&lt;div</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;tags&quot;</span><span class="nt">&gt;</span>
-<span class="w">            </span>Tags:
-<span class="w">            </span><span class="nt">&lt;meta</span><span class="w"> </span><span class="na">itemprop=</span><span class="s">&quot;keywords&quot;</span><span class="w"> </span><span class="na">content=</span><span class="s">&quot;inspirational,love&quot;</span><span class="nt">&gt;</span>
-
-<span class="w">            </span><span class="nt">&lt;a</span><span class="w"> </span><span class="na">href=</span><span class="s">&quot;/tag/inspirational/page/1/&quot;</span><span class="nt">&gt;</span>inspirational<span class="nt">&lt;/a&gt;</span>
-
-<span class="w">            </span><span class="nt">&lt;a</span><span class="w"> </span><span class="na">href=</span><span class="s">&quot;/tag/love/page/1/&quot;</span><span class="nt">&gt;</span>love<span class="nt">&lt;/a&gt;</span>
-
-<span class="w">        </span><span class="nt">&lt;/div&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/div&gt;</span>
-&gt;&gt;&gt;<span class="w"> </span>print<span class="w"> </span>quote.css(&#39;span&#39;).extract_first()
-<span class="nt">&lt;span</span><span class="w"> </span><span class="na">itemprop=</span><span class="s">&quot;text&quot;</span><span class="nt">&gt;</span>“We<span class="w"> </span>accept<span class="w"> </span>the<span class="w"> </span>love<span class="w"> </span>we<span class="w"> </span>think<span class="w"> </span>we<span class="w"> </span>deserve.”<span class="nt">&lt;/span&gt;</span>
-&gt;&gt;&gt;<span class="w"> </span>print<span class="w"> </span>quote.css(&#39;span::text&#39;).extract_first()<span class="w">  </span>#<span class="w"> </span>texto
-“We<span class="w"> </span>accept<span class="w"> </span>the<span class="w"> </span>love<span class="w"> </span>we<span class="w"> </span>think<span class="w"> </span>we<span class="w"> </span>deserve.”
-&gt;&gt;&gt;<span class="w"> </span>quote.css(&#39;small::text&#39;).extract_first()<span class="w">  </span>#<span class="w"> </span>autor
-<span class="w">    </span>u&#39;Stephen<span class="w"> </span>Chbosky&#39;
-&gt;&gt;&gt;<span class="w"> </span>
-&gt;&gt;&gt;<span class="w"> </span>#<span class="w"> </span>para<span class="w"> </span>a<span class="w"> </span>lista<span class="w"> </span>de<span class="w"> </span>tags,<span class="w"> </span>usamos<span class="w"> </span>.extract()<span class="w"> </span>em<span class="w"> </span>vez<span class="w"> </span>de<span class="w"> </span>.extract_first()
-&gt;&gt;&gt;<span class="w"> </span>quote.css(&#39;.tags<span class="w"> </span>a::text&#39;).extract()
-<span class="w">    </span>[u&#39;inspirational&#39;,<span class="w"> </span>u&#39;love&#39;]
-&gt;&gt;&gt;
-</code></pre></div>
-
+<pre><code>&gt;&gt;&gt; # olhando o fonte HTML, percebi que cada citação está num &lt;div class=&quot;quote&quot;&gt;
+&gt;&gt;&gt; # vamos pegar o primeiro dele, e ver como extrair o texto:
+&gt;&gt;&gt; quote = response.css('.quote')[0]
+&gt;&gt;&gt; quote
+    &lt;Selector xpath=u&quot;descendant-or-self::*[@class and contains(concat(' ', normalize-space(@class), ' '), ' quote ')]&quot; data=u'&lt;div class=&quot;quote&quot; itemscope itemtype=&quot;h'&gt;
+&gt;&gt;&gt; print quote.extract()
+&lt;div class=&quot;quote&quot; itemscope itemtype=&quot;http://schema.org/CreativeWork&quot;&gt;
+        &lt;span itemprop=&quot;text&quot;&gt;“We accept the love we think we deserve.”&lt;/span&gt;
+        &lt;small itemprop=&quot;author&quot;&gt;Stephen Chbosky&lt;/small&gt;
+        &lt;div class=&quot;tags&quot;&gt;
+            Tags:
+            &lt;meta itemprop=&quot;keywords&quot; content=&quot;inspirational,love&quot;&gt; 
+            
+            &lt;a href=&quot;/tag/inspirational/page/1/&quot;&gt;inspirational&lt;/a&gt;
+            
+            &lt;a href=&quot;/tag/love/page/1/&quot;&gt;love&lt;/a&gt;
+            
+        &lt;/div&gt;
+    &lt;/div&gt;
+&gt;&gt;&gt; print quote.css('span').extract_first()
+&lt;span itemprop=&quot;text&quot;&gt;“We accept the love we think we deserve.”&lt;/span&gt;
+&gt;&gt;&gt; print quote.css('span::text').extract_first()  # texto
+“We accept the love we think we deserve.”
+&gt;&gt;&gt; quote.css('small::text').extract_first()  # autor
+    u'Stephen Chbosky'
+&gt;&gt;&gt; 
+&gt;&gt;&gt; # para a lista de tags, usamos .extract() em vez de .extract_first()
+&gt;&gt;&gt; quote.css('.tags a::text').extract()
+    [u'inspirational', u'love']
+&gt;&gt;&gt; 
+</code></pre>
 <p>Com o resultado da exploração inicial acima, podemos começar escrevendo um
 spider assim, num arquivo <code>quote_spider.py</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
+<pre><code>import scrapy
 
 
-<span class="k">class</span> <span class="nc">QuotesSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;quotes&#39;</span>
-    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;http://spidyquotes.herokuapp.com/&#39;</span>
-    <span class="p">]</span>
+class QuotesSpider(scrapy.Spider):
+    name = 'quotes'
+    start_urls = [
+        'http://spidyquotes.herokuapp.com/'
+    ]
 
-    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;.quote&#39;</span><span class="p">):</span>
-            <span class="k">yield</span> <span class="p">{</span>
-                <span class="s1">&#39;texto&#39;</span><span class="p">:</span> <span class="n">quote</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;span::text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract_first</span><span class="p">(),</span>
-                <span class="s1">&#39;autor&#39;</span><span class="p">:</span> <span class="n">quote</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;small::text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract_first</span><span class="p">(),</span>
-                <span class="s1">&#39;tags&#39;</span><span class="p">:</span> <span class="n">quote</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;.tags a::text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">(),</span>
-            <span class="p">}</span>
-</code></pre></div>
-
+    def parse(self, response):
+        for quote in response.css('.quote'):
+            yield {
+                'texto': quote.css('span::text').extract_first(),
+                'autor': quote.css('small::text').extract_first(),
+                'tags': quote.css('.tags a::text').extract(),
+            }
+</code></pre>
 <p>Se você rodar esse spider com:</p>
-<div class="highlight"><pre><span></span><code>scrapy runspider quote_spider.py -o quotes.csv
-</code></pre></div>
-
+<pre><code>scrapy runspider quote_spider.py -o quotes.csv
+</code></pre>
 <p>Você obterá os dados das citações da primeira página no arquivo <code>quotes.csv</code>.
 Só está faltando agora seguir o link para a próxima página, o que você também
 pode descobrir com mais alguma exploração no shell:</p>
-<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="n">response</span><span class="p">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;li.next&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="o">[</span><span class="n">&lt;Selector xpath=u&quot;descendant-or-self::li[@class and contains(concat(&#39; &#39;, normalize-space(@class), &#39; &#39;), &#39; next &#39;)</span><span class="o">]</span><span class="ss">&quot; data=u&#39;&lt;li class=&quot;</span><span class="k">next</span><span class="ss">&quot;&gt;\n                &lt;a hre&#39;&gt;]</span>
-<span class="ss">&gt;&gt;&gt; response.css(&#39;li.next a&#39;)</span>
-<span class="ss">    [&lt;Selector xpath=u&quot;</span><span class="n">descendant</span><span class="o">-</span><span class="ow">or</span><span class="o">-</span><span class="nl">self</span><span class="p">:</span><span class="err">:</span><span class="n">li</span><span class="o">[</span><span class="n">@class and contains(concat(&#39; &#39;, normalize-space(@class), &#39; &#39;), &#39; next &#39;)</span><span class="o">]/</span><span class="n">descendant</span><span class="o">-</span><span class="ow">or</span><span class="o">-</span><span class="nl">self</span><span class="p">:</span><span class="err">:</span><span class="o">*/</span><span class="n">a</span><span class="ss">&quot; data=u&#39;&lt;a href=&quot;</span><span class="o">/</span><span class="n">page</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="ss">&quot;&gt;Next &lt;span aria-hidde&#39;&gt;]</span>
-<span class="ss">&gt;&gt;&gt; response.css(&#39;li.next a::attr(&quot;</span><span class="n">href</span><span class="ss">&quot;)&#39;).extract_first()</span>
-<span class="ss">    u&#39;/page/2/&#39;</span>
-<span class="ss">&gt;&gt;&gt; # o link é relativo, temos que joinear com a URL da resposta:</span>
-<span class="ss">&gt;&gt;&gt; response.urljoin(response.css(&#39;li.next a::attr(&quot;</span><span class="n">href</span><span class="err">&quot;</span><span class="p">)</span><span class="s1">&#39;).extract_first())</span>
-<span class="s1">    u&#39;</span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="n">spidyquotes</span><span class="p">.</span><span class="n">herokuapp</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">page</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="err">&#39;</span>
-</code></pre></div>
-
+<pre><code>&gt;&gt;&gt; response.css('li.next')
+    [&lt;Selector xpath=u&quot;descendant-or-self::li[@class and contains(concat(' ', normalize-space(@class), ' '), ' next ')]&quot; data=u'&lt;li class=&quot;next&quot;&gt;\n                &lt;a hre'&gt;]
+&gt;&gt;&gt; response.css('li.next a')
+    [&lt;Selector xpath=u&quot;descendant-or-self::li[@class and contains(concat(' ', normalize-space(@class), ' '), ' next ')]/descendant-or-self::*/a&quot; data=u'&lt;a href=&quot;/page/2/&quot;&gt;Next &lt;span aria-hidde'&gt;]
+&gt;&gt;&gt; response.css('li.next a::attr(&quot;href&quot;)').extract_first()
+    u'/page/2/'
+&gt;&gt;&gt; # o link é relativo, temos que joinear com a URL da resposta:
+&gt;&gt;&gt; response.urljoin(response.css('li.next a::attr(&quot;href&quot;)').extract_first())
+    u'http://spidyquotes.herokuapp.com/page/2/'
+</code></pre>
 <p>Juntando isso com o spider, ficamos com:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
+<pre><code>import scrapy
 
 
-<span class="k">class</span> <span class="nc">QuotesSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;quotes&#39;</span>
-    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;http://spidyquotes.herokuapp.com/&#39;</span>
-    <span class="p">]</span>
+class QuotesSpider(scrapy.Spider):
+    name = 'quotes'
+    start_urls = [
+        'http://spidyquotes.herokuapp.com/'
+    ]
 
-    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;.quote&#39;</span><span class="p">):</span>
-            <span class="k">yield</span> <span class="p">{</span>
-                <span class="s1">&#39;texto&#39;</span><span class="p">:</span> <span class="n">quote</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;span::text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract_first</span><span class="p">(),</span>
-                <span class="s1">&#39;autor&#39;</span><span class="p">:</span> <span class="n">quote</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;small::text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract_first</span><span class="p">(),</span>
-                <span class="s1">&#39;tags&#39;</span><span class="p">:</span> <span class="n">quote</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;.tags a::text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">(),</span>
-            <span class="p">}</span>
-        <span class="n">link_next</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;li.next a::attr(&quot;href&quot;)&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract_first</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">link_next</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">link_next</span><span class="p">))</span>
-</code></pre></div>
-
+    def parse(self, response):
+        for quote in response.css('.quote'):
+            yield {
+                'texto': quote.css('span::text').extract_first(),
+                'autor': quote.css('small::text').extract_first(),
+                'tags': quote.css('.tags a::text').extract(),
+            }
+        link_next = response.css('li.next a::attr(&quot;href&quot;)').extract_first()
+        if link_next:
+            yield scrapy.Request(response.urljoin(link_next))
+</code></pre>
 <p>Agora, se você rodar esse spider novamente com:</p>
-<div class="highlight"><pre><span></span><code>scrapy runspider quote_spider.py
-</code></pre></div>
-
+<pre><code>scrapy runspider quote_spider.py
+</code></pre>
 <p>Perceberá que ainda assim ele vai extrair apenas os items da primeira página, e a segunda página
 vai falhar com um código HTTP 429, com a seguinte mensagem no log:</p>
-<div class="highlight"><pre><span></span><code><span class="mi">2015</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">15</span><span class="w"> </span><span class="mi">00</span><span class="err">:</span><span class="mi">06</span><span class="err">:</span><span class="mi">15</span><span class="w"> </span><span class="o">[</span><span class="n">scrapy</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">Crawled</span><span class="w"> </span><span class="p">(</span><span class="mi">429</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="k">GET</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="n">spidyquotes</span><span class="p">.</span><span class="n">herokuapp</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">page</span><span class="o">/</span><span class="mi">2</span><span class="o">/&gt;</span><span class="w"> </span><span class="p">(</span><span class="nl">referer</span><span class="p">:</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="n">spidyquotes</span><span class="p">.</span><span class="n">herokuapp</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="p">)</span>
-<span class="mi">2015</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">15</span><span class="w"> </span><span class="mi">00</span><span class="err">:</span><span class="mi">06</span><span class="err">:</span><span class="mi">15</span><span class="w"> </span><span class="o">[</span><span class="n">scrapy</span><span class="o">]</span><span class="w"> </span><span class="nl">DEBUG</span><span class="p">:</span><span class="w"> </span><span class="n">Ignoring</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">&lt;</span><span class="mi">429</span><span class="w"> </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="n">spidyquotes</span><span class="p">.</span><span class="n">herokuapp</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">page</span><span class="o">/</span><span class="mi">2</span><span class="o">/&gt;</span><span class="err">:</span><span class="w"> </span><span class="n">HTTP</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">handled</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">allowed</span>
-<span class="mi">2015</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">15</span><span class="w"> </span><span class="mi">00</span><span class="err">:</span><span class="mi">06</span><span class="err">:</span><span class="mi">15</span><span class="w"> </span><span class="o">[</span><span class="n">scrapy</span><span class="o">]</span><span class="w"> </span><span class="nl">INFO</span><span class="p">:</span><span class="w"> </span><span class="n">Closing</span><span class="w"> </span><span class="n">spider</span><span class="w"> </span><span class="p">(</span><span class="n">finished</span><span class="p">)</span>
-</code></pre></div>
-
-<p><center>
-  <img alt="429 too many puppies" src="http://httpstatusdogs.com/wp-content/uploads/2011/12/429.jpg">
-</center></p>
+<pre><code>2015-11-15 00:06:15 [scrapy] DEBUG: Crawled (429) &lt;GET http://spidyquotes.herokuapp.com/page/2/&gt; (referer: http://spidyquotes.herokuapp.com/)
+2015-11-15 00:06:15 [scrapy] DEBUG: Ignoring response &lt;429 http://spidyquotes.herokuapp.com/page/2/&gt;: HTTP status code is not handled or not allowed
+2015-11-15 00:06:15 [scrapy] INFO: Closing spider (finished)
+</code></pre>
+<center>
+<p><img src="http://httpstatusdogs.com/wp-content/uploads/2011/12/429.jpg" alt="429 too many puppies" /></p>
+</center>
 <p>O status HTTP 429 é usado para indicar que o servidor está recebendo muitas
 requisições do mesmo cliente num curto período de tempo.</p>
 <p>No caso do nosso site, podemos simular o problema no próprio browser se
 apertarmos o botão atualizar várias vezes no mesmo segundo:</p>
-<p><center>
-  <img alt="Screenshot showing Too Many Requests" src="https://i.imgur.com/V3arr9E.jpg">
-</center></p>
+<center>
+<p><img src="https://i.imgur.com/V3arr9E.jpg" alt="Screenshot showing Too Many Requests" /></p>
+</center>
 <p>Neste caso, a mensagem no próprio site já nos diz o problema e a solução: o máximo de
 requisições permitido é uma a cada segundo, então podemos resolver o problema setando
 a configuração <code>DOWNLOAD_DELAY</code> para 1.5, deixando uma margem decente para podermos
@@ -446,28 +435,27 @@ fazer crawling sabendo que estamos respeitando a política.</p>
 <p>Como esta é uma necessidade comum para alguns sites, o Scrapy também permite
 você configurar este comportamento diretamente no spider, setando o atributo de
 classe <code>download_delay</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
+<pre><code>import scrapy
 
 
-<span class="k">class</span> <span class="nc">QuotesSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;quotes&#39;</span>
-    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;http://spidyquotes.herokuapp.com/&#39;</span>
-    <span class="p">]</span>
-    <span class="n">download_delay</span> <span class="o">=</span> <span class="mf">1.5</span>
+class QuotesSpider(scrapy.Spider):
+    name = 'quotes'
+    start_urls = [
+        'http://spidyquotes.herokuapp.com/'
+    ]
+    download_delay = 1.5
 
-    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;.quote&#39;</span><span class="p">):</span>
-            <span class="k">yield</span> <span class="p">{</span>
-                <span class="s1">&#39;texto&#39;</span><span class="p">:</span> <span class="n">quote</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;span::text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract_first</span><span class="p">(),</span>
-                <span class="s1">&#39;autor&#39;</span><span class="p">:</span> <span class="n">quote</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;small::text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract_first</span><span class="p">(),</span>
-                <span class="s1">&#39;tags&#39;</span><span class="p">:</span> <span class="n">quote</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;.tags a::text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">(),</span>
-            <span class="p">}</span>
-        <span class="n">link_next</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;li.next a::attr(&quot;href&quot;)&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract_first</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">link_next</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">link_next</span><span class="p">))</span>
-</code></pre></div>
-
+    def parse(self, response):
+        for quote in response.css('.quote'):
+            yield {
+                'texto': quote.css('span::text').extract_first(),
+                'autor': quote.css('small::text').extract_first(),
+                'tags': quote.css('.tags a::text').extract(),
+            }
+        link_next = response.css('li.next a::attr(&quot;href&quot;)').extract_first()
+        if link_next:
+            yield scrapy.Request(response.urljoin(link_next))
+</code></pre>
 <h3>Usando extruct para microdata</h3>
 <p>Se você é um leitor perspicaz, deve ter notado que o markup HTML tem umas
 marcações adicionais ao HTML normal, usando atributos <code>itemprop</code> e <code>itemtype</code>.
@@ -481,31 +469,29 @@ Guardian</a>, <a href="http://lemonde.fr">LeMonde</a>, etc.</p>
 interessado, você pode usar o extrator de microdata da biblioteca
 <a href="https://pypi.python.org/pypi/extruct">extruct</a>.</p>
 <p>Instale a biblioteca extruct com:</p>
-<div class="highlight"><pre><span></span><code>pip install extruct
-</code></pre></div>
-
+<pre><code>pip install extruct
+</code></pre>
 <p>Veja como fica o código usando a lib:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
-<span class="kn">from</span> <span class="nn">extruct.w3cmicrodata</span> <span class="kn">import</span> <span class="n">LxmlMicrodataExtractor</span>
+<pre><code>import scrapy
+from extruct.w3cmicrodata import LxmlMicrodataExtractor
 
 
-<span class="k">class</span> <span class="nc">QuotesSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;quotes-microdata&quot;</span>
-    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;http://spidyquotes.herokuapp.com/&#39;</span><span class="p">]</span>
-    <span class="n">download_delay</span> <span class="o">=</span> <span class="mf">1.5</span>
+class QuotesSpider(scrapy.Spider):
+    name = &quot;quotes-microdata&quot;
+    start_urls = ['http://spidyquotes.herokuapp.com/']
+    download_delay = 1.5
 
-    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
-        <span class="n">extractor</span> <span class="o">=</span> <span class="n">LxmlMicrodataExtractor</span><span class="p">()</span>
-        <span class="n">items</span> <span class="o">=</span> <span class="n">extractor</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body_as_unicode</span><span class="p">(),</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">)[</span><span class="s1">&#39;items&#39;</span><span class="p">]</span>
+    def parse(self, response):
+        extractor = LxmlMicrodataExtractor()
+        items = extractor.extract(response.body_as_unicode(), response.url)['items']
 
-        <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">it</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">]</span>
+        for it in items:
+            yield it['properties']
 
-        <span class="n">link_next</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;li.next a::attr(&quot;href&quot;)&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract_first</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">link_next</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">link_next</span><span class="p">))</span>
-</code></pre></div>
-
+        link_next = response.css('li.next a::attr(&quot;href&quot;)').extract_first()
+        if link_next:
+            yield scrapy.Request(response.urljoin(link_next))
+</code></pre>
 <p>Usando microdata você reduz sobremaneira os problemas de mudanças de leiaute,
 pois o desenvolvedor do site ao colocar o markup microdata se compromete a
 mantê-lo atualizado.</p>
@@ -524,64 +510,60 @@ na estrutura e nos padrões presentes no conteúdo.</p>
 <a href="http://spidyquotes.herokuapp.com/tableful">http://spidyquotes.herokuapp.com/tableful</a>, usando a expressão a seguir
 retorna os os nós <code>tr</code> (linhas da tabela) que contém os textos das citações,
 usando uma condição para pegar apenas linhas que estão imediatamente antes de
-linhas cujo texto comece com <code>"Tags: "</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span><span class="w"> </span><span class="nt">response</span><span class="p">.</span><span class="nc">xpath</span><span class="o">(</span><span class="s1">&#39;//tr</span><span class="cp">[</span><span class="nx">.</span><span class="p">/</span><span class="nx">following</span><span class="na">-sibling</span><span class="p">::</span><span class="nl">tr</span><span class="err">[</span><span class="mi">1</span><span class="cp">]</span><span class="s1">/td</span><span class="cp">[</span><span class="nx">starts</span><span class="na">-with</span><span class="p">(</span><span class="nx">.</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Tags:&quot;</span><span class="p">)</span><span class="cp">]</span><span class="s1">]&#39;</span><span class="o">)</span>
-<span class="cp">[</span><span class="o">&lt;</span><span class="nx">Selector</span><span class="w"> </span><span class="nx">xpath</span><span class="o">=</span><span class="s1">&#39;//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]&#39;</span><span class="w"> </span><span class="nx">data</span><span class="o">=</span><span class="nx">u</span><span class="s1">&#39;&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;</span><span class="se">\n</span><span class="s1">      &#39;</span><span class="o">&gt;</span><span class="p">,</span>
-<span class="w"> </span><span class="o">&lt;</span><span class="nx">Selector</span><span class="w"> </span><span class="nx">xpath</span><span class="o">=</span><span class="s1">&#39;//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]&#39;</span><span class="w"> </span><span class="nx">data</span><span class="o">=</span><span class="nx">u</span><span class="s1">&#39;&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;</span><span class="se">\n</span><span class="s1">      &#39;</span><span class="o">&gt;</span><span class="p">,</span>
-<span class="w"> </span><span class="o">&lt;</span><span class="nx">Selector</span><span class="w"> </span><span class="nx">xpath</span><span class="o">=</span><span class="s1">&#39;//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]&#39;</span><span class="w"> </span><span class="nx">data</span><span class="o">=</span><span class="nx">u</span><span class="s1">&#39;&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;</span><span class="se">\n</span><span class="s1">      &#39;</span><span class="o">&gt;</span><span class="p">,</span>
-<span class="w"> </span><span class="o">&lt;</span><span class="nx">Selector</span><span class="w"> </span><span class="nx">xpath</span><span class="o">=</span><span class="s1">&#39;//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]&#39;</span><span class="w"> </span><span class="nx">data</span><span class="o">=</span><span class="nx">u</span><span class="s1">&#39;&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;</span><span class="se">\n</span><span class="s1">      &#39;</span><span class="o">&gt;</span><span class="p">,</span>
-<span class="w"> </span><span class="o">&lt;</span><span class="nx">Selector</span><span class="w"> </span><span class="nx">xpath</span><span class="o">=</span><span class="s1">&#39;//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]&#39;</span><span class="w"> </span><span class="nx">data</span><span class="o">=</span><span class="nx">u</span><span class="s1">&#39;&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;</span><span class="se">\n</span><span class="s1">      &#39;</span><span class="o">&gt;</span><span class="p">,</span>
-<span class="w"> </span><span class="o">&lt;</span><span class="nx">Selector</span><span class="w"> </span><span class="nx">xpath</span><span class="o">=</span><span class="s1">&#39;//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]&#39;</span><span class="w"> </span><span class="nx">data</span><span class="o">=</span><span class="nx">u</span><span class="s1">&#39;&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;</span><span class="se">\n</span><span class="s1">      &#39;</span><span class="o">&gt;</span><span class="p">,</span>
-<span class="w"> </span><span class="o">&lt;</span><span class="nx">Selector</span><span class="w"> </span><span class="nx">xpath</span><span class="o">=</span><span class="s1">&#39;//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]&#39;</span><span class="w"> </span><span class="nx">data</span><span class="o">=</span><span class="nx">u</span><span class="s1">&#39;&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;</span><span class="se">\n</span><span class="s1">      &#39;</span><span class="o">&gt;</span><span class="p">,</span>
-<span class="w"> </span><span class="o">&lt;</span><span class="nx">Selector</span><span class="w"> </span><span class="nx">xpath</span><span class="o">=</span><span class="s1">&#39;//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]&#39;</span><span class="w"> </span><span class="nx">data</span><span class="o">=</span><span class="nx">u</span><span class="s1">&#39;&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;</span><span class="se">\n</span><span class="s1">      &#39;</span><span class="o">&gt;</span><span class="p">,</span>
-<span class="w"> </span><span class="o">&lt;</span><span class="nx">Selector</span><span class="w"> </span><span class="nx">xpath</span><span class="o">=</span><span class="s1">&#39;//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]&#39;</span><span class="w"> </span><span class="nx">data</span><span class="o">=</span><span class="nx">u</span><span class="s1">&#39;&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;</span><span class="se">\n</span><span class="s1">      &#39;</span><span class="o">&gt;</span><span class="p">,</span>
-<span class="w"> </span><span class="o">&lt;</span><span class="nx">Selector</span><span class="w"> </span><span class="nx">xpath</span><span class="o">=</span><span class="s1">&#39;//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]&#39;</span><span class="w"> </span><span class="nx">data</span><span class="o">=</span><span class="nx">u</span><span class="s1">&#39;&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;</span><span class="se">\n</span><span class="s1">      &#39;</span><span class="o">&gt;</span><span class="cp">]</span>
-</code></pre></div>
-
+linhas cujo texto comece com <code>&quot;Tags: &quot;</code>:</p>
+<pre><code>&gt;&gt;&gt; response.xpath('//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]')
+[&lt;Selector xpath='//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]' data=u'&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;\n      '&gt;,
+ &lt;Selector xpath='//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]' data=u'&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;\n      '&gt;,
+ &lt;Selector xpath='//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]' data=u'&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;\n      '&gt;,
+ &lt;Selector xpath='//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]' data=u'&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;\n      '&gt;,
+ &lt;Selector xpath='//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]' data=u'&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;\n      '&gt;,
+ &lt;Selector xpath='//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]' data=u'&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;\n      '&gt;,
+ &lt;Selector xpath='//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]' data=u'&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;\n      '&gt;,
+ &lt;Selector xpath='//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]' data=u'&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;\n      '&gt;,
+ &lt;Selector xpath='//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]' data=u'&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;\n      '&gt;,
+ &lt;Selector xpath='//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]' data=u'&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;\n      '&gt;]
+</code></pre>
 <p>Para extrair os dados, precisamos de alguma exploração:</p>
-<div class="highlight"><pre><span></span><code>&gt;&gt;&gt;<span class="w"> </span>quote<span class="w"> </span>=<span class="w"> </span>response.xpath(&#39;//tr[./following-sibling::tr[1]/td[starts-with(.,<span class="w"> </span>&quot;Tags:&quot;)]]&#39;)[0]
-&gt;&gt;&gt;<span class="w"> </span>print<span class="w"> </span>quote.extract()
-<span class="nt">&lt;tr</span><span class="w"> </span><span class="na">style=</span><span class="s">&quot;border-bottom: 0px; &quot;</span><span class="nt">&gt;</span>
-<span class="w">            </span><span class="nt">&lt;td</span><span class="w"> </span><span class="na">style=</span><span class="s">&quot;padding-top: 2em;&quot;</span><span class="nt">&gt;</span>“We<span class="w"> </span>accept<span class="w"> </span>the<span class="w"> </span>love<span class="w"> </span>we<span class="w"> </span>think<span class="w"> </span>we<span class="w"> </span>deserve.”<span class="w"> </span>Author:<span class="w"> </span>Stephen<span class="w"> </span>Chbosky<span class="nt">&lt;/td&gt;</span>
-<span class="w">                    </span><span class="nt">&lt;/tr&gt;</span>
-&gt;&gt;&gt;<span class="w"> </span>quote.xpath(&#39;string(.)&#39;).extract_first()
-<span class="w">    </span>u&#39;\n<span class="w">            </span>\u201cWe<span class="w"> </span>accept<span class="w"> </span>the<span class="w"> </span>love<span class="w"> </span>we<span class="w"> </span>think<span class="w"> </span>we<span class="w"> </span>deserve.\u201d<span class="w"> </span>Author:<span class="w"> </span>Stephen<span class="w"> </span>Chbosky\n<span class="w">        </span>&#39;
-&gt;&gt;&gt;<span class="w"> </span>quote.xpath(&#39;normalize-space(.)&#39;).extract_first()
-<span class="w">    </span>u&#39;\u201cWe<span class="w"> </span>accept<span class="w"> </span>the<span class="w"> </span>love<span class="w"> </span>we<span class="w"> </span>think<span class="w"> </span>we<span class="w"> </span>deserve.\u201d<span class="w"> </span>Author:<span class="w"> </span>Stephen<span class="w"> </span>Chbosky&#39;
-</code></pre></div>
-
+<pre><code>&gt;&gt;&gt; quote = response.xpath('//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]')[0]
+&gt;&gt;&gt; print quote.extract()
+&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;
+            &lt;td style=&quot;padding-top: 2em;&quot;&gt;“We accept the love we think we deserve.” Author: Stephen Chbosky&lt;/td&gt;
+                    &lt;/tr&gt;
+&gt;&gt;&gt; quote.xpath('string(.)').extract_first()
+    u'\n            \u201cWe accept the love we think we deserve.\u201d Author: Stephen Chbosky\n        '
+&gt;&gt;&gt; quote.xpath('normalize-space(.)').extract_first()
+    u'\u201cWe accept the love we think we deserve.\u201d Author: Stephen Chbosky'
+</code></pre>
 <p>Note como não tem marcação separando o autor do conteúdo, apenas uma string
-"Author:".  Então podemos usar o método <code>.re()</code> da classe seletor, que nos
+&quot;Author:&quot;.  Então podemos usar o método <code>.re()</code> da classe seletor, que nos
 permite usar uma expressão regular:</p>
-<div class="highlight"><pre><span></span><code>&gt;&gt;&gt; text, author = quote.xpath(&#39;normalize-space(.)&#39;).re(&#39;(.+) Author: (.+)&#39;)
+<pre><code>&gt;&gt;&gt; text, author = quote.xpath('normalize-space(.)').re('(.+) Author: (.+)')
 &gt;&gt;&gt; text
-    u&#39;\u201cWe accept the love we think we deserve.\u201d&#39;
+    u'\u201cWe accept the love we think we deserve.\u201d'
 &gt;&gt;&gt; author
-    u&#39;Stephen Chbosky&#39;
-</code></pre></div>
-
+    u'Stephen Chbosky'
+</code></pre>
 <p>O código final do spider fica:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
+<pre><code>import scrapy
 
 
-<span class="k">class</span> <span class="nc">QuotesSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;quotes-tableful&#39;</span>
-    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;http://spidyquotes.herokuapp.com/tableful&#39;</span><span class="p">]</span>
-    <span class="n">download_delay</span> <span class="o">=</span> <span class="mf">1.5</span>
+class QuotesSpider(scrapy.Spider):
+    name = 'quotes-tableful'
+    start_urls = ['http://spidyquotes.herokuapp.com/tableful']
+    download_delay = 1.5
 
-    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
-        <span class="n">quotes_xpath</span> <span class="o">=</span> <span class="s1">&#39;//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]&#39;</span>
+    def parse(self, response):
+        quotes_xpath = '//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]'
 
-        <span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">quotes_xpath</span><span class="p">):</span>
-            <span class="n">texto</span><span class="p">,</span> <span class="n">autor</span> <span class="o">=</span> <span class="n">quote</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;normalize-space(.)&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">re</span><span class="p">(</span><span class="s1">&#39;(.+) Author: (.+)&#39;</span><span class="p">)</span>
-            <span class="n">tags</span> <span class="o">=</span> <span class="n">quote</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;./following-sibling::tr[1]//a/text()&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
-            <span class="k">yield</span> <span class="nb">dict</span><span class="p">(</span><span class="n">texto</span><span class="o">=</span><span class="n">texto</span><span class="p">,</span> <span class="n">autor</span><span class="o">=</span><span class="n">autor</span><span class="p">,</span> <span class="n">tags</span><span class="o">=</span><span class="n">tags</span><span class="p">)</span>
+        for quote in response.xpath(quotes_xpath):
+            texto, autor = quote.xpath('normalize-space(.)').re('(.+) Author: (.+)')
+            tags = quote.xpath('./following-sibling::tr[1]//a/text()').extract()
+            yield dict(texto=texto, autor=autor, tags=tags)
 
-        <span class="n">link_next</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//a[contains(., &quot;Next&quot;)]/@href&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract_first</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">link_next</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">link_next</span><span class="p">))</span>
-</code></pre></div>
-
+        link_next = response.xpath('//a[contains(., &quot;Next&quot;)]/@href').extract_first()
+        if link_next:
+            yield scrapy.Request(response.urljoin(link_next))
+</code></pre>
 <p>Note como o uso de XPath permitiu vincularmos elementos de acordo com o conteúdo
 tanto no caso das tags quanto no caso do link para a próxima página.</p>
 <h3>Lidando com dados dentro do código</h3>
@@ -592,62 +574,59 @@ dentro de um array estático. E agora?</p>
 converter o código Javascript em XML e então usar XPath ou CSS em cima do XML
 resultante para extrair os dados que a gente quer.</p>
 <p>Instale a biblioteca js2xml com:</p>
-<div class="highlight"><pre><span></span><code>pip install js2xml
-</code></pre></div>
-
+<pre><code>pip install js2xml
+</code></pre>
 <p>Exemplo no shell:</p>
-<div class="highlight"><pre><span></span><code><span class="n">scrapy</span> <span class="n">shell</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">spidyquotes</span><span class="o">.</span><span class="n">herokuapp</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">js</span><span class="o">/</span>
+<pre><code>scrapy shell http://spidyquotes.herokuapp.com/js/
 
-<span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">js2xml</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">script</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//script[contains(., &quot;var data =&quot;)]/text()&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract_first</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">sel</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Selector</span><span class="p">(</span><span class="n">_root</span><span class="o">=</span><span class="n">js2xml</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">script</span><span class="p">))</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//var[@name=&quot;data&quot;]/array/object&#39;</span><span class="p">)</span>
-    <span class="p">[</span><span class="o">&lt;</span><span class="n">Selector</span> <span class="n">xpath</span><span class="o">=</span><span class="s1">&#39;//var[@name=&quot;data&quot;]/array/object&#39;</span> <span class="n">data</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;&#39;</span><span class="o">&gt;</span><span class="p">,</span>
- <span class="o">&lt;</span><span class="n">Selector</span> <span class="n">xpath</span><span class="o">=</span><span class="s1">&#39;//var[@name=&quot;data&quot;]/array/object&#39;</span> <span class="n">data</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;&#39;</span><span class="o">&gt;</span><span class="p">,</span>
- <span class="o">&lt;</span><span class="n">Selector</span> <span class="n">xpath</span><span class="o">=</span><span class="s1">&#39;//var[@name=&quot;data&quot;]/array/object&#39;</span> <span class="n">data</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;&#39;</span><span class="o">&gt;</span><span class="p">,</span>
- <span class="o">&lt;</span><span class="n">Selector</span> <span class="n">xpath</span><span class="o">=</span><span class="s1">&#39;//var[@name=&quot;data&quot;]/array/object&#39;</span> <span class="n">data</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;&#39;</span><span class="o">&gt;</span><span class="p">,</span>
- <span class="o">&lt;</span><span class="n">Selector</span> <span class="n">xpath</span><span class="o">=</span><span class="s1">&#39;//var[@name=&quot;data&quot;]/array/object&#39;</span> <span class="n">data</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;&#39;</span><span class="o">&gt;</span><span class="p">,</span>
- <span class="o">&lt;</span><span class="n">Selector</span> <span class="n">xpath</span><span class="o">=</span><span class="s1">&#39;//var[@name=&quot;data&quot;]/array/object&#39;</span> <span class="n">data</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;&#39;</span><span class="o">&gt;</span><span class="p">,</span>
- <span class="o">&lt;</span><span class="n">Selector</span> <span class="n">xpath</span><span class="o">=</span><span class="s1">&#39;//var[@name=&quot;data&quot;]/array/object&#39;</span> <span class="n">data</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;&#39;</span><span class="o">&gt;</span><span class="p">,</span>
- <span class="o">&lt;</span><span class="n">Selector</span> <span class="n">xpath</span><span class="o">=</span><span class="s1">&#39;//var[@name=&quot;data&quot;]/array/object&#39;</span> <span class="n">data</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;&#39;</span><span class="o">&gt;</span><span class="p">,</span>
- <span class="o">&lt;</span><span class="n">Selector</span> <span class="n">xpath</span><span class="o">=</span><span class="s1">&#39;//var[@name=&quot;data&quot;]/array/object&#39;</span> <span class="n">data</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;&#39;</span><span class="o">&gt;</span><span class="p">,</span>
- <span class="o">&lt;</span><span class="n">Selector</span> <span class="n">xpath</span><span class="o">=</span><span class="s1">&#39;//var[@name=&quot;data&quot;]/array/object&#39;</span> <span class="n">data</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;&#39;</span><span class="o">&gt;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">quote</span> <span class="o">=</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//var[@name=&quot;data&quot;]/array/object&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">quote</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;string(./property[@name=&quot;text&quot;])&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract_first</span><span class="p">()</span>
-    <span class="sa">u</span><span class="s1">&#39;</span><span class="se">\u201c</span><span class="s1">We accept the love we think we deserve.</span><span class="se">\u201d</span><span class="s1">&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">quote</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;string(./property[@name=&quot;author&quot;]//property[@name=&quot;name&quot;])&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract_first</span><span class="p">()</span>
-    <span class="sa">u</span><span class="s1">&#39;Stephen Chbosky&#39;</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">quote</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;./property[@name=&quot;tags&quot;]//string/text()&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
-    <span class="p">[</span><span class="sa">u</span><span class="s1">&#39;inspirational&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;love&#39;</span><span class="p">]</span>
-</code></pre></div>
-
+&gt;&gt;&gt; import js2xml
+&gt;&gt;&gt; script = response.xpath('//script[contains(., &quot;var data =&quot;)]/text()').extract_first()
+&gt;&gt;&gt; sel = scrapy.Selector(_root=js2xml.parse(script))
+&gt;&gt;&gt; sel.xpath('//var[@name=&quot;data&quot;]/array/object')
+    [&lt;Selector xpath='//var[@name=&quot;data&quot;]/array/object' data=u'&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;'&gt;,
+ &lt;Selector xpath='//var[@name=&quot;data&quot;]/array/object' data=u'&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;'&gt;,
+ &lt;Selector xpath='//var[@name=&quot;data&quot;]/array/object' data=u'&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;'&gt;,
+ &lt;Selector xpath='//var[@name=&quot;data&quot;]/array/object' data=u'&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;'&gt;,
+ &lt;Selector xpath='//var[@name=&quot;data&quot;]/array/object' data=u'&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;'&gt;,
+ &lt;Selector xpath='//var[@name=&quot;data&quot;]/array/object' data=u'&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;'&gt;,
+ &lt;Selector xpath='//var[@name=&quot;data&quot;]/array/object' data=u'&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;'&gt;,
+ &lt;Selector xpath='//var[@name=&quot;data&quot;]/array/object' data=u'&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;'&gt;,
+ &lt;Selector xpath='//var[@name=&quot;data&quot;]/array/object' data=u'&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;'&gt;,
+ &lt;Selector xpath='//var[@name=&quot;data&quot;]/array/object' data=u'&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;'&gt;]
+&gt;&gt;&gt; quote = sel.xpath('//var[@name=&quot;data&quot;]/array/object')[0]
+&gt;&gt;&gt; quote.xpath('string(./property[@name=&quot;text&quot;])').extract_first()
+    u'\u201cWe accept the love we think we deserve.\u201d'
+&gt;&gt;&gt; quote.xpath('string(./property[@name=&quot;author&quot;]//property[@name=&quot;name&quot;])').extract_first()
+    u'Stephen Chbosky'
+&gt;&gt;&gt; quote.xpath('./property[@name=&quot;tags&quot;]//string/text()').extract()
+    [u'inspirational', u'love']
+</code></pre>
 <p>O código final fica:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
-<span class="kn">import</span> <span class="nn">js2xml</span>
+<pre><code>import scrapy
+import js2xml
 
 
-<span class="k">class</span> <span class="nc">QuotesSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;quotes-js&#39;</span>
-    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;http://spidyquotes.herokuapp.com/js/&#39;</span><span class="p">]</span>
-    <span class="n">download_delay</span> <span class="o">=</span> <span class="mf">1.5</span>
+class QuotesSpider(scrapy.Spider):
+    name = 'quotes-js'
+    start_urls = ['http://spidyquotes.herokuapp.com/js/']
+    download_delay = 1.5
 
-    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
-        <span class="n">script</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//script[contains(., &quot;var data =&quot;)]/text()&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract_first</span><span class="p">()</span>
-        <span class="n">sel</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Selector</span><span class="p">(</span><span class="n">_root</span><span class="o">=</span><span class="n">js2xml</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">script</span><span class="p">))</span>
-        <span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//var[@name=&quot;data&quot;]/array/object&#39;</span><span class="p">):</span>
-            <span class="k">yield</span> <span class="p">{</span>
-                <span class="s1">&#39;texto&#39;</span><span class="p">:</span> <span class="n">quote</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;string(./property[@name=&quot;text&quot;])&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract_first</span><span class="p">(),</span>
-                <span class="s1">&#39;autor&#39;</span><span class="p">:</span> <span class="n">quote</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span>
-                    <span class="s1">&#39;string(./property[@name=&quot;author&quot;]//property[@name=&quot;name&quot;])&#39;</span>
-                <span class="p">)</span><span class="o">.</span><span class="n">extract_first</span><span class="p">(),</span>
-                <span class="s1">&#39;tags&#39;</span><span class="p">:</span> <span class="n">quote</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;./property[@name=&quot;tags&quot;]//string/text()&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">(),</span>
-            <span class="p">}</span>
+    def parse(self, response):
+        script = response.xpath('//script[contains(., &quot;var data =&quot;)]/text()').extract_first()
+        sel = scrapy.Selector(_root=js2xml.parse(script))
+        for quote in sel.xpath('//var[@name=&quot;data&quot;]/array/object'):
+            yield {
+                'texto': quote.xpath('string(./property[@name=&quot;text&quot;])').extract_first(),
+                'autor': quote.xpath(
+                    'string(./property[@name=&quot;author&quot;]//property[@name=&quot;name&quot;])'
+                ).extract_first(),
+                'tags': quote.xpath('./property[@name=&quot;tags&quot;]//string/text()').extract(),
+            }
 
-        <span class="n">link_next</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">&#39;li.next a::attr(&quot;href&quot;)&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">extract_first</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">link_next</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">link_next</span><span class="p">))</span>
-</code></pre></div>
-
+        link_next = response.css('li.next a::attr(&quot;href&quot;)').extract_first()
+        if link_next:
+            yield scrapy.Request(response.urljoin(link_next))
+</code></pre>
 <p>Fica um pouco obscuro pela transformação de código Javascript em XML, mas a
 extração fica mais confiável do que hacks baseados em expressões regulares.</p>
 <h3>Lidando com AJAX</h3>
@@ -659,69 +638,64 @@ no Firefox é similar).</p>
 <p>Nesse caso, precisamos replicar essas requisições com o Scrapy, e tratar
 os resultados de acordo com a resposta.</p>
 <p>Explorando no shell, vemos que o conteúdo é JSON:</p>
-<div class="highlight"><pre><span></span><code>scrapy shell http://spidyquotes.herokuapp.com/api/quotes?page=1
+<pre><code>scrapy shell http://spidyquotes.herokuapp.com/api/quotes?page=1
 
 &gt;&gt;&gt; response.headers
-{&#39;Content-Type&#39;: &#39;application/json&#39;,
- &#39;Date&#39;: &#39;Sun, 15 Nov 2015 22:18:29 GMT&#39;,
- &#39;Server&#39;: &#39;gunicorn/19.3.0&#39;,
- &#39;Via&#39;: &#39;1.1 vegur&#39;}
-</code></pre></div>
-
+{'Content-Type': 'application/json',
+ 'Date': 'Sun, 15 Nov 2015 22:18:29 GMT',
+ 'Server': 'gunicorn/19.3.0',
+ 'Via': '1.1 vegur'}
+</code></pre>
 <p>Portanto, podemos simplesmente usar o módulo JSON da biblioteca padrão e ser feliz:</p>
-<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">json</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-<span class="p">[</span><span class="sa">u</span><span class="s1">&#39;has_next&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;quotes&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;tag&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;page&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;top_ten_tags&#39;</span><span class="p">]</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;has_next&#39;</span><span class="p">]</span>
-<span class="kc">True</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;quotes&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-<span class="p">{</span><span class="sa">u</span><span class="s1">&#39;author&#39;</span><span class="p">:</span> <span class="p">{</span><span class="sa">u</span><span class="s1">&#39;goodreads_link&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;/author/show/12898.Stephen_Chbosky&#39;</span><span class="p">,</span>
-  <span class="sa">u</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;Stephen Chbosky&#39;</span><span class="p">},</span>
- <span class="sa">u</span><span class="s1">&#39;tags&#39;</span><span class="p">:</span> <span class="p">[</span><span class="sa">u</span><span class="s1">&#39;inspirational&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;love&#39;</span><span class="p">],</span>
- <span class="sa">u</span><span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="se">\u201c</span><span class="s1">We accept the love we think we deserve.</span><span class="se">\u201d</span><span class="s1">&#39;</span><span class="p">}</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;page&#39;</span><span class="p">]</span>
-<span class="mi">1</span>
-</code></pre></div>
-
+<pre><code>&gt;&gt;&gt; import json
+&gt;&gt;&gt; data = json.loads(response.body)
+&gt;&gt;&gt; data.keys()
+[u'has_next', u'quotes', u'tag', u'page', u'top_ten_tags']
+&gt;&gt;&gt; data['has_next']
+True
+&gt;&gt;&gt; data['quotes'][0]
+{u'author': {u'goodreads_link': u'/author/show/12898.Stephen_Chbosky',
+  u'name': u'Stephen Chbosky'},
+ u'tags': [u'inspirational', u'love'],
+ u'text': u'\u201cWe accept the love we think we deserve.\u201d'}
+&gt;&gt;&gt; data['page']
+1
+</code></pre>
 <p>Código final do spider fica:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapy</span>
-<span class="kn">import</span> <span class="nn">json</span>
+<pre><code>import scrapy
+import json
 
 
-<span class="k">class</span> <span class="nc">QuotesSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;quotes-scroll&#39;</span>
-    <span class="n">quotes_base_url</span> <span class="o">=</span> <span class="s1">&#39;http://spidyquotes.herokuapp.com/api/quotes?page=</span><span class="si">%s</span><span class="s1">&#39;</span>
-    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="n">quotes_base_url</span> <span class="o">%</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="n">download_delay</span> <span class="o">=</span> <span class="mf">1.5</span>
+class QuotesSpider(scrapy.Spider):
+    name = 'quotes-scroll'
+    quotes_base_url = 'http://spidyquotes.herokuapp.com/api/quotes?page=%s'
+    start_urls = [quotes_base_url % 1]
+    download_delay = 1.5
 
-    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;quotes&#39;</span><span class="p">,</span> <span class="p">[]):</span>
-            <span class="k">yield</span> <span class="p">{</span>
-                <span class="s1">&#39;texto&#39;</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">],</span>
-                <span class="s1">&#39;autor&#39;</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;author&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
-                <span class="s1">&#39;tags&#39;</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;tags&#39;</span><span class="p">],</span>
-            <span class="p">}</span>
-        <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;has_next&#39;</span><span class="p">]:</span>
-            <span class="n">next_page</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;page&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
-            <span class="k">yield</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">quotes_base_url</span> <span class="o">%</span> <span class="n">next_page</span><span class="p">)</span>
-</code></pre></div>
-
+    def parse(self, response):
+        data = json.loads(response.body)
+        for d in data.get('quotes', []):
+            yield {
+                'texto': d['text'],
+                'autor': d['author']['name'],
+                'tags': d['tags'],
+            }
+        if data['has_next']:
+            next_page = data['page'] + 1
+            yield scrapy.Request(self.quotes_base_url % next_page)
+</code></pre>
 <p>Ao lidar com requisições desse tipo, uma ferramenta útil que pode ser o
-<a href="https://pypi.python.org/pypi/minreq">minreq</a>, instale com: <code>pip install
-minreq</code>.</p>
+<a href="https://pypi.python.org/pypi/minreq">minreq</a>, instale com: <code>pip install minreq</code>.</p>
 <p>O minreq tenta encontrar a requisição mínima necessária para replicar
 uma requisição do browser, e pode opcionalmente mostrar como montar
 um objeto <code>scrapy.Request</code> equivalente.</p>
 <p>Rode o minreq com:</p>
-<div class="highlight"><pre><span></span><code>minreq --action print_scrapy_request
-</code></pre></div>
-
+<pre><code>minreq --action print_scrapy_request
+</code></pre>
 <p>Ele fica esperando você colar uma requisição no formato cURL. Para isto,
 encontre a requisição AJAX que você quer replicar na aba Network do browser, e
-use o recurso "Copy as cURL":</p>
-<p><img alt="Screenshot showing Copy as cURL" src="https://i.imgur.com/hqz9b58.jpg"></p>
+use o recurso &quot;Copy as cURL&quot;:</p>
+<p><img src="https://i.imgur.com/hqz9b58.jpg" alt="Screenshot showing Copy as cURL" /></p>
 <p>Cole no prompt do minreq, e espere ele fazer a mágica. =)</p>
 <blockquote>
 <p><strong>Nota:</strong> O minreq está em estágio pre-alpha, você provavelmente vai
@@ -731,7 +705,7 @@ encontrar bugs -- por favor reporte no GitHub.</p>
 <p>O <a href="http://scrapinghub.com/platform/">Scrapy Cloud</a> é a plataforma PaaS para
 rodar crawlers na nuvem, o que permite evitar uma série de preocupações com
 infraestrutura.</p>
-<p>Funciona como um "Heroku para crawlers", você faz deploy do seu projeto Scrapy
+<p>Funciona como um &quot;Heroku para crawlers&quot;, você faz deploy do seu projeto Scrapy
 e configura jobs para rodar spiders periodicamente.  Você pode também
 configurar scripts Python para rodar periodicamente, os quais podem gerenciar o
 escalonamento dos spiders.</p>
@@ -740,16 +714,14 @@ escalonamento dos spiders.</p>
 <p>Até aqui nossos exemplos foram simplesmente rodando spiders com <code>scrapy runspider</code>.
 Para fazer o deploy, chegou a hora de criar um projeto Scrapy propriamente dito.</p>
 <p>Para criar um projeto, basta rodar o comando <code>scrapy startproject</code> passando o nome do projeto:</p>
-<div class="highlight"><pre><span></span><code>scrapy startproject quotes_crawler
-</code></pre></div>
-
+<pre><code>scrapy startproject quotes_crawler
+</code></pre>
 <p>Feito isso, entre no diretório do projeto com <code>cd quotes_crawler</code> e copie os
 arquivos com spiders para dentro do diretório <code>quotes_crawler/spiders</code>.
 Certifique-se de usar um nome único para cada spider.</p>
 <p>A partir desse momento, você deve ser capaz de rodar cada spider em separado usando o comando:</p>
-<div class="highlight"><pre><span></span><code>scrapy crawl NOME_DO_SPIDER
-</code></pre></div>
-
+<pre><code>scrapy crawl NOME_DO_SPIDER
+</code></pre>
 <blockquote>
 <p><strong>Nota:</strong> Dependendo do caso, é legal começar com um projeto desde o começo,
 para já fazer tudo de maneira estruturada. Pessoalmente, eu gosto de começar
@@ -761,44 +733,42 @@ estruturado e fácil de crescer dentro de um projeto.</p>
 <h3>Configuração no Scrapy Cloud</h3>
 <p>Antes do deploy, você precisa criar um projeto no Scrapy Cloud. Na tela
 inicial, clique no botão adicionar uma organização:</p>
-<p><center>
-  <img alt="Scrapinghub screenshot: Add an organization" src="https://i.imgur.com/9fsBv4I.png">
-</center></p>
+<center>
+<p><img src="https://i.imgur.com/9fsBv4I.png" alt="Scrapinghub screenshot: Add an organization" /></p>
+</center>
 <p>Dê um nome para a organização e confirme:</p>
-<p><center>
-  <img alt="Scrapinghub screenshot: criando organização" src="https://i.imgur.com/GvfEXzu.png">
-</center></p>
+<center>
+<p><img src="https://i.imgur.com/GvfEXzu.png" alt="Scrapinghub screenshot: criando organização" /></p>
+</center>
 <p>Em seguida, adicione um serviço do para hospedar o seu serviço, clicando no
-botão "+ Service" que aparece dentro da organização criada:</p>
-<p><center>
-  <img alt="Scrapinghub screenshot: Adicionar serviço" src="https://i.imgur.com/D0VTJLc.png">
-</center></p>
+botão &quot;+ Service&quot; que aparece dentro da organização criada:</p>
+<center>
+<p><img src="https://i.imgur.com/D0VTJLc.png" alt="Scrapinghub screenshot: Adicionar serviço" /></p>
+</center>
 <p>Preencha os dados do seu projeto e confirme:</p>
-<p><center>
-  <img alt="Scrapinghub screenshot: Adicionar serviço" src="https://i.imgur.com/05Hvbu3.png">
-</center></p>
+<center>
+<p><img src="https://i.imgur.com/05Hvbu3.png" alt="Scrapinghub screenshot: Adicionar serviço" /></p>
+</center>
 <p>Depois disso, clique no nome do serviço na página inicial para acessar o local
 onde seu projeto estará disponível:</p>
-<p><center>
-  <img alt="Scrapinghub screenshot: acessar serviço" src="https://i.imgur.com/OIZLxYA.png">
-</center></p>
+<center>
+<p><img src="https://i.imgur.com/OIZLxYA.png" alt="Scrapinghub screenshot: acessar serviço" /></p>
+</center>
 <p>Note o número identificador do seu projeto: você usará esse identificador na
 hora fazer o deploy.</p>
-<p><center>
-  <img alt="Scrapinghub screenshot: pegando id do projeto" src="https://i.imgur.com/ErsMJbB.png">
-</center></p>
+<center>
+<p><img src="https://i.imgur.com/ErsMJbB.png" alt="Scrapinghub screenshot: pegando id do projeto" /></p>
+</center>
 <h3>Instalando e configurando shub</h3>
 <p>A maneira mais fácil de fazer deploy no Scrapy Cloud é usando a ferramenta
 <a href="http://doc.scrapinghub.com/shub.html">shub</a>, cliente da linha de comando
 para o Scrapy Cloud e demais serviços da Scrapinghub.</p>
 <p>Instale-a com:</p>
-<div class="highlight"><pre><span></span><code>pip install shub --upgrade
-</code></pre></div>
-
+<pre><code>pip install shub --upgrade
+</code></pre>
 <p>Faça login com o shub, usando o comando:</p>
-<div class="highlight"><pre><span></span><code>shub login
-</code></pre></div>
-
+<pre><code>shub login
+</code></pre>
 <p>Informe sua API key conforme for solicitado (<a href="https://dash.scrapinghub.com/account/apikey">descubra aqui sua API
 key</a>).</p>
 <blockquote>
@@ -811,39 +781,35 @@ linha de comando.</p>
 <p>Antes de fazer deploy do projeto, precisamos fazer deploy das dependências no
 Scrapy Cloud.
 Crie um arquivo <code>requirements-deploy.txt</code> com o seguinte conteúdo:</p>
-<div class="highlight"><pre><span></span><code>extruct
+<pre><code>extruct
 js2xml
 slimit
 ply
-</code></pre></div>
-
+</code></pre>
 <p>Rode o comando:</p>
-<div class="highlight"><pre><span></span><code>shub deploy-reqs PROJECT_ID requirements-deploy.txt
-</code></pre></div>
-
+<pre><code>shub deploy-reqs PROJECT_ID requirements-deploy.txt
+</code></pre>
 <p>Substitua <code>PROJECT_ID</code> pelo id do seu projeto (neste caso, 27199).</p>
 <h4>Deploy das dependências</h4>
 <p>Agora faça deploy do projeto com o comando:</p>
-<div class="highlight"><pre><span></span><code>shub deploy -p PROJECT_ID
-</code></pre></div>
-
+<pre><code>shub deploy -p PROJECT_ID
+</code></pre>
 <p>Novamente, substituindo <code>PROJECT_ID</code> pelo id do seu projeto (neste caso, 27199)</p>
 <p>Se tudo deu certo, você verá algo como</p>
-<div class="highlight"><pre><span></span><code>$<span class="w"> </span>shub<span class="w"> </span>deploy<span class="w"> </span>-p<span class="w"> </span><span class="m">27199</span>
-Packing<span class="w"> </span>version<span class="w"> </span><span class="m">1447628479</span>
-Deploying<span class="w"> </span>to<span class="w"> </span>Scrapy<span class="w"> </span>Cloud<span class="w"> </span>project<span class="w"> </span><span class="s2">&quot;27199&quot;</span>
-<span class="o">{</span><span class="s2">&quot;status&quot;</span>:<span class="w"> </span><span class="s2">&quot;ok&quot;</span>,<span class="w"> </span><span class="s2">&quot;project&quot;</span>:<span class="w"> </span><span class="m">27199</span>,<span class="w"> </span><span class="s2">&quot;version&quot;</span>:<span class="w"> </span><span class="s2">&quot;1447628479&quot;</span>,<span class="w"> </span><span class="s2">&quot;spiders&quot;</span>:<span class="w"> </span><span class="m">5</span><span class="o">}</span>
-Run<span class="w"> </span>your<span class="w"> </span>spiders<span class="w"> </span>at:<span class="w"> </span>https://dash.scrapinghub.com/p/27199/
-</code></pre></div>
-
+<pre><code>$ shub deploy -p 27199
+Packing version 1447628479
+Deploying to Scrapy Cloud project &quot;27199&quot;
+{&quot;status&quot;: &quot;ok&quot;, &quot;project&quot;: 27199, &quot;version&quot;: &quot;1447628479&quot;, &quot;spiders&quot;: 5}
+Run your spiders at: https://dash.scrapinghub.com/p/27199/
+</code></pre>
 <p>Agora você pode ir para a URL indicada (neste caso, <a href="https://dash.scrapinghub.com/p/27199/">https://dash.scrapinghub.com/p/27199/</a>)
-e agendar jobs dos spiders usando o botão "Schedule".</p>
+e agendar jobs dos spiders usando o botão &quot;Schedule&quot;.</p>
 <blockquote>
 <p><strong>Nota:</strong> opcionalmente, você pode configurar o identificador do projeto no
 arquivo <code>scrapy.cfg</code>, para não precisar ter que lembrar a cada vez.</p>
 </blockquote>
-<p>Para configurar um spider para rodar periodicamente, utilize a aba "Periodic
-Jobs", no menu à esquerda.</p>
+<p>Para configurar um spider para rodar periodicamente, utilize a aba &quot;Periodic
+Jobs&quot;, no menu à esquerda.</p>
 <h1>The End</h1>
 <p>Era isso, se você chegou até aqui, parabéns e obrigado pela atenção! :)</p>
 <p>Você pode conferir o código do projeto final em: <a href="https://github.com/eliasdorneles/quotes_crawler">https://github.com/eliasdorneles/quotes_crawler</a></p>
@@ -853,16 +819,9 @@ scrapy</a> ou pergunte em inglês no
 e-mail scrapy-users</a>.</p>
 <p>Obrigado Valdir pela ajuda com a montagem desse tutorial, tanto no desenvolvimento
 do app <code>spidyquotes</code> quanto na escrita do material. <em>You rock, dude!</em></p>
+
 </section>
 
-        <aside id="sidebar">
-                <div class="widget">
-                        <h2>Categories</h2>
-                        <ul>
-                           <li ><a href="../category/blog.html">blog</a></li>
-                        </ul>
-                </div>
-        </aside><!-- /#sidebar -->
 
         <hr />
         <footer class="footer-menu">

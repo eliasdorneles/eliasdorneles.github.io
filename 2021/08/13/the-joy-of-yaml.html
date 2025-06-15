@@ -5,10 +5,12 @@
         <link rel="shortcut icon" href="/images/favicon.ico">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="../../../theme/css/pygments.css" type="text/css" />
-        <link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
-        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
-        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/pygments.css" type="text/css" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+        <link href="https://eliasdorneles.com/atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
+        
+        <link href="https://eliasdorneles.com/feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        
 <script>
 var host = "eliasdorneles.github.io";
 if (window.location.host == host && window.location.protocol != "https:") {
@@ -21,16 +23,28 @@ if (window.location.host == host && window.location.protocol != "https:") {
     <a name="top"></a>
 
 <div class="site-container">
+        
         <header id="banner" class="body">
-                <h1><a href="../../../index.html">Elias Dorneles </a></h1>
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
                 <nav><ul>
+                
                     <li >
-                        <a href="../../../">Blog</a>
+                        <a href="https://eliasdorneles.com/">Blog</a>
                     </li>
-                    <li ><a href="../../../pages/about.html">About me</a></li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
                 </ul></nav>
         </header><!-- /#banner -->
+        
 
+        
 <section id="content" class="body">
     <article>
         <header>
@@ -41,14 +55,21 @@ if (window.location.host == host && window.location.protocol != "https:") {
         </header>
 
         <div class="entry-content">
+            
 <footer class="post-info">
+        
         <address class="vcard author">
             posted by
-            <a href="../../../pages/about-me.html">Elias Dorneles</a>
-            on <abbr class="published" title="2021-08-13T22:14:00+02:00">2021, août 13</abbr>
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2021-08-13 22:14:00+02:00">2021, August 13</abbr>
             <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/the-joy-of-yaml.md">Edit</a>
         </address>
-</footer>            <p>I haven't written much on the blog on the last few years, I don't know, I
+        
+
+
+</footer>
+
+            <p>I haven't written much on the blog on the last few years, I don't know, I
 didn't felt like I had much to say.  There is so much being said on the Web,
 lots of great stuff, but also tons of crap too, and I didn't feel like adding
 to the noise. I've learned loads of stuff, but not in the mood for sharing, and
@@ -106,38 +127,37 @@ hash table with configuration at the top of the module file, then a bunch of
 functions under that, and at the very bottom there would be some main-like code
 that would drive the execution and use the configuration.</p>
 <p>A lot of what I wrote back then was PHP, so reducing it to a minimal example, it looked to something like this:</p>
-<div class="highlight"><pre><span></span><code><span class="cp">&lt;?php</span>
+<pre><code class="language-php">&lt;?php
 
-<span class="nv">$config</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
-  <span class="s2">&quot;items&quot;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
-    <span class="s2">&quot;apple&quot;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s2">&quot;count&quot;</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Apples for baking a pie&quot;</span><span class="p">),</span>
-    <span class="s2">&quot;banana&quot;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s2">&quot;count&quot;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Banana for quick dessert&quot;</span><span class="p">),</span>
-    <span class="s2">&quot;tomato&quot;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s2">&quot;count&quot;</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Tomatoes for a salad&quot;</span><span class="p">),</span>
-  <span class="p">)</span>
-<span class="p">);</span>
+$config = array(
+  &quot;items&quot; =&gt; array(
+    &quot;apple&quot; =&gt; array(&quot;count&quot; =&gt; 2, &quot;description&quot; =&gt; &quot;Apples for baking a pie&quot;),
+    &quot;banana&quot; =&gt; array(&quot;count&quot; =&gt; 1, &quot;description&quot; =&gt; &quot;Banana for quick dessert&quot;),
+    &quot;tomato&quot; =&gt; array(&quot;count&quot; =&gt; 3, &quot;description&quot; =&gt; &quot;Tomatoes for a salad&quot;),
+  )
+);
 
-<span class="k">function</span> <span class="nf">generate_table</span><span class="p">(</span><span class="nv">$items</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nv">$out</span> <span class="o">=</span> <span class="s2">&quot;&lt;table&gt;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
-  <span class="nv">$out</span> <span class="o">.=</span> <span class="s2">&quot;&lt;th&gt;&lt;td&gt;Name&lt;/td&gt;&lt;td&gt;Count&lt;/td&gt;&lt;td&gt;Description&lt;/td&gt;&lt;/th&gt;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
-  <span class="k">foreach</span><span class="p">(</span><span class="nv">$items</span> <span class="k">as</span> <span class="nv">$name</span> <span class="o">=&gt;</span> <span class="nv">$it</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nv">$out</span> <span class="o">.=</span> <span class="s2">&quot;&lt;tr&gt;&quot;</span><span class="p">;</span>
-    <span class="nv">$out</span> <span class="o">.=</span> <span class="s2">&quot;&lt;td&gt;&quot;</span> <span class="o">.</span> <span class="nv">$name</span> <span class="o">.</span> <span class="s2">&quot;&lt;/td&gt;&quot;</span><span class="p">;</span>
-    <span class="nv">$out</span> <span class="o">.=</span> <span class="s2">&quot;&lt;td&gt;&quot;</span> <span class="o">.</span> <span class="nv">$it</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">]</span> <span class="o">.</span> <span class="s2">&quot;&lt;/td&gt;&quot;</span><span class="p">;</span>
-    <span class="nv">$out</span> <span class="o">.=</span> <span class="s2">&quot;&lt;td&gt;&quot;</span> <span class="o">.</span> <span class="nv">$it</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">.</span> <span class="s2">&quot;&lt;/td&gt;&quot;</span><span class="p">;</span>
-    <span class="nv">$out</span> <span class="o">.=</span> <span class="s2">&quot;&lt;/tr&gt;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="nv">$out</span> <span class="o">.=</span> <span class="s2">&quot;&lt;/table&gt;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
-  <span class="k">return</span> <span class="nv">$out</span><span class="p">;</span>
-<span class="p">}</span>
+function generate_table($items) {
+  $out = &quot;&lt;table&gt;\n&quot;;
+  $out .= &quot;&lt;th&gt;&lt;td&gt;Name&lt;/td&gt;&lt;td&gt;Count&lt;/td&gt;&lt;td&gt;Description&lt;/td&gt;&lt;/th&gt;\n&quot;;
+  foreach($items as $name =&gt; $it) {
+    $out .= &quot;&lt;tr&gt;&quot;;
+    $out .= &quot;&lt;td&gt;&quot; . $name . &quot;&lt;/td&gt;&quot;;
+    $out .= &quot;&lt;td&gt;&quot; . $it[&quot;count&quot;] . &quot;&lt;/td&gt;&quot;;
+    $out .= &quot;&lt;td&gt;&quot; . $it[&quot;description&quot;] . &quot;&lt;/td&gt;&quot;;
+    $out .= &quot;&lt;/tr&gt;\n&quot;;
+  }
+  $out .= &quot;&lt;/table&gt;\n&quot;;
+  return $out;
+}
 
-<span class="k">echo</span> <span class="nx">generate_table</span><span class="p">(</span><span class="nv">$config</span><span class="p">[</span><span class="s2">&quot;items&quot;</span><span class="p">]);</span>
-</code></pre></div>
-
-<p>I remember that my friend Valdir, with whom I hanged out all the time, after I showed him some code I was working on, he told me: "dude, I know a piece of code is from you when I see a big array of configuration in the beginning!". He was teasing me, of course, we had a laugh, and I remember feeling kind of proud of it! <em>"Yeah, this is my thing!"</em></p>
+echo generate_table($config[&quot;items&quot;]);
+</code></pre>
+<p>I remember that my friend Valdir, with whom I hanged out all the time, after I showed him some code I was working on, he told me: &quot;dude, I know a piece of code is from you when I see a big array of configuration in the beginning!&quot;. He was teasing me, of course, we had a laugh, and I remember feeling kind of proud of it! <em>&quot;Yeah, this is my thing!&quot;</em></p>
 <p>There were a bunch of things that I liked about this:</p>
 <ol>
 <li>
-<p>I had one central place to put all the "knobs" that determined how the program behave. That's pretty neat, if I came back later to code that I had written before, I didn't need to read through the code to figure out where to tweak some parameter: I would go directly to my configuration array.</p>
+<p>I had one central place to put all the &quot;knobs&quot; that determined how the program behave. That's pretty neat, if I came back later to code that I had written before, I didn't need to read through the code to figure out where to tweak some parameter: I would go directly to my configuration array.</p>
 </li>
 <li>
 <p>I could quickly extend the configuration (copy and paste, modify, tap tap tap...), and use my text editor features and my growing <a href="https://www.vim.org">vim</a> skills.  Working on vim is addictive: I still code on it to this day, even after trying lots of other editors and IDEs (<a href="https://github.com/eliasdorneles/dotfiles">and my configuration files are on Github, if you're curious</a>).</p>
@@ -152,21 +172,21 @@ that the young programmer I was, in his own way, felt already the need to
 come up with something of a clean architecture.</p>
 <p>Though I'd probably tell you off if you'd tell me something like that, back
 then I was pretty rebellious and I hated jargon that wanted to sound important
-like "architecture", "layers". I only trusted code that I could read and run.
-I had absorbed a bit too much that phrase from Linus Torvalds, <em>"talk is cheap,
-show me the code"</em>.</p>
+like &quot;architecture&quot;, &quot;layers&quot;. I only trusted code that I could read and run.
+I had absorbed a bit too much that phrase from Linus Torvalds, <em>&quot;talk is cheap,
+show me the code&quot;</em>.</p>
 <p>If you had sent me the link to a <a href="https://blog.cleancoder.com/uncle-bob/2011/11/22/Clean-Architecture.html">blog post by Robert Martin defending clean
 architecture</a>,
 I would scoff.</p>
 <p>But, deep down, I was working my way into those ideas. Years later, when I was ready,
-I read folks like Martin Fowler, Robert Martin, Kent Beck, and was like "yes, yes!"</p>
+I read folks like Martin Fowler, Robert Martin, Kent Beck, and was like &quot;yes, yes!&quot;</p>
 <p>Okay, I like that I showed you some PHP code even though you, dear reader, are most likely a lover of Python, but I will stop digressing and get to the point.</p>
 <p>The first point is: every big enough well-structured program has need of some form of configuration.</p>
 <p>That is, structured information that some power user may need change from time to time. Some values are more stable than others, some almost never change, some are specific to a deployment environment, etc. It's usually not truly programming code, but it can be, or it can contain code bits. And if it's kept in text files, it starts looking a lot like code, and you can use text editors, with syntax highlighting and automatic checks.</p>
 <p>The second point, and this is the important one, is that you can turn some of
 your admin interface into configuration files, and let your internal power
 users use their text editor to copy and paste, and have their fix of
-dopamine when they write "code" and it works!</p>
+dopamine when they write &quot;code&quot; and it works!</p>
 <p>And that's where YAML comes in!</p>
 <p>There is a lot to gain from using well-structured YAML files for the more
 stable bits of admin configuration.</p>
@@ -182,7 +202,7 @@ has the best combination of tooling support, power and readability.</p>
 folks who can immediately understand what it means, and later even write YAML
 on their own. That YAML draft becomes a spec once everyone is happy with it,
 and feeds right into the implementation. In a way, it's almost like it would
-answer the programmer who would say: <em>"talk is cheap, show me the code"</em>.</p>
+answer the programmer who would say: <em>&quot;talk is cheap, show me the code&quot;</em>.</p>
 <p>It's widely supported, has plenty of tooling support, and if you've never done
 any YAML, you may be surprised that it has even some <a href="https://www.netways.de/en/blog/2019/11/21/gitlab-ci-yaml-write-less-with-anchors-extends-and-hidden-keys/">reuse
 features</a>,
@@ -206,7 +226,7 @@ use YAML for its configuration.</p>
 <p>One great example is <a href="https://docs.gitlab.com/ee/ci/quick_start/#create-a-gitlab-ciyml-file">the Gitlab CI
 configuration</a>
 which is all YAML-based, which is a great inspiration. They've actually kind of extended
-YAML supporting "include" features and other things.</p>
+YAML supporting &quot;include&quot; features and other things.</p>
 <p>Someone did a round up of <a href="https://octopus.com/blog/state-of-config-file-formats">some common formats used for configuration
 here</a>, mostly to explain
 why Hashicorp went out to develop <a href="https://github.com/hashicorp/hcl">their own language</a> to use
@@ -225,21 +245,14 @@ Apple</a>.</p>
 <p>Aaaand, I've managed to write a blog post about YAML with zero YAML snippets on it, only PHP, haha!</p>
 <p>I'm off, have a good one, folks!
 Have fun coding, or whatever it is you like to do! =)</p>
+
         </div>
 
-        <div class="taglist"></div>
-
+        <div class="taglist">
+</div>
     </article>
 </section>
 
-        <aside id="sidebar">
-                <div class="widget">
-                        <h2>Categories</h2>
-                        <ul>
-                           <li class="active"><a href="../../../category/blog.html">blog</a></li>
-                        </ul>
-                </div>
-        </aside><!-- /#sidebar -->
 
         <hr />
         <footer class="footer-menu">
