@@ -5,4 +5,5 @@ description = "Elias Dorneles' website"
 requires-python = ">=3.11.0"
 dependencies = [
     "ghp-import>=2.1.0",
+    "watchdog>=6.0.0",
 ]

@@ -1,16 +1,23 @@
 # My blog
 
+Source code and content for [my blog](https://eliasdorneles.com)
 
-Source code and content for [my blog](https://eliasdorneles.github.io)
+Built with a custom static site generator written in [Odin](https://odin-lang.org).
 
-Built with Pelican, deployed by a Bash script in a Travis build.
+## Setting up
 
-For local editing, there is a helper Makefile:
+Install system dependencies:
 
-    $ make
-    Quick help:
-    
-    compile  generate site
-    server   generate site watching for changes and start server
-    clean    removes output and cache directories
+    sudo apt install libcmark-gfm-dev libcmark-gfm-extensions-dev
 
+Install [uv](https://docs.astral.sh/uv/) (currently only used for deploying).
+
+Run `make` to see the help.
+
+## History
+
+My blog has known many homes, and the one that lived longer was
+a static website built with [Pelican](https://getpelican.com/).
+
+In 2025 I learned Odin and decided to use it for building my website, as it was
+a good learning opportunity.
