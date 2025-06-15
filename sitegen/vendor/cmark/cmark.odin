@@ -1,8 +1,8 @@
 /*
-	Bindings against CMark (https://github.com/commonmark/cmark)
+Minimal wrapper for CMark-GFM (https://github.com/github/cmark-gfm)
 
-	Original authors: John MacFarlane, Vicent Marti, Kārlis Gaņģis, Nick Wellnhofer.
-	See LICENSE for license details.
+This is adapted from the Odin-vendored CMark bindings available here:
+https://github.com/odin-lang/Odin/blob/master/vendor/commonmark/
 */
 package vendor_commonmark
 
