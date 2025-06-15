@@ -1,6 +1,6 @@
 Template engine -- jinja2 syntax to support:
 
-Template evaluation:
+Template engine -- needed features:
 [x] {{ variable }} replaces content in variable
 [x] {{ variable.something.child }} replaces content in variable child
 [x] {{ variable.isoformat() }} implements date isoformat
@@ -16,9 +16,8 @@ Template evaluation:
     [x] {% if page is defined and url == page.url %}
     [x] {% if article.content != article._summary %}
     [x] {% if page is defined and it.url == page.url %}
-[ ] set: {% set rel_source_path = 'site/' + article.source_path.split('/site/')[1] %}
-    best to ignore the set command and set this in sitegen
-Template loading:
+[x] set: {% set rel_source_path = 'site/' + article.source_path.split('/site/')[1] %}
+      -> no need to implement set statement, implement it directly in the tool
 [x] Includes: {% include 'FILENAME' %}
     [x] support nested includes
 [x] Blocks: {% block NAME %}  {% endblock %}
@@ -49,7 +48,7 @@ main logic:
 [x]     load article metadata and MD source
 [x]     render article content from MD to HTML
     [x] fix missing GH syntax
-    [.] fix image MD syntax inside <center> tag
+    [x] fix image MD syntax inside <center> tag
         found a WORKAROUND: add blank line after <center> tag
             => this breaks in Pelican though
 [x]     create local context
@@ -57,7 +56,7 @@ main logic:
     [x] fix bug expression inside child block w/ double {{{{
     [x] fix bug dates incorrect format and TZ
     [x] add relative source path variable
-    [ ] add highlightjs to replace pygments: https://highlightjs.org/
+    [x] add highlightjs to replace pygments: https://highlightjs.org/
 [x] generate index page
     [x] build articles_page object, with object_list with list of articles
     [x] generate summary for every article
@@ -68,14 +67,8 @@ main logic:
     only articles in English by default and in each article, display a link
     to the alternative translations
 [x] fix CMark GFM usage to use table extension
-[ ] fix issue with incorrect image and weird path for "post pycon blues" article
-----------------------
-
 [x] Copy site/images/ OUTPUT_DIR/images/
 [x] Copy theme static files ./mytheme/static/*/** to OUTPUT_DIR/theme/*/**
 [x] Copy CNAME file
-
 [x] implement proper relative urls, for better local preview
-
-TODO before deploying:
-[ ] apply WORKAROUND for <center> tag wrapping images (see above)
+[ ] fix issue with incorrect image and weird path for "post pycon blues" article

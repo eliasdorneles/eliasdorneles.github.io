@@ -212,8 +212,15 @@ img.align-right {
     padding: 10px;
 }
 
+/* for syntax highlighted code blocks */
 pre code {
     font-size: 80%;
+}
+
+/* for inline code snippets */
+code {
+    background-color: #f3f3f3;
+    padding: 1px 5px;
 }
 
 .taglist {
