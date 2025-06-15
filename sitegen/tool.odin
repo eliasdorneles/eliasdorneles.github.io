@@ -477,6 +477,7 @@ main :: proc() {
     if rendered, ok := render_template(&env, "index.html", &index_ctx); ok {
         // Remove {static} for index page
         rendered, _ = strings.replace_all(rendered, "{static}", "")
+        rendered, _ = strings.replace_all(rendered, "%7Bstatic%7D", "")
         target_path := filepath.join({args.output, "index.html"})
         bytes_to_write := transmute([]u8)rendered
         if !os.write_entire_file(target_path, bytes_to_write) {

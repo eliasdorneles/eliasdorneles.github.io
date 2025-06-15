@@ -71,4 +71,6 @@ main logic:
 [x] Copy theme static files ./mytheme/static/*/** to OUTPUT_DIR/theme/*/**
 [x] Copy CNAME file
 [x] implement proper relative urls, for better local preview
-[ ] fix issue with incorrect image and weird path for "post pycon blues" article
+[x] fix issue with incorrect image and weird path for "post pycon blues" article
+
+It's all done!!! Yayyy! 🎉
