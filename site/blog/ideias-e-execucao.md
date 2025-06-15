@@ -37,6 +37,7 @@ teve incentivo do governo, e o que mais inventar o poderoso gerador de
 desculpas conhecido como cérebro humano.  
 
 <center>
+
   [![Linus Pauling, cientista superprodutivo](https://upload.wikimedia.org/wikipedia/commons/5/58/L_Pauling.jpg "Linus Pauling")](https://pt.wikipedia.org/wiki/Linus_Pauling)
 </center>
 

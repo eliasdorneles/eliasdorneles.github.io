@@ -3,6 +3,7 @@ Date: 2011-12-11 23:12
 Author: Elias Dorneles
 
 <center>
+
   [![Eu, tocando violão]({static}/images/ahogado.jpg "Eu, fominha, tocando violão em Punta del Este")](https://eljunior.files.wordpress.com/2011/12/ahogado.png)
 </center>
 
@@ -23,6 +24,7 @@ Angelina") do [Tommy Emmanuel](http://www.tommyemmanuel.com/ "Tommy Emmanuel -
 Site Oficial") no Youtube.
 
 <center>
+
   [![Tommy Emmanuel](http://farm5.staticflickr.com/4012/4224141072_f706c5452f.jpg)](http://www.flickr.com/photos/zanastardust/4224141072/)
 
   [Tommy Emmanuel em algum show fenomenal por aí..!](http://www.flickr.com/photos/zanastardust/4224141072/)
@@ -53,6 +55,7 @@ Tommy](https://www.youtube.com/watch?v=YoqG7PO-MHs "Tommy Emmanuel dando lição
 <https://www.youtube.com/watch?v=YoqG7PO-MHs>
 
 <center>
+
   [![Tommy Emmanuel fazendo palhaçada pra gente](https://eljunior.files.wordpress.com/2011/12/dsc05668.jpg?w=300 "Tommy Emmanuel fazendo palhaçada pra gente")](https://eljunior.files.wordpress.com/2011/12/dsc05668.jpg)
 
   Tommy fazendo graça, e eu felizão assistindo...
@@ -117,6 +120,7 @@ Your browser does not support this audio
 </audio>
 
 </p>
+
 [Baixar
 MP3](https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/01-baixo_alternado.mp3 "Baixar MP3 - Baixo Alternado") 
 |  [Baixar tablatura: Baixo
@@ -178,6 +182,7 @@ Your browser does not support this audio
 </audio>
 
 </p>
+
 [Baixar
 MP3](https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/02-acordes_no_tempo_forte_com_baixo_alternado.mp3 "Baixar MP3 - Acordes no Tempo Forte + Baixo Alternado") 
 |  [Baixar tablatura: Acordes no Tempo Torte +
@@ -219,6 +224,7 @@ Your browser does not support this audio
 </audio>
 
 </p>
+
 [Baixar
 MP3](https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/03-acordes_no_contratempo_com_baixo_alternado.mp3 "Baixar MP3 - Acordes no contratempo com baixo alternado") 
 |  [Baixar tablatura: Acordes no contratempo +
@@ -255,6 +261,7 @@ Your browser does not support this audio
 </audio>
 
 </p>
+
 [Baixar
 MP3](https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/04-base-thumbpicking.mp3 "Baixar MP3 - Base Thumbpicking")
  |  [Baixar tablatura: Base thumbpicking - Trocando
@@ -296,6 +303,7 @@ Your browser does not support this audio
 </audio>
 
 </p>
+
 [Baixar
 MP3](https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/05-base_com_dedilhado-thumbpicking.mp3 "Baixar MP3 - Base thumbpicking com dedilhado")
  |  [Baixar tablatura: Base thumbpicking com dedilhado em
@@ -320,6 +328,7 @@ Your browser does not support this audio
 </audio>
 
 </p>
+
 [Baixar
 MP3](https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/06-outra_base_com_dedilhado-thumbpicking.mp3 "Baixar MP3 - Base thumbpicking em dó, com dedilhado")
  |  [Baixar tablatura: Base thumbpicking em Dó
@@ -354,6 +363,7 @@ Your browser does not support this audio
 </audio>
 
 </p>
+
 [Baixar MP3 - Aloha
 Oe](https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/07-exemplo-aloha_oe.mp3 "Baixar MP3 de Aloha Oe")
 
@@ -373,6 +383,7 @@ Your browser does not support this audio
 </audio>
 
 </p>
+
 [Baixar MP3 - Windy and
 Warm](https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/08-exemplo-windy_and_warm.mp3 "Baixar MP3 - Windy and Warm")
 

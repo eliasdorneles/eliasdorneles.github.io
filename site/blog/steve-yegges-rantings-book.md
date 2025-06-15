@@ -21,6 +21,7 @@ the ebook from their website and it offered me to send as a gift to a few
 friends, so it was a nice deal.
 
 <center>
+
   [![Cover of Steve Yegge's Rantings book](https://3.bp.blogspot.com/-fsINtrFzTHs/U-f8-2QOj9I/AAAAAAAAAy4/7sWr2RZ8P8I/s1600/40632A90DD_thumb.jpg "A Programmer's Rantings: On Programming-Language Religions, Code Philosophies, Google Work Culture and Other Stuff")](http://www.hyperink.com/A-Programmers-Rantings-On-Programminglanguage-Religions-Code-Philosophies-Google-Work-Culture-And-Other-Stuff-b40632A90DD)[](https://www.blogger.com/)
 </center>
 

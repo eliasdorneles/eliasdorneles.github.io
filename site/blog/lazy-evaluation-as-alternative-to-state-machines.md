@@ -44,6 +44,7 @@ this to explore the idea of alternatives to state machines.
 Here is a diagram of the state machine:
 
 <center>
+
 ![Picture with diagram of Finite State machine]({static}/images/fsm_strip_comments.png)
 </center>
 
