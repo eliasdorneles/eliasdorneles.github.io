@@ -5,7 +5,6 @@
         <link rel="shortcut icon" href="/images/favicon.ico">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/pygments.css" type="text/css" />
         <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
         <link href="https://eliasdorneles.com/atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
         
@@ -244,7 +243,12 @@ keep solving the same conflicts again and again and save a few brain cycles.</p>
 (taken from <a href="https://github.com/eliasdorneles/dotfiles/blob/master/bashrc">my <code>~/.bashrc</code> file</a>)
 and tweak them to your needs:</p>
 <pre><code>edit_modified_files(){
-    $EDITOR $( (git ls-files -m -o --exclude-standard; git diff --cached --name-only --relative .) | sort | uniq)
+    $EDITOR $(
+        (
+            git ls-files -m -o --exclude-standard
+            git diff --cached --name-only --relative .
+        )  | sort | uniq
+    )
 }
 edit_files_with_conflicts(){
     $EDITOR $(git diff --name-only --diff-filter=U)
@@ -345,5 +349,9 @@ answers</a>.</p>
         </footer>
 </div>
 
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/default.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
 </body>
 </html>
