@@ -1,8 +1,6 @@
 {
     "SITEURL": "https://eliasdorneles.com",
     "SITENAME": "Elias Dorneles",
-    "FEED_ATOM": "atom.xml",
-    "FEED_RSS": "feed.xml",
     "MENUITEMS": [
         {"title": "Blog", "url": ""},
         {"title": "Today I Learned...", "url": "til"},

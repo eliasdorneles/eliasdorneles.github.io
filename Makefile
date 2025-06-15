@@ -1,5 +1,6 @@
 SHELL := /bin/bash
-OUTPUT_DIR := ./output
+LOCAL_OUTPUT_DIR := ./output
+PROD_OUTPUT_DIR := ./output_prod
 
 .DEFAULT_GOAL := help
 
@@ -7,16 +8,16 @@ sitegen.bin: sitegen/tool.odin sitegen/template_engine.odin config_sitegen.json
 	odin build sitegen
 
 .PHONY: compile-dev
-compile-dev: clean sitegen.bin
+compile-dev: clean-local sitegen.bin
 	./sitegen.bin --local --output output --config-file config_sitegen.json
 
 .PHONY: compile-prod
-compile-prod: clean sitegen.bin
-	./sitegen.bin --output output --config-file config_sitegen.json
+compile-prod: sitegen.bin
+	./sitegen.bin --output ${PROD_OUTPUT_DIR} --config-file config_sitegen.json
 
 .PHONY: server
 server: compile-dev  ## Start a local server to view the site
-	(cd ${OUTPUT_DIR} && python3 -m http.server)
+	(cd ${LOCAL_OUTPUT_DIR} && python3 -m http.server)
 
 .PHONY: watch
 watch: compile-dev  ## Start a local server and watch for changes
@@ -30,8 +31,8 @@ watch: compile-dev  ## Start a local server and watch for changes
 		make server
 
 .PHONY: deploy
-deploy: clean compile-prod  ## Deploy the site to GitHub Pages
-	uv run ghp-import -m "Update site" ${OUTPUT_DIR}
+deploy: clean-prod compile-prod  ## Deploy the site to GitHub Pages
+	uv run ghp-import -m "Update site" ${PROD_OUTPUT_DIR}
 	git push origin gh-pages:master --force
 
 .PHONY: posts
@@ -42,9 +43,17 @@ post:  ## Create a new post
 autorename:  ## Rename posts according to their titles
 	uv run ./posts rename-drafts
 
+.PHONY: clean-prod
+clean-prod:
+	rm -rf ${PROD_OUTPUT_DIR}
+
+.PHONY: clean-local
+clean-local:
+	rm -rf ${LOCAL_OUTPUT_DIR}
+
 .PHONY: clean
 clean:  ## Clean up generated files
-	rm -rf ${OUTPUT_DIR}
+	make clean-local clean-prod
 
 .PHONY: sitegen.bin
 test:  ## Run sitegen tests

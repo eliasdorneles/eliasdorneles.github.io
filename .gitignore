@@ -1,7 +1,7 @@
 deploy_key.pem
 cache
 output
-output_sitegen
+output_prod
 *.pyc
 .mypy_cache
 .ropeproject
