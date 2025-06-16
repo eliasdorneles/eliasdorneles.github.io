@@ -440,9 +440,22 @@ parse_template_blocks :: proc(
             append(&block_name_stack, block_name)
             append(&block_index_stack, reader.i)
         } else if next_stmt_split[0] == "endblock" {
+            if len(block_name_stack) == 0 {
+                log.error("Template syntax error: endblock without matching block")
+                return false
+            }
+            expected_block_name := block_name_stack[len(block_name_stack) - 1]
+            if len(next_stmt_split) > 1 {
+                endblock_name := unquote(next_stmt_split[1])
+                if endblock_name != expected_block_name {
+                    log.error("Template syntax error: endblock name mismatch")
+                    return false
+                }
+            }
             block_name := pop(&block_name_stack)
             start_index := pop(&block_index_stack)
-            block_content := reader.s[start_index:(reader.i - len("{% endblock %}"))]
+            block_content := reader.s[start_index:(reader.i)]
+            block_content = block_content[:strings.last_index(block_content, "{%")] // remove the endblock tag
             templ_blocks[block_name] = block_content
         }
         next_stmt, read_ok = read_until_next_stmt(reader)

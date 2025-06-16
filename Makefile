@@ -58,10 +58,17 @@ clean-local:
 clean:  ## Clean up generated files
 	make clean-local clean-prod
 
-.PHONY: test
-test:  ## Run sitegen tests
-	odin test sitegen -all-packages
+.PHONY: test-manage
+test-manage: manage.bin  ## Run manage tests
 	odin test manage -all-packages
+
+.PHONY: test-sitegen
+test-sitegen: sitegen.bin  ## Run sitegen tests
+	odin test sitegen -all-packages
+
+.PHONY: test
+test: test-manage test-sitegen  ## Run all tests
+	@echo
 
 # Implements this pattern for autodocumenting Makefiles:
 # https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html

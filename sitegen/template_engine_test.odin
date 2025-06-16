@@ -250,6 +250,33 @@ test_parse_template_blocks :: proc(t: ^testing.T) {
 }
 
 @(test)
+test_parse_template_blocks_with_block_name_in_endblock :: proc(t: ^testing.T) {
+    // and given:
+    templ_str := strings.trim_space(
+        `
+    {% extends "base.html" %}
+    {% block um %}um {% block inner-um %}inner-um{% endblock inner-um %} and um{% endblock um %}
+    {% block dois %}{% if hola %}dois{% endif %}{% endblock dois %}
+    `,
+    )
+    reader: strings.Reader
+    strings.reader_init(&reader, templ_str)
+
+    // when:
+    templ_blocks: map[string]string
+    defer delete(templ_blocks)
+
+    testing.expect(t, parse_template_blocks(&reader, &templ_blocks))
+    expect_str(
+        t,
+        "um {% block inner-um %}inner-um{% endblock inner-um %} and um",
+        templ_blocks["um"],
+    )
+    expect_str(t, "inner-um", templ_blocks["inner-um"])
+    expect_str(t, "{% if hola %}dois{% endif %}", templ_blocks["dois"])
+}
+
+@(test)
 test_render_template_for :: proc(t: ^testing.T) {
     // given:
     parsed, _ := json.parse_string(
