@@ -818,6 +818,7 @@ test_expr_tokenizer_is_defined :: proc(t: ^testing.T) {
 @(test)
 test_ast_parse_variable :: proc(t: ^testing.T) {
     ast := parse_expression("name")
+    defer destroy_ast(ast)
     testing.expect(t, ast != nil)
 
     if var_node, ok := ast^.(Variable); ok {
@@ -830,6 +831,7 @@ test_ast_parse_variable :: proc(t: ^testing.T) {
 @(test)
 test_ast_parse_property_access :: proc(t: ^testing.T) {
     ast := parse_expression("article.title")
+    defer destroy_ast(ast)
     testing.expect(t, ast != nil)
 
     if prop_node, ok := ast^.(PropertyAccess); ok {
@@ -852,6 +854,7 @@ test_ast_parse_property_access :: proc(t: ^testing.T) {
 @(test)
 test_ast_parse_filter :: proc(t: ^testing.T) {
     ast := parse_expression("title|striptags")
+    defer destroy_ast(ast)
     testing.expect(t, ast != nil)
 
     if filter_node, ok := ast^.(FilterExpression); ok {
@@ -874,6 +877,7 @@ test_ast_parse_filter :: proc(t: ^testing.T) {
 @(test)
 test_ast_parse_comparison :: proc(t: ^testing.T) {
     ast := parse_expression("fruit == banana.name")
+    defer destroy_ast(ast)
     testing.expect(t, ast != nil)
 
     if bin_op, ok := ast^.(BinaryOp); ok {
@@ -903,6 +907,7 @@ test_ast_parse_comparison :: proc(t: ^testing.T) {
 @(test)
 test_ast_parse_is_defined :: proc(t: ^testing.T) {
     ast := parse_expression("variable is defined")
+    defer destroy_ast(ast)
     testing.expect(t, ast != nil)
 
     if bin_op, ok := ast^.(BinaryOp); ok {
@@ -922,6 +927,7 @@ test_ast_parse_is_defined :: proc(t: ^testing.T) {
 @(test)
 test_ast_parse_function_call :: proc(t: ^testing.T) {
     ast := parse_expression("lang_display_name(translation.lang)")
+    defer destroy_ast(ast)
     testing.expect(t, ast != nil)
 
     if func_node, ok := ast^.(FunctionCall); ok {
@@ -939,11 +945,13 @@ test_ast_eval_variable :: proc(t: ^testing.T) {
     ctx := parsed.(json.Object)
 
     ast := parse_expression("name")
+    defer destroy_ast(ast)
     result := eval_ast_node(ast, &ctx)
     expect_str(t, "John", to_string(result))
 
-    ast = parse_expression("age")
-    result = eval_ast_node(ast, &ctx)
+    ast2 := parse_expression("age")
+    defer destroy_ast(ast2)
+    result = eval_ast_node(ast2, &ctx)
     expect_str(t, "30", to_string(result))
 }
 
@@ -956,11 +964,13 @@ test_ast_eval_property_access :: proc(t: ^testing.T) {
     ctx := parsed.(json.Object)
 
     ast := parse_expression("article.title")
+    defer destroy_ast(ast)
     result := eval_ast_node(ast, &ctx)
     expect_str(t, "Test Article", to_string(result))
 
-    ast = parse_expression("article.author.name")
-    result = eval_ast_node(ast, &ctx)
+    ast2 := parse_expression("article.author.name")
+    defer destroy_ast(ast2)
+    result = eval_ast_node(ast2, &ctx)
     expect_str(t, "John", to_string(result))
 }
 
@@ -971,6 +981,7 @@ test_ast_eval_filter :: proc(t: ^testing.T) {
     ctx := parsed.(json.Object)
 
     ast := parse_expression("title|striptags")
+    defer destroy_ast(ast)
     result := eval_ast_node(ast, &ctx)
     expect_str(t, "Test Title", to_string(result))
 }
@@ -982,6 +993,7 @@ test_ast_eval_comparison :: proc(t: ^testing.T) {
     ctx := parsed.(json.Object)
 
     ast := parse_expression("fruit == other")
+    defer destroy_ast(ast)
     result := eval_ast_node(ast, &ctx)
     if bool_val, ok := result.(json.Boolean); ok {
         testing.expect(t, !bool(bool_val))
@@ -989,8 +1001,9 @@ test_ast_eval_comparison :: proc(t: ^testing.T) {
         testing.expectf(t, false, "Expected Boolean result, got %T", result)
     }
 
-    ast = parse_expression("fruit != other")
-    result = eval_ast_node(ast, &ctx)
+    ast2 := parse_expression("fruit != other")
+    defer destroy_ast(ast2)
+    result = eval_ast_node(ast2, &ctx)
     if bool_val, ok := result.(json.Boolean); ok {
         testing.expect(t, bool(bool_val))
     } else {
@@ -1005,6 +1018,7 @@ test_ast_eval_is_defined :: proc(t: ^testing.T) {
     ctx := parsed.(json.Object)
 
     ast := parse_expression("existing is defined")
+    defer destroy_ast(ast)
     result := eval_ast_node(ast, &ctx)
     if bool_val, ok := result.(json.Boolean); ok {
         testing.expect(t, bool(bool_val))
@@ -1012,8 +1026,9 @@ test_ast_eval_is_defined :: proc(t: ^testing.T) {
         testing.expectf(t, false, "Expected Boolean result, got %T", result)
     }
 
-    ast = parse_expression("nonexisting is defined")
-    result = eval_ast_node(ast, &ctx)
+    ast2 := parse_expression("nonexisting is defined")
+    defer destroy_ast(ast2)
+    result = eval_ast_node(ast2, &ctx)
     if bool_val, ok := result.(json.Boolean); ok {
         testing.expect(t, !bool(bool_val))
     } else {
@@ -1028,11 +1043,13 @@ test_ast_eval_date_formatting :: proc(t: ^testing.T) {
     ctx := parsed.(json.Object)
 
     ast := parse_expression("article.date.isoformat()")
+    defer destroy_ast(ast)
     result := eval_ast_node(ast, &ctx)
     expect_str(t, "2025-06-03T00:01:00+02:00", to_string(result))
 
-    ast = parse_expression(`article.date.strftime("%Y, %B %d")`)
-    result = eval_ast_node(ast, &ctx)
+    ast2 := parse_expression(`article.date.strftime("%Y, %B %d")`)
+    defer destroy_ast(ast2)
+    result = eval_ast_node(ast2, &ctx)
     expect_str(t, "2025, June 03", to_string(result))
 }
 

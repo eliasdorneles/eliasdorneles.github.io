@@ -28,6 +28,32 @@ destroy_env :: proc(env: ^Environment) {
     delete(env.loaded_templates)
 }
 
+// Recursively destroy AST nodes to prevent memory leaks
+destroy_ast :: proc(node: ^ExprNode) {
+    if node == nil {
+        return
+    }
+
+    switch &n in node^ {
+    case PropertyAccess:
+        destroy_ast(n.object)
+    case FilterExpression:
+        destroy_ast(n.expr)
+    case BinaryOp:
+        destroy_ast(n.left)
+        destroy_ast(n.right)
+    case FunctionCall:
+        // Clean up all argument nodes
+        for arg in n.args {
+            destroy_ast(arg)
+        }
+    case Variable, Literal:
+    // These don't contain other AST nodes, just data
+    }
+
+    free(node)
+}
+
 // New tokenizer-based parser implementation
 TokenType :: enum {
     TEXT, // Plain text content
@@ -73,7 +99,7 @@ PropertyAccess :: struct {
 
 FunctionCall :: struct {
     name: string,
-    args: []ExprNode,
+    args: []^ExprNode,
 }
 
 FilterExpression :: struct {
@@ -266,12 +292,13 @@ parse_primary :: proc(parser: ^ExprParser) -> ^ExprNode {
         if expect_token(parser, .LPAREN) {
             consume_token(parser) // consume '('
 
-            args: [dynamic]ExprNode
+            args: [dynamic]^ExprNode
+            defer delete(args)
             // Parse function arguments
             if !expect_token(parser, .RPAREN) {
                 arg := parse_logical(parser)
                 if arg != nil {
-                    append(&args, arg^)
+                    append(&args, arg)
                 }
 
                 // For now, assume single argument
@@ -566,7 +593,7 @@ eval_ast_node :: proc(node: ^ExprNode, ctx: ^json.Object) -> json.Value {
     case FunctionCall:
         // Handle special functions like lang_display_name
         if n.name == "lang_display_name" && len(n.args) > 0 {
-            arg_value := eval_ast_node(&n.args[0], ctx)
+            arg_value := eval_ast_node(n.args[0], ctx)
             if lang_str, ok := arg_value.(json.String); ok {
                 switch string(lang_str) {
                 case "en":
@@ -1177,6 +1204,7 @@ unquote :: proc(s: string) -> string {
 // New AST-based expression evaluation - replaces hardcoded eval_expr
 eval_expr :: proc(expr: string, ctx: ^json.Object) -> json.Value {
     ast := parse_expression(expr)
+    defer destroy_ast(ast)
     return eval_ast_node(ast, ctx)
 }
 
