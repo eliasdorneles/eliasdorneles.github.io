@@ -743,6 +743,334 @@ test_render_template_for_v2 :: proc(t: ^testing.T) {
     expect_str(t, "- Apple- Banana- Kiwi", result)
 }
 
+// AST System Tests
+@(test)
+test_expr_tokenizer :: proc(t: ^testing.T) {
+    // Test basic tokenization
+    tokenizer := init_expr_tokenizer("name.property|filter")
+
+    token := next_expr_token(&tokenizer)
+    testing.expect(t, token.type == .IDENTIFIER && token.value == "name")
+
+    token = next_expr_token(&tokenizer)
+    testing.expect(t, token.type == .DOT && token.value == ".")
+
+    token = next_expr_token(&tokenizer)
+    testing.expect(t, token.type == .IDENTIFIER && token.value == "property")
+
+    token = next_expr_token(&tokenizer)
+    testing.expect(t, token.type == .PIPE && token.value == "|")
+
+    token = next_expr_token(&tokenizer)
+    testing.expect(t, token.type == .IDENTIFIER && token.value == "filter")
+
+    token = next_expr_token(&tokenizer)
+    testing.expect(t, token.type == .EXPR_EOF)
+}
+
+@(test)
+test_expr_tokenizer_operators :: proc(t: ^testing.T) {
+    tokenizer := init_expr_tokenizer("var == \"test\" and other != value")
+
+    token := next_expr_token(&tokenizer)
+    testing.expect(t, token.type == .IDENTIFIER && token.value == "var")
+
+    token = next_expr_token(&tokenizer)
+    testing.expect(t, token.type == .EQUALS && token.value == "==")
+
+    token = next_expr_token(&tokenizer)
+    testing.expect(t, token.type == .STRING && token.value == "test")
+
+    token = next_expr_token(&tokenizer)
+    testing.expect(t, token.type == .AND && token.value == "and")
+
+    token = next_expr_token(&tokenizer)
+    testing.expect(t, token.type == .IDENTIFIER && token.value == "other")
+
+    token = next_expr_token(&tokenizer)
+    testing.expect(t, token.type == .NOT_EQUALS && token.value == "!=")
+
+    token = next_expr_token(&tokenizer)
+    testing.expect(t, token.type == .IDENTIFIER && token.value == "value")
+}
+
+@(test)
+test_expr_tokenizer_is_defined :: proc(t: ^testing.T) {
+    tokenizer := init_expr_tokenizer("variable is defined")
+
+    token := next_expr_token(&tokenizer)
+    testing.expect(t, token.type == .IDENTIFIER && token.value == "variable")
+
+    token = next_expr_token(&tokenizer)
+    testing.expect(t, token.type == .IS && token.value == "is")
+
+    token = next_expr_token(&tokenizer)
+    testing.expect(t, token.type == .DEFINED && token.value == "defined")
+}
+
+@(test)
+test_ast_parse_variable :: proc(t: ^testing.T) {
+    ast := parse_expression("name")
+    testing.expect(t, ast != nil)
+
+    if var_node, ok := ast^.(Variable); ok {
+        testing.expect(t, var_node.name == "name")
+    } else {
+        testing.expectf(t, false, "Expected Variable node, got %T", ast^)
+    }
+}
+
+@(test)
+test_ast_parse_property_access :: proc(t: ^testing.T) {
+    ast := parse_expression("article.title")
+    testing.expect(t, ast != nil)
+
+    if prop_node, ok := ast^.(PropertyAccess); ok {
+        testing.expect(t, prop_node.property == "title")
+        if var_node, ok := prop_node.object^.(Variable); ok {
+            testing.expect(t, var_node.name == "article")
+        } else {
+            testing.expectf(
+                t,
+                false,
+                "Expected Variable in object, got %T",
+                prop_node.object^,
+            )
+        }
+    } else {
+        testing.expectf(t, false, "Expected PropertyAccess node, got %T", ast^)
+    }
+}
+
+@(test)
+test_ast_parse_filter :: proc(t: ^testing.T) {
+    ast := parse_expression("title|striptags")
+    testing.expect(t, ast != nil)
+
+    if filter_node, ok := ast^.(FilterExpression); ok {
+        testing.expect(t, filter_node.filter_name == "striptags")
+        if var_node, ok := filter_node.expr^.(Variable); ok {
+            testing.expect(t, var_node.name == "title")
+        } else {
+            testing.expectf(
+                t,
+                false,
+                "Expected Variable in expr, got %T",
+                filter_node.expr^,
+            )
+        }
+    } else {
+        testing.expectf(t, false, "Expected FilterExpression node, got %T", ast^)
+    }
+}
+
+@(test)
+test_ast_parse_comparison :: proc(t: ^testing.T) {
+    ast := parse_expression("fruit == banana.name")
+    testing.expect(t, ast != nil)
+
+    if bin_op, ok := ast^.(BinaryOp); ok {
+        testing.expect(t, bin_op.operator == "==")
+
+        if left_var, ok := bin_op.left^.(Variable); ok {
+            testing.expect(t, left_var.name == "fruit")
+        } else {
+            testing.expectf(t, false, "Expected Variable on left, got %T", bin_op.left^)
+        }
+
+        if right_prop, ok := bin_op.right^.(PropertyAccess); ok {
+            testing.expect(t, right_prop.property == "name")
+        } else {
+            testing.expectf(
+                t,
+                false,
+                "Expected PropertyAccess on right, got %T",
+                bin_op.right^,
+            )
+        }
+    } else {
+        testing.expectf(t, false, "Expected BinaryOp node, got %T", ast^)
+    }
+}
+
+@(test)
+test_ast_parse_is_defined :: proc(t: ^testing.T) {
+    ast := parse_expression("variable is defined")
+    testing.expect(t, ast != nil)
+
+    if bin_op, ok := ast^.(BinaryOp); ok {
+        testing.expect(t, bin_op.operator == "is defined")
+        testing.expect(t, bin_op.right == nil)
+
+        if left_var, ok := bin_op.left^.(Variable); ok {
+            testing.expect(t, left_var.name == "variable")
+        } else {
+            testing.expectf(t, false, "Expected Variable on left, got %T", bin_op.left^)
+        }
+    } else {
+        testing.expectf(t, false, "Expected BinaryOp node, got %T", ast^)
+    }
+}
+
+@(test)
+test_ast_parse_function_call :: proc(t: ^testing.T) {
+    ast := parse_expression("lang_display_name(translation.lang)")
+    testing.expect(t, ast != nil)
+
+    if func_node, ok := ast^.(FunctionCall); ok {
+        testing.expect(t, func_node.name == "lang_display_name")
+        // Note: function argument parsing is simplified for now
+    } else {
+        testing.expectf(t, false, "Expected FunctionCall node, got %T", ast^)
+    }
+}
+
+@(test)
+test_ast_eval_variable :: proc(t: ^testing.T) {
+    parsed, _ := json.parse_string(`{"name": "John", "age": 30}`)
+    defer json.destroy_value(parsed)
+    ctx := parsed.(json.Object)
+
+    ast := parse_expression("name")
+    result := eval_ast_node(ast, &ctx)
+    expect_str(t, "John", to_string(result))
+
+    ast = parse_expression("age")
+    result = eval_ast_node(ast, &ctx)
+    expect_str(t, "30", to_string(result))
+}
+
+@(test)
+test_ast_eval_property_access :: proc(t: ^testing.T) {
+    parsed, _ := json.parse_string(
+        `{"article": {"title": "Test Article", "author": {"name": "John"}}}`,
+    )
+    defer json.destroy_value(parsed)
+    ctx := parsed.(json.Object)
+
+    ast := parse_expression("article.title")
+    result := eval_ast_node(ast, &ctx)
+    expect_str(t, "Test Article", to_string(result))
+
+    ast = parse_expression("article.author.name")
+    result = eval_ast_node(ast, &ctx)
+    expect_str(t, "John", to_string(result))
+}
+
+@(test)
+test_ast_eval_filter :: proc(t: ^testing.T) {
+    parsed, _ := json.parse_string(`{"title": "Test Title"}`)
+    defer json.destroy_value(parsed)
+    ctx := parsed.(json.Object)
+
+    ast := parse_expression("title|striptags")
+    result := eval_ast_node(ast, &ctx)
+    expect_str(t, "Test Title", to_string(result))
+}
+
+@(test)
+test_ast_eval_comparison :: proc(t: ^testing.T) {
+    parsed, _ := json.parse_string(`{"fruit": "Apple", "other": "Banana"}`)
+    defer json.destroy_value(parsed)
+    ctx := parsed.(json.Object)
+
+    ast := parse_expression("fruit == other")
+    result := eval_ast_node(ast, &ctx)
+    if bool_val, ok := result.(json.Boolean); ok {
+        testing.expect(t, !bool(bool_val))
+    } else {
+        testing.expectf(t, false, "Expected Boolean result, got %T", result)
+    }
+
+    ast = parse_expression("fruit != other")
+    result = eval_ast_node(ast, &ctx)
+    if bool_val, ok := result.(json.Boolean); ok {
+        testing.expect(t, bool(bool_val))
+    } else {
+        testing.expectf(t, false, "Expected Boolean result, got %T", result)
+    }
+}
+
+@(test)
+test_ast_eval_is_defined :: proc(t: ^testing.T) {
+    parsed, _ := json.parse_string(`{"existing": "value"}`)
+    defer json.destroy_value(parsed)
+    ctx := parsed.(json.Object)
+
+    ast := parse_expression("existing is defined")
+    result := eval_ast_node(ast, &ctx)
+    if bool_val, ok := result.(json.Boolean); ok {
+        testing.expect(t, bool(bool_val))
+    } else {
+        testing.expectf(t, false, "Expected Boolean result, got %T", result)
+    }
+
+    ast = parse_expression("nonexisting is defined")
+    result = eval_ast_node(ast, &ctx)
+    if bool_val, ok := result.(json.Boolean); ok {
+        testing.expect(t, !bool(bool_val))
+    } else {
+        testing.expectf(t, false, "Expected Boolean result, got %T", result)
+    }
+}
+
+@(test)
+test_ast_eval_date_formatting :: proc(t: ^testing.T) {
+    parsed, _ := json.parse_string(`{"article": {"date": "2025-06-03T00:01:00+02:00"}}`)
+    defer json.destroy_value(parsed)
+    ctx := parsed.(json.Object)
+
+    ast := parse_expression("article.date.isoformat()")
+    result := eval_ast_node(ast, &ctx)
+    expect_str(t, "2025-06-03T00:01:00+02:00", to_string(result))
+
+    ast = parse_expression(`article.date.strftime("%Y, %B %d")`)
+    result = eval_ast_node(ast, &ctx)
+    expect_str(t, "2025, June 03", to_string(result))
+}
+
+
+// Test AST vs old system compatibility
+@(test)
+test_ast_vs_old_expr_compatibility :: proc(t: ^testing.T) {
+    parsed, _ := json.parse_string(
+        `{
+            "name": "John",
+            "age": 30,
+            "article": {"title": "Test", "date": "2025-06-03T00:01:00+02:00"},
+            "translation": {"lang": "en"},
+            "existing": "value"
+        }`,
+    )
+    defer json.destroy_value(parsed)
+    ctx := parsed.(json.Object)
+
+    test_cases := []string {
+        "name",
+        "article.title",
+        "article.date.isoformat()",
+        "existing|striptags",
+        "lang_display_name(translation.lang)",
+    }
+
+    for test_case in test_cases {
+        result_old := eval_expr_old(test_case, &ctx)
+        result_new := eval_expr(test_case, &ctx)
+
+        old_str := to_string(result_old)
+        new_str := to_string(result_new)
+
+        testing.expectf(
+            t,
+            old_str == new_str,
+            "New AST result differs from old eval_expr for: %s\nOld: %s\nNew: %s",
+            test_case,
+            old_str,
+            new_str,
+        )
+    }
+}
+
 // Compatibility test: compare old vs new parser output
 @(test)
 test_parser_compatibility :: proc(t: ^testing.T) {

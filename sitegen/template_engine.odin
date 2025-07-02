@@ -59,6 +59,595 @@ Tokenizer :: struct {
     column: int,
 }
 
+// Expression AST System
+ExprNode :: union {
+    Variable,
+    PropertyAccess,
+    FunctionCall,
+    FilterExpression,
+    BinaryOp,
+    Literal,
+}
+
+Variable :: struct {
+    name: string,
+}
+
+PropertyAccess :: struct {
+    object:   ^ExprNode,
+    property: string,
+}
+
+FunctionCall :: struct {
+    name: string,
+    args: []ExprNode,
+}
+
+FilterExpression :: struct {
+    expr:        ^ExprNode,
+    filter_name: string,
+}
+
+BinaryOp :: struct {
+    left:     ^ExprNode,
+    operator: string, // "==", "!=", "and", "is", etc.
+    right:    ^ExprNode,
+}
+
+Literal :: struct {
+    value: json.Value,
+}
+
+// Expression tokenizer for parsing individual expressions
+ExprTokenType :: enum {
+    IDENTIFIER, // variable names, function names
+    DOT, // .
+    PIPE, // |
+    LPAREN, // (
+    RPAREN, // )
+    STRING, // "quoted string"
+    EQUALS, // ==
+    NOT_EQUALS, // !=
+    AND, // and
+    IS, // is
+    DEFINED, // defined
+    EXPR_EOF, // end of expression
+}
+
+ExprToken :: struct {
+    type:  ExprTokenType,
+    value: string,
+    pos:   int,
+}
+
+ExprTokenizer :: struct {
+    input: string,
+    pos:   int,
+}
+
+// Expression Parser
+ExprParser :: struct {
+    tokenizer:     ExprTokenizer,
+    current_token: ExprToken,
+}
+
+// Expression tokenizer functions
+init_expr_tokenizer :: proc(input: string) -> ExprTokenizer {
+    return ExprTokenizer{input = input, pos = 0}
+}
+
+peek_expr_char :: proc(tokenizer: ^ExprTokenizer, offset: int = 0) -> u8 {
+    pos := tokenizer.pos + offset
+    if pos >= len(tokenizer.input) {
+        return 0
+    }
+    return tokenizer.input[pos]
+}
+
+advance_expr_char :: proc(tokenizer: ^ExprTokenizer) -> u8 {
+    if tokenizer.pos >= len(tokenizer.input) {
+        return 0
+    }
+    char := tokenizer.input[tokenizer.pos]
+    tokenizer.pos += 1
+    return char
+}
+
+skip_expr_whitespace :: proc(tokenizer: ^ExprTokenizer) {
+    for tokenizer.pos < len(tokenizer.input) {
+        char := peek_expr_char(tokenizer)
+        if char == ' ' || char == '\t' || char == '\n' || char == '\r' {
+            advance_expr_char(tokenizer)
+        } else {
+            break
+        }
+    }
+}
+
+next_expr_token :: proc(tokenizer: ^ExprTokenizer) -> ExprToken {
+    skip_expr_whitespace(tokenizer)
+
+    if tokenizer.pos >= len(tokenizer.input) {
+        return ExprToken{type = .EXPR_EOF, value = "", pos = tokenizer.pos}
+    }
+
+    start_pos := tokenizer.pos
+    char := peek_expr_char(tokenizer)
+
+    switch char {
+    case '.':
+        advance_expr_char(tokenizer)
+        return ExprToken{type = .DOT, value = ".", pos = start_pos}
+    case '|':
+        advance_expr_char(tokenizer)
+        return ExprToken{type = .PIPE, value = "|", pos = start_pos}
+    case '(':
+        advance_expr_char(tokenizer)
+        return ExprToken{type = .LPAREN, value = "(", pos = start_pos}
+    case ')':
+        advance_expr_char(tokenizer)
+        return ExprToken{type = .RPAREN, value = ")", pos = start_pos}
+    case '"':
+        advance_expr_char(tokenizer) // skip opening quote
+        value_start := tokenizer.pos
+        for tokenizer.pos < len(tokenizer.input) && peek_expr_char(tokenizer) != '"' {
+            advance_expr_char(tokenizer)
+        }
+        value := tokenizer.input[value_start:tokenizer.pos]
+        if tokenizer.pos < len(tokenizer.input) {
+            advance_expr_char(tokenizer) // skip closing quote
+        }
+        return ExprToken{type = .STRING, value = value, pos = start_pos}
+    case '!':
+        if peek_expr_char(tokenizer, 1) == '=' {
+            advance_expr_char(tokenizer)
+            advance_expr_char(tokenizer)
+            return ExprToken{type = .NOT_EQUALS, value = "!=", pos = start_pos}
+        }
+    case '=':
+        if peek_expr_char(tokenizer, 1) == '=' {
+            advance_expr_char(tokenizer)
+            advance_expr_char(tokenizer)
+            return ExprToken{type = .EQUALS, value = "==", pos = start_pos}
+        }
+    }
+
+    // Handle identifiers and keywords
+    if (char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z') || char == '_' {
+        for tokenizer.pos < len(tokenizer.input) {
+            c := peek_expr_char(tokenizer)
+            if (c >= 'a' && c <= 'z') ||
+               (c >= 'A' && c <= 'Z') ||
+               (c >= '0' && c <= '9') ||
+               c == '_' {
+                advance_expr_char(tokenizer)
+            } else {
+                break
+            }
+        }
+        value := tokenizer.input[start_pos:tokenizer.pos]
+
+        // Check for keywords
+        switch value {
+        case "and":
+            return ExprToken{type = .AND, value = value, pos = start_pos}
+        case "is":
+            return ExprToken{type = .IS, value = value, pos = start_pos}
+        case "defined":
+            return ExprToken{type = .DEFINED, value = value, pos = start_pos}
+        case:
+            return ExprToken{type = .IDENTIFIER, value = value, pos = start_pos}
+        }
+    }
+
+    // Unknown character, skip it
+    advance_expr_char(tokenizer)
+    return next_expr_token(tokenizer)
+}
+
+// Expression parser functions
+init_expr_parser :: proc(input: string) -> ExprParser {
+    tokenizer := init_expr_tokenizer(input)
+    parser := ExprParser {
+        tokenizer = tokenizer,
+    }
+    parser.current_token = next_expr_token(&parser.tokenizer)
+    return parser
+}
+
+expect_token :: proc(parser: ^ExprParser, token_type: ExprTokenType) -> bool {
+    return parser.current_token.type == token_type
+}
+
+consume_token :: proc(parser: ^ExprParser) {
+    parser.current_token = next_expr_token(&parser.tokenizer)
+}
+
+parse_primary :: proc(parser: ^ExprParser) -> ^ExprNode {
+    #partial switch parser.current_token.type {
+    case .IDENTIFIER:
+        name := parser.current_token.value
+        consume_token(parser)
+
+        // Check for function call
+        if expect_token(parser, .LPAREN) {
+            consume_token(parser) // consume '('
+
+            args: [dynamic]ExprNode
+            // Parse function arguments
+            if !expect_token(parser, .RPAREN) {
+                arg := parse_logical(parser)
+                if arg != nil {
+                    append(&args, arg^)
+                }
+
+                // For now, assume single argument
+                for !expect_token(parser, .RPAREN) && !expect_token(parser, .EXPR_EOF) {
+                    consume_token(parser)
+                }
+            }
+
+            if expect_token(parser, .RPAREN) {
+                consume_token(parser) // consume ')'
+            }
+
+            node := new(ExprNode)
+            node^ = FunctionCall {
+                name = name,
+                args = args[:],
+            }
+            return node
+        }
+
+        // Regular variable
+        node := new(ExprNode)
+        node^ = Variable {
+            name = name,
+        }
+        return node
+
+    case .STRING:
+        value := parser.current_token.value
+        consume_token(parser)
+        node := new(ExprNode)
+        node^ = Literal {
+            value = json.String(value),
+        }
+        return node
+    }
+
+    return nil
+}
+
+parse_postfix :: proc(parser: ^ExprParser) -> ^ExprNode {
+    left := parse_primary(parser)
+    if left == nil {
+        return nil
+    }
+
+    for {
+        if expect_token(parser, .DOT) {
+            consume_token(parser) // consume '.'
+            if expect_token(parser, .IDENTIFIER) {
+                property := parser.current_token.value
+                consume_token(parser)
+
+                // Check if this is a method call like isoformat()
+                if expect_token(parser, .LPAREN) {
+                    consume_token(parser) // consume '('
+                    if expect_token(parser, .RPAREN) {
+                        consume_token(parser) // consume ')'
+                        property = strings.concatenate(
+                            {property, "()"},
+                            allocator = context.temp_allocator,
+                        )
+                    } else {
+                        // Handle method calls with arguments like strftime("format")
+                        arg_tokens: [dynamic]string
+                        defer delete(arg_tokens)
+
+                        for !expect_token(parser, .RPAREN) &&
+                            !expect_token(parser, .EXPR_EOF) {
+                            if expect_token(parser, .STRING) {
+                                token_str := strings.concatenate(
+                                    {"\"", parser.current_token.value, "\""},
+                                    allocator = context.temp_allocator,
+                                )
+                                append(&arg_tokens, token_str)
+                            } else {
+                                append(&arg_tokens, parser.current_token.value)
+                            }
+                            consume_token(parser)
+                        }
+                        if expect_token(parser, .RPAREN) {
+                            consume_token(parser)
+                        }
+
+                        // Reconstruct the method call with arguments
+                        args_str := strings.join(
+                            arg_tokens[:],
+                            "",
+                            allocator = context.temp_allocator,
+                        )
+                        property = strings.concatenate(
+                            {property, "(", args_str, ")"},
+                            allocator = context.temp_allocator,
+                        )
+                    }
+                }
+
+                new_node := new(ExprNode)
+                new_node^ = PropertyAccess {
+                    object   = left,
+                    property = property,
+                }
+                left = new_node
+            } else {
+                break
+            }
+        } else if expect_token(parser, .PIPE) {
+            consume_token(parser) // consume '|'
+            if expect_token(parser, .IDENTIFIER) {
+                filter_name := parser.current_token.value
+                consume_token(parser)
+
+                new_node := new(ExprNode)
+                new_node^ = FilterExpression {
+                    expr        = left,
+                    filter_name = filter_name,
+                }
+                left = new_node
+            } else {
+                break
+            }
+        } else {
+            break
+        }
+    }
+
+    return left
+}
+
+parse_comparison :: proc(parser: ^ExprParser) -> ^ExprNode {
+    left := parse_postfix(parser)
+    if left == nil {
+        return nil
+    }
+
+    for {
+        if expect_token(parser, .EQUALS) {
+            op := parser.current_token.value
+            consume_token(parser)
+            right := parse_postfix(parser)
+            if right == nil {
+                return left
+            }
+
+            new_node := new(ExprNode)
+            new_node^ = BinaryOp {
+                left     = left,
+                operator = op,
+                right    = right,
+            }
+            left = new_node
+        } else if expect_token(parser, .NOT_EQUALS) {
+            op := parser.current_token.value
+            consume_token(parser)
+            right := parse_postfix(parser)
+            if right == nil {
+                return left
+            }
+
+            new_node := new(ExprNode)
+            new_node^ = BinaryOp {
+                left     = left,
+                operator = op,
+                right    = right,
+            }
+            left = new_node
+        } else if expect_token(parser, .IS) {
+            consume_token(parser) // consume 'is'
+            if expect_token(parser, .DEFINED) {
+                consume_token(parser) // consume 'defined'
+
+                new_node := new(ExprNode)
+                new_node^ = BinaryOp {
+                    left     = left,
+                    operator = "is defined",
+                    right    = nil,
+                }
+                left = new_node
+            } else {
+                break
+            }
+        } else {
+            break
+        }
+    }
+
+    return left
+}
+
+parse_logical :: proc(parser: ^ExprParser) -> ^ExprNode {
+    left := parse_comparison(parser)
+    if left == nil {
+        return nil
+    }
+
+    for expect_token(parser, .AND) {
+        op := parser.current_token.value
+        consume_token(parser)
+        right := parse_comparison(parser)
+        if right == nil {
+            return left
+        }
+
+        new_node := new(ExprNode)
+        new_node^ = BinaryOp {
+            left     = left,
+            operator = op,
+            right    = right,
+        }
+        left = new_node
+    }
+
+    return left
+}
+
+parse_expression :: proc(input: string) -> ^ExprNode {
+    parser := init_expr_parser(input)
+    return parse_logical(&parser)
+}
+
+// AST evaluation
+eval_ast_node :: proc(node: ^ExprNode, ctx: ^json.Object) -> json.Value {
+    if node == nil {
+        return nil
+    }
+
+    switch &n in node^ {
+    case Variable:
+        return ctx[n.name]
+
+    case PropertyAccess:
+        obj_value := eval_ast_node(n.object, ctx)
+        if obj_value == nil {
+            return nil
+        }
+
+        #partial switch &v in obj_value {
+        case json.Object:
+            // Handle special methods like isoformat() and strftime()
+            if strings.ends_with(n.property, "()") {
+                method_name := n.property[:len(n.property) - 2]
+                if method_name == "isoformat" {
+                    return obj_value // Return the original string for isoformat
+                }
+            } else if strings.starts_with(n.property, `strftime("`) &&
+               strings.ends_with(n.property, `")`) {
+                // Extract format string from strftime("format")
+                format_str := n.property[len(`strftime("`):]
+                format_str = format_str[:len(format_str) - 2] // Remove ") 
+
+                // Look for the actual date value in the object
+                if date_val, has_date := v["__value__"]; has_date {
+                    if date_str, ok := date_val.(json.String); ok {
+                        ts, _, _ := time.iso8601_to_time_and_offset(string(date_str))
+                        if format_str == "%Y, %B %d" {
+                            return json.String(
+                                fmt.aprintf(
+                                    "%d, %s %02d",
+                                    time.year(ts),
+                                    time.month(ts),
+                                    time.day(ts),
+                                    allocator = context.temp_allocator,
+                                ),
+                            )
+                        }
+                    }
+                }
+                return nil
+            }
+            return v[n.property]
+
+        case json.String:
+            // Handle date formatting for strings
+            if n.property == "isoformat()" {
+                return obj_value
+            } else if n.property == `strftime("%Y, %B %d")` {
+                ts, _, _ := time.iso8601_to_time_and_offset(string(v))
+                return json.String(
+                    fmt.aprintf(
+                        "%d, %s %02d",
+                        time.year(ts),
+                        time.month(ts),
+                        time.day(ts),
+                        allocator = context.temp_allocator,
+                    ),
+                )
+            }
+            return nil
+        }
+        return nil
+
+    case FunctionCall:
+        // Handle special functions like lang_display_name
+        if n.name == "lang_display_name" && len(n.args) > 0 {
+            arg_value := eval_ast_node(&n.args[0], ctx)
+            if lang_str, ok := arg_value.(json.String); ok {
+                switch string(lang_str) {
+                case "en":
+                    return json.String("English")
+                case "pt-br":
+                    return json.String("Português (Brasil)")
+                case:
+                    return lang_str
+                }
+            }
+        }
+        return nil
+
+    case FilterExpression:
+        expr_value := eval_ast_node(n.expr, ctx)
+        switch n.filter_name {
+        case "striptags":
+            // For now, just return the original value (no HTML stripping needed)
+            return expr_value
+        }
+        return expr_value
+
+    case BinaryOp:
+        if n.operator == "is defined" {
+            // For "is defined", check if the left side variable exists in context
+            if var_node, ok := n.left^.(Variable); ok {
+                return json.Boolean(var_node.name in ctx)
+            }
+            return json.Boolean(false)
+        }
+
+        left_val := eval_ast_node(n.left, ctx)
+        right_val := eval_ast_node(n.right, ctx)
+
+        switch n.operator {
+        case "==":
+            return json.Boolean(eql_values(left_val, right_val))
+        case "!=":
+            return json.Boolean(!eql_values(left_val, right_val))
+        case "and":
+            return json.Boolean(is_truthy(left_val) && is_truthy(right_val))
+        }
+        return json.Boolean(false)
+
+    case Literal:
+        return n.value
+    }
+
+    return nil
+}
+
+is_truthy :: proc(value: json.Value) -> bool {
+    if value == nil {
+        return false
+    }
+    switch v in value {
+    case json.Null:
+        return false
+    case json.Boolean:
+        return v
+    case json.String:
+        return len(v) > 0
+    case json.Integer:
+        return v != 0
+    case json.Float:
+        return v != 0
+    case json.Object:
+        return true
+    case json.Array:
+        return len(v) > 0
+    }
+    return false
+}
+
 init_tokenizer :: proc(input: string) -> Tokenizer {
     return Tokenizer{input = input, pos = 0, line = 1, column = 1}
 }
@@ -434,6 +1023,14 @@ to_string :: proc(value: json.Value) -> string {
         return ""
     case json.String:
         return v
+    case json.Float:
+        // Check if this is actually an integer that was parsed as float
+        if v == f64(i64(v)) {
+            return fmt.aprintf("%d", i64(v), allocator = context.temp_allocator)
+        }
+        return fmt.aprintf("%f", v, allocator = context.temp_allocator)
+    case json.Integer:
+        return fmt.aprintf("%d", v, allocator = context.temp_allocator)
     case json.Object:
         repr := v["__repr__"]
         if repr != nil {
@@ -503,10 +1100,17 @@ eval_context_path :: proc(value: ^json.Value, path: []string) -> json.Value {
     return "ERROR, UNSUPPORTED TYPE LOOKUP"
 }
 
+// New AST-based expression evaluation - replaces hardcoded eval_expr
 eval_expr :: proc(expr: string, ctx: ^json.Object) -> json.Value {
+    ast := parse_expression(expr)
+    return eval_ast_node(ast, ctx)
+}
+
+// Keep old implementation for reference/comparison in tests
+eval_expr_old :: proc(expr: string, ctx: ^json.Object) -> json.Value {
     // handle special case {{ lang_display_name(translation.lang) }}
     if strings.starts_with(expr, "lang_display_name(") {
-        lang := eval_expr(expr[len("lang_display_name("):len(expr) - 1], ctx)
+        lang := eval_expr_old(expr[len("lang_display_name("):len(expr) - 1], ctx)
         #partial switch v in lang {
         case string:
             if v == "en" {
