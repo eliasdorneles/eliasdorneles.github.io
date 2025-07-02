@@ -22,13 +22,6 @@ ParsingStatementsState :: enum {
     Statement,
 }
 
-ParsingTemplateState :: enum {
-    Copying,
-    Skipping,
-    MaybeExpressionOrCommand,
-    Expression,
-    Command,
-}
 
 destroy_env :: proc(env: ^Environment) {
     delete(env.raw_templates)
@@ -945,7 +938,8 @@ render_tokens_v2 :: proc(tokens: []Token, ctx: ^json.Object) -> string {
         return if_cond_stack[len(if_cond_stack) - 1]
     }
 
-    for token in tokens {
+    for i := 0; i < len(tokens); i += 1 {
+        token := tokens[i]
         switch token.type {
         case .TEXT:
             if is_copying(&if_cond_stack) {
@@ -981,6 +975,51 @@ render_tokens_v2 :: proc(tokens: []Token, ctx: ^json.Object) -> string {
                 if len(if_cond_stack) > 0 {
                     pop(&if_cond_stack)
                 }
+
+            case "for":
+                if len(stmt_parts) >= 4 &&
+                   stmt_parts[2] == "in" &&
+                   is_copying(&if_cond_stack) {
+                    loop_var := stmt_parts[1]
+                    loop_iterable := eval_expr(stmt_parts[3], ctx)
+
+                    // Find current position in token stream
+                    current_index := find_current_token_index(tokens, token)
+
+                    if current_index >= 0 {
+                        // Collect loop tokens
+                        loop_tokens, end_index := collect_for_loop_tokens(
+                            tokens,
+                            current_index,
+                        )
+                        defer delete(loop_tokens)
+
+                        // Render for-loop content
+                        #partial switch v in loop_iterable {
+                        case json.Array:
+                            for item in v {
+                                loop_iter_ctx := clone_context(ctx)
+                                loop_iter_ctx[loop_var] = item
+
+                                inner_result := render_tokens_v2(
+                                    loop_tokens[:],
+                                    &loop_iter_ctx,
+                                )
+                                strings.write_string(&builder, inner_result)
+                            }
+                        case nil, json.Null:
+                        // ignore
+                        case:
+                            log.error("Looping over non-list value not yet supported")
+                        }
+
+                        // Skip to after the matching endfor
+                        i = end_index
+                    }
+                }
+
+            case "endfor":
+            // Handled in for-loop processing above
             }
 
         case .EOF:
@@ -992,6 +1031,86 @@ render_tokens_v2 :: proc(tokens: []Token, ctx: ^json.Object) -> string {
         strings.to_string(builder),
         allocator = context.temp_allocator,
     )
+}
+
+// Find the index of a specific token in the tokens array
+@(private = "file")
+find_current_token_index :: proc(tokens: []Token, target_token: Token) -> int {
+    for tok, i in tokens {
+        if tok.type == .STATEMENT &&
+           strings.compare(tok.value, target_token.value) == 0 {
+            return i
+        }
+    }
+    return -1
+}
+
+// Extract tokens between matching for/endfor statements
+@(private = "file")
+collect_for_loop_tokens :: proc(
+    tokens: []Token,
+    start_index: int,
+) -> (
+    loop_tokens: [dynamic]Token,
+    end_index: int,
+) {
+    if start_index < 0 || start_index >= len(tokens) {
+        return {}, -1
+    }
+
+    loop_tokens = make([dynamic]Token)
+    for_depth := 1
+
+    for i in start_index + 1 ..< len(tokens) {
+        tok := tokens[i]
+        if tok.type == .STATEMENT {
+            parts := strings.split(tok.value, " ")
+            defer delete(parts)
+            if len(parts) > 0 {
+                if parts[0] == "for" {
+                    for_depth += 1
+                } else if parts[0] == "endfor" {
+                    for_depth -= 1
+                }
+            }
+        }
+        if for_depth > 0 {
+            append(&loop_tokens, tok)
+        } else {
+            end_index = i
+            break
+        }
+    }
+
+    return loop_tokens, end_index
+}
+
+// Find the index of the matching endfor statement
+@(private = "file")
+find_matching_endfor :: proc(tokens: []Token, start_index: int) -> int {
+    if start_index < 0 || start_index >= len(tokens) {
+        return -1
+    }
+
+    skip_depth := 1
+    for j in start_index + 1 ..< len(tokens) {
+        tok := tokens[j]
+        if tok.type == .STATEMENT {
+            parts := strings.split(tok.value, " ")
+            defer delete(parts)
+            if len(parts) > 0 {
+                if parts[0] == "for" {
+                    skip_depth += 1
+                } else if parts[0] == "endfor" {
+                    skip_depth -= 1
+                    if skip_depth == 0 {
+                        return j
+                    }
+                }
+            }
+        }
+    }
+    return -1
 }
 
 // helpers to get the top of the stack
@@ -1054,51 +1173,6 @@ unquote :: proc(s: string) -> string {
     return strings.trim(s, `"`)
 }
 
-// ({"um": "1"}, ["um"]) -> "1"
-// ({"um": "1"}, ["dois"]) -> nil
-// ({"um": "1"}, ["um", "dois"]) -> nil
-// ({"um": {"dois": "2"}}, ["um", "dois"]) -> "2"
-// ({"list": ["1", "2"]}, ["list"]) -> ["1", "2"]
-eval_context_path :: proc(value: ^json.Value, path: []string) -> json.Value {
-    if value == nil || value^ == nil {
-        return nil
-    }
-    #partial switch &v in value^ {
-    case json.Null:
-        return nil
-    case json.String:
-        // here we implement date formatting for datetime values represented as
-        // strings in iso format
-        if path[0] == "isoformat()" {
-            return v
-        } else if path[0] == `strftime("%Y, %B %d")` {
-            ts, utc_offset, _ := time.iso8601_to_time_and_offset(v)
-            return fmt.aprintf(
-                "%d, %s %02d",
-                time.year(ts),
-                time.month(ts),
-                time.day(ts),
-                allocator = context.temp_allocator,
-            )
-        }
-        return nil // can't do lookups in strings
-    case json.Object:
-        if len(path) == 1 {
-            key: string = path[0]
-            // ignoring |striptags because none of my articles have tags in the title
-            if strings.ends_with(key, "|striptags") {
-                key = key[:len(key) - len("|striptags")]
-            }
-            return v[key]
-        } else {
-            next_val := v[path[0]]
-            return eval_context_path(&next_val, path[1:])
-        }
-    case json.Array:
-        return nil // can't do lookups in lists yet
-    }
-    return "ERROR, UNSUPPORTED TYPE LOOKUP"
-}
 
 // New AST-based expression evaluation - replaces hardcoded eval_expr
 eval_expr :: proc(expr: string, ctx: ^json.Object) -> json.Value {
@@ -1106,28 +1180,6 @@ eval_expr :: proc(expr: string, ctx: ^json.Object) -> json.Value {
     return eval_ast_node(ast, ctx)
 }
 
-// Keep old implementation for reference/comparison in tests
-eval_expr_old :: proc(expr: string, ctx: ^json.Object) -> json.Value {
-    // handle special case {{ lang_display_name(translation.lang) }}
-    if strings.starts_with(expr, "lang_display_name(") {
-        lang := eval_expr_old(expr[len("lang_display_name("):len(expr) - 1], ctx)
-        #partial switch v in lang {
-        case string:
-            if v == "en" {
-                return "English"
-            } else if v == "pt-br" {
-                return "Português (Brasil)"
-            }
-            return v
-        }
-    }
-
-    path := strings.split(expr, ".")
-    defer delete(path)
-
-    v: json.Value = ctx^
-    return eval_context_path(&v, path)
-}
 
 eql_values :: proc(val1: json.Value, val2: json.Value) -> bool {
     val1_bytes, _ := json.marshal(val1, allocator = context.temp_allocator)
@@ -1201,193 +1253,6 @@ read_until_next_stmt :: proc(reader: ^strings.Reader) -> (string, bool) {
     return "", false
 }
 
-parse_inner_for_template_str :: proc(reader: ^strings.Reader) -> (string, bool) {
-    start_index := reader.i
-
-    ok: bool
-    next_stmt: string
-    next_stmt, ok = read_until_next_stmt(reader)
-    for ok {
-        next_stmt_split := strings.split(next_stmt, " ")
-        defer delete(next_stmt_split)
-        if next_stmt_split[0] == "for" {
-            // we'll parse discarding the output for now, let the main loop
-            // of the recursive render_template_string call to parse it again
-            _, ok := parse_inner_for_template_str(reader)
-            if !ok {
-                return "", false
-            }
-        }
-        if next_stmt == "endfor" {
-            return reader.s[start_index:reader.i], true
-        }
-        next_stmt, ok = read_until_next_stmt(reader)
-    }
-
-    return "", false
-}
-
-render_for_loop :: proc(
-    builder: ^strings.Builder,
-    loop_list: json.Array,
-    loop_var: string,
-    loop_inner_templ_str: string,
-    ctx: ^json.Object,
-) {
-    // for each item of the iterable value ...
-    for item in loop_list {
-        // we create its context object...
-        loop_iter_ctx := clone_context(ctx)
-        loop_iter_ctx[loop_var] = item
-
-        // render the inner loop template with it...
-        inner_render := render_template_string(loop_inner_templ_str, &loop_iter_ctx)
-
-        // and send to the output!
-        written := strings.write_string(builder, inner_render)
-        if written != len(inner_render) {
-            log.error(
-                "ERROR: couldn't write to the builder buffer -- not enough memory?",
-            )
-        }
-    }
-}
-
-render_template_string :: proc(templ_str: string, ctx: ^json.Object) -> string {
-    builder: strings.Builder
-    defer strings.builder_destroy(&builder)
-
-    state: ParsingTemplateState
-    reader: strings.Reader
-    strings.reader_init(&reader, templ_str)
-
-    if_cond_stack: [dynamic]bool
-    defer delete(if_cond_stack)
-
-    copying_or_skipping :: proc(if_cond_stack: ^[dynamic]bool) -> ParsingTemplateState {
-        top_if_cond_stack := top(if_cond_stack^)
-        if top_if_cond_stack == nil {     // if we're not inside an if-block
-            return .Copying
-        }
-        if top_if_cond_stack.? {     // if the current if-condition is true
-            return .Copying
-        }
-        return .Skipping
-    }
-
-    for char, size, read_err := strings.reader_read_rune(&reader);
-        read_err == nil;
-        char, size, read_err = strings.reader_read_rune(&reader) {
-        switch state {
-        case .Skipping:
-            if char == '{' {
-                state = .MaybeExpressionOrCommand
-            }
-        case .Copying:
-            if char == '{' {
-                state = .MaybeExpressionOrCommand
-            } else {
-                strings.write_rune(&builder, char)
-            }
-        case .MaybeExpressionOrCommand:
-            if char == '{' {     // handle {{ case
-                state = .Expression
-            } else if char == '%' {
-                state = .Command
-            } else {
-                state = .Copying
-                strings.write_rune(&builder, '{')
-                strings.reader_unread_rune(&reader)
-            }
-        case .Expression:
-            // unread current rune, let read_until + trim do all the work ;)
-            strings.reader_unread_rune(&reader)
-
-            if expr_read, ok := read_until(&reader, "}}"); ok {
-                // next_state := ParsingTemplateState.Copying
-                next_state := copying_or_skipping(&if_cond_stack)
-                if next_state == .Copying {
-                    expr_read = strings.trim_space(expr_read)
-                    // log.infof("expr_read: [%s]", expr_read)
-                    strings.write_string(&builder, to_string(eval_expr(expr_read, ctx)))
-                }
-                state = next_state
-            } else {
-                return "ERROR PARSING TEMPLATE EXPRESSION"
-            }
-        case .Command:
-            // unread current rune, let read_until + trim do all the work ;)
-            strings.reader_unread_rune(&reader)
-
-            if stmt_read, ok := read_until(&reader, "%}"); ok {
-                stmt_read := strings.trim_space(stmt_read)
-                stmt_split := strings.split(stmt_read, " ")
-                defer delete(stmt_split)
-                if stmt_split[0] == "if" {
-                    cond_val := eval_condition(stmt_split[1:], ctx)
-                    append(&if_cond_stack, cond_val)
-                    if cond_val {
-                        state = .Copying
-                    } else {
-                        state = .Skipping
-                    }
-                } else if stmt_split[0] == "else" {
-                    state =
-                        .Skipping if copying_or_skipping(&if_cond_stack) == .Copying else .Copying
-                } else if stmt_split[0] == "endif" {
-                    pop(&if_cond_stack)
-                    state = copying_or_skipping(&if_cond_stack)
-                } else if stmt_split[0] == "for" {
-                    // we handle the for loop by fetching the inner template inside it...
-                    next_state := copying_or_skipping(&if_cond_stack)
-                    if inner_templ, ok := parse_inner_for_template_str(&reader); ok {
-                        if next_state == .Copying {
-                            loop_var := stmt_split[1]
-                            // ... evaluate the iterable expression
-                            loop_iterable := eval_expr(stmt_split[3], ctx)
-                            #partial switch v in loop_iterable {
-                            case json.Array:
-                                // ... and rendering the inner template for each iterable item
-                                render_for_loop(&builder, v, loop_var, inner_templ, ctx)
-                            case nil, json.Null:
-                            // let's just ignore the content
-                            case:
-                                log.error(
-                                    "Looping over non-list value not yet supported -- loop expression was:",
-                                    stmt_read,
-                                )
-                                return "ERROR LOOPING OVER NON-LIST"
-                            }
-                        }
-                    } else {
-                        log.error("Error parsing for-loop", stmt_read)
-                        return "ERROR PARSING FOR LOOP"
-                    }
-                    state = next_state
-                } else {
-                    // handle {% endfor %} and other unknown commands by
-                    // switching back to copying or skipping mode
-                    state = copying_or_skipping(&if_cond_stack)
-                }
-            } else {
-                // log.error(
-                //     "Error parsing template at:",
-                //     reader.s[max(reader.i - 12, 0):reader.i],
-                //     reader.i,
-                //     "state:",
-                //     state,
-                // )
-                return "ERROR PARSING TEMPLATE"
-            }
-
-        }
-    }
-
-    return strings.clone_from(
-        strings.to_string(builder),
-        allocator = context.temp_allocator,
-    )
-}
 
 parse_template_blocks :: proc(
     reader: ^strings.Reader,

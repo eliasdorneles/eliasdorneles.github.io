@@ -85,7 +85,7 @@ Architecture improvements:
     - Parser: handle token stream with proper state management
     - Benefits: cleaner code, better error handling, easier testing
 
-[ ] Implement Expression AST system:
+[x] Implement Expression AST system:
     - Replace hardcoded eval_expr with proper AST nodes
     - Add operator precedence handling (comparison, logical, arithmetic)
     - Support for filters (|filter_name), function calls, array/object access

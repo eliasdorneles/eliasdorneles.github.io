@@ -66,22 +66,25 @@ test_render_template_simple_expr :: proc(t: ^testing.T) {
     country := ctx["world"].(json.Object)["country"].(json.Object)
 
     result: string
-    result = render_template_string("hello {{   city   }} bye", &country)
+    result = render_template_string_v2("hello {{   city   }} bye", &country)
     expect_str(t, "hello Paris bye", result)
 
-    result = render_template_string("hello {{ world.country.city }} bye", &ctx)
+    result = render_template_string_v2("hello {{ world.country.city }} bye", &ctx)
     expect_str(t, "hello Paris bye", result)
 
-    result = render_template_string("hello {{ world }} bye", &ctx)
+    result = render_template_string_v2("hello {{ world }} bye", &ctx)
     expect_str(t, `hello {"country":{"city":"Paris"}} bye`, result)
 
-    result = render_template_string("hello {{ list }} bye", &ctx)
+    result = render_template_string_v2("hello {{ list }} bye", &ctx)
     expect_str(t, `hello ["um","dois","tres"] bye`, result)
 
-    result = render_template_string("hello [{{ not.valid }}] bye", &ctx)
+    result = render_template_string_v2("hello [{{ not.valid }}] bye", &ctx)
     expect_str(t, "hello [] bye", result)
 
-    result = render_template_string("hello {{ world.country.city.invalid }} bye", &ctx)
+    result = render_template_string_v2(
+        "hello {{ world.country.city.invalid }} bye",
+        &ctx,
+    )
     expect_str(t, "hello  bye", result)
 }
 
@@ -92,13 +95,13 @@ test_render_template_translation_lang_display :: proc(t: ^testing.T) {
     ctx := parsed.(json.Object)
 
     result: string
-    result = render_template_string(
+    result = render_template_string_v2(
         "Lang: {{ lang_display_name(translation.lang) }}",
         &ctx,
     )
     expect_str(t, "Lang: English", result)
 
-    result = render_template_string("Lang: {{ lang_display_name(lang2) }}", &ctx)
+    result = render_template_string_v2("Lang: {{ lang_display_name(lang2) }}", &ctx)
     expect_str(t, "Lang: Português (Brasil)", result)
 }
 
@@ -121,56 +124,60 @@ test_render_template_if :: proc(t: ^testing.T) {
     // when:
     templ_str = "{% if article %}{{ article.title }}{% endif %}"
     // then:
-    expect_str(t, "One giga monkeys", render_template_string(templ_str, &ctx))
+    expect_str(t, "One giga monkeys", render_template_string_v2(templ_str, &ctx))
 
     // when:
     templ_str =
     "{% if nothing %}nothing{% endif %}Article: {% if article %}{{ article.title }}{% endif %}"
     // then:
-    expect_str(t, "Article: One giga monkeys", render_template_string(templ_str, &ctx))
+    expect_str(
+        t,
+        "Article: One giga monkeys",
+        render_template_string_v2(templ_str, &ctx),
+    )
 
     // when:
     templ_str = "{% if nothing %}nothing{% else %}something{% endif %}"
     // then:
-    expect_str(t, "something", render_template_string(templ_str, &ctx))
+    expect_str(t, "something", render_template_string_v2(templ_str, &ctx))
 
     // when:
     templ_str = "{% if nothing %}nothing{% else %}something{% endif %}"
     // then:
-    expect_str(t, "something", render_template_string(templ_str, &ctx))
+    expect_str(t, "something", render_template_string_v2(templ_str, &ctx))
 
     // when:
     templ_str = "{% if nothing is defined %}nothing{% else %}something{% endif %}"
     // then:
-    expect_str(t, "nothing", render_template_string(templ_str, &ctx))
+    expect_str(t, "nothing", render_template_string_v2(templ_str, &ctx))
 
     // when:
     templ_str = "{% if article %}{{ article.title }}{% else %}no article{% endif %}"
     // then:
-    expect_str(t, "One giga monkeys", render_template_string(templ_str, &ctx))
+    expect_str(t, "One giga monkeys", render_template_string_v2(templ_str, &ctx))
 
     // when:
     templ_str = `{% if fruit == banana.name %}Bananas for all!{% endif %}`
     // then:
-    expect_str(t, "Bananas for all!", render_template_string(templ_str, &ctx))
+    expect_str(t, "Bananas for all!", render_template_string_v2(templ_str, &ctx))
 
     // when:
     templ_str =
     `{% if fruit != banana.name %}Bananas for all!{% else %}No bananas{% endif %}`
     // then:
-    expect_str(t, "No bananas", render_template_string(templ_str, &ctx))
+    expect_str(t, "No bananas", render_template_string_v2(templ_str, &ctx))
 
     // when:
     templ_str =
     `{% if nothing is defined and fruit == banana.name %}Bananas for all!{% endif %}`
     // then:
-    expect_str(t, "Bananas for all!", render_template_string(templ_str, &ctx))
+    expect_str(t, "Bananas for all!", render_template_string_v2(templ_str, &ctx))
 
     // when:
     templ_str =
     `{% if nothing is defined and fruit == something %}Bananas for all!{% endif %}`
     // then:
-    expect_str(t, "", render_template_string(templ_str, &ctx))
+    expect_str(t, "", render_template_string_v2(templ_str, &ctx))
 
     // when:
     templ_str =
@@ -179,7 +186,7 @@ test_render_template_if :: proc(t: ^testing.T) {
     expect_str(
         t,
         `<h1><a href="/index.html"> </a></h1>`,
-        render_template_string(templ_str, &ctx),
+        render_template_string_v2(templ_str, &ctx),
     )
 
     // and given:
@@ -192,14 +199,14 @@ test_render_template_if :: proc(t: ^testing.T) {
     expect_str(
         t,
         `<h1><a href="http://example.com/index.html"> </a></h1>`,
-        render_template_string(templ_str, &ctx),
+        render_template_string_v2(templ_str, &ctx),
     )
 
     // when:
     templ_str =
     `{% if FEED_RSS %}<link href="{{ SITEURL }}/{{ FEED_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} RSS Feed" />{% endif %}`
     // then:
-    expect_str(t, "", render_template_string(templ_str, &ctx))
+    expect_str(t, "", render_template_string_v2(templ_str, &ctx))
 }
 
 @(test)
@@ -219,7 +226,7 @@ if (window.location.host == host && window.location.protocol != "https:") {
         `,
     )
     // then:
-    expect_str(t, templ_str, render_template_string(templ_str, &ctx))
+    expect_str(t, templ_str, render_template_string_v2(templ_str, &ctx))
 }
 
 @(test)
@@ -298,7 +305,7 @@ test_render_template_for :: proc(t: ^testing.T) {
     // when:
     templ_str = "{% for it in items %}- {{ it.name }}{% endfor %}"
     // then:
-    expect_str(t, "- Apple- Banana- Kiwi", render_template_string(templ_str, &ctx))
+    expect_str(t, "- Apple- Banana- Kiwi", render_template_string_v2(templ_str, &ctx))
 
     // and when:
     templ_str =
@@ -307,7 +314,7 @@ test_render_template_for :: proc(t: ^testing.T) {
     expect_str(
         t,
         "BEGIN : a_b_c_ AND: d_e_f_ AND: g_h_i_ AND END",
-        render_template_string(templ_str, &ctx),
+        render_template_string_v2(templ_str, &ctx),
     )
 
     // and when:
@@ -334,7 +341,7 @@ test_render_template_for :: proc(t: ^testing.T) {
     `,
     )
     // then:
-    expect_str(t, expected, render_template_string(templ_str, &ctx))
+    expect_str(t, expected, render_template_string_v2(templ_str, &ctx))
 }
 
 @(test)
@@ -1030,47 +1037,6 @@ test_ast_eval_date_formatting :: proc(t: ^testing.T) {
 }
 
 
-// Test AST vs old system compatibility
-@(test)
-test_ast_vs_old_expr_compatibility :: proc(t: ^testing.T) {
-    parsed, _ := json.parse_string(
-        `{
-            "name": "John",
-            "age": 30,
-            "article": {"title": "Test", "date": "2025-06-03T00:01:00+02:00"},
-            "translation": {"lang": "en"},
-            "existing": "value"
-        }`,
-    )
-    defer json.destroy_value(parsed)
-    ctx := parsed.(json.Object)
-
-    test_cases := []string {
-        "name",
-        "article.title",
-        "article.date.isoformat()",
-        "existing|striptags",
-        "lang_display_name(translation.lang)",
-    }
-
-    for test_case in test_cases {
-        result_old := eval_expr_old(test_case, &ctx)
-        result_new := eval_expr(test_case, &ctx)
-
-        old_str := to_string(result_old)
-        new_str := to_string(result_new)
-
-        testing.expectf(
-            t,
-            old_str == new_str,
-            "New AST result differs from old eval_expr for: %s\nOld: %s\nNew: %s",
-            test_case,
-            old_str,
-            new_str,
-        )
-    }
-}
-
 // Compatibility test: compare old vs new parser output
 @(test)
 test_parser_compatibility :: proc(t: ^testing.T) {
@@ -1097,7 +1063,7 @@ test_parser_compatibility :: proc(t: ^testing.T) {
     }
 
     for test_case in test_cases {
-        result_v1 := render_template_string(test_case, &ctx)
+        result_v1 := render_template_string_v2(test_case, &ctx)
         result_v2 := render_template_string_v2(test_case, &ctx)
 
         testing.expectf(
