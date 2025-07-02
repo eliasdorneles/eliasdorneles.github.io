@@ -8,7 +8,7 @@ sitegen.bin: sitegen/tool.odin sitegen/template_engine.odin config_sitegen.json
 	odin build sitegen
 
 .PHONY: compile-dev
-compile-dev: clean-local sitegen.bin
+compile-dev: clean-local sitegen.bin  ## Compile the site for local development
 	./sitegen.bin --local --output output --config-file config_sitegen.json
 
 .PHONY: compile-prod

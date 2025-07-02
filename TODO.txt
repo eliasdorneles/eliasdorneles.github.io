@@ -74,3 +74,75 @@ main logic:
 [x] fix issue with incorrect image and weird path for "post pycon blues" article
 
 It's all done!!! Yayyy! 🎉
+
+Template Engine Improvements
+############################
+
+Architecture improvements:
+--------------------------
+[x] Refactor parser: Split into separate tokenizer + parser stages
+    - Tokenizer: convert raw text to tokens (TEXT, EXPRESSION, STATEMENT, etc.)
+    - Parser: handle token stream with proper state management
+    - Benefits: cleaner code, better error handling, easier testing
+
+[ ] Implement Expression AST system:
+    - Replace hardcoded eval_expr with proper AST nodes
+    - Add operator precedence handling (comparison, logical, arithmetic)
+    - Support for filters (|filter_name), function calls, array/object access
+    - Benefits: more flexible expressions, better error messages
+
+[ ] Add comprehensive error reporting:
+    - Track line numbers and column positions during parsing
+    - Provide specific error messages with context
+    - Include template name in error messages
+    - Benefits: much easier debugging for template authors
+
+[ ] Enhance filter system:
+    - Replace hardcoded |striptags with proper filter chain
+    - Add common filters: truncate, upper, lower, date formatting
+    - Make filters extensible via function registry
+    - Benefits: more Jinja2 compatibility, easier to extend
+
+[ ] Testing and validation:
+    - Add benchmarking tests for performance regression detection
+    - Add fuzzing tests for parser robustness
+    - Template validation (undefined variables, missing includes)
+    - Benefits: more reliable, maintainable code
+
+[ ] Advanced features:
+    - Macro definitions and calls
+    - Template variables via {% set var = value %}
+    - More loop variables (loop.index, loop.first, loop.last)
+    - Template comments {# comment #}
+    - Include with context passing
+    - Benefits: full Jinja2 feature parity
+
+[ ] Improve memory management:
+    - Reduce temp_allocator usage, use proper cleanup
+    - Pool string builders and reusable data structures
+    - Add memory usage tracking/limits
+    - Benefits: better performance, predictable memory usage
+
+Performance optimizations:
+-------------------------
+[ ] Optimize string operations:
+    - Use string interning for repeated template names/variables
+    - Pre-allocate builders with estimated sizes
+    - Reduce string allocations in hot paths
+
+[ ] Template inheritance optimization:
+    - Cache resolved inheritance chains
+    - Avoid re-parsing parent templates
+    - Lazy block resolution
+
+Code quality improvements:
+-------------------------
+[ ] Add proper documentation:
+    - Document all public procedures and data structures
+    - Add usage examples for each feature
+    - Performance characteristics and memory usage docs
+
+[ ] Improve test coverage:
+    - Add edge case tests (malformed templates, deep nesting)
+    - Integration tests with real template files
+    - Error condition testing
