@@ -35,6 +35,376 @@ destroy_env :: proc(env: ^Environment) {
     delete(env.loaded_templates)
 }
 
+// New tokenizer-based parser implementation
+TokenType :: enum {
+    TEXT, // Plain text content
+    EXPRESSION, // {{ variable }}
+    STATEMENT, // {% if/for/block %}
+    EOF, // End of file
+}
+
+Token :: struct {
+    type:      TokenType,
+    value:     string,
+    line:      int,
+    column:    int,
+    start_pos: int,
+    end_pos:   int,
+}
+
+Tokenizer :: struct {
+    input:  string,
+    pos:    int,
+    line:   int,
+    column: int,
+}
+
+init_tokenizer :: proc(input: string) -> Tokenizer {
+    return Tokenizer{input = input, pos = 0, line = 1, column = 1}
+}
+
+peek_char :: proc(tokenizer: ^Tokenizer, offset: int = 0) -> u8 {
+    pos := tokenizer.pos + offset
+    if pos >= len(tokenizer.input) {
+        return 0
+    }
+    return tokenizer.input[pos]
+}
+
+advance_char :: proc(tokenizer: ^Tokenizer) -> u8 {
+    if tokenizer.pos >= len(tokenizer.input) {
+        return 0
+    }
+
+    char := tokenizer.input[tokenizer.pos]
+    tokenizer.pos += 1
+
+    if char == '\n' {
+        tokenizer.line += 1
+        tokenizer.column = 1
+    } else {
+        tokenizer.column += 1
+    }
+
+    return char
+}
+
+advance_until :: proc(
+    tokenizer: ^Tokenizer,
+    pattern: string,
+) -> (
+    found: bool,
+    content: string,
+) {
+    start_pos := tokenizer.pos
+
+    for tokenizer.pos < len(tokenizer.input) {
+        if tokenizer.pos + len(pattern) <= len(tokenizer.input) {
+            if tokenizer.input[tokenizer.pos:tokenizer.pos + len(pattern)] == pattern {
+                content = tokenizer.input[start_pos:tokenizer.pos]
+                // Advance past the pattern
+                for _ in 0 ..< len(pattern) {
+                    advance_char(tokenizer)
+                }
+                return true, content
+            }
+        }
+        advance_char(tokenizer)
+    }
+
+    // If not found, return content from start to end
+    content = tokenizer.input[start_pos:tokenizer.pos]
+    return false, content
+}
+
+next_token :: proc(tokenizer: ^Tokenizer) -> Token {
+    if tokenizer.pos >= len(tokenizer.input) {
+        return Token {
+            type = .EOF,
+            value = "",
+            line = tokenizer.line,
+            column = tokenizer.column,
+            start_pos = tokenizer.pos,
+            end_pos = tokenizer.pos,
+        }
+    }
+
+    start_line := tokenizer.line
+    start_column := tokenizer.column
+    start_pos := tokenizer.pos
+
+    // Check for expressions {{ }}
+    if peek_char(tokenizer) == '{' && peek_char(tokenizer, 1) == '{' {
+        advance_char(tokenizer) // {
+        advance_char(tokenizer) // {
+
+        found, content := advance_until(tokenizer, "}}")
+        if !found {
+            // Malformed expression, treat remaining content as text starting from the first {
+            tokenizer.pos = start_pos
+            tokenizer.line = start_line
+            tokenizer.column = start_column
+            // Fall through to regular text processing
+        } else {
+            return Token {
+                type = .EXPRESSION,
+                value = strings.trim_space(content),
+                line = start_line,
+                column = start_column,
+                start_pos = start_pos,
+                end_pos = tokenizer.pos,
+            }
+        }
+    }
+
+    // Check for statements {% %}
+    if peek_char(tokenizer) == '{' && peek_char(tokenizer, 1) == '%' {
+        advance_char(tokenizer) // {
+        advance_char(tokenizer) // %
+
+        found, content := advance_until(tokenizer, "%}")
+        if !found {
+            // Malformed statement, treat remaining content as text starting from the first {
+            tokenizer.pos = start_pos
+            tokenizer.line = start_line
+            tokenizer.column = start_column
+            // Fall through to regular text processing
+        } else {
+            return Token {
+                type = .STATEMENT,
+                value = strings.trim_space(content),
+                line = start_line,
+                column = start_column,
+                start_pos = start_pos,
+                end_pos = tokenizer.pos,
+            }
+        }
+    }
+
+    // Regular text - read until next { or end of input
+    text_content: strings.Builder
+    defer strings.builder_destroy(&text_content)
+
+    for tokenizer.pos < len(tokenizer.input) {
+        char := peek_char(tokenizer)
+        if char == '{' {
+            // Only break if we haven't started processing text yet
+            // If we're already in text mode (start_pos == tokenizer.pos), 
+            // we should consume the { as part of the text
+            if tokenizer.pos > start_pos {
+                break
+            }
+        }
+        strings.write_byte(&text_content, advance_char(tokenizer))
+    }
+
+    value := strings.clone_from(
+        strings.to_string(text_content),
+        allocator = context.temp_allocator,
+    )
+
+    return Token {
+        type = .TEXT,
+        value = value,
+        line = start_line,
+        column = start_column,
+        start_pos = start_pos,
+        end_pos = tokenizer.pos,
+    }
+}
+
+// New token-based template renderer
+render_template_string_v2 :: proc(templ_str: string, ctx: ^json.Object) -> string {
+    tokenizer := init_tokenizer(templ_str)
+
+    builder: strings.Builder
+    defer strings.builder_destroy(&builder)
+
+    if_cond_stack: [dynamic]bool
+    defer delete(if_cond_stack)
+
+    is_copying :: proc(if_cond_stack: ^[dynamic]bool) -> bool {
+        if len(if_cond_stack) == 0 {
+            return true
+        }
+        return if_cond_stack[len(if_cond_stack) - 1]
+    }
+
+    for {
+        token := next_token(&tokenizer)
+
+        if token.type == .EOF {
+            break
+        }
+
+        #partial switch token.type {
+
+        case .TEXT:
+            if is_copying(&if_cond_stack) {
+                strings.write_string(&builder, token.value)
+            }
+
+        case .EXPRESSION:
+            if is_copying(&if_cond_stack) {
+                result := eval_expr(token.value, ctx)
+                strings.write_string(&builder, to_string(result))
+            }
+
+        case .STATEMENT:
+            stmt_parts := strings.split(token.value, " ")
+            defer delete(stmt_parts)
+
+            if len(stmt_parts) == 0 {
+                continue
+            }
+
+            switch stmt_parts[0] {
+            case "if":
+                cond_val := eval_condition(stmt_parts[1:], ctx)
+                append(&if_cond_stack, cond_val)
+
+            case "else":
+                if len(if_cond_stack) > 0 {
+                    if_cond_stack[len(if_cond_stack) - 1] =
+                    !if_cond_stack[len(if_cond_stack) - 1]
+                }
+
+            case "endif":
+                if len(if_cond_stack) > 0 {
+                    pop(&if_cond_stack)
+                }
+
+            case "for":
+                if len(stmt_parts) >= 4 &&
+                   stmt_parts[2] == "in" &&
+                   is_copying(&if_cond_stack) {
+                    loop_var := stmt_parts[1]
+                    loop_iterable := eval_expr(stmt_parts[3], ctx)
+
+                    // Parse for-loop content until endfor
+                    loop_tokens: [dynamic]Token
+                    defer delete(loop_tokens)
+
+                    for_depth := 1
+                    for for_depth > 0 {
+                        inner_token := next_token(&tokenizer)
+                        if inner_token.type == .EOF {
+                            break
+                        }
+                        if inner_token.type == .STATEMENT {
+                            inner_parts := strings.split(inner_token.value, " ")
+                            defer delete(inner_parts)
+                            if len(inner_parts) > 0 {
+                                if inner_parts[0] == "for" {
+                                    for_depth += 1
+                                } else if inner_parts[0] == "endfor" {
+                                    for_depth -= 1
+                                }
+                            }
+                        }
+                        if for_depth > 0 {
+                            append(&loop_tokens, inner_token)
+                        }
+                    }
+
+                    // Render for-loop content
+                    #partial switch v in loop_iterable {
+                    case json.Array:
+                        for item in v {
+                            loop_iter_ctx := clone_context(ctx)
+                            loop_iter_ctx[loop_var] = item
+
+                            inner_result := render_tokens_v2(
+                                loop_tokens[:],
+                                &loop_iter_ctx,
+                            )
+                            strings.write_string(&builder, inner_result)
+                        }
+                    case nil, json.Null:
+                    // ignore
+                    case:
+                        log.error("Looping over non-list value not yet supported")
+                    }
+                }
+
+            case "endfor":
+            // Handled in for-loop processing
+
+            case:
+            // Unknown statement, ignore
+            }
+        }
+    }
+
+    return strings.clone_from(
+        strings.to_string(builder),
+        allocator = context.temp_allocator,
+    )
+}
+
+render_tokens_v2 :: proc(tokens: []Token, ctx: ^json.Object) -> string {
+    builder: strings.Builder
+    defer strings.builder_destroy(&builder)
+
+    if_cond_stack: [dynamic]bool
+    defer delete(if_cond_stack)
+
+    is_copying :: proc(if_cond_stack: ^[dynamic]bool) -> bool {
+        if len(if_cond_stack) == 0 {
+            return true
+        }
+        return if_cond_stack[len(if_cond_stack) - 1]
+    }
+
+    for token in tokens {
+        switch token.type {
+        case .TEXT:
+            if is_copying(&if_cond_stack) {
+                strings.write_string(&builder, token.value)
+            }
+
+        case .EXPRESSION:
+            if is_copying(&if_cond_stack) {
+                result := eval_expr(token.value, ctx)
+                strings.write_string(&builder, to_string(result))
+            }
+
+        case .STATEMENT:
+            stmt_parts := strings.split(token.value, " ")
+            defer delete(stmt_parts)
+
+            if len(stmt_parts) == 0 {
+                continue
+            }
+
+            switch stmt_parts[0] {
+            case "if":
+                cond_val := eval_condition(stmt_parts[1:], ctx)
+                append(&if_cond_stack, cond_val)
+
+            case "else":
+                if len(if_cond_stack) > 0 {
+                    if_cond_stack[len(if_cond_stack) - 1] =
+                    !if_cond_stack[len(if_cond_stack) - 1]
+                }
+
+            case "endif":
+                if len(if_cond_stack) > 0 {
+                    pop(&if_cond_stack)
+                }
+            }
+
+        case .EOF:
+            break
+        }
+    }
+
+    return strings.clone_from(
+        strings.to_string(builder),
+        allocator = context.temp_allocator,
+    )
+}
+
 // helpers to get the top of the stack
 @(private = "file")
 top_slice :: proc(li: []$T) -> Maybe(T) {
@@ -748,7 +1118,8 @@ render_template :: proc(
     load_template(env, template_name) or_return
     template_str := resolve_extends_template(env, template_name) or_return
     // log.debug("final template is\n", template_str)
-    result = render_template_string(template_str, ctx)
+    // result = render_template_string(template_str, ctx)
+    result = render_template_string_v2(template_str, ctx)
     // TODO: improve render_template_string error handling
     return result, true
 }
