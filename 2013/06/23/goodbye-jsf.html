@@ -5,10 +5,7 @@
         <link rel="shortcut icon" href="/images/favicon.ico">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="../../../theme/css/pygments.css" type="text/css" />
-        <link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
-        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
-        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
 <script>
 var host = "eliasdorneles.github.io";
 if (window.location.host == host && window.location.protocol != "https:") {
@@ -21,16 +18,28 @@ if (window.location.host == host && window.location.protocol != "https:") {
     <a name="top"></a>
 
 <div class="site-container">
+        
         <header id="banner" class="body">
-                <h1><a href="../../../index.html">Elias Dorneles </a></h1>
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
                 <nav><ul>
+                
                     <li >
-                        <a href="../../../">Blog</a>
+                        <a href="https://eliasdorneles.com/">Blog</a>
                     </li>
-                    <li ><a href="../../../pages/about.html">About me</a></li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
                 </ul></nav>
         </header><!-- /#banner -->
+        
 
+        
 <section id="content" class="body">
     <article>
         <header>
@@ -41,14 +50,21 @@ if (window.location.host == host && window.location.protocol != "https:") {
         </header>
 
         <div class="entry-content">
+            
 <footer class="post-info">
+        
         <address class="vcard author">
             posted by
-            <a href="../../../pages/about-me.html">Elias Dorneles</a>
-            on <abbr class="published" title="2013-06-23T13:31:00+02:00">2013, juin 23</abbr>
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2013-06-23 13:31:00+02:00">2013, June 23</abbr>
             <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/goodbye-jsf.md">Edit</a>
         </address>
-</footer>            <p>Ok, se você não é javeiro, talvez nunca tenha ouvido falar em JSF. <em>No
+        
+
+
+</footer>
+
+            <p>Ok, se você não é javeiro, talvez nunca tenha ouvido falar em JSF. <em>No
 worries</em>, você não está perdendo muita coisa.</p>
 <p>Porém, se você aprendeu a programar em Java, talvez nem tenha procurado
 aprender outra linguagem de propósito geral (... <em>ainda</em>, I hope) mas já
@@ -151,7 +167,7 @@ cuidar da infra Java (e têm medo de deixar os desenvolvedores mexer no
 banco de produção), o Java EE é jogo pra elas.</p>
 <h1>Problema cultural chato de JSF</h1>
 <p>Acabo classificando esse problema como cultural porque é uma coisa que
-fica meio "aceita" pelo pessoal, e se reflete na maioria das aplicações.
+fica meio &quot;aceita&quot; pelo pessoal, e se reflete na maioria das aplicações.
 Basicamente, a curva de aprendizado é escarpada e longa <strong>demais</strong>!
 Fazer JSF de um jeito decente exige aprender o famoso <a href="http://docs.oracle.com/javaee/6/tutorial/doc/bnaqq.html">ciclo de
 vida</a> (um
@@ -191,18 +207,27 @@ truque de jornalista e colocar aqui...</p>
 <h1>10 coisas que todo desenvolvedor JSF precisa saber</h1>
 <p>Ok, está mais para 10 perguntas e respostas do StackOverflow que todo
 desenvolvedor JSF precisa ler, mas tá valendo! :)</p>
-<h2>1. <a href="http://stackoverflow.com/questions/3106452/how-do-servlets-work-instantiation-session-variables-and-multithreading">Como funcionam os tais servlets? O que acontece quando eu inicio uma aplicação, e em que ordem?</a></h2>
+<ol>
+<li><a href="http://stackoverflow.com/questions/3106452/how-do-servlets-work-instantiation-session-variables-and-multithreading">Como funcionam os tais servlets? O que acontece quando eu inicio uma aplicação, e em que ordem?</a></li>
+</ol>
+<hr />
 <p>Entender como funcionam os servlets, filtros, listeners, as sessões e
 como funciona tudo isso em cima do protocolo HTTP ajuda bastante na hora
 de resolver problemas -- são os fundamentos de Java Web. A explicação
 concisa e bem completa contida nessa resposta do BalusC simplesmente não
 tem preço.</p>
-<h2>2. <a href="http://stackoverflow.com/questions/2090033/why-jsf-calls-getters-multiple-times">Porque os métodos getters são chamados várias vezes durante a mesma requisição?</a></h2>
+<ol start="2">
+<li><a href="http://stackoverflow.com/questions/2090033/why-jsf-calls-getters-multiple-times">Porque os métodos getters são chamados várias vezes durante a mesma requisição?</a></li>
+</ol>
+<hr />
 <p>Boa pergunta! Leia essa pra saber por que você não deve fazer chamadas
 de acesso ao banco dentro de um método <em>getAlgumaCoisa()</em> nos seus
 backing beans. E sim, eu também já fiz isso antes e tive que mudar
 tudo... Contra-intuitivo, ou não?</p>
-<h2>3. <a href="http://stackoverflow.com/questions/2118656/hcommandlink-hcommandbutton-is-not-being-invoked">Meu botão ou link não está sendo acionado! Ai mel dels, e agora?</a></h2>
+<ol start="3">
+<li><a href="http://stackoverflow.com/questions/2118656/hcommandlink-hcommandbutton-is-not-being-invoked">Meu botão ou link não está sendo acionado! Ai mel dels, e agora?</a></li>
+</ol>
+<hr />
 <p>Rá! Você caiu na armadilha! Leia todos os itens possíveis nessa
 resposta, é uma excelente checklist na hora de depurar problemas. Você
 vai acabar aprendendo um bocadinho de JSF, vai se dar conta que o BalusC
@@ -211,19 +236,28 @@ droga que é -- e escrever respostas completíssimas no SO.</p>
 <p>Quero dizer, olhe para aquela lista! Ninguém devia ter TANTO possíveis
 problemas afetando se um botão vai realmente fazer o esperado! Talk
 about bad developer UX...</p>
-<h2>4. <a href="http://stackoverflow.com/questions/4317684/when-should-i-use-houtputlink-instead-of-hcommandlink">Quando devo usar links e quando usar commandLinks?</a></h2>
+<ol start="4">
+<li><a href="http://stackoverflow.com/questions/4317684/when-should-i-use-houtputlink-instead-of-hcommandlink">Quando devo usar links e quando usar commandLinks?</a></li>
+</ol>
+<hr />
 <p>HTTP: GET vs POST.  Navegação/favoritabilidade vs. ações do tipo altera/cria
 alguma coisa. A maioria dos desenvolvedores JSF levaram 10 anos para aprender
 <a href="http://www.w3.org/2001/tag/doc/whenToUseGet.html">quando usar GET vs POST</a>.
-Alguns ainda não aprenderam...  </p>
-<h2>5. <a href="http://stackoverflow.com/questions/4994458/how-can-i-pass-a-parameter-to-a-commandlink-inside-a-datatable">Como passar parâmetro para um commandLink dentro de um datatable?</a></h2>
+Alguns ainda não aprenderam...</p>
+<ol start="5">
+<li><a href="http://stackoverflow.com/questions/4994458/how-can-i-pass-a-parameter-to-a-commandlink-inside-a-datatable">Como passar parâmetro para um commandLink dentro de um datatable?</a></li>
+</ol>
+<hr />
 <p>Datatables são basicamente inúteis se você não puder fazer uma ação para
 agir no registro de uma linha. Isso às vezes é mais difícil do que
 parece. Leia essa para não sofrer na próxima vez que precisar fazer
 isso. E não seja bobo: se estiver usando um container antigo, <a href="http://stackoverflow.com/questions/3284236/invoke-direct-methods-or-methods-with-arguments-variables-parameters-in-jsf">use a
 JBoss-EL logo e largue de
 frescura</a>!</p>
-<h2>6. <a href="http://stackoverflow.com/questions/10726653/by-default-jsf-generates-unusable-ids-which-are-incompatible-with-css-part-of">Meu jQuery não tá funcionando! #comofas</a></h2>
+<ol start="6">
+<li><a href="http://stackoverflow.com/questions/10726653/by-default-jsf-generates-unusable-ids-which-are-incompatible-with-css-part-of">Meu jQuery não tá funcionando! #comofas</a></li>
+</ol>
+<hr />
 <p>JSF gera ids no HTML usando o dois-pontos <strong>':'</strong> como separador, isso
 acaba gerando alguma confusão porque o dois-pontos é um separador com
 significado diferente para a nossa <em><a href="http://www.jquery.com" title="jQuery rocks!">beloved Javascript library
@@ -233,7 +267,10 @@ mordido por esse problema.</p>
 comportamento pelo <em>id</em> do elemento HTML não escala, há quem digo que é
 melhor usar sempre <em>classes</em>. Dizem que é como o Gmail faz, mas nunca
 conferi... (sim, eu tenho medo do JavaScript compilado do Gmail).</p>
-<h2>7. <a href="http://stackoverflow.com/tags/composite-component/info">Como usar Composite Components?</a></h2>
+<ol start="7">
+<li><a href="http://stackoverflow.com/tags/composite-component/info">Como usar Composite Components?</a></li>
+</ol>
+<hr />
 <p>Ok, dessa vez o link não é para uma pergunta/resposta no SO, mas para a
 wiki da tag composite-component. Aí tem um tutorial bacana ensinando a
 criar um <a href="http://docs.oracle.com/javaee/6/tutorial/doc/giqzr.html">Composite
@@ -241,7 +278,10 @@ Component</a>. Se
 você está usando JSF 2.x e ainda não fez algo do tipo, tire uma meia
 horinha pra seguir o tutorial lá, vale muito a pena -- é a maneira mais
 efetiva de reuso para as páginas JSF.</p>
-<h2>8. <a href="http://stackoverflow.com/questions/6822000/when-to-use-uiinclude-tag-files-composite-components-and-or-custom-componen">Facelets templates, Facelets tags, Composite Components, Custom Components, aaargh! WTF are they about, anyway?</a></h2>
+<ol start="8">
+<li><a href="http://stackoverflow.com/questions/6822000/when-to-use-uiinclude-tag-files-composite-components-and-or-custom-componen">Facelets templates, Facelets tags, Composite Components, Custom Components, aaargh! WTF are they about, anyway?</a></li>
+</ol>
+<hr />
 <p>Pois é, era de esperar que reuso em um framework baseado em componentes
 fosse algo trivial, claro, tranquilo e sussa. <em>Hmmmm, not really</em>! Você
 ainda precisa ficar ligado em muita coisa pra fazer as coisas
@@ -253,14 +293,20 @@ terão identificador prefixado pelo id do componente que você criou. Isso
 facilita na hora de fazer componentes AJAX reusáveis, porque o alvo das
 alterações (o que você usa no render) sempre terá uma identificação
 única para aquele componente.</p>
-<h2>9. <a href="https://balusc.blogspot.com.br/2011/09/communication-in-jsf-20.html">Comunicação em JSF 2.0 -- como passar os dados que eu quero para onde eu preciso</a></h2>
+<ol start="9">
+<li><a href="https://balusc.blogspot.com.br/2011/09/communication-in-jsf-20.html">Comunicação em JSF 2.0 -- como passar os dados que eu quero para onde eu preciso</a></li>
+</ol>
+<hr />
 <p>Bom... se você está usando JSF 2.x, provavelmente já chegou esse artigo
 antes. Eu nem precisaria postar, porque é tão batata que todo mundo
 usando JSF 2.x deve cair nele toda hora, mas como tenho a impressão que
 meu eleitorado não gosta de textos grandes, é bom colocar na lista. Você
 não vai ler agora mesmo, então sugiro favoritar a página e ir lendo aos
 poucos durante a semana.</p>
-<h2>10. <a href="http://stackoverflow.com/questions/3623911/what-are-the-main-disadvantages-of-java-server-faces-2-0">Por fim, uma breve história de JSF</a></h2>
+<ol start="10">
+<li><a href="http://stackoverflow.com/questions/3623911/what-are-the-main-disadvantages-of-java-server-faces-2-0">Por fim, uma breve história de JSF</a></li>
+</ol>
+<hr />
 <p>Apesar de reclamar um bocado sobre JSF, reconheço que ele está
 melhorando, e nos últimos anos tem andado melhor do que antes. É bom
 estar a par de como a coisa começou, os problemas foram aparecendo, como
@@ -289,21 +335,14 @@ implementações/configurações podem variar.</p>
 por um consultor australiano, que pelo jeito <a href="http://www.industrieit.com/blog/2011/11/stateless-jsf-high-performance-zero-per-request-memory-overhead/">compartilha a mesma idéia
 de que UI no servidor é
 roubada</a>.</p>
+
         </div>
 
-        <div class="taglist"></div>
-
+        <div class="taglist">
+</div>
     </article>
 </section>
 
-        <aside id="sidebar">
-                <div class="widget">
-                        <h2>Categories</h2>
-                        <ul>
-                           <li class="active"><a href="../../../category/blog.html">blog</a></li>
-                        </ul>
-                </div>
-        </aside><!-- /#sidebar -->
 
         <hr />
         <footer class="footer-menu">
@@ -311,5 +350,9 @@ roubada</a>.</p>
         </footer>
 </div>
 
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/default.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
 </body>
 </html>

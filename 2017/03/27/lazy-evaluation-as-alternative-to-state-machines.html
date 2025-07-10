@@ -5,10 +5,7 @@
         <link rel="shortcut icon" href="/images/favicon.ico">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="../../../theme/css/pygments.css" type="text/css" />
-        <link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
-        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
-        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
 <script>
 var host = "eliasdorneles.github.io";
 if (window.location.host == host && window.location.protocol != "https:") {
@@ -21,16 +18,28 @@ if (window.location.host == host && window.location.protocol != "https:") {
     <a name="top"></a>
 
 <div class="site-container">
+        
         <header id="banner" class="body">
-                <h1><a href="../../../index.html">Elias Dorneles </a></h1>
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
                 <nav><ul>
+                
                     <li >
-                        <a href="../../../">Blog</a>
+                        <a href="https://eliasdorneles.com/">Blog</a>
                     </li>
-                    <li ><a href="../../../pages/about.html">About me</a></li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
                 </ul></nav>
         </header><!-- /#banner -->
+        
 
+        
 <section id="content" class="body">
     <article>
         <header>
@@ -41,14 +50,21 @@ if (window.location.host == host && window.location.protocol != "https:") {
         </header>
 
         <div class="entry-content">
+            
 <footer class="post-info">
+        
         <address class="vcard author">
             posted by
-            <a href="../../../pages/about-me.html">Elias Dorneles</a>
-            on <abbr class="published" title="2017-03-27T22:13:00+02:00">2017, mars 27</abbr>
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2017-03-27 22:13:00+02:00">2017, March 27</abbr>
             <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/lazy-evaluation-as-alternative-to-state-machines.md">Edit</a>
         </address>
-</footer>            <p>Some days ago I read <a href="http://eli.thegreenplace.net/2009/08/29/co-routines-as-an-alternative-to-state-machines">this nice article talking about co-routines as an
+        
+
+
+</footer>
+
+            <p>Some days ago I read <a href="http://eli.thegreenplace.net/2009/08/29/co-routines-as-an-alternative-to-state-machines">this nice article talking about co-routines as an
 alternative to state
 machines</a>.</p>
 <p>The most popular use case for co-routines in Python has been asynchronous I/O,
@@ -79,17 +95,17 @@ program to strip out C-style comments.</p>
 inside of a string (as in <code>'/**/'</code> for the sake of simplicity). I only wrote
 this to explore the idea of alternatives to state machines.</p>
 <p>Here is a diagram of the state machine:</p>
-<p><center>
-<img alt="Picture with diagram of Finite State machine" src="../../../images/fsm_strip_comments.png">
-</center></p>
+<center>
+<p><img src="../../..//images/fsm_strip_comments.png" alt="Picture with diagram of Finite State machine" /></p>
+</center>
 <p><a href="https://github.com/eliasdorneles/lazy-eval-gt-state-machines/blob/master/001_state_machine.py">Here is the state machine implementation</a>.</p>
 <p>It was fairly straightforward to implement, but the code ends up a bit verbose.</p>
 <p>Next, I went on and wrote <a href="https://github.com/eliasdorneles/lazy-eval-gt-state-machines/blob/master/002_coroutine.py">the co-routine version</a>, and didn't really like the result.
 First of all, I find a bit cumbersome having to write the sink and build the driving code,
-I thought: "why can't I just use the function? what if I want to do something
-else than just print, do I have to write a sink-like code every time?"</p>
+I thought: &quot;why can't I just use the function? what if I want to do something
+else than just print, do I have to write a sink-like code every time?&quot;</p>
 <p>After mulling for a bit, I realized that the most important gain from the
-co-routine code was being able to "pause execution", so I figured I could write
+co-routine code was being able to &quot;pause execution&quot;, so I figured I could write
 a generator function that would consume the input lazily. While attempting
 to do that, I realized I don't even need it to be a generator, it can
 be just a regular function that will consume the input lazily and
@@ -121,21 +137,14 @@ benefits without most of the drawbacks.</p>
 <p>I'm not sure if they're as much powerful nor I'm convinced that the code is
 more maintainable, but for some state machines it may be very expressive.</p>
 <p>Also, <a href="https://github.com/eliasdorneles/lazy-eval-gt-state-machines/blob/master/005_pro.py">regular expressions are awesome</a>. =)</p>
+
         </div>
 
-        <div class="taglist"></div>
-
+        <div class="taglist">
+</div>
     </article>
 </section>
 
-        <aside id="sidebar">
-                <div class="widget">
-                        <h2>Categories</h2>
-                        <ul>
-                           <li class="active"><a href="../../../category/blog.html">blog</a></li>
-                        </ul>
-                </div>
-        </aside><!-- /#sidebar -->
 
         <hr />
         <footer class="footer-menu">
@@ -143,5 +152,9 @@ more maintainable, but for some state machines it may be very expressive.</p>
         </footer>
 </div>
 
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/default.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
 </body>
 </html>

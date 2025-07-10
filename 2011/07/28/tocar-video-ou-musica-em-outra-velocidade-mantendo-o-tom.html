@@ -5,10 +5,7 @@
         <link rel="shortcut icon" href="/images/favicon.ico">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="../../../theme/css/pygments.css" type="text/css" />
-        <link rel="stylesheet" href="../../../theme/css/main.css" type="text/css" />
-        <link href="../../../atom.xml" type="application/atom+xml" rel="alternate" title="Elias Dorneles ATOM Feed" />
-        <link href="../../../feed.xml" type="application/rss+xml" rel="alternate" title="Elias Dorneles RSS Feed" />
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
 <script>
 var host = "eliasdorneles.github.io";
 if (window.location.host == host && window.location.protocol != "https:") {
@@ -21,16 +18,28 @@ if (window.location.host == host && window.location.protocol != "https:") {
     <a name="top"></a>
 
 <div class="site-container">
+        
         <header id="banner" class="body">
-                <h1><a href="../../../index.html">Elias Dorneles </a></h1>
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
                 <nav><ul>
+                
                     <li >
-                        <a href="../../../">Blog</a>
+                        <a href="https://eliasdorneles.com/">Blog</a>
                     </li>
-                    <li ><a href="../../../pages/about.html">About me</a></li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
                 </ul></nav>
         </header><!-- /#banner -->
+        
 
+        
 <section id="content" class="body">
     <article>
         <header>
@@ -41,14 +50,21 @@ if (window.location.host == host && window.location.protocol != "https:") {
         </header>
 
         <div class="entry-content">
+            
 <footer class="post-info">
+        
         <address class="vcard author">
             posted by
-            <a href="../../../pages/about-me.html">Elias Dorneles</a>
-            on <abbr class="published" title="2011-07-28T10:53:00+02:00">2011, juillet 28</abbr>
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2011-07-28 10:53:00+02:00">2011, July 28</abbr>
             <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/tocar-video-ou-musica-em-outra-velocidade-mantendo-o-tom.md">Edit</a>
         </address>
-</footer>            <p>Alguns meses atrás descobri o <a href="http://29a.ch/playitslowly/" title="http://29a.ch/playitslowly/">Play it slowly</a>, um programa para tocar arquivos de áudio em
+        
+
+
+</footer>
+
+            <p>Alguns meses atrás descobri o <a href="http://29a.ch/playitslowly/" title="http://29a.ch/playitslowly/">Play it slowly</a>, um programa para tocar arquivos de áudio em
 velocidades ou alturas diferentes, no Linux. Você pode usá-lo para, por
 exemplo, ouvir uma música no mesmo tom da original mas com um ritmo bem mais
 lento (útil para aprender as notas de um solo complicado), ou ainda ouvir um
@@ -60,32 +76,23 @@ slowly).</p>
 alternativa que encontrei, até agora, é utilizar o plugin
 <a href="http://scaletempo.sourceforge.net" title="http://scaletempo.sourceforge.net">scaletempo</a> do <a href="http://www.mplayerhq.hu" title="http://www.mplayerhq.hu">mplayer</a> (nunca testei, mas acredito que também funcione no
 Windows):</p>
-<div class="highlight"><pre><span></span><code>mplayer -af scaletempo video.avi
-</code></pre></div>
-
+<pre><code>mplayer -af scaletempo video.avi
+</code></pre>
 <p>Tendo iniciado o <em>mplayer</em> assim, basta usar os atalhos [ ou ] (abre e
 fecha colchetes) para reduzir ou aumentar a velocidade, respectivamente!
 Para o <em>mplayer</em> sempre carregar o plugin <em>scaletempo</em> para qualquer
-arquivo, coloquei no meu <em>\~/.mplayer/config</em> a diretiva:</p>
-<div class="highlight"><pre><span></span><code>af=scaletempo
-</code></pre></div>
-
+arquivo, coloquei no meu <em>~/.mplayer/config</em> a diretiva:</p>
+<pre><code>af=scaletempo
+</code></pre>
 <p>Era isso! :)</p>
+
         </div>
 
-        <div class="taglist"></div>
-
+        <div class="taglist">
+</div>
     </article>
 </section>
 
-        <aside id="sidebar">
-                <div class="widget">
-                        <h2>Categories</h2>
-                        <ul>
-                           <li class="active"><a href="../../../category/blog.html">blog</a></li>
-                        </ul>
-                </div>
-        </aside><!-- /#sidebar -->
 
         <hr />
         <footer class="footer-menu">
@@ -93,5 +100,9 @@ arquivo, coloquei no meu <em>\~/.mplayer/config</em> a diretiva:</p>
         </footer>
 </div>
 
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/default.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
 </body>
 </html>
