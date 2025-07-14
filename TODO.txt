@@ -75,6 +75,11 @@ main logic:
 
 It's all done!!! Yayyy! 🎉
 
+Manage Tool
+===========
+
+[ ] fix auto-rename-drafts feature which doesn't seem to be working
+
 Template Engine Improvements
 ############################
 
