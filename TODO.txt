@@ -75,10 +75,11 @@ main logic:
 
 It's all done!!! Yayyy! 🎉
 
-Manage Tool
+Bugs to fix
 ===========
 
-[ ] fix auto-rename-drafts feature which doesn't seem to be working
+[ ] manage tool: fix auto-rename-drafts feature which doesn't seem to be working
+[ ] theme/sitegen tool: fix the article url of title link when accessing the article
 
 Template Engine Improvements
 ############################
