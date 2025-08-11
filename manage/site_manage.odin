@@ -15,13 +15,7 @@ Options :: struct {
     articles_dir: string `usage:"Blog articles directory"`,
 }
 
-POST_TEMPLATE :: `Title: %s
-Date: %s
-Author: Elias Dorneles
-Status: draft
-
-Write here...
-`
+POST_TEMPLATE :: #load("post_template.md", string)
 
 
 Article_Metadata :: struct {
