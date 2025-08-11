@@ -21,7 +21,7 @@ server: compile-dev  ## Start a local server to view the site
 
 .PHONY: watch
 watch: compile-dev  ## Start a local server and watch for changes
-	python3 -m webbrowser http://localhost:8000
+	bash -c "sleep 1 && python3 -m webbrowser http://localhost:8000" &
 	uv run watchmedo auto-restart \
 		--directory=site \
 		--directory=sitegen \
