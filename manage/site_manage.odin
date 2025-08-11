@@ -106,13 +106,18 @@ gen_article_filename :: proc(title: string, articles_dir: string) -> string {
 new_post :: proc(articles_dir: string) {
     title := "New Blog Post"
     now := time.now()
-    //date := time.format(now, "%Y-%m-%d %H:%M")
-    buf: [time.MIN_YYYY_DATE_LEN]u8
-    date := fmt.aprintf(
-        "%s %s",
-        time.to_string_yyyy_mm_dd(now, buf[:]),
-        time.to_string_hms(now, buf[:]),
+
+    // Use libc.strftime for proper date formatting
+    // Convert Odin time to Unix timestamp then to C tm
+    buf: [64]u8
+    unix_time := libc.time_t(time.to_unix_seconds(now))
+    len := libc.strftime(
+        raw_data(&buf),
+        size_of(buf),
+        "%Y-%m-%d %H:%M",
+        libc.localtime(&unix_time),
     )
+    date := string(buf[:len])
 
     content := fmt.aprintf(POST_TEMPLATE, title, date)
     filename := gen_article_filename(title, articles_dir)
