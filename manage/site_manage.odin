@@ -193,6 +193,8 @@ find_drafts_needing_renaming :: proc(
                         append(&old_paths, filepath)
                         append(&new_paths, expected_filename)
                     }
+                } else {
+                    fmt.println("No valid metadata found in:", filepath)
                 }
                 delete(content)
             }
@@ -213,6 +215,11 @@ rename_drafts :: proc(articles_dir: string) {
         if err := os.rename(old_paths[i], new_paths[i]); err != nil {
             fmt.eprintln("Failed to rename:", old_paths[i], "->", new_paths[i])
         }
+    }
+    if len(old_paths) == 0 {
+        fmt.println("No drafts needing renaming found.")
+    } else {
+        fmt.println("Renaming completed.")
     }
 }
 
