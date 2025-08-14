@@ -354,6 +354,8 @@ main :: proc() {
     env: Environment
     defer destroy_env(&env)
 
+    libc.setlocale(.ALL, "")
+
     count_files_written := 0
 
     // Process pages first
