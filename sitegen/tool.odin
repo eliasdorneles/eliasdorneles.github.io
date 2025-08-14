@@ -193,7 +193,7 @@ generate_article_summary :: proc(article: ^Article, summary_max_length: int = 1)
         return clean_html_summary(html)
     }
 
-    // Otherwise take first SUMMARY_MAX_LENGTH paragraphs and first image
+    // Otherwise take first summary_max_length paragraphs and first image
     paragraphs := strings.split(
         article.md_content,
         "\n\n",
@@ -212,15 +212,15 @@ generate_article_summary :: proc(article: ^Article, summary_max_length: int = 1)
         }
     }
 
-    // Take first SUMMARY_MAX_LENGTH paragraphs
+    // Take first summary_max_length paragraphs
     summary_paragraphs: [dynamic]string
     defer delete(summary_paragraphs)
-    for i in 0 ..< min(SUMMARY_MAX_LENGTH, len(paragraphs)) {
+    for i in 0 ..< min(summary_max_length, len(paragraphs)) {
         append(&summary_paragraphs, paragraphs[i])
     }
 
     // If we found an image and it's not already included in the summary, add it
-    if first_image_idx != -1 && first_image_idx >= SUMMARY_MAX_LENGTH {
+    if first_image_idx != -1 && first_image_idx >= summary_max_length {
         append(&summary_paragraphs, paragraphs[first_image_idx])
     }
 

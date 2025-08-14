@@ -1,6 +1,7 @@
 package sitegen
 
 import "core:bytes"
+import "core:c/libc"
 import "core:encoding/json"
 import "core:fmt"
 import "core:log"
@@ -457,6 +458,55 @@ unquote :: proc(s: string) -> string {
     return strings.trim(s, `"`)
 }
 
+// Parse strftime("format") call and return the format string
+// Returns (format_string, is_strftime_call)
+parse_strftime_call :: proc(call: string) -> (string, bool) {
+    if !strings.has_prefix(call, "strftime(") {
+        return "", false
+    }
+    if !strings.has_suffix(call, ")") {
+        return "", false
+    }
+
+    // Extract content between strftime( and )
+    content := call[len("strftime("):len(call) - 1]
+
+    // Handle quoted strings - remove outer quotes
+    if len(content) >= 2 &&
+       ((content[0] == '"' && content[len(content) - 1] == '"') ||
+               (content[0] == '\'' && content[len(content) - 1] == '\'')) {
+        format := content[1:len(content) - 1]
+        return format, true
+    }
+
+    fmt.eprint("Invalid strftime argument string: ", content)
+    return "", false
+}
+
+// Format time using libc.strftime with locale-aware formatting
+// Uses UTC time to avoid timezone conversion issues
+// Returns empty string if formatting fails
+strftime_ts :: proc(ts: time.Time, format: string) -> string {
+    buf: [256]u8 // Buffer for formatted string
+    unix_time := libc.time_t(time.to_unix_seconds(ts))
+
+    // Use gmtime for UTC time to avoid local timezone conversion
+    tm_ptr := libc.gmtime(&unix_time)
+    if tm_ptr == nil {
+        return ""
+    }
+
+    // Convert format string to C string
+    format_cstr := strings.clone_to_cstring(format, allocator = context.temp_allocator)
+
+    len := libc.strftime(raw_data(&buf), size_of(buf), format_cstr, tm_ptr)
+    if len == 0 {
+        return ""
+    }
+    result := string(buf[:len])
+    return strings.clone(result, allocator = context.temp_allocator)
+}
+
 // ({"um": "1"}, ["um"]) -> "1"
 // ({"um": "1"}, ["dois"]) -> nil
 // ({"um": "1"}, ["um", "dois"]) -> nil
@@ -474,15 +524,17 @@ eval_context_path :: proc(value: ^json.Value, path: []string) -> json.Value {
         // strings in iso format
         if path[0] == "isoformat()" {
             return v
-        } else if path[0] == `strftime("%Y, %B %d")` {
+        } else if format, is_strftime := parse_strftime_call(path[0]); is_strftime {
             ts, utc_offset, _ := time.iso8601_to_time_and_offset(v)
-            return fmt.aprintf(
-                "%d, %s %02d",
-                time.year(ts),
-                time.month(ts),
-                time.day(ts),
-                allocator = context.temp_allocator,
-            )
+
+            // Use locale-aware strftime formatting
+            formatted := strftime_ts(ts, format)
+            if formatted != "" {
+                return formatted
+            }
+
+            // If libc.strftime fails, return empty string
+            return ""
         }
         return nil // can't do lookups in strings
     case json.Object:

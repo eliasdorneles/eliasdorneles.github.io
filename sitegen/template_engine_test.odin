@@ -1,9 +1,11 @@
 package sitegen
 
 import "core:encoding/json"
+import "core:fmt"
 import "core:log"
 import "core:strings"
 import "core:testing"
+import "core:c/libc"
 
 expect_str :: proc(t: ^testing.T, expected: string, result: string) {
     testing.expectf(
@@ -32,6 +34,101 @@ test_eval_expr_isoformat :: proc(t: ^testing.T) {
         "2025, June 03",
         to_string(eval_expr("article.date.strftime(\"%Y, %B %d\")", &ctx)),
     )
+}
+
+@(test)
+test_strftime_parse_function :: proc(t: ^testing.T) {
+    // Test parsing of strftime calls
+    {
+        format, ok := parse_strftime_call(`strftime("%Y-%m-%d")`)
+        testing.expect(t, ok)
+        testing.expect_value(t, format, "%Y-%m-%d")
+    }
+
+    {
+        format, ok := parse_strftime_call(`strftime('%B %d, %Y')`)
+        testing.expect(t, ok)
+        testing.expect_value(t, format, "%B %d, %Y")
+    }
+
+    // Test invalid calls
+    {
+        _, ok := parse_strftime_call("not_strftime")
+        testing.expect(t, !ok)
+    }
+
+    {
+        _, ok := parse_strftime_call("strftime(no_quotes)")
+        testing.expect(t, !ok)
+    }
+
+    {
+        _, ok := parse_strftime_call("strftime(\"unclosed")
+        testing.expect(t, !ok)
+    }
+}
+
+@(test)
+test_dynamic_strftime_formats :: proc(t: ^testing.T) {
+    // Use UTC time to avoid timezone conversion issues
+    parsed, _ := json.parse_string(`{"article": {"date": "2025-06-03T15:30:45Z"}}`)
+    defer json.destroy_value(parsed)
+    ctx := parsed.(json.Object)
+
+    // Test various format strings
+    test_cases := []struct {
+        format:   string,
+        expected: string,
+    } {
+        {`strftime("%Y")`, "2025"},
+        {`strftime("%m")`, "06"},
+        {`strftime("%d")`, "03"},
+        {`strftime("%H")`, "15"},
+        {`strftime("%M")`, "30"},
+        {`strftime("%S")`, "45"},
+        {`strftime("%Y-%m-%d")`, "2025-06-03"},
+        {`strftime("%H:%M:%S")`, "15:30:45"},
+        {`strftime("%Y-%m-%d %H:%M:%S")`, "2025-06-03 15:30:45"},
+    }
+
+    for test_case in test_cases {
+        result := to_string(
+            eval_expr(fmt.aprintf("article.date.%s", test_case.format), &ctx),
+        )
+        expect_str(t, test_case.expected, result)
+    }
+}
+
+@(test)
+test_strftime_with_locale_c :: proc(t: ^testing.T) {
+    libc.setlocale(libc.Locale_Category.ALL, "C")
+    defer libc.setlocale(libc.Locale_Category.ALL, "")
+
+    // Use UTC time to avoid timezone issues
+    parsed, _ := json.parse_string(`{"article": {"date": "2025-06-03T15:30:45Z"}}`)
+    defer json.destroy_value(parsed)
+    ctx := parsed.(json.Object)
+
+    // Test with C locale (English)
+    expect_str(t, "June", to_string(eval_expr("article.date.strftime(\"%B\")", &ctx)))
+    expect_str(t, "Jun", to_string(eval_expr("article.date.strftime(\"%b\")", &ctx)))
+    expect_str(t, "Tuesday", to_string(eval_expr("article.date.strftime(\"%A\")", &ctx)))
+    expect_str(t, "Tue", to_string(eval_expr("article.date.strftime(\"%a\")", &ctx)))
+}
+
+@(test)
+test_strftime_with_locale_fr :: proc(t: ^testing.T) {
+    libc.setlocale(libc.Locale_Category.ALL, "fr_FR.UTF-8")
+    defer libc.setlocale(libc.Locale_Category.ALL, "")
+
+    // Use UTC time to avoid timezone issues
+    parsed, _ := json.parse_string(`{"article": {"date": "2025-06-03T15:30:45Z"}}`)
+    defer json.destroy_value(parsed)
+    ctx := parsed.(json.Object)
+
+    // Test with French locale - these will only work if fr_FR.UTF-8 is available on the system
+    result := to_string(eval_expr("article.date.strftime(\"%B\")", &ctx))
+    expect_str(t, "juin", result)
 }
 
 @(test)
