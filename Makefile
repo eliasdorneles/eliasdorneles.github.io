@@ -2,6 +2,9 @@ SHELL := /bin/bash
 LOCAL_OUTPUT_DIR := ./output
 PROD_OUTPUT_DIR := ./output_prod
 
+export LANG := en_US.UTF-8
+export LC_ALL := en_US.UTF-8
+
 .DEFAULT_GOAL := help
 
 sitegen.bin: sitegen/tool.odin sitegen/template_engine.odin config_sitegen.json
