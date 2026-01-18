@@ -24,7 +24,7 @@ Did I use agent coding? Well, yes, I did!
 I also used Gemini for some help improving the copy.
 
 Actually I used this game project to try Claude Code again, since I had paid
-for an annual subscription and which I was not using at all, after getting
+for an annual subscription which I was not using at all, after getting
 disenchanted with AI agent coding assistance.
 
 Btw, I am sure I'm not the only person who have gone through a phase like this,
@@ -43,7 +43,7 @@ managed to implement -- gosh, I feel ashamed of using the word _implement_
 when most of the code changes were done by the coding agent in "vibecoding"
 mode... anyway, I managed to _get done_ several features that were sitting on a
 [to-do list](https://github.com/eliasdorneles/drum-game/blob/master/PLAN.md)
-for _years_ and which I had never had the energy to implement previously.
+for _years_ which I had never had the energy to implement previously.
 
 It allowed me to greatly improve the game, and I have a bunch of ideas for what
 to do next.
@@ -58,7 +58,8 @@ be able to design better levels, I needed a way to be able to quickly preview a
 drum loop, make adjustments and check the result.
 
 It took like 3 or 4 prompts to have a nice usable level editor that I could use
-right away. This alone already made the game much better, and got me very excited.
+right away. This alone already allowed me to make the game much better, with
+more interesting and musical drum patterns, and got me very excited.
 
 The level editor looks like this:
 
