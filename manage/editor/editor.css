@@ -266,10 +266,16 @@ body {
     overflow: hidden;
 }
 
+/* Hide original textarea (CodeMirror takes over) */
 .editor-textarea {
+    display: none;
+}
+
+/* CodeMirror styling */
+.CodeMirror {
     flex: 1;
     width: 100%;
-    padding: 12px;
+    height: auto !important;
     background: var(--input-bg);
     border: 1px solid var(--input-border);
     border-radius: 4px;
@@ -277,12 +283,95 @@ body {
     font-family: "JetBrains Mono", "Fira Code", "Consolas", monospace;
     font-size: 14px;
     line-height: 1.6;
-    resize: none;
 }
 
-.editor-textarea:focus {
-    outline: none;
+.CodeMirror-focused {
     border-color: var(--accent-color);
+}
+
+.CodeMirror-scroll {
+    padding: 12px;
+}
+
+/* Markdown syntax highlighting */
+.cm-header {
+    color: #1A759F;
+    font-weight: bold;
+}
+
+.cm-header-1 { font-size: 1.3em; }
+.cm-header-2 { font-size: 1.2em; }
+.cm-header-3 { font-size: 1.1em; }
+
+.cm-strong {
+    font-weight: bold;
+    color: #333;
+}
+
+.cm-em {
+    font-style: italic;
+    color: #555;
+}
+
+.cm-link {
+    color: var(--link-color);
+    text-decoration: underline;
+}
+
+.cm-url {
+    color: var(--accent-color);
+}
+
+.cm-comment {
+    color: #888;
+}
+
+.cm-quote {
+    color: #666;
+    font-style: italic;
+}
+
+.cm-keyword {
+    color: #d73a49;
+}
+
+.cm-atom {
+    color: #005cc5;
+}
+
+.cm-string {
+    color: #22863a;
+}
+
+.cm-tag {
+    color: #22863a;
+}
+
+.cm-attribute {
+    color: #6f42c1;
+}
+
+/* Code spans in markdown */
+.cm-comment.cm-formatting-code,
+.cm-comment.cm-formatting-code-block {
+    color: #e36209;
+    background: #f6f8fa;
+    border-radius: 3px;
+}
+
+/* Selection and cursor */
+.CodeMirror-selected {
+    background: rgba(82, 182, 154, 0.3) !important;
+}
+
+.CodeMirror-cursor {
+    border-left-color: var(--text-color);
+}
+
+/* Gutters (if ever enabled) */
+.CodeMirror-gutters {
+    background: #f7f7f7;
+    border-right: 1px solid var(--input-border);
 }
 
 .drop-zone {

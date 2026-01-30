@@ -6,15 +6,35 @@ let autoSaveTimeout = null;
 let previewTimeout = null;
 let images = [];
 let widthMode = 'auto'; // 'auto' or 'custom'
+let cmEditor = null; // CodeMirror instance
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     loadPosts();
     loadImages();
+    setupCodeMirror();
     setupDropZone();
     setupKeyboardShortcuts();
     setupWidthToggle();
 });
+
+// Setup CodeMirror
+function setupCodeMirror() {
+    const textarea = document.getElementById('postBody');
+    cmEditor = CodeMirror.fromTextArea(textarea, {
+        mode: 'markdown',
+        lineNumbers: false,
+        lineWrapping: true,
+        theme: 'default',
+        autofocus: false,
+        viewportMargin: Infinity,
+    });
+
+    // Handle changes
+    cmEditor.on('change', () => {
+        handleBodyInput();
+    });
+}
 
 // API functions
 async function loadPosts() {
@@ -68,7 +88,7 @@ async function savePost() {
                 date: document.getElementById('postDate').value,
                 author: 'Elias Dorneles',
                 status: document.getElementById('postStatus').value,
-                body: document.getElementById('postBody').value,
+                body: cmEditor.getValue(),
             }),
         });
 
@@ -187,13 +207,13 @@ function renderEditor() {
     document.getElementById('postTitle').value = currentPost.title || '';
     document.getElementById('postDate').value = currentPost.date || '';
     document.getElementById('postStatus').value = currentPost.status || 'draft';
-    document.getElementById('postBody').value = currentPost.body || '';
+    cmEditor.setValue(currentPost.body || '');
 
     setSaveStatus('ready', 'Ready');
 }
 
 function updatePreview() {
-    const body = document.getElementById('postBody')?.value || '';
+    const body = cmEditor ? cmEditor.getValue() : '';
     const title = document.getElementById('postTitle')?.value || '';
 
     // Replace {static}/images/ with actual image path for preview
@@ -252,7 +272,6 @@ function escapeHtml(text) {
 function setupDropZone() {
     const dropZone = document.getElementById('dropZone');
     const fileInput = document.getElementById('fileInput');
-    const textarea = document.getElementById('postBody');
     const editorPanel = document.querySelector('.editor-panel');
 
     // Click to open file picker
@@ -287,28 +306,32 @@ function setupDropZone() {
     // Handle drop on drop zone
     dropZone.addEventListener('drop', handleDrop, false);
 
-    // Also handle drop on textarea
-    textarea.addEventListener('dragenter', (e) => {
-        preventDefaults(e);
-        dropZone.classList.add('drag-over');
-    });
+    // Handle drop on CodeMirror (after it's initialized)
+    setTimeout(() => {
+        const cmWrapper = document.querySelector('.CodeMirror');
+        if (cmWrapper) {
+            cmWrapper.addEventListener('dragenter', (e) => {
+                preventDefaults(e);
+                dropZone.classList.add('drag-over');
+            });
 
-    textarea.addEventListener('dragover', (e) => {
-        preventDefaults(e);
-        dropZone.classList.add('drag-over');
-    });
+            cmWrapper.addEventListener('dragover', (e) => {
+                preventDefaults(e);
+                dropZone.classList.add('drag-over');
+            });
 
-    textarea.addEventListener('dragleave', (e) => {
-        preventDefaults(e);
-        // Only remove highlight if leaving the textarea entirely
-        const rect = textarea.getBoundingClientRect();
-        if (e.clientX < rect.left || e.clientX >= rect.right ||
-            e.clientY < rect.top || e.clientY >= rect.bottom) {
-            dropZone.classList.remove('drag-over');
+            cmWrapper.addEventListener('dragleave', (e) => {
+                preventDefaults(e);
+                const rect = cmWrapper.getBoundingClientRect();
+                if (e.clientX < rect.left || e.clientX >= rect.right ||
+                    e.clientY < rect.top || e.clientY >= rect.bottom) {
+                    dropZone.classList.remove('drag-over');
+                }
+            });
+
+            cmWrapper.addEventListener('drop', handleDrop, false);
         }
-    });
-
-    textarea.addEventListener('drop', handleDrop, false);
+    }, 100);
 
     // Handle drop on the entire editor panel as fallback
     editorPanel.addEventListener('dragover', (e) => {
@@ -422,22 +445,19 @@ function insertImage() {
         code = `![${alt}](${imgPath})`;
     }
 
-    // Insert at cursor position
-    const textarea = document.getElementById('postBody');
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const text = textarea.value;
+    // Insert at cursor position using CodeMirror
+    const cursor = cmEditor.getCursor();
+    const line = cmEditor.getLine(cursor.line);
 
     // Add newlines if not at start of line
     let prefix = '';
     let suffix = '\n\n';
-    if (start > 0 && text[start - 1] !== '\n') {
+    if (cursor.ch > 0 || line.length > 0) {
         prefix = '\n\n';
     }
 
-    textarea.value = text.substring(0, start) + prefix + code + suffix + text.substring(end);
-    textarea.selectionStart = textarea.selectionEnd = start + prefix.length + code.length + suffix.length;
-    textarea.focus();
+    cmEditor.replaceSelection(prefix + code + suffix);
+    cmEditor.focus();
 
     closeImageModal();
     handleBodyInput();
