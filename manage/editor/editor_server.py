@@ -93,9 +93,9 @@ def build_frontmatter(metadata: dict) -> str:
 
 
 def get_post_list() -> list[dict]:
-    """Get list of all blog posts with metadata."""
+    """Get list of all blog posts with metadata, sorted by date (most recent first)."""
     posts = []
-    for filepath in sorted(BLOG_DIR.glob("*.md"), key=lambda p: p.stat().st_mtime, reverse=True):
+    for filepath in BLOG_DIR.glob("*.md"):
         try:
             content = filepath.read_text(encoding="utf-8")
             metadata, _ = parse_frontmatter(content)
@@ -107,6 +107,9 @@ def get_post_list() -> list[dict]:
             })
         except Exception as e:
             print(f"Error reading {filepath}: {e}")
+    # Sort by date (YYYY-MM-DD HH:MM format), most recent first
+    # Posts without dates go to the end
+    posts.sort(key=lambda p: p["date"] or "", reverse=True)
     return posts
 
 
