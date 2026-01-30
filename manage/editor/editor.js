@@ -1,0 +1,478 @@
+// State
+let posts = [];
+let currentPost = null;
+let currentFilter = 'all';
+let autoSaveTimeout = null;
+let previewTimeout = null;
+let images = [];
+let widthMode = 'auto'; // 'auto' or 'custom'
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    loadPosts();
+    loadImages();
+    setupDropZone();
+    setupKeyboardShortcuts();
+    setupWidthToggle();
+});
+
+// API functions
+async function loadPosts() {
+    try {
+        const response = await fetch('/api/posts');
+        posts = await response.json();
+        renderPostList();
+    } catch (error) {
+        console.error('Failed to load posts:', error);
+    }
+}
+
+async function loadImages() {
+    try {
+        const response = await fetch('/api/images');
+        images = await response.json();
+        renderImageGallery();
+    } catch (error) {
+        console.error('Failed to load images:', error);
+    }
+}
+
+async function loadPost(filename) {
+    try {
+        const response = await fetch(`/api/posts/${filename}`);
+        currentPost = await response.json();
+        currentPost.filename = filename;
+        renderEditor();
+        updatePreview();
+
+        // Update active state in list
+        document.querySelectorAll('.post-item').forEach(el => {
+            el.classList.toggle('active', el.dataset.filename === filename);
+        });
+    } catch (error) {
+        console.error('Failed to load post:', error);
+    }
+}
+
+async function savePost() {
+    if (!currentPost) return;
+
+    setSaveStatus('saving', 'Saving...');
+
+    try {
+        const response = await fetch(`/api/posts/${currentPost.filename}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                title: document.getElementById('postTitle').value,
+                date: document.getElementById('postDate').value,
+                author: 'Elias Dorneles',
+                status: document.getElementById('postStatus').value,
+                body: document.getElementById('postBody').value,
+            }),
+        });
+
+        if (response.ok) {
+            setSaveStatus('saved', 'Saved');
+            // Reload posts list to update title/status if changed
+            loadPosts();
+        } else {
+            setSaveStatus('error', 'Save failed');
+        }
+    } catch (error) {
+        console.error('Failed to save:', error);
+        setSaveStatus('error', 'Save failed');
+    }
+}
+
+async function createNewPost() {
+    const title = prompt('Enter post title:', 'New Blog Post');
+    if (!title) return;
+
+    try {
+        const response = await fetch('/api/posts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title }),
+        });
+
+        const data = await response.json();
+        if (data.success) {
+            await loadPosts();
+            loadPost(data.filename);
+        }
+    } catch (error) {
+        console.error('Failed to create post:', error);
+    }
+}
+
+async function uploadImage(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    // Show upload progress
+    const dropZone = document.getElementById('dropZone');
+    const originalText = dropZone.textContent;
+    dropZone.innerHTML = 'Uploading... <span class="upload-progress"></span>';
+
+    try {
+        const response = await fetch('/api/images', {
+            method: 'POST',
+            body: formData,
+        });
+
+        const data = await response.json();
+        dropZone.textContent = originalText;
+
+        if (data.success) {
+            await loadImages();
+            openImageModal(data.url, data.filename);
+        } else {
+            alert('Upload failed: ' + (data.error || 'Unknown error'));
+        }
+    } catch (error) {
+        console.error('Failed to upload image:', error);
+        dropZone.textContent = originalText;
+        alert('Failed to upload image');
+    }
+}
+
+// Rendering functions
+function renderPostList() {
+    const container = document.getElementById('postList');
+    const search = document.getElementById('searchInput').value.toLowerCase();
+
+    const filtered = posts.filter(post => {
+        const matchesSearch = post.title.toLowerCase().includes(search);
+        const matchesFilter = currentFilter === 'all' ||
+            (currentFilter === 'draft' && post.status === 'draft') ||
+            (currentFilter === 'published' && post.status !== 'draft');
+        return matchesSearch && matchesFilter;
+    });
+
+    container.innerHTML = filtered.map(post => `
+        <div class="post-item ${currentPost?.filename === post.filename ? 'active' : ''}"
+             data-filename="${post.filename}"
+             onclick="loadPost('${post.filename}')">
+            <div class="post-item-title">${escapeHtml(post.title)}</div>
+            <div class="post-item-meta">
+                ${post.date ? post.date.split(' ')[0] : 'No date'}
+                <span class="status-badge status-${post.status === 'draft' ? 'draft' : 'published'}">
+                    ${post.status || 'published'}
+                </span>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderImageGallery() {
+    const container = document.getElementById('imageGallery');
+    container.innerHTML = images.slice(0, 12).map(img => `
+        <div class="gallery-image" onclick="openImageModal('${img.url}', '${img.filename}')">
+            <img src="${img.url}" alt="${img.filename}" loading="lazy">
+        </div>
+    `).join('');
+}
+
+function renderEditor() {
+    if (!currentPost) {
+        document.getElementById('editorContent').style.display = 'none';
+        document.getElementById('editorEmpty').style.display = 'flex';
+        return;
+    }
+
+    document.getElementById('editorContent').style.display = 'flex';
+    document.getElementById('editorEmpty').style.display = 'none';
+
+    document.getElementById('postTitle').value = currentPost.title || '';
+    document.getElementById('postDate').value = currentPost.date || '';
+    document.getElementById('postStatus').value = currentPost.status || 'draft';
+    document.getElementById('postBody').value = currentPost.body || '';
+
+    setSaveStatus('ready', 'Ready');
+}
+
+function updatePreview() {
+    const body = document.getElementById('postBody')?.value || '';
+    const title = document.getElementById('postTitle')?.value || '';
+
+    // Replace {static}/images/ with actual image path for preview
+    let previewContent = body.replace(/\{static\}\/images\//g, '/static/images/');
+
+    // Parse markdown
+    const html = marked.parse(previewContent);
+
+    document.getElementById('previewPanel').innerHTML = `
+        <h1>${escapeHtml(title)}</h1>
+        ${html}
+    `;
+}
+
+// UI Helpers
+function setFilter(filter) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.filter === filter);
+    });
+    renderPostList();
+}
+
+function filterPosts() {
+    renderPostList();
+}
+
+function setSaveStatus(status, text) {
+    const indicator = document.getElementById('saveIndicator');
+    const statusEl = document.getElementById('saveStatus');
+    indicator.className = 'save-indicator ' + status;
+    statusEl.textContent = text;
+}
+
+function scheduleAutoSave() {
+    clearTimeout(autoSaveTimeout);
+    setSaveStatus('pending', 'Unsaved changes...');
+    autoSaveTimeout = setTimeout(savePost, 1000);
+}
+
+function handleBodyInput() {
+    scheduleAutoSave();
+
+    // Debounce preview update
+    clearTimeout(previewTimeout);
+    previewTimeout = setTimeout(updatePreview, 200);
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Drag and Drop
+function setupDropZone() {
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const textarea = document.getElementById('postBody');
+    const editorPanel = document.querySelector('.editor-panel');
+
+    // Click to open file picker
+    dropZone.addEventListener('click', (e) => {
+        e.stopPropagation();
+        fileInput.click();
+    });
+
+    // Prevent default drag behaviors on the whole document
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        document.body.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    // Highlight drop zone when dragging over it
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, () => {
+            dropZone.classList.add('drag-over');
+        }, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, () => {
+            dropZone.classList.remove('drag-over');
+        }, false);
+    });
+
+    // Handle drop on drop zone
+    dropZone.addEventListener('drop', handleDrop, false);
+
+    // Also handle drop on textarea
+    textarea.addEventListener('dragenter', (e) => {
+        preventDefaults(e);
+        dropZone.classList.add('drag-over');
+    });
+
+    textarea.addEventListener('dragover', (e) => {
+        preventDefaults(e);
+        dropZone.classList.add('drag-over');
+    });
+
+    textarea.addEventListener('dragleave', (e) => {
+        preventDefaults(e);
+        // Only remove highlight if leaving the textarea entirely
+        const rect = textarea.getBoundingClientRect();
+        if (e.clientX < rect.left || e.clientX >= rect.right ||
+            e.clientY < rect.top || e.clientY >= rect.bottom) {
+            dropZone.classList.remove('drag-over');
+        }
+    });
+
+    textarea.addEventListener('drop', handleDrop, false);
+
+    // Handle drop on the entire editor panel as fallback
+    editorPanel.addEventListener('dragover', (e) => {
+        preventDefaults(e);
+    });
+
+    editorPanel.addEventListener('drop', handleDrop, false);
+
+    function handleDrop(e) {
+        preventDefaults(e);
+        dropZone.classList.remove('drag-over');
+
+        const dt = e.dataTransfer;
+        const files = dt.files;
+
+        if (files.length > 0) {
+            const file = files[0];
+            if (file.type.startsWith('image/')) {
+                uploadImage(file);
+            } else {
+                alert('Please drop an image file (PNG, JPG, GIF, WebP, or SVG)');
+            }
+        }
+    }
+}
+
+function handleFileSelect(event) {
+    const file = event.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+        uploadImage(file);
+    }
+    event.target.value = ''; // Reset input
+}
+
+// Width toggle
+function setupWidthToggle() {
+    const autoBtn = document.getElementById('widthAutoBtn');
+    const customBtn = document.getElementById('widthCustomBtn');
+    const widthInput = document.getElementById('imageWidth');
+
+    autoBtn.addEventListener('click', () => {
+        widthMode = 'auto';
+        autoBtn.classList.add('active');
+        customBtn.classList.remove('active');
+        widthInput.disabled = true;
+        widthInput.value = '';
+    });
+
+    customBtn.addEventListener('click', () => {
+        widthMode = 'custom';
+        customBtn.classList.add('active');
+        autoBtn.classList.remove('active');
+        widthInput.disabled = false;
+        widthInput.focus();
+        if (!widthInput.value) {
+            widthInput.value = '400';
+        }
+    });
+}
+
+// Image Modal
+function openImageModal(url, filename) {
+    document.getElementById('modalImagePreview').src = url;
+    document.getElementById('modalImageUrl').value = filename;
+    document.getElementById('imageAlt').value = '';
+    document.getElementById('imageCaption').value = '';
+    document.getElementById('imageWidth').value = '';
+    document.getElementById('imageWidth').disabled = true;
+
+    // Reset width toggle to auto
+    widthMode = 'auto';
+    document.getElementById('widthAutoBtn').classList.add('active');
+    document.getElementById('widthCustomBtn').classList.remove('active');
+
+    document.querySelector('input[name="alignment"][value="none"]').checked = true;
+    document.getElementById('imageModal').classList.add('active');
+
+    // Focus alt text field
+    setTimeout(() => document.getElementById('imageAlt').focus(), 100);
+}
+
+function closeImageModal() {
+    document.getElementById('imageModal').classList.remove('active');
+}
+
+function insertImage() {
+    const filename = document.getElementById('modalImageUrl').value;
+    const alt = document.getElementById('imageAlt').value || filename;
+    const caption = document.getElementById('imageCaption').value;
+    const alignment = document.querySelector('input[name="alignment"]:checked').value;
+    const width = widthMode === 'custom' ? document.getElementById('imageWidth').value : null;
+
+    let code = '';
+    const imgPath = `{static}/images/${filename}`;
+
+    if (caption) {
+        // Figure with caption
+        const alignClass = alignment !== 'none' ? ` align-${alignment}` : '';
+        const styleAttr = width ? ` style="width: ${width}px"` : '';
+        code = `<div class="figure${alignClass}"${styleAttr}>
+  <img src="${imgPath}" alt="${alt}">
+  <p class="caption">${caption}</p>
+</div>`;
+    } else if (alignment !== 'none' || width) {
+        // HTML img with class/width
+        const alignClass = alignment !== 'none' ? ` class="align-${alignment}"` : '';
+        const widthAttr = width ? ` width="${width}"` : '';
+        code = `<img src="${imgPath}"${alignClass}${widthAttr} alt="${alt}" />`;
+    } else {
+        // Simple markdown
+        code = `![${alt}](${imgPath})`;
+    }
+
+    // Insert at cursor position
+    const textarea = document.getElementById('postBody');
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const text = textarea.value;
+
+    // Add newlines if not at start of line
+    let prefix = '';
+    let suffix = '\n\n';
+    if (start > 0 && text[start - 1] !== '\n') {
+        prefix = '\n\n';
+    }
+
+    textarea.value = text.substring(0, start) + prefix + code + suffix + text.substring(end);
+    textarea.selectionStart = textarea.selectionEnd = start + prefix.length + code.length + suffix.length;
+    textarea.focus();
+
+    closeImageModal();
+    handleBodyInput();
+}
+
+// Keyboard shortcuts
+function setupKeyboardShortcuts() {
+    document.addEventListener('keydown', (e) => {
+        // Ctrl+S or Cmd+S to save
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+            e.preventDefault();
+            if (currentPost) {
+                clearTimeout(autoSaveTimeout);
+                savePost();
+            }
+        }
+
+        // Ctrl+N or Cmd+N for new post
+        if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
+            e.preventDefault();
+            createNewPost();
+        }
+
+        // Escape to close modal
+        if (e.key === 'Escape') {
+            closeImageModal();
+        }
+
+        // Enter in modal to insert
+        if (e.key === 'Enter' && document.getElementById('imageModal').classList.contains('active')) {
+            // Don't insert if focus is on a text input
+            if (document.activeElement.tagName !== 'INPUT') {
+                e.preventDefault();
+                insertImage();
+            }
+        }
+    });
+}

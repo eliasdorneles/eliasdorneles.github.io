@@ -6,13 +6,14 @@ A local WordPress-like blog editor with drag-and-drop images,
 live markdown preview, and auto-save.
 """
 
+import io
 import os
 import re
-import unicodedata
 from datetime import datetime
 from pathlib import Path
 
 from flask import Flask, jsonify, request, send_file, send_from_directory
+from PIL import Image
 
 # Configuration
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -118,6 +119,77 @@ def sanitize_filename(filename: str) -> str:
     # Remove any characters that aren't alphanumeric, underscore, hyphen, or dot
     filename = re.sub(r"[^\w\-.]", "", filename)
     return filename
+
+
+# Image processing settings
+MAX_IMAGE_WIDTH = 1200
+JPEG_QUALITY = 85
+PNG_COMPRESS_LEVEL = 6
+
+
+def process_image(file_data: bytes, filename: str) -> tuple[bytes, str]:
+    """
+    Process an uploaded image: resize if too large, compress.
+    Returns (processed_bytes, final_filename).
+
+    - Resizes images wider than MAX_IMAGE_WIDTH pixels
+    - Compresses JPEGs to JPEG_QUALITY
+    - Optimizes PNGs
+    - Leaves SVGs and GIFs untouched
+    """
+    ext = filename.rsplit(".", 1)[-1].lower() if "." in filename else ""
+
+    # Don't process SVGs (vector) or GIFs (might be animated)
+    if ext in ("svg", "gif"):
+        return file_data, filename
+
+    try:
+        img = Image.open(io.BytesIO(file_data))
+
+        # Convert RGBA to RGB for JPEG (can't save RGBA as JPEG)
+        if ext in ("jpg", "jpeg") and img.mode == "RGBA":
+            # Create white background
+            background = Image.new("RGB", img.size, (255, 255, 255))
+            background.paste(img, mask=img.split()[3])  # 3 is the alpha channel
+            img = background
+
+        # Resize if too wide
+        if img.width > MAX_IMAGE_WIDTH:
+            ratio = MAX_IMAGE_WIDTH / img.width
+            new_height = int(img.height * ratio)
+            img = img.resize((MAX_IMAGE_WIDTH, new_height), Image.Resampling.LANCZOS)
+            print(f"Resized image from {img.width}x{img.height} to {MAX_IMAGE_WIDTH}x{new_height}")
+
+        # Save with compression
+        output = io.BytesIO()
+
+        if ext in ("jpg", "jpeg"):
+            # Ensure RGB mode for JPEG
+            if img.mode != "RGB":
+                img = img.convert("RGB")
+            img.save(output, format="JPEG", quality=JPEG_QUALITY, optimize=True)
+        elif ext == "png":
+            img.save(output, format="PNG", optimize=True, compress_level=PNG_COMPRESS_LEVEL)
+        elif ext == "webp":
+            img.save(output, format="WEBP", quality=JPEG_QUALITY, optimize=True)
+        else:
+            # Unknown format, return original
+            return file_data, filename
+
+        processed_data = output.getvalue()
+
+        # Only use processed version if it's actually smaller
+        if len(processed_data) < len(file_data):
+            print(f"Compressed image: {len(file_data)} -> {len(processed_data)} bytes ({100 * len(processed_data) // len(file_data)}%)")
+            return processed_data, filename
+        else:
+            print(f"Keeping original: processed ({len(processed_data)}) >= original ({len(file_data)})")
+            return file_data, filename
+
+    except Exception as e:
+        print(f"Error processing image: {e}")
+        # Return original on error
+        return file_data, filename
 
 
 # Routes
@@ -239,7 +311,7 @@ def list_images():
 
 @app.route("/api/images", methods=["POST"])
 def upload_image():
-    """Upload a new image."""
+    """Upload a new image with automatic resize and compression."""
     if "file" not in request.files:
         return jsonify({"error": "No file provided"}), 400
 
@@ -253,6 +325,11 @@ def upload_image():
         return jsonify({"error": f"Invalid file type. Allowed: {', '.join(ALLOWED_IMAGE_EXTENSIONS)}"}), 400
 
     filename = sanitize_filename(file.filename)
+
+    # Read file data and process image
+    file_data = file.read()
+    processed_data, filename = process_image(file_data, filename)
+
     filepath = IMAGES_DIR / filename
 
     # Ensure unique filename
@@ -263,7 +340,8 @@ def upload_image():
         filepath = IMAGES_DIR / filename
         counter += 1
 
-    file.save(filepath)
+    # Write processed image
+    filepath.write_bytes(processed_data)
 
     return jsonify({
         "success": True,
@@ -276,6 +354,18 @@ def upload_image():
 def serve_image(filename: str):
     """Serve images for preview."""
     return send_from_directory(IMAGES_DIR, filename)
+
+
+@app.route("/static/editor.css")
+def serve_editor_css():
+    """Serve editor CSS."""
+    return send_file(EDITOR_DIR / "editor.css", mimetype="text/css")
+
+
+@app.route("/static/editor.js")
+def serve_editor_js():
+    """Serve editor JavaScript."""
+    return send_file(EDITOR_DIR / "editor.js", mimetype="application/javascript")
 
 
 if __name__ == "__main__":
