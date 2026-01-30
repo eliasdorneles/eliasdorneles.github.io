@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Elias Dorneles' website"
 requires-python = ">=3.11.0"
 dependencies = [
+    "flask>=3.1.2",
     "ghp-import>=2.1.0",
     "watchdog>=6.0.0",
 ]
