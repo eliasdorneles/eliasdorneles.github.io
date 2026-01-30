@@ -49,6 +49,10 @@ post: manage.bin  ## Create a new post
 autorename: manage.bin  ## Rename posts according to their titles
 	 ./manage.bin auto-rename-drafts
 
+.PHONY: editor
+editor:  ## Start the blog post editor
+	uv run python manage/editor/editor_server.py
+
 .PHONY: clean-prod
 clean-prod:
 	rm -rf ${PROD_OUTPUT_DIR}
