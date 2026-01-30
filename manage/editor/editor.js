@@ -9,6 +9,8 @@ let widthMode = 'auto'; // 'auto' or 'custom'
 let cmEditor = null; // CodeMirror instance
 let editMode = false; // true when editing existing image
 let editPosition = null; // { startLine, endLine } of image being edited
+let collapsedYears = new Set(); // Track which years are collapsed
+let initialCollapseSet = false; // Track if we've set initial collapse state
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -173,19 +175,74 @@ function renderPostList() {
         return matchesSearch && matchesFilter;
     });
 
-    container.innerHTML = filtered.map(post => `
-        <div class="post-item ${currentPost?.filename === post.filename ? 'active' : ''}"
-             data-filename="${post.filename}"
-             onclick="loadPost('${post.filename}')">
-            <div class="post-item-title">${escapeHtml(post.title)}</div>
-            <div class="post-item-meta">
-                ${post.date ? post.date.split(' ')[0] : 'No date'}
-                <span class="status-badge status-${post.status === 'draft' ? 'draft' : 'published'}">
-                    ${post.status || 'published'}
-                </span>
+    // Group posts by year
+    const groupedByYear = {};
+    filtered.forEach(post => {
+        const year = post.date ? post.date.split('-')[0] : 'No Date';
+        if (!groupedByYear[year]) {
+            groupedByYear[year] = [];
+        }
+        groupedByYear[year].push(post);
+    });
+
+    // Sort years descending, with "No Date" at the end
+    const years = Object.keys(groupedByYear).sort((a, b) => {
+        if (a === 'No Date') return 1;
+        if (b === 'No Date') return -1;
+        return parseInt(b) - parseInt(a);
+    });
+
+    // Set initial collapse state (older years collapsed)
+    if (!initialCollapseSet && years.length > 0) {
+        const currentYear = new Date().getFullYear();
+        years.forEach(year => {
+            if (year !== 'No Date' && parseInt(year) < currentYear - 1) {
+                collapsedYears.add(year);
+            }
+        });
+        initialCollapseSet = true;
+    }
+
+    // Render grouped posts
+    container.innerHTML = years.map(year => {
+        const yearPosts = groupedByYear[year];
+        const isCollapsed = collapsedYears.has(year);
+
+        const postsHtml = isCollapsed ? '' : yearPosts.map(post => `
+            <div class="post-item ${currentPost?.filename === post.filename ? 'active' : ''}"
+                 data-filename="${post.filename}"
+                 onclick="loadPost('${post.filename}')">
+                <div class="post-item-title">${escapeHtml(post.title)}</div>
+                <div class="post-item-meta">
+                    ${post.date ? post.date.split(' ')[0] : 'No date'}
+                    <span class="status-badge status-${post.status === 'draft' ? 'draft' : 'published'}">
+                        ${post.status || 'published'}
+                    </span>
+                </div>
             </div>
-        </div>
-    `).join('');
+        `).join('');
+
+        return `
+            <div class="year-group">
+                <div class="year-header ${isCollapsed ? 'collapsed' : ''}" onclick="toggleYear('${year}')">
+                    <span>${year} <span class="count">(${yearPosts.length})</span></span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="year-posts">
+                    ${postsHtml}
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function toggleYear(year) {
+    if (collapsedYears.has(year)) {
+        collapsedYears.delete(year);
+    } else {
+        collapsedYears.add(year);
+    }
+    renderPostList();
 }
 
 function renderImageGallery() {

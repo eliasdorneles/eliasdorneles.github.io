@@ -129,6 +129,44 @@ body {
     padding: 8px;
 }
 
+/* Year group headers */
+.year-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    margin: 4px 0;
+    background: rgba(255,255,255,0.05);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.year-header:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.year-header .count {
+    font-weight: normal;
+    opacity: 0.7;
+}
+
+.year-header .toggle-icon {
+    transition: transform 0.2s ease;
+}
+
+.year-header.collapsed .toggle-icon {
+    transform: rotate(-90deg);
+}
+
+.year-posts {
+    /* Container for posts within a year group */
+}
+
 .post-item {
     padding: 12px;
     border-radius: 4px;
