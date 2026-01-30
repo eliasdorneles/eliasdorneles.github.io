@@ -7,6 +7,8 @@ let previewTimeout = null;
 let images = [];
 let widthMode = 'auto'; // 'auto' or 'custom'
 let cmEditor = null; // CodeMirror instance
+let editMode = false; // true when editing existing image
+let editPosition = null; // { startLine, endLine } of image being edited
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -16,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupDropZone();
     setupKeyboardShortcuts();
     setupWidthToggle();
+    setupPreviewClickHandler();
 });
 
 // Setup CodeMirror
@@ -415,6 +418,16 @@ function openImageModal(url, filename) {
 
 function closeImageModal() {
     document.getElementById('imageModal').classList.remove('active');
+
+    // Reset edit mode
+    editMode = false;
+    editPosition = null;
+
+    // Reset button text to "Insert"
+    const insertBtn = document.getElementById('imageModalSubmit');
+    if (insertBtn) {
+        insertBtn.textContent = 'Insert';
+    }
 }
 
 function insertImage() {
@@ -445,20 +458,32 @@ function insertImage() {
         code = `![${alt}](${imgPath})`;
     }
 
-    // Insert at cursor position using CodeMirror
-    const cursor = cmEditor.getCursor();
-    const line = cmEditor.getLine(cursor.line);
+    if (editMode && editPosition) {
+        // Replace existing image
+        const endLineContent = cmEditor.getLine(editPosition.endLine);
+        cmEditor.replaceRange(
+            code,
+            { line: editPosition.startLine, ch: 0 },
+            { line: editPosition.endLine, ch: endLineContent.length }
+        );
+        editMode = false;
+        editPosition = null;
+    } else {
+        // Insert at cursor position using CodeMirror
+        const cursor = cmEditor.getCursor();
+        const line = cmEditor.getLine(cursor.line);
 
-    // Add newlines if not at start of line
-    let prefix = '';
-    let suffix = '\n\n';
-    if (cursor.ch > 0 || line.length > 0) {
-        prefix = '\n\n';
+        // Add newlines if not at start of line
+        let prefix = '';
+        let suffix = '\n\n';
+        if (cursor.ch > 0 || line.length > 0) {
+            prefix = '\n\n';
+        }
+
+        cmEditor.replaceSelection(prefix + code + suffix);
     }
 
-    cmEditor.replaceSelection(prefix + code + suffix);
     cmEditor.focus();
-
     closeImageModal();
     handleBodyInput();
 }
@@ -495,4 +520,158 @@ function setupKeyboardShortcuts() {
             }
         }
     });
+}
+
+// Preview click-to-edit functionality
+function setupPreviewClickHandler() {
+    const preview = document.getElementById('previewPanel');
+    preview.addEventListener('click', (e) => {
+        if (e.target.tagName === 'IMG') {
+            handlePreviewImageClick(e.target);
+        }
+    });
+}
+
+function handlePreviewImageClick(imgElement) {
+    // Get filename from src (preview uses /static/images/, source uses {static}/images/)
+    const src = imgElement.getAttribute('src');
+    const filename = src.replace('/static/images/', '');
+
+    // Check if inside a figure
+    const figure = imgElement.closest('.figure');
+
+    // Extract current values
+    const info = {
+        filename: filename,
+        alt: imgElement.getAttribute('alt') || '',
+        caption: figure ? (figure.querySelector('.caption')?.textContent || '') : '',
+        alignment: extractAlignment(figure || imgElement),
+        width: extractWidth(figure || imgElement)
+    };
+
+    // Find position in source
+    const sourcePosition = findImageInSource(filename);
+    if (sourcePosition) {
+        openImageModalForEdit(info, sourcePosition);
+    }
+}
+
+function extractAlignment(element) {
+    const classList = element.classList;
+    if (classList.contains('align-left')) return 'left';
+    if (classList.contains('align-right')) return 'right';
+    if (classList.contains('align-center')) return 'center';
+    return 'none';
+}
+
+function extractWidth(element) {
+    // Check style attribute for width
+    const style = element.getAttribute('style');
+    if (style) {
+        const match = style.match(/width:\s*(\d+)px/);
+        if (match) return match[1];
+    }
+
+    // Check width attribute (for img elements)
+    const widthAttr = element.getAttribute('width');
+    if (widthAttr) return widthAttr;
+
+    return null;
+}
+
+function escapeRegex(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function findImageInSource(filename) {
+    const content = cmEditor.getValue();
+    const lines = content.split('\n');
+    const escapedFilename = escapeRegex(filename);
+
+    // Pattern 1: Markdown ![...]({static}/images/filename)
+    const markdownPattern = new RegExp(`!\\[[^\\]]*\\]\\(\\{static\\}/images/${escapedFilename}\\)`);
+
+    // Pattern 2: HTML img <img ... src="{static}/images/filename" ...>
+    const imgPattern = new RegExp(`<img[^>]*src=["']\\{static\\}/images/${escapedFilename}["'][^>]*/?>`, 'i');
+
+    // Pattern 3: Figure div containing the filename
+    const figureStartPattern = /<div\s+class=["']figure[^"']*["']/i;
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+
+        // Check for markdown image
+        if (markdownPattern.test(line)) {
+            return { startLine: i, endLine: i };
+        }
+
+        // Check for standalone img tag
+        if (imgPattern.test(line) && !figureStartPattern.test(line)) {
+            return { startLine: i, endLine: i };
+        }
+
+        // Check for figure block
+        if (figureStartPattern.test(line)) {
+            // Look for the filename within this figure block
+            let endLine = i;
+            let foundFilename = false;
+            let blockContent = line;
+
+            // Find the end of the figure block
+            for (let j = i; j < lines.length; j++) {
+                blockContent += '\n' + lines[j];
+                if (lines[j].includes('</div>')) {
+                    endLine = j;
+                    break;
+                }
+            }
+
+            // Check if this figure contains our image
+            if (blockContent.includes(`{static}/images/${filename}`)) {
+                return { startLine: i, endLine: endLine };
+            }
+        }
+    }
+
+    return null;
+}
+
+function openImageModalForEdit(info, position) {
+    editMode = true;
+    editPosition = position;
+
+    // Set modal preview image
+    document.getElementById('modalImagePreview').src = `/static/images/${info.filename}`;
+    document.getElementById('modalImageUrl').value = info.filename;
+    document.getElementById('imageAlt').value = info.alt;
+    document.getElementById('imageCaption').value = info.caption;
+
+    // Set alignment
+    document.querySelector(`input[name="alignment"][value="${info.alignment}"]`).checked = true;
+
+    // Set width
+    if (info.width) {
+        widthMode = 'custom';
+        document.getElementById('widthAutoBtn').classList.remove('active');
+        document.getElementById('widthCustomBtn').classList.add('active');
+        document.getElementById('imageWidth').value = info.width;
+        document.getElementById('imageWidth').disabled = false;
+    } else {
+        widthMode = 'auto';
+        document.getElementById('widthAutoBtn').classList.add('active');
+        document.getElementById('widthCustomBtn').classList.remove('active');
+        document.getElementById('imageWidth').value = '';
+        document.getElementById('imageWidth').disabled = true;
+    }
+
+    // Update button text to "Update"
+    const insertBtn = document.getElementById('imageModalSubmit');
+    if (insertBtn) {
+        insertBtn.textContent = 'Update';
+    }
+
+    document.getElementById('imageModal').classList.add('active');
+
+    // Focus alt text field
+    setTimeout(() => document.getElementById('imageAlt').focus(), 100);
 }

@@ -479,6 +479,13 @@ body {
     padding: 4px;
     margin: 1em 1em 1em 0;
     box-shadow: 4px 4px 4px 0px rgba(128, 128, 128, 0.5);
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.preview-panel img:hover {
+    border-color: var(--accent-color);
+    box-shadow: 4px 4px 8px 0px rgba(82, 182, 154, 0.5);
 }
 
 .preview-panel blockquote {
