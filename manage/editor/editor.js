@@ -500,8 +500,8 @@ function setupKeyboardShortcuts() {
             }
         }
 
-        // Ctrl+N or Cmd+N for new post
-        if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
+        // Alt+N for new post
+        if (e.altKey && e.key === 'n') {
             e.preventDefault();
             createNewPost();
         }
