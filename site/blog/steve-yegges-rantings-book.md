@@ -1,6 +1,7 @@
 Title: Steve Yegge's Rantings book
 Date: 2014-08-10 20:20
 Author: Elias Dorneles
+Status: published
 
 
 Those who know me well, know that I'm a bit of a [Steve

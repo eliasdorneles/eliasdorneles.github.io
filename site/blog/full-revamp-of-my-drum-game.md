@@ -1,6 +1,7 @@
 Title: Full revamp of my drum game
 Date: 2026-01-18 22:24
 Author: Elias Dorneles
+Status: published
 
 In the past week I've fully revamped my [drum
 game](https://github.com/eliasdorneles/drum-game) that I had initially written like 10

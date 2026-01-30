@@ -1,6 +1,7 @@
 Title: Failing to finish a book
 Date: 2014-05-31 23:08
 Author: Elias Dorneles
+Status: published
 
 
 Okay, here is a book I've been trying to read for almost two months already and

@@ -1,6 +1,7 @@
 Title: You're not alone
 Date: 2016-04-19 19:19
 Author: Elias Dorneles
+Status: published
 
 > I've shared this text almost as-is internally at @Scrapinghub, the company I work at. As it had a good response, I'm sharing it here after some minor editing. I wrote it mainly to my programmer friends, but many people will probably relate to it.
 

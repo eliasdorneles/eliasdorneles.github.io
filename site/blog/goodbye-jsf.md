@@ -1,6 +1,7 @@
 Title: Goodbye, JSF!
 Date: 2013-06-23 13:31
 Author: Elias Dorneles
+Status: published
 
 Ok, se você não é javeiro, talvez nunca tenha ouvido falar em JSF. *No
 worries*, você não está perdendo muita coisa.

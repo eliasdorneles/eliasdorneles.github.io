@@ -1,6 +1,7 @@
 Title: So I'm releasing a single!
 Date: 2023-05-01 20:00
 Author: Elias Dorneles
+Status: published
 Lang: en
 Slug: so-i-m-releasing-a-single
 

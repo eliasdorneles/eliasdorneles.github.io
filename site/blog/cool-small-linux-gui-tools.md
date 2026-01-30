@@ -1,6 +1,7 @@
 Title: Cool Linux apps you might not know
 Date: 2019-01-25 23:03
 Author: Elias Dorneles
+Status: published
 
 <sup>Trying to ship the old blog post drafts</sup>
 

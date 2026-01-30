@@ -1,6 +1,7 @@
 Title: So, here is a story
 Date: 2014-06-13 14:00
 Author: Elias Dorneles
+Status: published
 
 Soon after graduating, I went to work as a software developer for a big public
 company in Brazil. This company is responsible for a huge part of the country's

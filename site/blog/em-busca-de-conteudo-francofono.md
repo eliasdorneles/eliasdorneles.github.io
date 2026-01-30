@@ -1,6 +1,7 @@
 Title: Em busca de conteúdo francófono
 Date: 2019-01-25 23:38
 Author: Elias Dorneles
+Status: published
 
 Faz pouco mais de um ano que estou morando na França, e ainda estou
 descobrindo onde encontrar bom conteúdo francófono na internet.

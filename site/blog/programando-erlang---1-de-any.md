@@ -1,6 +1,7 @@
 Title: Programando Erlang - 1 de Any
 Date: 2014-04-05 23:35
 Author: Elias Dorneles
+Status: published
 
 Na virada do ano, uma das minhas resoluções para 2014 foi a de que este ano
 aprenderia [Erlang](http://www.erlang.org/).  Eu queria brincar com alguma

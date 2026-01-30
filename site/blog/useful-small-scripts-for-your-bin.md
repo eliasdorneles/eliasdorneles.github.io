@@ -1,6 +1,7 @@
 Title: Useful small scripts for your ~/bin
 Date: 2015-01-28 00:03
 Author: Elias Dorneles
+Status: published
 
 ### fields
 

@@ -1,6 +1,7 @@
 Title: Vou lançar um single!
 Date: 2023-05-01 20:00
 Author: Elias Dorneles
+Status: published
 Lang: pt-br
 Slug: so-i-m-releasing-a-single
 

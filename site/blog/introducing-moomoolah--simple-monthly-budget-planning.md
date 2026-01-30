@@ -1,6 +1,7 @@
 Title: Introducing MooMoolah -- simple monthly budget planning
 Date: 2025-07-10 21:58:39
 Author: Elias Dorneles
+Status: published
 
 
 I wanted a simple, lightweight way to keep track of my money, but without the

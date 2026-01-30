@@ -1,6 +1,7 @@
 Title: A maleta do milhão
 Date: 2011-10-17 23:40
 Author: Elias Dorneles
+Status: published
 
 [![maleta do
 milhão](https://eljunior.files.wordpress.com/2011/10/432888092_8887774475_m.jpg "maleta cheia de dinheiro")](https://www.flickr.com/photos/julianrod/432888092/)

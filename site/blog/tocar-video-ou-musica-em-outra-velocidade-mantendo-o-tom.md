@@ -1,6 +1,7 @@
 Title: Tocar vídeo ou música em outra velocidade mantendo o tom
 Date: 2011-07-28 10:53
 Author: Elias Dorneles
+Status: published
 
 Alguns meses atrás descobri o [Play it slowly](http://29a.ch/playitslowly/
 "http://29a.ch/playitslowly/"), um programa para tocar arquivos de áudio em

@@ -1,6 +1,7 @@
 Title: Urwid is great!
 Date: 2017-04-21 22:09
 Author: Elias Dorneles
+Status: published
 
 Ever since I started using the awesome [pudb debugger for Python
 programs](https://pypi.python.org/pypi/pudb) I've been curious about the [urwid

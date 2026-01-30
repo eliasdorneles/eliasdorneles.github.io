@@ -1,6 +1,7 @@
 Title: On getting productive with Git
 Date: 2016-06-19 00:29
 Author: Elias Dorneles
+Status: published
 
 
 I remember the first time I submitted a pull request in GitHub and some

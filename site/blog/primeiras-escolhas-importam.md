@@ -1,6 +1,7 @@
 Title: Primeiras escolhas importam
 Date: 2012-10-18 16:23
 Author: Elias Dorneles
+Status: published
 
 Nossas primeiras experiências influenciam as seguintes muito mais do que
 a gente percebe.

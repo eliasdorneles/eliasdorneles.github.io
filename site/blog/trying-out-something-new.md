@@ -1,6 +1,7 @@
 Title: Trying out something new
 Date: 2016-01-26 22:54
 Author: Elias Dorneles
+Status: published
 
 
 <!-- PELICAN_BEGIN_SUMMARY -->

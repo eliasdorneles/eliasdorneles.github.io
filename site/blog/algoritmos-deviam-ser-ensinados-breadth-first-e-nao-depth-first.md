@@ -1,6 +1,7 @@
 Title: Algoritmos deviam ser ensinados breadth-first, e não depth-first
 Date: 2012-11-07 16:58
 Author: Elias Dorneles
+Status: published
 
 Algoritmos deviam ser ensinados 
 [*breadth-first*](https://pt.wikipedia.org/wiki/Busca_em_largura "Busca em largura (Breadth-first search), na Wikipedia"),

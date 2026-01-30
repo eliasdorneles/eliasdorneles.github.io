@@ -1,6 +1,7 @@
 Title: Desenho de Interface do Usuário - para programadores
 Date: 2013-03-18 22:57
 Author: Elias Dorneles
+Status: published
 
 [Joel Spolsky](http://www.joelonsoftware.com/) é um cara batuta e muito
 inteligente. Ele é uma das figuras por trás do

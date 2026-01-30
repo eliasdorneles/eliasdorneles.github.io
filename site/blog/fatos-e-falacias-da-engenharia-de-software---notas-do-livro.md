@@ -1,6 +1,7 @@
 Title: Fatos e Falácias da Engenharia de Software - notas do livro
 Date: 2012-12-03 13:23
 Author: Elias Dorneles
+Status: published
 
 [![Book cover](https://codinghorror.typepad.com/.a/6a0120a85dcdae970b012877703e5c970c-pi)](https://www.amazon.com/Facts-Fallacies-Software-Engineering-Robert/dp/0321117425)Acabo
 de terminar a leitura de um livro simplesmente excelente, *Facts and

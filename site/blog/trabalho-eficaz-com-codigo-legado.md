@@ -1,6 +1,7 @@
 Title: Trabalho Eficaz com Código Legado
 Date: 2014-01-26 17:58
 Author: Elias Dorneles
+Status: published
 
 [Trabalho Eficaz com Código
 Legado](http://www.grupoa.com.br/livros/engenharia-de-software-e-metodos-ageis/trabalho-eficaz-com-codigo-legado/9788582600320

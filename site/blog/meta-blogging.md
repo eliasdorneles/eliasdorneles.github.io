@@ -1,6 +1,7 @@
 Title: Meta-blogging
 Date: 2018-05-02 00:49
 Author: Elias Dorneles
+Status: published
 
 I've been wanting to write since a little while but whenever I sit to write a
 post I end up on an endless yak-shaving of making small adjustments to the

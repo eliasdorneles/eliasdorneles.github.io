@@ -1,6 +1,7 @@
 Title: Aprendendo Thumbpicking
 Date: 2011-12-11 23:12
 Author: Elias Dorneles
+Status: published
 
 <center>
 

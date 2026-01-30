@@ -1,6 +1,7 @@
 Title: Programming Grails -- a aventura continua
 Date: 2013-07-28 10:12
 Author: Elias Dorneles
+Status: published
 
 Alguns dias atrás terminei de ler o *[Programming
 Grails](http://shop.oreilly.com/product/0636920024750.do "Programming Grails - OReilly") ([Amazon](https://www.amazon.com/Programming-Grails-Burt-Beckwith/dp/1449323936))*,

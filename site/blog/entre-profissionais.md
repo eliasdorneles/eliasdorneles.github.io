@@ -1,6 +1,7 @@
 Title: Entre profissionais
 Date: 2012-06-21 20:41
 Author: Elias Dorneles
+Status: published
 
 
 Alguns dias atrás, tive a chance de fazer duas coisas muito importantes pra

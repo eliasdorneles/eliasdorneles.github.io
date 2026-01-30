@@ -1,6 +1,7 @@
 Title: Tips on Performance and Monitoring of Java Applications
 Date: 2014-06-16 20:06
 Author: Elias Dorneles
+Status: published
 
 I cleaned up my desk this weekend and ended up finding some notes I wrote down
 some time ago when I attended a course about monitoring JBoss application

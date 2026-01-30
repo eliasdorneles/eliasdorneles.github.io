@@ -1,6 +1,7 @@
 Title: Learning Odin
 Date: 2025-06-15 21:04:50
 Author: Elias Dorneles
+Status: published
 
 Over the past month or so I've been learning [Odin](https://odin-lang.org/) and
 I'm enjoying it so much that I'm breaking the silence on the blog.

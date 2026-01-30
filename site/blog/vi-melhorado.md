@@ -1,6 +1,7 @@
 Title: VI Melhorado
 Date: 2013-09-26 16:49
 Author: Elias Dorneles
+Status: published
 
 [Practical Vim](http://pragprog.com/book/dnvim/practical-vim) é um livro sobre
 o [Vim](http://www.vim.org/) -- o editor de textos xodó dos programadores.

@@ -1,6 +1,7 @@
 Title: Você devia aprender shell-script
 Date: 2014-01-11 16:34
 Author: Elias Dorneles
+Status: published
 
 Se você é programador, você devia aprender
 [shell-script](https://pt.wikipedia.org/wiki/Shell_script). Ou pelo

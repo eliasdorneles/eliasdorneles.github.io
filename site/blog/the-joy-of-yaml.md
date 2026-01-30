@@ -1,6 +1,7 @@
 Title: The Joy of YAML
 Date: 2021-08-13 22:14
 Author: Elias Dorneles
+Status: published
 
 I haven't written much on the blog on the last few years, I don't know, I
 didn't felt like I had much to say.  There is so much being said on the Web,

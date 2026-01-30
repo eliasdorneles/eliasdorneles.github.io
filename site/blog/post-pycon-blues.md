@@ -1,6 +1,7 @@
 Title: Post Pycon blues
 Date: 2018-05-22 23:48
 Author: Elias Dorneles
+Status: published
 
 When I arrived at Cleveland's airport a few weeks ago to attend
 [Pycon](https://us.pycon.org), the customs agent didn't know that

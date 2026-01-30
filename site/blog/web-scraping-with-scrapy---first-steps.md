@@ -1,6 +1,7 @@
 Title: Web Scraping with Scrapy - first steps
 Date: 2014-08-30 19:29
 Author: Elias Dorneles
+Status: published
 
 
 <strong>Update:</strong> This tutorial isn't up to date with the latest and greatest of Scrapy. You should follow [the official documentation instead](https://docs.scrapy.org/en/latest/intro/overview.html), I've worked together with other Scrapy developers to make it better. I'm leaving this article online for archival purposes only.

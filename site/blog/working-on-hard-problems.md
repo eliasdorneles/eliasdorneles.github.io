@@ -1,6 +1,7 @@
 Title: Working on hard problems
 Date: 2015-09-13 18:41
 Author: Elias Dorneles
+Status: published
 
 We programmers often prefer to work in problems that we already know how to
 solve, and tend to avoid hard ones that don't have a straightforward solution.
