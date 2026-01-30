@@ -209,7 +209,7 @@ function renderEditor() {
 
     document.getElementById('postTitle').value = currentPost.title || '';
     document.getElementById('postDate').value = currentPost.date || '';
-    document.getElementById('postStatus').value = currentPost.status || 'draft';
+    document.getElementById('postStatus').value = currentPost.status || 'published';
     cmEditor.setValue(currentPost.body || '');
 
     setSaveStatus('ready', 'Ready');
