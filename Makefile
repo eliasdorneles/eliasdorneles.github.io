@@ -51,6 +51,7 @@ autorename: manage.bin  ## Rename posts according to their titles
 
 .PHONY: editor
 editor:  ## Start the blog post editor
+	(sleep 1 && xdg-open http://localhost:5000) &
 	uv run python manage/editor/editor_server.py
 
 .PHONY: clean-prod
