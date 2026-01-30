@@ -118,7 +118,7 @@ new_post :: proc(articles_dir: string) {
 
     if os.write_entire_file(filename, transmute([]u8)content) {
         fmt.println("Created new post:", filename)
-        cmd := fmt.aprintf("vim %s", filename)
+        cmd := fmt.aprintf("nvim %s", filename)
         defer delete(cmd)
         libc.system(strings.unsafe_string_to_cstring(cmd))
     } else {
