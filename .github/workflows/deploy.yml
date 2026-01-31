@@ -1,0 +1,37 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [source]
+  workflow_dispatch:  # Allow manual trigger
+
+permissions:
+  contents: write  # Needed to push to master branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Odin
+        uses: laytan/setup-odin@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Python/uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Build sitegen
+        run: odin build sitegen
+
+      - name: Build site
+        run: ./sitegen.bin --output output_prod --config-file config_sitegen.json
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./output_prod
+          publish_branch: master
+          force_orphan: true
