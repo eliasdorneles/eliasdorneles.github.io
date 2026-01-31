@@ -45,6 +45,7 @@ body {
 }
 
 .sidebar-header {
+    flex-shrink: 0;
     padding: 16px;
     border-bottom: 1px solid rgba(255,255,255,0.2);
 }
@@ -125,6 +126,7 @@ body {
 
 .post-list {
     flex: 1;
+    min-height: 0;
     overflow-y: auto;
     padding: 8px;
 }
@@ -214,6 +216,7 @@ body {
 
 /* Image Gallery Section */
 .image-gallery-section {
+    flex-shrink: 0;
     border-top: 1px solid rgba(255,255,255,0.2);
     padding: 12px;
     max-height: 200px;
@@ -259,9 +262,18 @@ body {
     flex-direction: column;
     background: var(--panel-bg);
     border-right: 4px solid var(--border-color);
+    overflow: hidden;
+}
+
+#editorContent {
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
 }
 
 .editor-header {
+    flex-shrink: 0;
     padding: 16px;
     border-bottom: 1px solid #ddd;
     background: #f9f9f9;
@@ -301,6 +313,7 @@ body {
     display: flex;
     flex-direction: column;
     padding: 16px;
+    min-height: 0;
     overflow: hidden;
 }
 
@@ -312,8 +325,9 @@ body {
 /* CodeMirror styling */
 .CodeMirror {
     flex: 1;
+    min-height: 0;
+    height: 100% !important;
     width: 100%;
-    height: auto !important;
     background: var(--input-bg);
     border: 1px solid var(--input-border);
     border-radius: 4px;
@@ -413,8 +427,9 @@ body {
 }
 
 .drop-zone {
+    flex-shrink: 0;
     margin-top: 12px;
-    padding: 20px;
+    padding: 16px;
     border: 2px dashed var(--input-border);
     border-radius: 8px;
     text-align: center;
@@ -436,6 +451,7 @@ body {
 }
 
 .save-indicator {
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     gap: 8px;

@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadImages();
     setupCodeMirror();
     setupDropZone();
+    setupPasteHandler();
     setupKeyboardShortcuts();
     setupWidthToggle();
     setupPreviewClickHandler();
@@ -32,7 +33,6 @@ function setupCodeMirror() {
         lineWrapping: true,
         theme: 'default',
         autofocus: false,
-        viewportMargin: Infinity,
     });
 
     // Handle changes
@@ -424,6 +424,35 @@ function handleFileSelect(event) {
         uploadImage(file);
     }
     event.target.value = ''; // Reset input
+}
+
+// Paste handler for clipboard images
+function setupPasteHandler() {
+    document.addEventListener('paste', (e) => {
+        // Only handle paste when editor is active
+        if (!currentPost) return;
+
+        const items = e.clipboardData?.items;
+        if (!items) return;
+
+        for (const item of items) {
+            if (item.type.startsWith('image/')) {
+                e.preventDefault();
+                const file = item.getAsFile();
+                if (file) {
+                    // Generate timestamped filename for pasted images
+                    const ext = file.type.split('/')[1] || 'png';
+                    const timestamp = new Date().toISOString()
+                        .replace(/[T:]/g, '-')
+                        .replace(/\..+/, '');
+                    const newFilename = `pasted-${timestamp}.${ext}`;
+                    const renamedFile = new File([file], newFilename, { type: file.type });
+                    uploadImage(renamedFile);
+                }
+                return;
+            }
+        }
+    });
 }
 
 // Width toggle
