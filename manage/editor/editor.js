@@ -33,6 +33,7 @@ function setupCodeMirror() {
         lineWrapping: true,
         theme: 'default',
         autofocus: false,
+        viewportMargin: Infinity, // attempt to fix the hidden last line issue
     });
 
     // Handle changes
@@ -131,6 +132,37 @@ async function createNewPost() {
         }
     } catch (error) {
         console.error('Failed to create post:', error);
+    }
+}
+
+async function deleteDraft() {
+    if (!currentPost) return;
+
+    const status = document.getElementById('postStatus').value;
+    if (status !== 'draft') {
+        alert('Only draft posts can be deleted. Change the status to "Draft" first if you want to delete this post.');
+        return;
+    }
+
+    const confirmed = confirm(`Are you sure you want to delete "${currentPost.title || currentPost.filename}"?\n\nThis action cannot be undone.`);
+    if (!confirmed) return;
+
+    try {
+        const response = await fetch(`/api/posts/${currentPost.filename}`, {
+            method: 'DELETE',
+        });
+
+        const data = await response.json();
+        if (response.ok && data.success) {
+            currentPost = null;
+            renderEditor();
+            await loadPosts();
+        } else {
+            alert('Failed to delete: ' + (data.error || 'Unknown error'));
+        }
+    } catch (error) {
+        console.error('Failed to delete post:', error);
+        alert('Failed to delete post');
     }
 }
 
@@ -272,7 +304,14 @@ function renderEditor() {
     document.getElementById('postStatus').value = currentPost.status || 'published';
     cmEditor.setValue(currentPost.body || '');
 
+    updateDeleteButton();
     setSaveStatus('ready', 'Ready');
+}
+
+function updateDeleteButton() {
+    const deleteBtn = document.getElementById('deleteBtn');
+    const status = document.getElementById('postStatus').value;
+    deleteBtn.style.display = status === 'draft' ? 'block' : 'none';
 }
 
 function updatePreview() {

@@ -71,6 +71,15 @@ body {
     background: var(--accent-hover);
 }
 
+.btn-danger {
+    background: #dc3545;
+    margin-bottom: 12px;
+}
+
+.btn-danger:hover {
+    background: #c82333;
+}
+
 .btn-new {
     width: 100%;
     margin-bottom: 12px;
@@ -325,8 +334,6 @@ body {
 /* CodeMirror styling */
 .CodeMirror {
     flex: 1;
-    min-height: 0;
-    height: 100% !important;
     width: 100%;
     background: var(--input-bg);
     border: 1px solid var(--input-border);
@@ -339,10 +346,6 @@ body {
 
 .CodeMirror-focused {
     border-color: var(--accent-color);
-}
-
-.CodeMirror-scroll {
-    padding: 12px;
 }
 
 /* Markdown syntax highlighting */

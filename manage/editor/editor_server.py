@@ -252,6 +252,25 @@ def save_post(filename: str):
     return jsonify({"success": True, "filename": filename})
 
 
+@app.route("/api/posts/<filename>", methods=["DELETE"])
+def delete_post(filename: str):
+    """Delete a draft post."""
+    filepath = BLOG_DIR / filename
+    if not filepath.exists() or not filepath.is_file():
+        return jsonify({"error": "Post not found"}), 404
+
+    # Read the post to check if it's a draft
+    content = filepath.read_text(encoding="utf-8")
+    metadata, _ = parse_frontmatter(content)
+
+    if metadata.get("status") != "draft":
+        return jsonify({"error": "Only draft posts can be deleted"}), 400
+
+    # Delete the file
+    filepath.unlink()
+    return jsonify({"success": True, "filename": filename})
+
+
 @app.route("/api/posts", methods=["POST"])
 def create_post():
     """Create a new post."""
