@@ -9,6 +9,7 @@ let widthMode = 'auto'; // 'auto' or 'custom'
 let cmEditor = null; // CodeMirror instance
 let editMode = false; // true when editing existing image
 let editPosition = null; // { startLine, endLine } of image being edited
+let editIsExternal = false; // true when editing an external URL image
 let collapsedYears = new Set(); // Track which years are collapsed
 let initialCollapseSet = false; // Track if we've set initial collapse state
 let contextMenuFilename = null; // Filename for context menu actions
@@ -645,6 +646,7 @@ function closeImageModal() {
     // Reset edit mode
     editMode = false;
     editPosition = null;
+    editIsExternal = false;
 
     // Reset button text to "Insert"
     const insertBtn = document.getElementById('imageModalSubmit');
@@ -661,7 +663,8 @@ function insertImage() {
     const width = widthMode === 'custom' ? document.getElementById('imageWidth').value : null;
 
     let code = '';
-    const imgPath = `{static}/images/${filename}`;
+    // Use URL directly for external images, otherwise use {static}/images/ prefix
+    const imgPath = editIsExternal ? filename : `{static}/images/${filename}`;
 
     if (caption) {
         // Figure with caption
@@ -691,6 +694,7 @@ function insertImage() {
         );
         editMode = false;
         editPosition = null;
+        editIsExternal = false;
     } else {
         // Insert at cursor position using CodeMirror
         const cursor = cmEditor.getCursor();
@@ -757,9 +761,11 @@ function setupPreviewClickHandler() {
 }
 
 function handlePreviewImageClick(imgElement) {
-    // Get filename from src (preview uses /static/images/, source uses {static}/images/)
     const src = imgElement.getAttribute('src');
-    const filename = src.replace('/static/images/', '');
+
+    // Check if it's an external URL or a local image
+    const isExternal = src.startsWith('http://') || src.startsWith('https://');
+    const filename = isExternal ? src : src.replace('/static/images/', '');
 
     // Check if inside a figure
     const figure = imgElement.closest('.figure');
@@ -770,11 +776,12 @@ function handlePreviewImageClick(imgElement) {
         alt: imgElement.getAttribute('alt') || '',
         caption: figure ? (figure.querySelector('.caption')?.textContent || '') : '',
         alignment: extractAlignment(figure || imgElement),
-        width: extractWidth(figure || imgElement)
+        width: extractWidth(figure || imgElement),
+        isExternal: isExternal
     };
 
     // Find position in source
-    const sourcePosition = findImageInSource(filename);
+    const sourcePosition = isExternal ? findExternalImageInSource(filename) : findImageInSource(filename);
     if (sourcePosition) {
         openImageModalForEdit(info, sourcePosition);
     }
@@ -860,12 +867,65 @@ function findImageInSource(filename) {
     return null;
 }
 
+function findExternalImageInSource(url) {
+    const content = cmEditor.getValue();
+    const lines = content.split('\n');
+    const escapedUrl = escapeRegex(url);
+
+    // Pattern 1: Markdown ![...](url)
+    const markdownPattern = new RegExp(`!\\[[^\\]]*\\]\\(${escapedUrl}\\)`);
+
+    // Pattern 2: HTML img <img ... src="url" ...>
+    const imgPattern = new RegExp(`<img[^>]*src=["']${escapedUrl}["'][^>]*/?>`, 'i');
+
+    // Pattern 3: Figure div containing the URL
+    const figureStartPattern = /<div\s+class=["']figure[^"']*["']/i;
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+
+        // Check for markdown image
+        if (markdownPattern.test(line)) {
+            return { startLine: i, endLine: i };
+        }
+
+        // Check for standalone img tag
+        if (imgPattern.test(line) && !figureStartPattern.test(line)) {
+            return { startLine: i, endLine: i };
+        }
+
+        // Check for figure block
+        if (figureStartPattern.test(line)) {
+            let endLine = i;
+            let blockContent = line;
+
+            // Find the end of the figure block
+            for (let j = i; j < lines.length; j++) {
+                blockContent += '\n' + lines[j];
+                if (lines[j].includes('</div>')) {
+                    endLine = j;
+                    break;
+                }
+            }
+
+            // Check if this figure contains our URL
+            if (blockContent.includes(url)) {
+                return { startLine: i, endLine: endLine };
+            }
+        }
+    }
+
+    return null;
+}
+
 function openImageModalForEdit(info, position) {
     editMode = true;
     editPosition = position;
+    editIsExternal = info.isExternal || false;
 
     // Set modal preview image
-    document.getElementById('modalImagePreview').src = `/static/images/${info.filename}`;
+    const previewSrc = info.isExternal ? info.filename : `/static/images/${info.filename}`;
+    document.getElementById('modalImagePreview').src = previewSrc;
     document.getElementById('modalImageUrl').value = info.filename;
     document.getElementById('imageAlt').value = info.alt;
     document.getElementById('imageCaption').value = info.caption;
