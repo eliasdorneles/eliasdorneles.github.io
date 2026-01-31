@@ -47,7 +47,7 @@ However, over the years there were two things that were bothering me:
 
 In fact, [I wrote about these frustrations in a post from 2018](https://eliasdorneles.com/2018/05/02/meta-blogging.html):
 
-<div class="figure align-center">
+<div class="figure align-center" style="width: 500px">
   <img src="{static}/images/metablogging-archive-screenshot-2026-01-31-10-44-58.png" alt="Screenshot of my old blog post">
   <p class="caption">My old blog post, with the layout from back then</p>
 </div>
@@ -76,7 +76,7 @@ It supports adding images via drag-n-drop, and I can also just paste an image fr
 
 Here, let me add a screenshot of the editor as it is looking right now:
 
-<div class="figure align-center">
+<div class="figure align-center" style="width: 500px">
   <img src="{static}/images/blog-editor-screenshot-2026-01-31-19-42-27.png" alt="A screenshot of my blog post editor while editing this post">
   <p class="caption">I just Ctrl+V this from my clipboard! Ahhh... so cool to be able to do that this easily!</p>
 </div>
