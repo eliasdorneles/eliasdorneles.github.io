@@ -22,4 +22,6 @@ My blog has known many homes, and the one that lived longer was
 a static website built with [Pelican](https://getpelican.com/).
 
 In 2025 I learned Odin and decided to use it for building my website, as it was
-a good learning opportunity.
+a good learning opportunity. That's how the [sitegen](https://github.com/eliasdorneles/eliasdorneles.github.io/tree/source/sitegen) tool was born.
+
+In early 2026, I built a blog editor/manager tool, the whole tale and a bit more history [is explained in this blog post](https://eliasdorneles.com/2026/01/31/fluid-blogging-again.html).
