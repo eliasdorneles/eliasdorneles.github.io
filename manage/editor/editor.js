@@ -96,9 +96,9 @@ async function savePost() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 title: document.getElementById('postTitle').value,
-                date: document.getElementById('postDate').value,
+                date: currentPost.date || '',
                 author: 'Elias Dorneles',
-                status: document.getElementById('postStatus').value,
+                status: currentPost.status || 'draft',
                 body: cmEditor.getValue(),
             }),
         });
@@ -137,12 +137,45 @@ async function createNewPost() {
     }
 }
 
+async function publishPost() {
+    if (!currentPost) return;
+
+    // Set date to current datetime
+    const now = new Date();
+    const datetime = now.getFullYear() + '-' +
+        String(now.getMonth() + 1).padStart(2, '0') + '-' +
+        String(now.getDate()).padStart(2, '0') + ' ' +
+        String(now.getHours()).padStart(2, '0') + ':' +
+        String(now.getMinutes()).padStart(2, '0');
+    currentPost.date = datetime;
+    currentPost.status = 'published';
+
+    // Save the post with new status and date
+    await savePost();
+    updateActionButtons();
+    updateStatusDisplay();
+    await loadPosts();
+}
+
+async function unpublishPost() {
+    if (!currentPost) return;
+
+    const confirmed = confirm('Unpublish this post? It will become a draft again.');
+    if (!confirmed) return;
+
+    currentPost.status = 'draft';
+
+    await savePost();
+    updateActionButtons();
+    updateStatusDisplay();
+    await loadPosts();
+}
+
 async function deleteDraft() {
     if (!currentPost) return;
 
-    const status = document.getElementById('postStatus').value;
-    if (status !== 'draft') {
-        alert('Only draft posts can be deleted. Change the status to "Draft" first if you want to delete this post.');
+    if (currentPost.status !== 'draft') {
+        alert('Only draft posts can be deleted. Unpublish first if you want to delete this post.');
         return;
     }
 
@@ -304,18 +337,46 @@ function renderEditor() {
     document.getElementById('editorEmpty').style.display = 'none';
 
     document.getElementById('postTitle').value = currentPost.title || '';
-    document.getElementById('postDate').value = currentPost.date || '';
-    document.getElementById('postStatus').value = currentPost.status || 'published';
     cmEditor.setValue(currentPost.body || '');
 
-    updateDeleteButton();
+    updateStatusDisplay();
+    updateActionButtons();
     setSaveStatus('ready', 'Ready');
 }
 
-function updateDeleteButton() {
+function updateStatusDisplay() {
+    const statusDisplay = document.getElementById('postStatusDisplay');
+    const status = currentPost?.status || 'draft';
+    const date = currentPost?.date || '';
+
+    if (status === 'draft') {
+        statusDisplay.textContent = 'Draft';
+        statusDisplay.className = 'post-status-display status-draft';
+    } else {
+        statusDisplay.textContent = `Published on ${date}`;
+        statusDisplay.className = 'post-status-display status-published';
+    }
+}
+
+function updateActionButtons() {
+    const publishBtn = document.getElementById('publishBtn');
+    const unpublishBtn = document.getElementById('unpublishBtn');
     const deleteBtn = document.getElementById('deleteBtn');
-    const status = document.getElementById('postStatus').value;
-    deleteBtn.style.display = status === 'draft' ? 'block' : 'none';
+    const status = currentPost?.status || 'draft';
+
+    if (status === 'draft') {
+        publishBtn.style.display = 'inline-block';
+        unpublishBtn.style.display = 'none';
+        deleteBtn.style.display = 'inline-block';
+    } else {
+        publishBtn.style.display = 'none';
+        unpublishBtn.style.display = 'inline-block';
+        deleteBtn.style.display = 'none';
+    }
+}
+
+function updateDeleteButton() {
+    updateActionButtons();
 }
 
 function updatePreview() {

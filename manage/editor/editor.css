@@ -73,7 +73,6 @@ body {
 
 .btn-danger {
     background: #dc3545;
-    margin-bottom: 12px;
 }
 
 .btn-danger:hover {
@@ -315,6 +314,40 @@ body {
 .editor-field select:focus {
     outline: none;
     border-color: var(--accent-color);
+}
+
+/* Editor actions row */
+.editor-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+.post-status-display {
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-weight: 500;
+    margin-right: auto;
+}
+
+.post-status-display.status-draft {
+    background: #fef3cd;
+    color: #856404;
+}
+
+.post-status-display.status-published {
+    background: #d4edda;
+    color: #155724;
+}
+
+.btn-publish {
+    background: #28a745;
+}
+
+.btn-publish:hover {
+    background: #218838;
 }
 
 .editor-body {

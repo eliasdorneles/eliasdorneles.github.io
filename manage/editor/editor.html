@@ -37,18 +37,10 @@
                         <label>Title</label>
                         <input type="text" id="postTitle" oninput="scheduleAutoSave()">
                     </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 12px; align-items: end;">
-                        <div class="editor-field">
-                            <label>Date</label>
-                            <input type="text" id="postDate" oninput="scheduleAutoSave()">
-                        </div>
-                        <div class="editor-field">
-                            <label>Status</label>
-                            <select id="postStatus" onchange="scheduleAutoSave(); updateDeleteButton()">
-                                <option value="draft">Draft</option>
-                                <option value="published">Published</option>
-                            </select>
-                        </div>
+                    <div class="editor-actions">
+                        <span class="post-status-display" id="postStatusDisplay"></span>
+                        <button class="btn btn-publish" id="publishBtn" onclick="publishPost()">Publish</button>
+                        <button class="btn btn-secondary" id="unpublishBtn" onclick="unpublishPost()">Unpublish</button>
                         <button class="btn btn-danger" id="deleteBtn" onclick="deleteDraft()" title="Delete draft">Delete</button>
                     </div>
                 </div>
