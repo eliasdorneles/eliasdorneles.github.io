@@ -38,16 +38,7 @@ deploy: clean-prod compile-prod  ## Deploy the site to GitHub Pages
 	uv run ghp-import -m "Update site" ${PROD_OUTPUT_DIR}
 	git push origin gh-pages:master --force
 
-manage.bin: manage/site_manage.odin
-	odin build manage
-
-.PHONY: posts
-post: manage.bin  ## Create a new post
-	./manage.bin new-post
-
-.PHONY: autorename
-autorename: manage.bin  ## Rename posts according to their titles
-	 ./manage.bin auto-rename-drafts
+publish: deploy  ## Alias for deploy
 
 .PHONY: editor
 editor:  ## Start the blog post editor
