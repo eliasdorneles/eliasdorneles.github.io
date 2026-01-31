@@ -85,7 +85,7 @@ As you can see, I get Markdown syntax highlight via [Code Mirror 5](https://code
 
 I can now retire the scripts that I was using to ease the blog writing inside Neovim.
 
-### Prolog
+## Epilogue
 
 Did I really need AI for this? Could I have already built something like this before?
 
