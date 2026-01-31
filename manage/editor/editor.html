@@ -125,6 +125,44 @@
         </div>
     </div>
 
+    <!-- Context Menu for Gallery Images -->
+    <div class="context-menu" id="galleryContextMenu">
+        <div class="context-menu-item" onclick="openRenameModal(contextMenuFilename)">Rename...</div>
+    </div>
+
+    <!-- Rename Image Modal -->
+    <div class="modal-overlay" id="renameModal">
+        <div class="modal">
+            <h2>Rename Image</h2>
+            <img class="modal-preview" id="renameModalPreview" src="" alt="Preview">
+
+            <div class="modal-field">
+                <label>Current Name</label>
+                <div class="current-filename" id="renameCurrentName"></div>
+            </div>
+
+            <div class="modal-field">
+                <label>New Name</label>
+                <div class="rename-input-wrapper">
+                    <input type="text" id="renameNewName" placeholder="new-filename">
+                    <span class="rename-extension" id="renameExtension">.png</span>
+                </div>
+            </div>
+
+            <div class="modal-field">
+                <label>Affected Posts</label>
+                <div class="affected-posts" id="affectedPosts">
+                    <div class="loading">Loading...</div>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeRenameModal()">Cancel</button>
+                <button class="btn" id="renameSubmitBtn" onclick="submitRename()">Rename</button>
+            </div>
+        </div>
+    </div>
+
     <!-- marked.js (MIT License) - Markdown parser -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <!-- CodeMirror -->

@@ -791,3 +791,117 @@ body {
     font-size: 12px;
     color: var(--link-color);
 }
+
+/* Context Menu */
+.context-menu {
+    display: none;
+    position: fixed;
+    background: var(--panel-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1001;
+    min-width: 120px;
+    padding: 4px 0;
+}
+
+.context-menu.active {
+    display: block;
+}
+
+.context-menu-item {
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.context-menu-item:hover {
+    background: var(--accent-color);
+    color: white;
+}
+
+/* Rename Modal */
+.current-filename {
+    padding: 8px 12px;
+    background: #f5f5f5;
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    font-family: "JetBrains Mono", "Fira Code", monospace;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.rename-input-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.rename-input-wrapper input {
+    flex: 1;
+    padding: 8px 12px;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 4px 0 0 4px;
+    color: var(--text-color);
+    font-size: 14px;
+    font-family: "JetBrains Mono", "Fira Code", monospace;
+}
+
+.rename-input-wrapper input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.rename-extension {
+    padding: 8px 12px;
+    background: #f5f5f5;
+    border: 1px solid var(--input-border);
+    border-left: none;
+    border-radius: 0 4px 4px 0;
+    font-family: "JetBrains Mono", "Fira Code", monospace;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.affected-posts {
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    background: #fafafa;
+}
+
+.affected-posts .loading {
+    padding: 16px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.affected-posts .no-refs {
+    padding: 16px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.affected-post-item {
+    padding: 8px 12px;
+    border-bottom: 1px solid #eee;
+    font-size: 13px;
+}
+
+.affected-post-item:last-child {
+    border-bottom: none;
+}
+
+.affected-post-item .post-title {
+    color: var(--text-color);
+}
+
+.affected-post-item .ref-count {
+    color: var(--text-muted);
+    font-size: 12px;
+    margin-left: 8px;
+}

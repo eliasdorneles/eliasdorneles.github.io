@@ -372,6 +372,123 @@ def upload_image():
     })
 
 
+def find_posts_with_image(filename: str) -> list[dict]:
+    """Find all posts that reference a given image filename."""
+    posts_with_refs = []
+    pattern = re.compile(re.escape(f"{{static}}/images/{filename}"))
+
+    for filepath in BLOG_DIR.glob("*.md"):
+        try:
+            content = filepath.read_text(encoding="utf-8")
+            matches = pattern.findall(content)
+            if matches:
+                metadata, _ = parse_frontmatter(content)
+                posts_with_refs.append({
+                    "filename": filepath.name,
+                    "title": metadata.get("title", filepath.stem),
+                    "ref_count": len(matches),
+                })
+        except Exception as e:
+            print(f"Error reading {filepath}: {e}")
+
+    return posts_with_refs
+
+
+def update_image_references(content: str, old_filename: str, new_filename: str) -> str:
+    """Replace all image references from old filename to new filename."""
+    old_ref = f"{{static}}/images/{old_filename}"
+    new_ref = f"{{static}}/images/{new_filename}"
+    return content.replace(old_ref, new_ref)
+
+
+@app.route("/api/images/<path:filename>/references", methods=["GET"])
+def get_image_references(filename: str):
+    """Get list of posts that reference a given image."""
+    filepath = IMAGES_DIR / filename
+    if not filepath.exists():
+        return jsonify({"error": "Image not found"}), 404
+
+    posts = find_posts_with_image(filename)
+    return jsonify({
+        "filename": filename,
+        "posts": posts,
+        "total_refs": sum(p["ref_count"] for p in posts),
+    })
+
+
+@app.route("/api/images/<path:filename>/rename", methods=["POST"])
+def rename_image(filename: str):
+    """Rename an image and update all references in blog posts."""
+    filepath = IMAGES_DIR / filename
+    if not filepath.exists():
+        return jsonify({"error": "Image not found"}), 404
+
+    data = request.get_json()
+    if not data or not data.get("new_name"):
+        return jsonify({"error": "New name is required"}), 400
+
+    # Get the new name (without extension) and preserve the original extension
+    new_name_base = data["new_name"].strip()
+    if not new_name_base:
+        return jsonify({"error": "New name cannot be empty"}), 400
+
+    # Sanitize the new name
+    new_name_base = sanitize_filename(new_name_base)
+    if not new_name_base:
+        return jsonify({"error": "Invalid filename after sanitization"}), 400
+
+    # Preserve the original extension
+    _, ext = os.path.splitext(filename)
+    new_filename = new_name_base + ext
+
+    # Check if it's the same name
+    if new_filename == filename:
+        return jsonify({"error": "New name is the same as current name"}), 400
+
+    # Check for conflicts
+    new_filepath = IMAGES_DIR / new_filename
+    if new_filepath.exists():
+        return jsonify({"error": f"An image named '{new_filename}' already exists"}), 400
+
+    # Find and update all posts with references
+    posts_updated = []
+    for post_filepath in BLOG_DIR.glob("*.md"):
+        try:
+            content = post_filepath.read_text(encoding="utf-8")
+            if f"{{static}}/images/{filename}" in content:
+                updated_content = update_image_references(content, filename, new_filename)
+                post_filepath.write_text(updated_content, encoding="utf-8")
+                metadata, _ = parse_frontmatter(content)
+                posts_updated.append({
+                    "filename": post_filepath.name,
+                    "title": metadata.get("title", post_filepath.stem),
+                })
+        except Exception as e:
+            print(f"Error updating {post_filepath}: {e}")
+
+    # Rename the actual image file
+    try:
+        filepath.rename(new_filepath)
+    except Exception as e:
+        # Rollback post updates if file rename fails
+        for post_info in posts_updated:
+            post_filepath = BLOG_DIR / post_info["filename"]
+            try:
+                content = post_filepath.read_text(encoding="utf-8")
+                rollback_content = update_image_references(content, new_filename, filename)
+                post_filepath.write_text(rollback_content, encoding="utf-8")
+            except Exception:
+                pass
+        return jsonify({"error": f"Failed to rename file: {e}"}), 500
+
+    return jsonify({
+        "success": True,
+        "old_filename": filename,
+        "new_filename": new_filename,
+        "updated_posts": posts_updated,
+    })
+
+
 @app.route("/static/images/<path:filename>")
 def serve_image(filename: str):
     """Serve images for preview."""

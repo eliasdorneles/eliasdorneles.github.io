@@ -11,6 +11,7 @@ let editMode = false; // true when editing existing image
 let editPosition = null; // { startLine, endLine } of image being edited
 let collapsedYears = new Set(); // Track which years are collapsed
 let initialCollapseSet = false; // Track if we've set initial collapse state
+let contextMenuFilename = null; // Filename for context menu actions
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupKeyboardShortcuts();
     setupWidthToggle();
     setupPreviewClickHandler();
+    setupGalleryContextMenu();
 });
 
 // Setup CodeMirror
@@ -283,7 +285,9 @@ function toggleYear(year) {
 function renderImageGallery() {
     const container = document.getElementById('imageGallery');
     container.innerHTML = images.slice(0, 12).map(img => `
-        <div class="gallery-image" onclick="openImageModal('${img.url}', '${img.filename}')">
+        <div class="gallery-image"
+             onclick="openImageModal('${img.url}', '${img.filename}')"
+             oncontextmenu="event.preventDefault(); showContextMenu(event.clientX, event.clientY, '${img.filename}')">
             <img src="${img.url}" alt="${img.filename}" loading="lazy">
         </div>
     `).join('');
@@ -664,9 +668,10 @@ function setupKeyboardShortcuts() {
             createNewPost();
         }
 
-        // Escape to close modal
+        // Escape to close modals
         if (e.key === 'Escape') {
             closeImageModal();
+            closeRenameModal();
         }
 
         // Enter in modal to insert
@@ -832,4 +837,161 @@ function openImageModalForEdit(info, position) {
 
     // Focus alt text field
     setTimeout(() => document.getElementById('imageAlt').focus(), 100);
+}
+
+// Gallery Context Menu
+function setupGalleryContextMenu() {
+    const contextMenu = document.getElementById('galleryContextMenu');
+
+    // Close context menu on click outside
+    document.addEventListener('click', (e) => {
+        if (!contextMenu.contains(e.target)) {
+            hideContextMenu();
+        }
+    });
+
+    // Close on escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            hideContextMenu();
+        }
+    });
+}
+
+function showContextMenu(x, y, filename) {
+    const contextMenu = document.getElementById('galleryContextMenu');
+    contextMenuFilename = filename;
+
+    // Position the menu
+    contextMenu.style.left = `${x}px`;
+    contextMenu.style.top = `${y}px`;
+    contextMenu.classList.add('active');
+
+    // Adjust position if menu goes off screen
+    const rect = contextMenu.getBoundingClientRect();
+    if (rect.right > window.innerWidth) {
+        contextMenu.style.left = `${window.innerWidth - rect.width - 5}px`;
+    }
+    if (rect.bottom > window.innerHeight) {
+        contextMenu.style.top = `${window.innerHeight - rect.height - 5}px`;
+    }
+}
+
+function hideContextMenu() {
+    const contextMenu = document.getElementById('galleryContextMenu');
+    contextMenu.classList.remove('active');
+    contextMenuFilename = null;
+}
+
+// Rename Modal
+async function openRenameModal(filename) {
+    hideContextMenu();
+
+    if (!filename) return;
+
+    const modal = document.getElementById('renameModal');
+    const preview = document.getElementById('renameModalPreview');
+    const currentName = document.getElementById('renameCurrentName');
+    const newNameInput = document.getElementById('renameNewName');
+    const extensionSpan = document.getElementById('renameExtension');
+    const affectedPosts = document.getElementById('affectedPosts');
+
+    // Set preview and current name
+    preview.src = `/static/images/${filename}`;
+    currentName.textContent = filename;
+
+    // Extract base name and extension
+    const lastDot = filename.lastIndexOf('.');
+    const baseName = lastDot > 0 ? filename.substring(0, lastDot) : filename;
+    const extension = lastDot > 0 ? filename.substring(lastDot) : '';
+
+    newNameInput.value = baseName;
+    extensionSpan.textContent = extension;
+
+    // Show loading state
+    affectedPosts.innerHTML = '<div class="loading">Loading...</div>';
+
+    // Show modal
+    modal.classList.add('active');
+
+    // Focus the input
+    setTimeout(() => newNameInput.focus(), 100);
+
+    // Fetch references
+    try {
+        const response = await fetch(`/api/images/${encodeURIComponent(filename)}/references`);
+        const data = await response.json();
+
+        if (data.posts && data.posts.length > 0) {
+            affectedPosts.innerHTML = data.posts.map(post => `
+                <div class="affected-post-item">
+                    <span class="post-title">${escapeHtml(post.title)}</span>
+                    <span class="ref-count">(${post.ref_count} ref${post.ref_count > 1 ? 's' : ''})</span>
+                </div>
+            `).join('');
+        } else {
+            affectedPosts.innerHTML = '<div class="no-refs">No posts reference this image</div>';
+        }
+    } catch (error) {
+        console.error('Failed to fetch references:', error);
+        affectedPosts.innerHTML = '<div class="no-refs">Failed to load references</div>';
+    }
+}
+
+function closeRenameModal() {
+    document.getElementById('renameModal').classList.remove('active');
+}
+
+async function submitRename() {
+    const currentName = document.getElementById('renameCurrentName').textContent;
+    const newName = document.getElementById('renameNewName').value.trim();
+
+    if (!newName) {
+        alert('Please enter a new name');
+        return;
+    }
+
+    const submitBtn = document.getElementById('renameSubmitBtn');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Renaming...';
+    submitBtn.disabled = true;
+
+    try {
+        const response = await fetch(`/api/images/${encodeURIComponent(currentName)}/rename`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ new_name: newName }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            closeRenameModal();
+            await loadImages();
+
+            // Reload current post if it was affected
+            if (currentPost && data.updated_posts) {
+                const currentWasUpdated = data.updated_posts.some(
+                    p => p.filename === currentPost.filename
+                );
+                if (currentWasUpdated) {
+                    await loadPost(currentPost.filename);
+                }
+            }
+
+            // Show success message
+            const updatedCount = data.updated_posts?.length || 0;
+            if (updatedCount > 0) {
+                console.log(`Renamed to ${data.new_filename}, updated ${updatedCount} post(s)`);
+            }
+        } else {
+            alert('Rename failed: ' + (data.error || 'Unknown error'));
+        }
+    } catch (error) {
+        console.error('Failed to rename:', error);
+        alert('Failed to rename image');
+    } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    }
 }
