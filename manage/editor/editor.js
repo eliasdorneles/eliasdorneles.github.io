@@ -39,6 +39,9 @@ function setupCodeMirror() {
     cmEditor.on('change', () => {
         handleBodyInput();
     });
+
+    // Setup smart link paste after CM is ready
+    setupCodeMirrorPasteHandler();
 }
 
 // API functions
@@ -426,8 +429,9 @@ function handleFileSelect(event) {
     event.target.value = ''; // Reset input
 }
 
-// Paste handler for clipboard images
+// Paste handler for clipboard images and smart link insertion
 function setupPasteHandler() {
+    // Document-level handler for images (works outside CodeMirror too)
     document.addEventListener('paste', (e) => {
         // Only handle paste when editor is active
         if (!currentPost) return;
@@ -453,6 +457,35 @@ function setupPasteHandler() {
             }
         }
     });
+}
+
+// Setup smart link paste handler on CodeMirror (called after CM is initialized)
+function setupCodeMirrorPasteHandler() {
+    const cmWrapper = cmEditor.getWrapperElement();
+    cmWrapper.addEventListener('paste', (e) => {
+        const selection = cmEditor.getSelection();
+        if (!selection) return; // No selection, let default paste happen
+
+        const text = e.clipboardData?.getData('text/plain');
+        if (text && isUrl(text)) {
+            // User has text selected and pasted a URL - create a link
+            e.preventDefault();
+            e.stopPropagation();
+            const link = `[${selection}](${text.trim()})`;
+            cmEditor.replaceSelection(link);
+            handleBodyInput();
+        }
+    }, true); // Use capture phase to run before CodeMirror's handler
+}
+
+// Check if a string is a URL
+function isUrl(str) {
+    try {
+        const url = new URL(str.trim());
+        return url.protocol === 'http:' || url.protocol === 'https:';
+    } catch {
+        return false;
+    }
 }
 
 // Width toggle
