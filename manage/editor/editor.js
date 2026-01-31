@@ -100,6 +100,8 @@ async function savePost() {
                 date: currentPost.date || '',
                 author: 'Elias Dorneles',
                 status: currentPost.status || 'draft',
+                lang: document.getElementById('postLang').value || '',
+                slug: document.getElementById('postSlug').value || '',
                 body: cmEditor.getValue(),
             }),
         });
@@ -338,6 +340,8 @@ function renderEditor() {
     document.getElementById('editorEmpty').style.display = 'none';
 
     document.getElementById('postTitle').value = currentPost.title || '';
+    document.getElementById('postLang').value = currentPost.lang || '';
+    document.getElementById('postSlug').value = currentPost.slug || '';
     cmEditor.setValue(currentPost.body || '');
 
     updateStatusDisplay();

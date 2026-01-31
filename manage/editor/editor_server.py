@@ -83,8 +83,8 @@ def parse_frontmatter(content: str) -> tuple[dict, str]:
 def build_frontmatter(metadata: dict) -> str:
     """Build frontmatter string from metadata dict."""
     lines = []
-    # Preserve order: Title, Date, Author, Status
-    order = ["title", "date", "author", "status"]
+    # Preserve order: Title, Date, Author, Status, Lang, Slug
+    order = ["title", "date", "author", "status", "lang", "slug"]
     for key in order:
         if key in metadata and metadata[key]:
             # Capitalize key for output
@@ -225,6 +225,8 @@ def get_post(filename: str):
         "date": metadata.get("date", ""),
         "author": metadata.get("author", ""),
         "status": metadata.get("status", ""),
+        "lang": metadata.get("lang", ""),
+        "slug": metadata.get("slug", ""),
         "body": body,
     })
 
@@ -244,6 +246,11 @@ def save_post(filename: str):
         "author": data.get("author", "Elias Dorneles"),
         "status": data.get("status", "draft"),
     }
+    # Only include lang and slug if they have values (i18n fields)
+    if data.get("lang"):
+        metadata["lang"] = data.get("lang")
+    if data.get("slug"):
+        metadata["slug"] = data.get("slug")
     body = data.get("body", "")
 
     content = build_frontmatter(metadata) + "\n\n" + body

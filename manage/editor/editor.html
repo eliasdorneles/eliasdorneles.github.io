@@ -37,6 +37,16 @@
                         <label>Title</label>
                         <input type="text" id="postTitle" oninput="scheduleAutoSave()">
                     </div>
+                    <div class="editor-i18n-fields">
+                        <div class="editor-field-small">
+                            <label>Lang</label>
+                            <input type="text" id="postLang" placeholder="e.g. en, pt-br" oninput="scheduleAutoSave()">
+                        </div>
+                        <div class="editor-field-small">
+                            <label>Slug</label>
+                            <input type="text" id="postSlug" placeholder="custom-slug" oninput="scheduleAutoSave()">
+                        </div>
+                    </div>
                     <div class="editor-actions">
                         <span class="post-status-display" id="postStatusDisplay"></span>
                         <button class="btn btn-publish" id="publishBtn" onclick="publishPost()">Publish</button>
