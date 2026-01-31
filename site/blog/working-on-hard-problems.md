@@ -12,7 +12,7 @@ important. We're biased to tools and techniques that we already know and are com
 with, we favor solutions we don’t need to think much.
 
 <center>
-<img src="/images/easy-solution.jpg" alt="a Rubik's cube painted to look solved"
+<img src="{static}/images/easy-solution.jpg" alt="a Rubik's cube painted to look solved"
 style="border: 1px solid #111; width: 400px" />
 </center>
 

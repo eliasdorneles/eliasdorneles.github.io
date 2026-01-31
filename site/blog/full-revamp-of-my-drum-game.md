@@ -13,11 +13,17 @@ years ago.
 
 **Before:**
 
-<img src="{static}/images/drum_game-before.png" />
+<div class="figure align-center">
+  <img src="{static}/images/drum_game-before.png" alt="Screenshot of old version of my game 2 years prior">
+  <p class="caption">The drum game 2 years ago</p>
+</div>
 
 **After:**
 
-<img src="{static}/images/drum_game-after.png" />
+<div class="figure align-center">
+  <img src="{static}/images/drum_game-after.png" alt="Screenshot of the game as of the time the blog post is published">
+  <p class="caption">The game after revamp</p>
+</div>
 
 
 Did I use agent coding? Well, yes, I did!
@@ -64,7 +70,10 @@ more interesting and musical drum patterns, and got me very excited.
 
 The level editor looks like this:
 
-<img src="{static}/images/level_editor.png" />
+<div class="figure align-center">
+  <img src="{static}/images/level_editor.png" alt="Screenshot of the level editor">
+  <p class="caption">The level editor</p>
+</div>
 
 ## Coding with AI
 

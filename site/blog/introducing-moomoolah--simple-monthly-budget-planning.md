@@ -31,7 +31,10 @@ Here’s what it looks like when you're adding an expense:
 
 <center>
 
-<img src="https://raw.githubusercontent.com/eliasdorneles/moomoolah/refs/heads/main/demo_add_expense.svg" width="600" />
+<div class="figure align-center" style="width: 600px">
+  <img src="https://raw.githubusercontent.com/eliasdorneles/moomoolah/refs/heads/main/demo_add_expense.svg" alt="Screenshot of adding an expense in MooMoolah">
+  <p class="caption">Adding an expense in MooMoolah</p>
+</div>
 
 </center>
 
@@ -40,7 +43,10 @@ plus a look back at the last 3:
 
 <center>
 
-<img src="https://raw.githubusercontent.com/eliasdorneles/moomoolah/refs/heads/main/demo_main_screen.svg" width="600" />
+<div class="figure align-center" style="width: 600px">
+  <img src="https://raw.githubusercontent.com/eliasdorneles/moomoolah/refs/heads/main/demo_main_screen.svg" alt="Screenshot of MooMoolah main screen (fictious data)">
+  <p class="caption">MooMoolah main screen (fictious data)</p>
+</div>
 
 </center>
 

@@ -72,7 +72,7 @@ When I'm writing, I want the process to be as fluid as possible to not break my 
 
 ### So I vibecoded a blog post editor
 
-It supports adding images via drag-n-drop, and I can also just paste an image from the clipboard, which is great for screenshots, for example.
+It supports adding images via drag-n-drop, and I can also just paste an image from the clipboard, which is great for screenshots, for example. When I add an image, it will preprocess it (thanks [Pillow](https://pypi.org/project/pillow/)), optimizing it for web usage.
 
 Here, let me add a screenshot of the editor as it is looking right now:
 
