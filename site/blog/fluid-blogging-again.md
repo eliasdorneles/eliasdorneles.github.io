@@ -49,7 +49,7 @@ In fact, [I wrote about these frustrations in a post from 2018](https://eliasdor
 
 <div class="figure align-center" style="width: 500px">
   <img src="{static}/images/metablogging-archive-screenshot-2026-01-31-10-44-58.png" alt="Screenshot of my old blog post">
-  <p class="caption">My old blog post, with the layout from back then</p>
+  <p class="caption">My old blog post, with the design from back then</p>
 </div>
 
 Anyway, I expressed that frustration and then went on with my life, not blogging much, not using images much when I did.

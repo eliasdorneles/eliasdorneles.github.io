@@ -502,6 +502,12 @@ def serve_image(filename: str):
     return send_from_directory(IMAGES_DIR, filename)
 
 
+@app.route("/static/fonts/<path:filename>")
+def serve_font(filename: str):
+    """Serve self-hosted fonts for preview."""
+    return send_from_directory(BASE_DIR / "mytheme" / "static" / "fonts", filename)
+
+
 @app.route("/static/editor.css")
 def serve_editor_css():
     """Serve editor CSS."""
