@@ -4,7 +4,7 @@
         <address class="vcard author">
             posted by
             <a href="{{ SITEURL }}/pages/about.html">{{ article.author }}</a>
-            on <abbr class="published" title="{{ article.date.isoformat() }}">{{ article.date.strftime("%Y, %B %d") }}</abbr>
+            on <abbr class="published" title="{{ article.date.isoformat() }}">{{ article.date.strftime("%d %b %Y") }}</abbr>
             <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/{{ rel_source_path }}">Edit</a>
         </address>
         {% endif %}

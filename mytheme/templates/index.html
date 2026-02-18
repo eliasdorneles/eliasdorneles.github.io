@@ -11,7 +11,7 @@
                 title="Permalink to {{ article.title|striptags }}">{{ article.title }}
             </a>
         </h1>
-        <small class="published" title="{{ article.date.isoformat() }}">{{ article.date.strftime("%Y, %B %d") }}</small>
+        <small class="published" title="{{ article.date.isoformat() }}">{{ article.date.strftime("%d %b %Y") }}</small>
     </header>
 
     <div class="postsummary"> {{ article._summary }} </div>
