@@ -295,7 +295,7 @@ get_article_filename :: proc(article: ^Article) -> string {
 // Get the URL for an article based on its date, slug and language
 get_article_url :: proc(article: ^Article) -> string {
     year, month, day := extract_ymd(article.date)
-    return fmt.aprintf("%s/%s/%s/%s", year, month, day, get_article_filename(article))
+    return fmt.aprintf("/%s/%s/%s/%s", year, month, day, get_article_filename(article))
 }
 
 // Group articles by slug to find translations
