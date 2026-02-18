@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Goodbye, JSF!</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="manifest" href="/images/site.webmanifest">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4f3dd4ee-0791-4d9c-b94f-6d1aa073e79a"></script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
+                <nav><ul>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
+                </ul></nav>
+        </header><!-- /#banner -->
+        
+
+        
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="/2013/06/23/goodbye-jsf.html"
+                    rel="bookmark" title="Permalink to Goodbye, JSF!">Goodbye, JSF!</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+            
+<footer class="post-info">
+        
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2013-06-23 13:31:00+02:00">23 Jun 2013</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/goodbye-jsf.md">Edit</a>
+        </address>
+        
+
+
+</footer>
+
+            <p>Ok, se você não é javeiro, talvez nunca tenha ouvido falar em JSF. <em>No
+worries</em>, você não está perdendo muita coisa.</p>
+<p>Porém, se você aprendeu a programar em Java, talvez nem tenha procurado
+aprender outra linguagem de propósito geral (... <em>ainda</em>, I hope) mas já
+se interessou por programar para a Web, nesse caso provavelmente já
+ouviu falar, talvez deu uma conferida, ou quem sabe está ferrado tendo
+que manter aplicações escritas com o <a href="https://pt.wikipedia.org/wiki/JavaServer_Faces">Java Server Faces -- aka
+JSF</a>.</p>
+<p>Os motivos para o meu ranço com JSF são vários. Alguns problemas que eu
+vejo são técnicos, outros são culturais e outros são meio filosóficos,
+mesmo.</p>
+<p>Há uns anos atrás, quando tive meu primeiro contato com JSF, odiei a
+tecnologia com todas as minhas forças. Meu background com Web era
+principalmente
+<a href="https://en.wikipedia.org/wiki/LAMP_(software_bundle)">LAMP</a> -- muito PHP
+e um pouquinho de Python/Django -- e todo aquele mundo JSF de
+componentes no servidor era uma coisa <strong>muito</strong> distante. Continua sendo
+distante de certa forma, mas hoje a coisa até que está melhorzinha para
+o JSF.</p>
+<p>Enfim, pude ter uma compreensão melhor da coisa quando, depois de passar
+2 anos reclamando, resolvi brigar de volta. Decidi lutar com o dragão,
+ia aprender como a bagaça funcionava, pra depois poder xingar com
+propriedade -- em um post comprido no blog! :P</p>
+<p>Comecei a acompanhar a <a href="http://stackoverflow.com/tags/jsf/" title="JSF taginfo">tag JSF no
+StackOverflow</a>, li e
+reli as respostas e perguntas dos top usuários e comecei a tentar
+responder as perguntas de outros -- a velha tática de aprender tentando
+resolvendo problemas mais ou menos reais.</p>
+<p>Nesse caminho, acabei aprendendo bastantes coisas, e à medida que fui
+dominando mais a parada eu estava até já quase começando a gostar -- mas
+aí aconteceu que  <a href="http://grails.org">Grails</a> meio que <a href="https://eljunior.wordpress.com/2013/06/03/aventurando-se-com-grails/">se meteu no meio
+da
+história</a>
+e o meu ranço com JSF voltou. Aliás, estou atualmente lendo o livro
+<a href="http://shop.oreilly.com/product/0636920024750.do" title="Programming Grails - pagina do livro">Programming
+Grails</a> e
+estou descobrindo tudo tão mais fácil que Java/JSF, que decidi
+compartilhar logo meu <em>rant</em> antes que eu apague da memória. :P</p>
+<h1>Problema técnico chato de JSF</h1>
+<p>O grosso da lógica de UI fica no lado servidor. <em>Yeah</em>, os browsers
+estão cada vez mais espertos, a tendência tem sido
+<em>fat-client/thin-server</em> já há algum tempo, e JSF ainda tá nessa de usar
+o servidor pra controlar quase tudo da interface. Isto significa que
+mesmo para pequenas atualizações na tela do lado cliente, você
+<strong>precisa</strong> fazer novas requisições AJAX ao servidor.</p>
+<p>Pior, para suportar isso, o objeto que representa a árvore de
+componentes (view state) de cada página XHTML é armazenada no servidor.
+Para cada acesso... Para cada usuário... Por várias requisições
+consecutivas... [1]</p>
+<p>Está vindo aí no <a href="http://jdevelopment.nl/jsf-22/" title="JSF 2.2">JSF 2.2</a> o
+suporte a <a href="https://jsfcorner.blogspot.com.br/2013/05/jsf-22-stateless-views-explained.html">Stateless
+Views</a> (basicamente,
+páginas que não precisem de armazenar a árvore no servidor) para amainar
+o problema, mas como para usá-las você precisa abrir mão de várias
+comodidades do framework
+(<a href="http://docs.oracle.com/javaee/6/api/javax/faces/bean/ViewScoped.html">@ViewScoped</a>,
+por exemplo), não percebo tanto avanço assim. [2]</p>
+<h1>Problema filosófico chato de JSF</h1>
+<p><a href="https://en.wikipedia.org/wiki/Design_by_committee">Design by comittee</a>
+-- no caso, não só de JSF, mas de <a href="https://en.wikipedia.org/wiki/Java_Platform,_Enterprise_Edition">Java
+EE</a> em
+geral. As coisas demoram muito pra evoluir esperando pelos comitês de
+<em>experts</em> resolverem as coisas, e não ficam com a melhor qualidade por
+causa disso. Spring está aí sustentando a controvérsia há já alguns anos
+-- existe uma velha discussão Spring (projeto graúdo open source
+tradicional, evolui sem especificação) vs Java EE (uma cacetada de
+especificações, todo um processo para sugestão de melhorias,
+implementações de referência de cada especificação espalhadas em
+projetos open source mundo afora e reunidas no
+<a href="https://glassfish.java.net">Glassfish</a>) que já está meio gasta mas
+<a href="http://stackoverflow.com/questions/2822812/spring-3-0-vs-java-ee-6-0">ainda
+sobrevive</a>.</p>
+<p>Uma das coisas chatas desse problema é que seguidamente algum ingênuo
+que pensa de forma conservadora vai dizer pra você que é melhor usar
+Java EE porque é “<em>standardized</em>”, querendo dizer que é padronizado,
+especificado e tudo o mais. Escolhendo Java EE você supostamente não se
+prenderia a nenhum fabricante (já que tem várias implementações das
+espeficações), e evita o “lock-in” que você está sujeito se usar Spring.
+<em>OH NO, vamos ficar presos à uma solução “proprietária”</em>! Nevermind que
+o Spring é open source, e que existem muitos empreendimentos por aí
+usando .NET e outras coisas <em>realmente</em> proprietárias, do tipo em que o
+<em>lock-in</em> é real, e tudo continua funcionando mesmo assim. Dá pra
+imaginar?</p>
+<p>Fora que você não ganha muita liberdade de escolha indo com Java EE. O
+que acaba acontecendo é que você acaba escolhendo um servidor de
+aplicação, pelo menos uma biblioteca de componentes e fica preso neles
+até o fim. Experimenta mudar pra ver se você não está em <em>vendor
+lock-in</em>... E agora?</p>
+<p>Enfim, na minha opinião, esses argumentos são balela. As reais vantagens
+e desvantagens que diferenciam um e outro estão relacionadas a políticas
+de configuração. Com Spring, o <em>deploy</em> é usualmente obter um WAR que já
+tem todas as configurações que a aplicação precisa dentro, e basta
+jogá-lo no servidor de aplicação -- a configuração de ambiente é
+usualmente feita em tempo de <em>build</em>. Com Java EE, você precisa fazer
+todas as configurações necessárias para a aplicação (datasources, filas,
+etc) no servidor de aplicação (ainda bem que a interface pra configurar
+é padrão em todos os servidores de aplicação... <em>NOT!</em>), e geralmente
+tem alguém responsável pela configuração que acaba mexendo nos WARs,
+EARs e JARs da vida. Como algumas empresas têm equipes dedicadas para
+cuidar da infra Java (e têm medo de deixar os desenvolvedores mexer no
+banco de produção), o Java EE é jogo pra elas.</p>
+<h1>Problema cultural chato de JSF</h1>
+<p>Acabo classificando esse problema como cultural porque é uma coisa que
+fica meio &quot;aceita&quot; pelo pessoal, e se reflete na maioria das aplicações.
+Basicamente, a curva de aprendizado é escarpada e longa <strong>demais</strong>!
+Fazer JSF de um jeito decente exige aprender o famoso <a href="http://docs.oracle.com/javaee/6/tutorial/doc/bnaqq.html">ciclo de
+vida</a> (um
+<a href="https://javaserverfaces.java.net/nonav/docs/2.0/javadocs/javax/faces/lifecycle/Lifecycle.html">objeto</a>
+usado pra controlar toda a putaria que exige programação Web baseada em
+componentes com Java), sacar que o código dentro do seu XHTML passa por
+várias fases de execução diferentes (construção da view, renderização da
+view, HTML renderizado rodando no browser) e uma cacetada enorme de
+pegadinhas não-intuitivas. Aprender todas essas coisas leva um tempo
+danado!</p>
+<p>O resultado é que você só aprende a coisa pela metade, decidindo que não
+vale a pena ir muito a fundo, acaba se conformando com as soluções
+existentes e fica esperando que alguém mais encarnado resolva os
+problemas parecidos com os que você está tentando resolver -- pra depois
+você copiar a solução. A galera que programa em JSF acaba conhecendo o
+<a href="https://balusc.blogspot.com" title="BalusC's blog">BalusC</a> de uma maneira ou
+outra, basicamente porque ele resolve a maioria dos problemas práticos
+de JSF antes de todo mundo. Esse cara é um herói de Java EE -- ele manja
+mais de JSF que os próprios desenvolvedores da parada!</p>
+<p>Ele faz algumas coisas importantíssimas que mantêm JSF vivo: mantém o
+<a href="http://code.google.com/p/omnifaces">OmniFaces</a> (um projeto de código
+aberto simplesmente imperdível pra quem programa JSF 2.x), escreve
+tutoriais <a href="https://balusc.blogspot.com">bem completos e compreensíveis no seu
+blog</a>, e responde ativamente as <a href="http://stackoverflow.com/tags/jsf*" title="tag JSF no SO">perguntas
+no Stackoverflow</a>.
+Aprendi muito desse cara -- além de ser um
+<a href="https://en.wikipedia.org/wiki/Maven">maven</a> de Java/JSF, é um cara muito
+generoso compartilhando seu conhecimento e sempre atencioso. <em>Hey,
+Bauke, all the JSF devs in the world thank their gods for your very
+existence and spetacular work. You rock, dude!</em></p>
+<p>Bem, mas como ele é ele, e eu sou eu, ele provavelmente está nesse
+momento estudando, produzindo, escrevendo ou <a href="http://stackoverflow.com/tags/jsf/">ajudando a galera no
+SO</a>, enquanto eu tô aqui, escrevendo
+só mais um <em>rant</em> no blog.</p>
+<p>Enfim, para esse post não ficar só na reclamação, vou usar o velho
+truque de jornalista e colocar aqui...</p>
+<h1>10 coisas que todo desenvolvedor JSF precisa saber</h1>
+<p>Ok, está mais para 10 perguntas e respostas do StackOverflow que todo
+desenvolvedor JSF precisa ler, mas tá valendo! :)</p>
+<ol>
+<li><a href="http://stackoverflow.com/questions/3106452/how-do-servlets-work-instantiation-session-variables-and-multithreading">Como funcionam os tais servlets? O que acontece quando eu inicio uma aplicação, e em que ordem?</a></li>
+</ol>
+<hr />
+<p>Entender como funcionam os servlets, filtros, listeners, as sessões e
+como funciona tudo isso em cima do protocolo HTTP ajuda bastante na hora
+de resolver problemas -- são os fundamentos de Java Web. A explicação
+concisa e bem completa contida nessa resposta do BalusC simplesmente não
+tem preço.</p>
+<ol start="2">
+<li><a href="http://stackoverflow.com/questions/2090033/why-jsf-calls-getters-multiple-times">Porque os métodos getters são chamados várias vezes durante a mesma requisição?</a></li>
+</ol>
+<hr />
+<p>Boa pergunta! Leia essa pra saber por que você não deve fazer chamadas
+de acesso ao banco dentro de um método <em>getAlgumaCoisa()</em> nos seus
+backing beans. E sim, eu também já fiz isso antes e tive que mudar
+tudo... Contra-intuitivo, ou não?</p>
+<ol start="3">
+<li><a href="http://stackoverflow.com/questions/2118656/hcommandlink-hcommandbutton-is-not-being-invoked">Meu botão ou link não está sendo acionado! Ai mel dels, e agora?</a></li>
+</ol>
+<hr />
+<p>Rá! Você caiu na armadilha! Leia todos os itens possíveis nessa
+resposta, é uma excelente checklist na hora de depurar problemas. Você
+vai acabar aprendendo um bocadinho de JSF, vai se dar conta que o BalusC
+é um herói por conseguir fazer as coisas acontecerem mesmo JSF sendo a
+droga que é -- e escrever respostas completíssimas no SO.</p>
+<p>Quero dizer, olhe para aquela lista! Ninguém devia ter TANTO possíveis
+problemas afetando se um botão vai realmente fazer o esperado! Talk
+about bad developer UX...</p>
+<ol start="4">
+<li><a href="http://stackoverflow.com/questions/4317684/when-should-i-use-houtputlink-instead-of-hcommandlink">Quando devo usar links e quando usar commandLinks?</a></li>
+</ol>
+<hr />
+<p>HTTP: GET vs POST.  Navegação/favoritabilidade vs. ações do tipo altera/cria
+alguma coisa. A maioria dos desenvolvedores JSF levaram 10 anos para aprender
+<a href="http://www.w3.org/2001/tag/doc/whenToUseGet.html">quando usar GET vs POST</a>.
+Alguns ainda não aprenderam...</p>
+<ol start="5">
+<li><a href="http://stackoverflow.com/questions/4994458/how-can-i-pass-a-parameter-to-a-commandlink-inside-a-datatable">Como passar parâmetro para um commandLink dentro de um datatable?</a></li>
+</ol>
+<hr />
+<p>Datatables são basicamente inúteis se você não puder fazer uma ação para
+agir no registro de uma linha. Isso às vezes é mais difícil do que
+parece. Leia essa para não sofrer na próxima vez que precisar fazer
+isso. E não seja bobo: se estiver usando um container antigo, <a href="http://stackoverflow.com/questions/3284236/invoke-direct-methods-or-methods-with-arguments-variables-parameters-in-jsf">use a
+JBoss-EL logo e largue de
+frescura</a>!</p>
+<ol start="6">
+<li><a href="http://stackoverflow.com/questions/10726653/by-default-jsf-generates-unusable-ids-which-are-incompatible-with-css-part-of">Meu jQuery não tá funcionando! #comofas</a></li>
+</ol>
+<hr />
+<p>JSF gera ids no HTML usando o dois-pontos <strong>':'</strong> como separador, isso
+acaba gerando alguma confusão porque o dois-pontos é um separador com
+significado diferente para a nossa <em><a href="http://www.jquery.com" title="jQuery rocks!">beloved Javascript library
+jQuery</a></em>. Aprenda como evitar ser
+mordido por esse problema.</p>
+<p>Talvez você possa aproveitar o ensejo pra mudar de hábito: como atrelar
+comportamento pelo <em>id</em> do elemento HTML não escala, há quem digo que é
+melhor usar sempre <em>classes</em>. Dizem que é como o Gmail faz, mas nunca
+conferi... (sim, eu tenho medo do JavaScript compilado do Gmail).</p>
+<ol start="7">
+<li><a href="http://stackoverflow.com/tags/composite-component/info">Como usar Composite Components?</a></li>
+</ol>
+<hr />
+<p>Ok, dessa vez o link não é para uma pergunta/resposta no SO, mas para a
+wiki da tag composite-component. Aí tem um tutorial bacana ensinando a
+criar um <a href="http://docs.oracle.com/javaee/6/tutorial/doc/giqzr.html">Composite
+Component</a>. Se
+você está usando JSF 2.x e ainda não fez algo do tipo, tire uma meia
+horinha pra seguir o tutorial lá, vale muito a pena -- é a maneira mais
+efetiva de reuso para as páginas JSF.</p>
+<ol start="8">
+<li><a href="http://stackoverflow.com/questions/6822000/when-to-use-uiinclude-tag-files-composite-components-and-or-custom-componen">Facelets templates, Facelets tags, Composite Components, Custom Components, aaargh! WTF are they about, anyway?</a></li>
+</ol>
+<hr />
+<p>Pois é, era de esperar que reuso em um framework baseado em componentes
+fosse algo trivial, claro, tranquilo e sussa. <em>Hmmmm, not really</em>! Você
+ainda precisa ficar ligado em muita coisa pra fazer as coisas
+funcionarem do jeito que você quer.</p>
+<p>Acho que a dica maior aqui é que os ids dos objetos dentro dos
+componentes são únicos para a própria instância, isto é, cada vez que
+você usar o componente numa página, os outros componentes dentro dele
+terão identificador prefixado pelo id do componente que você criou. Isso
+facilita na hora de fazer componentes AJAX reusáveis, porque o alvo das
+alterações (o que você usa no render) sempre terá uma identificação
+única para aquele componente.</p>
+<ol start="9">
+<li><a href="https://balusc.blogspot.com.br/2011/09/communication-in-jsf-20.html">Comunicação em JSF 2.0 -- como passar os dados que eu quero para onde eu preciso</a></li>
+</ol>
+<hr />
+<p>Bom... se você está usando JSF 2.x, provavelmente já chegou esse artigo
+antes. Eu nem precisaria postar, porque é tão batata que todo mundo
+usando JSF 2.x deve cair nele toda hora, mas como tenho a impressão que
+meu eleitorado não gosta de textos grandes, é bom colocar na lista. Você
+não vai ler agora mesmo, então sugiro favoritar a página e ir lendo aos
+poucos durante a semana.</p>
+<ol start="10">
+<li><a href="http://stackoverflow.com/questions/3623911/what-are-the-main-disadvantages-of-java-server-faces-2-0">Por fim, uma breve história de JSF</a></li>
+</ol>
+<hr />
+<p>Apesar de reclamar um bocado sobre JSF, reconheço que ele está
+melhorando, e nos últimos anos tem andado melhor do que antes. É bom
+estar a par de como a coisa começou, os problemas foram aparecendo, como
+eles foram sendo (lentamente) resolvidos, como outros apareceram no
+processo, e como alguns ainda estão esperando solução. Toda tecnologia
+acaba tendo um certo ciclo de vida, e é sempre bom saber o caminho que
+está seguindo as ferramentas que você está investindo.</p>
+<p>Eu, por exemplo, comecei a me afastar de JSF depois que <a href="http://www.infoq.com/news/2012/01/jsf-update-2.x">o Ed Burns
+(lead developer de JSF) confirmou que JSF vai continuar sempre mantendo
+a maior parte da lógica de UI no lado
+servidor</a>. Realmente
+faz sentido pra JSF se manter assim, afinal, sempre vai existir
+desenvolvedores que não estão muito a fim de aprender coisas novas,
+empresas que vão postergar upgrades por anos, enfim... Ainda vai ter
+muita aplicação JSF pra ser mantida nos próximos 20 anos. Mas eu prefiro
+investir numa tecnologia que me ajude a alavancar as demais tecnologias
+da Web (especialmente as que eu preciso conhecer de qualquer forma, como
+HTML/CSS/HTTP), e não uma em que as <a href="https://en.wikipedia.org/wiki/Leaky_abstraction" title="abstrações vazadas na Wikipedia em inglês">abstrações simplesmente vazam
+demais</a> e
+dificultam usar os outros blocos da construção. Para mim, JSF está
+definitivamente no último grupo. So... <em>Goodbye, JSF!</em></p>
+<p>[1] No Mojarra, a implementação de referência de JSF, o default é
+armazenar a <em>view</em> por 15 requisições consecutivas; outras
+implementações/configurações podem variar.</p>
+<p>[2] A idéia de stateless views em JSF foi implementada pela primeira vez
+por um consultor australiano, que pelo jeito <a href="http://www.industrieit.com/blog/2011/11/stateless-jsf-high-performance-zero-per-request-memory-overhead/">compartilha a mesma idéia
+de que UI no servidor é
+roubada</a>.</p>
+
+        </div>
+
+        <div class="taglist">
+</div>
+    </article>
+</section>
+
+
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+        </footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/atom-one-dark.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+<script src="https://eliasdorneles.com/theme/js/imgviewer.js"></script>
+</body>
+</html>

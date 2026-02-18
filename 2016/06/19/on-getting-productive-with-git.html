@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>On getting productive with Git</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="manifest" href="/images/site.webmanifest">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4f3dd4ee-0791-4d9c-b94f-6d1aa073e79a"></script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
+                <nav><ul>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
+                </ul></nav>
+        </header><!-- /#banner -->
+        
+
+        
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="/2016/06/19/on-getting-productive-with-git.html"
+                    rel="bookmark" title="Permalink to On getting productive with Git">On getting productive with Git</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+            
+<footer class="post-info">
+        
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2016-06-19 00:29:00+02:00">19 Jun 2016</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/on-getting-productive-with-git.md">Edit</a>
+        </address>
+        
+
+
+</footer>
+
+            <p>I remember the first time I submitted a pull request in GitHub and some
+reviewer asked me to <a href="https://git-scm.com/book/en/v2/Git-Tools-Rewriting-History#Squashing-Commits">squash the
+commits</a>.
+I had no idea what they were talking about. I didn't have any friends who knew
+Git, I was pretty much a noob on Git and GitHub. It's easy to forget how scary
+this stuff can be for someone just starting out with their first open source
+contribution.</p>
+<div class="figure align-right" style="width: 250px">
+<img src="../../..//images/confused.png">
+<p class="caption">
+    First-timer OSS contributor asked to rebase and squash commits
+</p>
+</div>
+<p>It took me several weeks to figure out the whole thing because I was so afraid
+of messing up. And in the end the code didn't even get merged.</p>
+<p>I never forgot my frustration during this, which is why today I avoid as much
+as possible to ask for someone to rebase their code in a pull request, unless I
+can pair with them and show how to do it.</p>
+<!-- PELICAN_END_SUMMARY -->
+<p>Well, nowadays <a href="https://help.github.com/articles/about-pull-request-merge-squashing/">GitHub allows a maintainer to squash commits when
+merging</a>,
+which is pretty cool. However, this isn't a task that's particularly hard to
+do. When you have someone else to show you how, you pick it up real fast. It's
+just a bit scary when you're on your own.</p>
+<p>I've found there are many little things like this with Git. Git is a fine tool
+for collaborating on software development and many open source developers would
+find hard to use any other thing.</p>
+<p>However, there is all this learning curve you must go through until you're
+finally actually productive with it. When you're just starting to use it, this
+XKCD comic is very real:</p>
+<a href="https://xkcd.com/1597">
+<img src="https://imgs.xkcd.com/comics/git.png" class="align-center">
+</a>
+<p>You want to get stuff done, you don't want to be spending cognition on your
+version control tool. With Git, it takes a little while to get to a point where
+you don't need to think much about it, at least when you're collaborating on a
+project with many different people, as is the case in many open source
+projects.</p>
+<p>I want to share with you a couple things I learned in order to get productive
+with Git, in the hopes that it will ease your own learning curve and get you
+productive quicker. This won't be a Git tutorial, it's more like a booster of
+your own Git learning. These are things that helped me to learn and use Git
+better. If you want a tutorial, <a href="https://try.github.io">this is a cool one</a>.</p>
+<p>I'm far from a Git expert, most of what I learned was while trying to get stuff
+done, usually after googling for <em>&quot;how to do X in Git&quot;</em>. I have trouble
+understanding Git's help because it seems to be written for people that know Git
+internals, using all this unfamiliar vocabulary. But I can get stuff done, and
+you can too.</p>
+<p>So, let's start! The first thing I want you to know is ...</p>
+<h2>There is always a way to undo</h2>
+<p>The fact that this isn't obvious and that undoing things in Git aren't
+always straightforward, is one of the biggest reasons for the fear of messing up.
+So, let's get rid of those fears first.</p>
+<p>Almost always, there is a way to undo whatever you've done. This is true even
+when you've used one of the power tools (<code>git rebase</code>) that rewrites the commit
+history. As long as you haven't deleted your local repo, you can always get
+back to a previous state.</p>
+<h3>Undo a commit</h3>
+<p>If you've committed and then realized that you didn't mean to,
+don't worry, you can undo it with the following command:</p>
+<pre><code>git undo-commit
+</code></pre>
+<p>This will undo the last commit, but will keep your files intact
+so you won't lose any work.</p>
+<p>Now, if you've just tried running that and it didn't work it's because I've
+lied to you -- sorry! That command doesn't exist by default in Git, but it
+should! In order to add it, run the following command:</p>
+<pre><code>git config --global alias.undo-commit 'reset HEAD~1 --mixed'
+</code></pre>
+<p>This adds an alias, which is essentially a shortcut to another command.
+Git aliases are very helpful, because that's how you tweak Git's complicated
+command line interface to something that's actually usable. Aliases (and
+Git's global configuration for your user) are stored in a <code>.gitconfig</code>
+file in your user directory, which you can edit using your editor if you like.</p>
+<p>In fact, you can even add an alias to add new aliases more easily, but this may
+be getting out of hand... Anyway, later on, we'll see also how to use Bash
+aliases and functions to further improve the workflow.</p>
+<p>You can check <a href="https://github.com/eliasdorneles/dotfiles/tree/master/gitconfig">my personal
+gitconfig</a>
+(which contains the stuff I share here and more) if you're already familiar
+with this stuff and came here only for the Git aliases.</p>
+<p>You can use any other alias name that you prefer instead of <code>undo-commit</code>
+there. Personally, I use just <code>undo</code> for this one.</p>
+<h3>Undo adding a file to commit</h3>
+<p>If you've added a file with <code>git add</code> that you didn't mean to,
+you can undo it with:</p>
+<pre><code>git undo-add
+</code></pre>
+<p>Again, this is only after you've added the proper alias with the following command:</p>
+<pre><code>git config --global alias.undo-add 'reset --keep'
+</code></pre>
+<h3>Undo a rebase that went wrong</h3>
+<p>If you've tried doing a rebase or some other command that rewrote the commit history
+and you want to undo it, you can use something called the reference log (or, <code>reflog</code>).
+Try running <code>git reflog</code> in a Git repository, you'll see something like this:</p>
+<pre><code>26e15cf HEAD@{0}: rebase finished: returning to refs/heads/master
+26e15cf HEAD@{1}: pull --rebase: moving basic path config to ~/.profile to work with gnome apps
+f993d5c HEAD@{2}: pull --rebase: checkout f993d5cc3d6df6ce9f5c083ebf17d45b9c7e9130
+b517509 HEAD@{3}: pull: Merge made by the 'recursive' strategy.
+29438f2 HEAD@{4}: commit: moving basic path config to ~/.profile to work with gnome apps
+a000618 HEAD@{5}: clone: from git@github.com:eliasdorneles/dotfiles.git
+</code></pre>
+<p>This is a log of every state of your files that is stored, which includes
+when you commit changes, checkout branches, do rebases (with separate states
+for every step of the rebase), merges and etc.</p>
+<p>You can get back to any of those states, using the command below, replacing
+<code>REFLOG_ENTRY</code> by the <code>HEAD@{index}</code> from the reflog for the state
+you want to go back:</p>
+<pre><code>git reset --hard REFLOG_ENTRY
+</code></pre>
+<p>Note that those numbers are counting backwards, they change every time you make
+a change in the repo. You want to always run <code>git reflog</code> before going back,
+to be sure you'll use the up-to-date reference.</p>
+<p>Also, note that these logs are only stored locally, you'll lose them if you delete
+your local repo.</p>
+<hr />
+<p>Alright, we're done covering undoing stuff. I hope now that you know how to
+undo, you will feel more comfortable trying more stuff without the fear of
+breaking things. The next tips will be a bit more random.</p>
+<h2>Enable colors</h2>
+<p>Your brain can parse this:</p>
+<img src="https://i.imgur.com/OBOFz7A.png" width="400" class="align-center">
+<p>Much easier than this:</p>
+<img src="https://i.imgur.com/ajXQxbA.png" width="400" class="align-center">
+<p>In case your Git output isn't showing colored output, configure it to do so:</p>
+<pre><code>git config --global color.ui auto
+</code></pre>
+<p>Also, if you end up needing to do this, consider upgrading Git, this has been
+the default for some time, together with many other nice usability
+improvements.</p>
+<h2>Preparing files to commit, the easy way</h2>
+<p>I rarely run the command <code>git add FILENAME</code>.</p>
+<p>I usually use short aliases to either <code>git add --update</code> or <code>git add --all</code>.</p>
+<h3>Add only files that were edited, ignore new ones</h3>
+<p>When you want to commit all files that you have edited,
+ignoring any new files that may now be inside the repo
+directory, do:</p>
+<pre><code>git add -u
+</code></pre>
+<p>This is a shortcut to <code>git add --update</code>, which is the equivalent
+of doing a <code>git add</code> on every modified file that were previously
+committed.</p>
+<p>It can also take a directory, you can ask Git to add only
+files that were edited inside a directory:</p>
+<pre><code>git add -u tests/
+</code></pre>
+<h3>Add all files, detecting file renames and deletes</h3>
+<p>Git expects you to tell it when you rename or delete files. You can ask Git to
+add all changes to be committed, including adding, deleting and renaming
+files, using the command:</p>
+<pre><code>git add --all
+</code></pre>
+<p>You can also give it a directory, so that Git only does this for the stuff under it:</p>
+<pre><code>git add --all some_dir/
+</code></pre>
+<p>I use this so often that it deserved an alias:</p>
+<pre><code>git config --global alias.aa 'add --all'
+</code></pre>
+<h2>Solve conflicts only once</h2>
+<p>When you're merging or rebasing often, some conflicts keep reappearing,
+specially when you're working temporarily on a branch. Instead of solving them
+again manually every time, ask Git to do it automatically, by enabling
+<a href="https://git-scm.com/docs/git-rerere"><code>rerere</code></a>:</p>
+<pre><code>git config --global rerere.enabled true
+</code></pre>
+<p>The name <code>rerere</code> stands for &quot;reuse recorded resolution&quot;, and that's exactly what
+it does: it will record how you solved previous conflicts and next time it finds
+the same conflict it will just apply your previous fix. This way, you won't need to
+keep solving the same conflicts again and again and save a few brain cycles.</p>
+<h2>Opening files in your editor</h2>
+<p>I edit code in <a href="https://www.vim.org">Vim</a>.</p>
+<p>But even if you don't, you might find useful these Bash functions and aliases
+(taken from <a href="https://github.com/eliasdorneles/dotfiles/blob/master/bashrc">my <code>~/.bashrc</code> file</a>)
+and tweak them to your needs:</p>
+<pre><code>edit_modified_files(){
+    $EDITOR $(
+        (
+            git ls-files -m -o --exclude-standard
+            git diff --cached --name-only --relative .
+        )  | sort | uniq
+    )
+}
+edit_files_with_conflicts(){
+    $EDITOR $(git diff --name-only --diff-filter=U)
+}
+edit_recently_committed(){
+    $EDITOR $(git show --name-only --oneline --relative . | egrep -v &quot;^[a-z0-9]+ &quot;)
+}
+alias em=edit_modified_files
+alias ec=edit_files_with_conflicts
+alias er=edit_recently_committed
+</code></pre>
+<p>I came up with these functions when I realized how often I wanted to do open
+the editor and load one of these set of files:</p>
+<ol>
+<li>the ones that are currently modified, so I can wrap it up for commit</li>
+<li>the ones that have conflicts, so I can fix them</li>
+<li>the ones that were in the last commit, so I can continue working on them</li>
+</ol>
+<p>This may or may not be useful to you, depending on how you use your editor.
+In my case, I open and close vim often, sometimes in different terminals,
+so this has been quite handy.</p>
+<h2>Fetching code from a pull request (GitHub only)</h2>
+<blockquote>
+<p><strong>Update:</strong> <a href="https://github.com/immerrr">A friend</a> has pointed out that
+another option is to <a href="https://gist.github.com/piscisaureus/3342247">add a configuration to have the PRs fetched
+automatically</a>.</p>
+</blockquote>
+<p>If you maintain open source projects, you may like this one.</p>
+<p>When you want to check out locally the changes introduced by
+a pull request, in vanilla Git it's a bit of work (you have to add
+a new remote, fetch from it and then checkout the branch). GitHub
+allows you to skip adding a new remote, you can fetch the code
+from a pull request into a new branch with only one command:</p>
+<pre><code>git fetch origin pull/$PULL_REQUEST_ID/head:BRANCH_NAME
+</code></pre>
+<p>If you're like me, you'll be lazy to type (and memorize) all that too,
+so here is an alias for doing that, paste it under the <code>[alias]</code> section
+in your <code>~/.gitconfig</code>:</p>
+<pre><code>fetch-pr = &quot;!f(){\
+    [ -z \&quot;$1\&quot; ] &amp;&amp; { echo Usage: git fetch-pr PULL_REQUEST_ID [new_branch_name]; exit 1; }; \
+    branch=${2:-pr-$1}; \
+    git fetch origin \&quot;pull/$1/head:$branch\&quot;; \
+    }; f &quot;
+</code></pre>
+<p>This alias is using a shell function to parameterize it.
+If you run <code>git fetch-pr</code> it will show the help:</p>
+<pre><code>$ git fetch-pr
+Usage: git fetch-pr PULL_REQUEST_ID [new_branch_name]
+</code></pre>
+<p>Using this, to fetch the code from pull request #1234, you can do simply:</p>
+<pre><code>git fetch-pr 1234
+</code></pre>
+<p>This will create a branch called <code>pr-1234</code> with the checked-out code.
+If you want to name the branch, just provide yet another parameter:</p>
+<pre><code>git fetch-pr 1234 new-branch-for-pull-request-1234
+</code></pre>
+<h2>Other things that might be helpful</h2>
+<p><code>git stash</code> is an useful command to know: it sets aside your current changes,
+so you can work in other stuff. Use <code>git stash pop</code> to get back the changes.
+This is handy to switch to a different task, without having to copy files or
+lose your current uncommitted progress.</p>
+<p>I've also found useful to know how to use diffs &amp; patches, including the diff
+tools <code>git diff</code> &amp; <code>git apply</code> and also the <code>patch</code> command-line tool. These
+are helpful a few times, when you have to replay your work in another
+repository.</p>
+<p>If you like to do atomic commits (i.e., making each commit introduces a small
+self-contained change), you will like the <code>git add -p</code> command. It starts an
+interactive session, asking for each piece of the diff if you want to include
+in the next commit or not.</p>
+<p>You will also like the <code>git diff --cached</code> command, which shows the diff for
+the stuff added to the index, i.e., the changes you're about to commit.</p>
+<p>One tool that I've been meaning to learn is <a href="http://jonas.nitro.dk/tig/">tig</a>,
+a console interface for Git. It has some nice features, like you can do <code>tig grep</code> to search files and then hit <code>e</code> on top of a search result to open the
+file in your editor in that exact place. I haven't adopted this tool fully
+in my workflow, though, I'm still evaluating.</p>
+<p>There is also this thing called <a href="http://www.git-legit.org">Legit</a>, a set of
+extensions (used via aliases) created by <a href="https://twitter.com/kennethreitz">Kenneth
+Reitz</a> (from <a href="https://www.python-requests.org">Python
+Requests</a> and <a href="https://httpbin.org/">httpbin</a>
+fame) which looks interesting. I have only recently started experimenting with
+it, so I can't comment much. I know that Git deserves something like it. If you
+use it, let me know how you like it.</p>
+<p>Finally, you may also like this <a href="https://stackoverflow.com/questions/315911/git-for-beginners-the-definitive-practical-guide">StackOverflow thread with Git questions and
+answers</a>.</p>
+<p>That's all I had for now, folks!</p>
+
+        </div>
+
+        <div class="taglist">
+</div>
+    </article>
+</section>
+
+
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+        </footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/atom-one-dark.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+<script src="https://eliasdorneles.com/theme/js/imgviewer.js"></script>
+</body>
+</html>

@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Material do Tutorial: Web Scraping na Nuvem</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="manifest" href="/images/site.webmanifest">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4f3dd4ee-0791-4d9c-b94f-6d1aa073e79a"></script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
+                <nav><ul>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
+                </ul></nav>
+        </header><!-- /#banner -->
+        
+
+        
+<section id="content" class="body">
+    <header>
+        <h1 class="entry-title">Material do Tutorial: Web Scraping na Nuvem</h1>
+    </header>
+    <h2>Roteiro</h2>
+<ul>
+<li>Introdução a web scraping com <a href="http://scrapy.org/">Scrapy</a></li>
+<li>Conceitos do Scrapy</li>
+<li>Hands-on: crawler para versões diferentes dum site de citações</li>
+<li>Rodando no <a href="http://scrapinghub.com/platform/">Scrapy Cloud</a></li>
+</ul>
+<p>O tutorial é 90% Scrapy e 10% Scrapy Cloud.</p>
+<blockquote>
+<p><strong>Nota:</strong> Scrapy Cloud é o serviço PaaS da Scrapinghub, a empresa em que
+trabalho e que é responsável pelo desenvolvimento do Scrapy.</p>
+</blockquote>
+<h3>Precisa de ajuda?</h3>
+<p>Pergunte no <a href="http://pt.stackoverflow.com/tags/scrapy">Stackoverflow em Português usando a tag
+scrapy</a> ou pergunte em inglês no
+<a href="http://stackoverflow.com/tags/scrapy">Stackoverflow em inglês</a> ou na <a href="https://groups.google.com/forum/#!forum/scrapy-users">lista de
+e-mail scrapy-users</a>.</p>
+<h2>Introdução a web scraping com Scrapy</h2>
+<h3>O que é Scrapy?</h3>
+<p><a href="http://scrapy.org/">Scrapy</a> é um framework para crawlear web sites e extrair dados estruturados que
+podem ser usados para uma gama de aplicações úteis (data mining, arquivamento,
+etc).</p>
+<p><em>Scraping:</em>
+: extrair dados do conteúdo da página</p>
+<p><em>Crawling:</em>
+: seguir links de uma página a outra</p>
+<p>Se você já fez extração de dados de páginas Web antes em Python, são grandes as
+chances de você ter usado algo como requests + beautifulsoup. Essas tecnologias
+ajudam a fazer <em>scraping</em>.</p>
+<p>A grande vantagem de usar Scrapy é que tem suporte de primeira classe a
+<em>crawling</em>.</p>
+<p>Por exemplo, ele permite configurar o tradeoff de <strong>politeness vs speed</strong> (sem
+precisar escrever código pra isso) e já vem com uma configuração útil de
+fábrica para crawling habilitada: suporte a cookies, redirecionamento tanto via
+HTTP header quanto via tag HTML <code>meta</code>, tenta de novo requisições que falham,
+evita requisições duplicadas, etc.</p>
+<p>Além disso, o framework é altamente extensível, permite seguir combinando
+componentes e crescer um projeto de maneira gerenciável.</p>
+<h3>Instalando o Scrapy</h3>
+<p>Recomendamos usar virtualenv, e instalar o Scrapy com:</p>
+<pre><code>pip install scrapy
+</code></pre>
+<p>A dependência chatinha é normalmente o <a href="http://lxml.de/">lxml</a> (que precisa de
+algumas bibliotecas C instaladas). Caso tenha dificuldade, <a href="http://doc.scrapy.org/en/latest/intro/install.html#intro-install-platform-notes">consulte as
+instruções específicas por
+plataforma</a>
+ou peça ajuda nos canais citados acima.</p>
+<p>Para verificar se o Scrapy está instalado corretamente, rode o comando:</p>
+<pre><code>scrapy version
+</code></pre>
+<p>A saída que obtenho rodando este comando no meu computador é:</p>
+<pre><code>$ scrapy version
+2015-11-14 19:58:56 [scrapy] INFO: Scrapy 1.0.3 started (bot: scrapybot)
+2015-11-14 19:58:56 [scrapy] INFO: Optional features available: ssl, http11
+2015-11-14 19:58:56 [scrapy] INFO: Overridden settings: {}
+Scrapy 1.0.3
+</code></pre>
+<h3>Rodando um spider</h3>
+<p>Para ter uma noção inicial de como usar o Scrapy, vamos começar rodando um
+spider de exemplo.</p>
+<p>Crie um arquivo <strong>youtube_spider.py</strong> com o seguinte conteúdo:</p>
+<pre><code>import scrapy
+
+
+def first(sel, xpath):
+    return sel.xpath(xpath).extract_first()
+
+
+class YoutubeChannelLister(scrapy.Spider):
+    name = 'channel-lister'
+    youtube_channel = 'portadosfundos'
+    start_urls = ['https://www.youtube.com/user/%s/videos' % youtube_channel]
+
+    def parse(self, response):
+        for sel in response.css(&quot;ul#channels-browse-content-grid &gt; li&quot;):
+            yield {
+                'link': response.urljoin(first(sel, './/h3/a/@href')),
+                'title': first(sel, './/h3/a/text()'),
+                'views': first(sel, &quot;.//ul/li[1]/text()&quot;),
+            }
+</code></pre>
+<p>Agora, rode o spider com o comando:</p>
+<pre><code>scrapy runspider youtube_spider.py -o portadosfundos.csv
+</code></pre>
+<p>O scrapy vai procurar um spider no arquivo <strong>youtube_spider.py</strong> e
+escrever os dados no arquivo CSV <strong>portadosfundos.csv</strong>.</p>
+<p>Caso tudo deu certo, você verá o log da página sendo baixada, os dados sendo
+extraídos, e umas estatísticas resumindo o processo no final, algo como:</p>
+<pre><code>...
+2015-11-14 20:14:21 [scrapy] DEBUG: Crawled (200) &lt;GET https://www.youtube.com/user/portadosfundos/videos&gt; (referer: None)
+2015-11-14 20:14:22 [scrapy] DEBUG: Scraped from &lt;200 https://www.youtube.com/user/portadosfundos/videos&gt;
+{'views': u'323,218 views', 'link': u'https://www.youtube.com/watch?v=qSqPkRi-UiE', 'title': u'GAR\xc7ONS'}
+2015-11-14 20:14:22 [scrapy] DEBUG: Scraped from &lt;200 https://www.youtube.com/user/portadosfundos/videos&gt;
+{'views': u'1,295,054 views', 'link': u'https://www.youtube.com/watch?v=yXc8KCxyEyQ', 'title': u'SUCESSO'}
+2015-11-14 20:14:22 [scrapy] DEBUG: Scraped from &lt;200 https://www.youtube.com/user/portadosfundos/videos&gt;
+{'views': u'1,324,448 views', 'link': u'https://www.youtube.com/watch?v=k9CbDcOT1e8', 'title': u'BIBLIOTECA'}
+...
+{'downloader/request_bytes': 239,
+ 'downloader/request_count': 1,
+ 'downloader/request_method_count/GET': 1,
+ 'downloader/response_bytes': 27176,
+ 'downloader/response_count': 1,
+ 'downloader/response_status_count/200': 1,
+ 'item_scraped_count': 30,
+...
+2015-11-14 20:14:22 [scrapy] INFO: Spider closed (finished)
+</code></pre>
+<p>Ao final, verifique os resultados abrindo o arquivo CSV no seu editor de
+planilhas favorito.</p>
+<p>Se você quiser os dados em JSON, basta mudar a extensão do arquivo de saída:</p>
+<pre><code>scrapy runspider youtube_spider.py -o portadosfundos.json
+</code></pre>
+<p>Outro formato interessante que o Scrapy suporta é <a href="http://jsonlines.org">JSON lines</a>:</p>
+<pre><code>scrapy runspider youtube_spider.py -o portadosfundos.jl
+</code></pre>
+<p>Esse formato usa um item JSON em cada linha -- isso é muito útil para arquivos
+grandes, porque fica fácil de concatenar dois arquivos ou acrescentar novas
+entradas a um arquivo já existente.</p>
+<h2>Conceitos do Scrapy</h2>
+<h2>Spiders</h2>
+<p>Conceito central no Scrapy,
+<a href="http://doc.scrapy.org/en/latest/topics/spiders.html">spiders</a> são classes que
+herdam de
+<a href="http://doc.scrapy.org/en/latest/topics/spiders.html#scrapy-spider"><code>scrapy.Spider</code></a>,
+definindo de alguma maneira as requisições iniciais do crawl e como proceder
+para tratar os resultados dessas requisições.</p>
+<p>Um exemplo simples de spider é:</p>
+<pre><code>import scrapy
+
+class SpiderSimples(scrapy.Spider):
+    name = 'meuspider'
+
+    def start_requests(self):
+        return [scrapy.Request('http://example.com')]
+
+    def parse(self, response):
+        self.log('Visitei o site: %s' % response.url)
+</code></pre>
+<p>Se você rodar o spider acima com o comando <code>scrapy runspider</code>, deverá ver no
+log as mensagens:</p>
+<pre><code>2015-11-14 21:11:13 [scrapy] DEBUG: Crawled (200) &lt;GET http://example.com&gt; (referer: None)
+2015-11-14 21:11:13 [meuspider] DEBUG: Visitei o site: http://example.com
+</code></pre>
+<p>Como iniciar um crawl a partir de uma lista de URLs é uma tarefa comum,
+o Scrapy permite você usar o atribute de classe <code>start_urls</code> em vez de
+definir o método <code>start_requests()</code> a cada vez:</p>
+<pre><code>import scrapy
+
+class SpiderSimples(scrapy.Spider):
+    name = 'meuspider'
+    start_urls = ['http://example.com']
+
+    def parse(self, response):
+        self.log('Visitei o site: %s' % response.url)
+</code></pre>
+<h2>Callbacks e próximas requisições</h2>
+<p>Repare o método <code>parse()</code>, ele recebe um objeto <em>response</em> que representa uma
+resposta HTTP, é o que chamamos de um <strong>callback</strong>. Os métodos <strong>callbacks</strong> no
+Scrapy são
+<a href="https://pythonhelp.wordpress.com/2012/09/03/generator-expressions/">generators</a>
+(ou retornam uma lista ou iterável) de objetos que podem ser:</p>
+<ul>
+<li>dados extraídos (dicionários Python ou objetos que herdam de scrapy.Item)</li>
+<li>requisições a serem feitas a seguir (objetos scrapy.Request)</li>
+</ul>
+<p>O motor do Scrapy itera sobre os objetos resultantes dos callbacks e os
+encaminha para o pipeline de dados ou para a fila de próximas requisições a
+serem feitas.</p>
+<p>Exemplo:</p>
+<pre><code>import scrapy
+
+class SpiderSimples(scrapy.Spider):
+    name = 'meuspider'
+    start_urls = ['http://example.com']
+
+    def parse(self, response):
+        self.log('Visitei o site: %s' % response.url)
+        yield {'url': response.url, 'tamanho': len(response.body)}
+
+        proxima_url = 'http://www.google.com.br'
+        self.log('Agora vou para: %s' % proxima_url)
+        yield scrapy.Request(proxima_url, self.handle_google)
+
+    def handle_google(self, response):
+        self.log('Visitei o google via URL: %s' % response.url)
+</code></pre>
+<p>Antes de rodar o código acima, experimente ler o código e prever
+o que ele vai fazer. Depois, rode e verifique se ele fez mesmo
+o que você esperava.</p>
+<p>Você deverá ver no log algo como:</p>
+<pre><code>2015-11-14 21:32:53 [scrapy] DEBUG: Crawled (200) &lt;GET http://example.com&gt; (referer: None)
+2015-11-14 21:32:53 [meuspider] DEBUG: Visitei o site: http://example.com
+2015-11-14 21:32:53 [scrapy] DEBUG: Scraped from &lt;200 http://example.com&gt;
+{'url': 'http://example.com', 'tamanho': 1270}
+2015-11-14 21:32:53 [meuspider] DEBUG: Agora vou para: http://www.google.com.br
+2015-11-14 21:32:53 [scrapy] DEBUG: Crawled (200) &lt;GET http://www.google.com.br&gt; (referer: http://example.com)
+2015-11-14 21:32:54 [meuspider] DEBUG: Visitei o google via URL: http://www.google.com.br
+2015-11-14 21:32:54 [scrapy] INFO: Closing spider (finished)
+</code></pre>
+<h3>Settings</h3>
+<p>Outro conceito importante do Scrapy são as <strong>settings</strong> (isto é, configurações).
+As <strong>settings</strong> oferecem uma maneira de configurar componentes do Scrapy, podendo
+ser setadas de várias maneiras, tanto via linha de comando, variáveis de ambiente
+em um arquivo <strong>settings.py</strong> no caso de você estar usando um projeto Scrapy ou ainda
+diretamente no spider definindo um atributo de classe <code>custom_settings</code>.</p>
+<p>Exemplo setando no código do spider um delay de 1.5 segundos entre cada
+requisição:</p>
+<pre><code>class MeuSpider(scrapy.Spider):
+    name = 'meuspider'
+
+    custom_settings = {
+        'DOWNLOAD_DELAY': 1.5,
+    }
+</code></pre>
+<p>Para setar uma setting diretamente na linha de comando com <code>scrapy runspider</code>,
+use opção <code>-s</code>:</p>
+<pre><code>scrapy runspider meuspider.py -s DOWNLOAD_DELAY=1.5
+</code></pre>
+<p>Uma setting útil durante o desenvolvimento é a <em>HTTPCACHE_ENABLED</em>, que
+habilita uma cache das requisições HTTP -- útil para evitar baixar as
+mesmas páginas várias vezes enquanto você refina o código de extração.</p>
+<blockquote>
+<p><strong>Dica:</strong> na versão atual do Scrapy, a cache por padrão só funciona caso você
+esteja dentro de um projeto, que é onde ele coloca um diretório
+<code>.scrapy/httpcache</code> para os arquivos de cache. Caso você queira usar a cache
+rodando o spider com <code>scrapy runspider</code>, você pode usar um truque &quot;enganar&quot; o
+Scrapy criando um arquivo vazio com o nome <code>scrapy.cfg</code> no diretório atual, e
+o Scrapy criará a estrutura de diretórios <code>.scrapy/httpcache</code> no diretório
+atual.</p>
+</blockquote>
+<p>Bem, por ora você já deve estar familiarizado com os conceitos importantes do
+Scrapy, está na hora de partir para exemplos mais realistas.</p>
+<h2>Hands-on: crawler para versões diferentes dum site de citações</h2>
+<p>Vamos agora criar um crawler para um site de frases e citações, feito
+para esse tutorial e disponível em: <a href="http://spidyquotes.herokuapp.com">http://spidyquotes.herokuapp.com</a></p>
+<blockquote>
+<p><em>Nota:</em> O código-fonte do site está disponível em:
+<a href="https://github.com/eliasdorneles/spidyquotes">https://github.com/eliasdorneles/spidyquotes</a></p>
+</blockquote>
+<h3>Descrição dos objetivos:</h3>
+<p>O site contém uma lista de citações com autor e tags, paginadas com 10 citações
+por páginas. Queremos obter todas as citações, juntamente com os respectivos
+autores e lista de tags.</p>
+<p>Existem 4 variações do site, com o mesmo conteúdo mas usando markup HTML diferente.</p>
+<ul>
+<li>Versão com markup HTML semântico: <a href="http://spidyquotes.herokuapp.com/">http://spidyquotes.herokuapp.com/</a></li>
+<li>Versão com leiaute em tabelas: <a href="http://spidyquotes.herokuapp.com/tableful/">http://spidyquotes.herokuapp.com/tableful/</a></li>
+<li>Versão com os dados dentro do código Javascript: <a href="http://spidyquotes.herokuapp.com/js/">http://spidyquotes.herokuapp.com/js/</a></li>
+<li>Versão com AJAX e scroll infinito: <a href="http://spidyquotes.herokuapp.com/scroll">http://spidyquotes.herokuapp.com/scroll</a></li>
+</ul>
+<p>Para ver as diferenças entre cada versão do site, acione a opção &quot;Exibir
+código-fonte&quot; (<kbd>Ctrl</kbd>-<kbd>U</kbd>) do menu de contexto do seu
+browser.</p>
+<blockquote>
+<p><strong>Nota:</strong> cuidado com a opção &quot;Inspecionar elemento&quot; do browser para inspecionar
+a estrutura do markup. Diferentemente do resultado da opção &quot;Exibir
+código-fonte&quot; Usando essa ferramenta, o código que você vê representa as
+estruturas que o browser cria para a página, e nem sempre mapeiam diretamente
+ao código HTML que veio na requisição HTTP (que é o que você obtém quando usa
+o Scrapy), especialmente se a página estiver usando Javascript ou AJAX. Outro
+exemplo é o elemento <code>&lt;tbody&gt;</code> que é adicionado automaticamente pelos
+browsers em todas as tabelas, mesmo quando não declarado no markup.</p>
+</blockquote>
+<h3>Spider para a versão com HTML semântico</h3>
+<p>Para explorar a página (e a API de scraping do Scrapy), você pode usar
+o comando <code>scrapy shell URL</code>:</p>
+<pre><code>scrapy shell http://spidyquotes.herokuapp.com/
+</code></pre>
+<p>Esse comando abre um shell Python (ou <a href="http://ipython.org">IPython</a>, se você o
+tiver instalado no mesmo virtualenv) com o objeto <code>response</code>, o mesmo que você
+obteria num método <strong>callback</strong>. Recomendo usar o IPython porque fica mais fácil
+de explorar as APIs sem precisar ter que abrir a documentação a cada vez.</p>
+<p>Exemplo de exploração com o shell:</p>
+<pre><code>&gt;&gt;&gt; # olhando o fonte HTML, percebi que cada citação está num &lt;div class=&quot;quote&quot;&gt;
+&gt;&gt;&gt; # vamos pegar o primeiro dele, e ver como extrair o texto:
+&gt;&gt;&gt; quote = response.css('.quote')[0]
+&gt;&gt;&gt; quote
+    &lt;Selector xpath=u&quot;descendant-or-self::*[@class and contains(concat(' ', normalize-space(@class), ' '), ' quote ')]&quot; data=u'&lt;div class=&quot;quote&quot; itemscope itemtype=&quot;h'&gt;
+&gt;&gt;&gt; print quote.extract()
+&lt;div class=&quot;quote&quot; itemscope itemtype=&quot;http://schema.org/CreativeWork&quot;&gt;
+        &lt;span itemprop=&quot;text&quot;&gt;“We accept the love we think we deserve.”&lt;/span&gt;
+        &lt;small itemprop=&quot;author&quot;&gt;Stephen Chbosky&lt;/small&gt;
+        &lt;div class=&quot;tags&quot;&gt;
+            Tags:
+            &lt;meta itemprop=&quot;keywords&quot; content=&quot;inspirational,love&quot;&gt; 
+            
+            &lt;a href=&quot;/tag/inspirational/page/1/&quot;&gt;inspirational&lt;/a&gt;
+            
+            &lt;a href=&quot;/tag/love/page/1/&quot;&gt;love&lt;/a&gt;
+            
+        &lt;/div&gt;
+    &lt;/div&gt;
+&gt;&gt;&gt; print quote.css('span').extract_first()
+&lt;span itemprop=&quot;text&quot;&gt;“We accept the love we think we deserve.”&lt;/span&gt;
+&gt;&gt;&gt; print quote.css('span::text').extract_first()  # texto
+“We accept the love we think we deserve.”
+&gt;&gt;&gt; quote.css('small::text').extract_first()  # autor
+    u'Stephen Chbosky'
+&gt;&gt;&gt; 
+&gt;&gt;&gt; # para a lista de tags, usamos .extract() em vez de .extract_first()
+&gt;&gt;&gt; quote.css('.tags a::text').extract()
+    [u'inspirational', u'love']
+&gt;&gt;&gt; 
+</code></pre>
+<p>Com o resultado da exploração inicial acima, podemos começar escrevendo um
+spider assim, num arquivo <code>quote_spider.py</code>:</p>
+<pre><code>import scrapy
+
+
+class QuotesSpider(scrapy.Spider):
+    name = 'quotes'
+    start_urls = [
+        'http://spidyquotes.herokuapp.com/'
+    ]
+
+    def parse(self, response):
+        for quote in response.css('.quote'):
+            yield {
+                'texto': quote.css('span::text').extract_first(),
+                'autor': quote.css('small::text').extract_first(),
+                'tags': quote.css('.tags a::text').extract(),
+            }
+</code></pre>
+<p>Se você rodar esse spider com:</p>
+<pre><code>scrapy runspider quote_spider.py -o quotes.csv
+</code></pre>
+<p>Você obterá os dados das citações da primeira página no arquivo <code>quotes.csv</code>.
+Só está faltando agora seguir o link para a próxima página, o que você também
+pode descobrir com mais alguma exploração no shell:</p>
+<pre><code>&gt;&gt;&gt; response.css('li.next')
+    [&lt;Selector xpath=u&quot;descendant-or-self::li[@class and contains(concat(' ', normalize-space(@class), ' '), ' next ')]&quot; data=u'&lt;li class=&quot;next&quot;&gt;\n                &lt;a hre'&gt;]
+&gt;&gt;&gt; response.css('li.next a')
+    [&lt;Selector xpath=u&quot;descendant-or-self::li[@class and contains(concat(' ', normalize-space(@class), ' '), ' next ')]/descendant-or-self::*/a&quot; data=u'&lt;a href=&quot;/page/2/&quot;&gt;Next &lt;span aria-hidde'&gt;]
+&gt;&gt;&gt; response.css('li.next a::attr(&quot;href&quot;)').extract_first()
+    u'/page/2/'
+&gt;&gt;&gt; # o link é relativo, temos que joinear com a URL da resposta:
+&gt;&gt;&gt; response.urljoin(response.css('li.next a::attr(&quot;href&quot;)').extract_first())
+    u'http://spidyquotes.herokuapp.com/page/2/'
+</code></pre>
+<p>Juntando isso com o spider, ficamos com:</p>
+<pre><code>import scrapy
+
+
+class QuotesSpider(scrapy.Spider):
+    name = 'quotes'
+    start_urls = [
+        'http://spidyquotes.herokuapp.com/'
+    ]
+
+    def parse(self, response):
+        for quote in response.css('.quote'):
+            yield {
+                'texto': quote.css('span::text').extract_first(),
+                'autor': quote.css('small::text').extract_first(),
+                'tags': quote.css('.tags a::text').extract(),
+            }
+        link_next = response.css('li.next a::attr(&quot;href&quot;)').extract_first()
+        if link_next:
+            yield scrapy.Request(response.urljoin(link_next))
+</code></pre>
+<p>Agora, se você rodar esse spider novamente com:</p>
+<pre><code>scrapy runspider quote_spider.py
+</code></pre>
+<p>Perceberá que ainda assim ele vai extrair apenas os items da primeira página, e a segunda página
+vai falhar com um código HTTP 429, com a seguinte mensagem no log:</p>
+<pre><code>2015-11-15 00:06:15 [scrapy] DEBUG: Crawled (429) &lt;GET http://spidyquotes.herokuapp.com/page/2/&gt; (referer: http://spidyquotes.herokuapp.com/)
+2015-11-15 00:06:15 [scrapy] DEBUG: Ignoring response &lt;429 http://spidyquotes.herokuapp.com/page/2/&gt;: HTTP status code is not handled or not allowed
+2015-11-15 00:06:15 [scrapy] INFO: Closing spider (finished)
+</code></pre>
+<center>
+<p><img src="http://httpstatusdogs.com/wp-content/uploads/2011/12/429.jpg" alt="429 too many puppies" /></p>
+</center>
+<p>O status HTTP 429 é usado para indicar que o servidor está recebendo muitas
+requisições do mesmo cliente num curto período de tempo.</p>
+<p>No caso do nosso site, podemos simular o problema no próprio browser se
+apertarmos o botão atualizar várias vezes no mesmo segundo:</p>
+<center>
+<p><img src="https://i.imgur.com/V3arr9E.jpg" alt="Screenshot showing Too Many Requests" /></p>
+</center>
+<p>Neste caso, a mensagem no próprio site já nos diz o problema e a solução: o máximo de
+requisições permitido é uma a cada segundo, então podemos resolver o problema setando
+a configuração <code>DOWNLOAD_DELAY</code> para 1.5, deixando uma margem decente para podermos
+fazer crawling sabendo que estamos respeitando a política.</p>
+<p>Como esta é uma necessidade comum para alguns sites, o Scrapy também permite
+você configurar este comportamento diretamente no spider, setando o atributo de
+classe <code>download_delay</code>:</p>
+<pre><code>import scrapy
+
+
+class QuotesSpider(scrapy.Spider):
+    name = 'quotes'
+    start_urls = [
+        'http://spidyquotes.herokuapp.com/'
+    ]
+    download_delay = 1.5
+
+    def parse(self, response):
+        for quote in response.css('.quote'):
+            yield {
+                'texto': quote.css('span::text').extract_first(),
+                'autor': quote.css('small::text').extract_first(),
+                'tags': quote.css('.tags a::text').extract(),
+            }
+        link_next = response.css('li.next a::attr(&quot;href&quot;)').extract_first()
+        if link_next:
+            yield scrapy.Request(response.urljoin(link_next))
+</code></pre>
+<h3>Usando extruct para microdata</h3>
+<p>Se você é um leitor perspicaz, deve ter notado que o markup HTML tem umas
+marcações adicionais ao HTML normal, usando atributos <code>itemprop</code> e <code>itemtype</code>.
+Trata-se de um mecanismo chamado
+<a href="https://en.wikipedia.org/wiki/Microdata_(HTML)">Microdata</a>, <a href="http://www.w3.org/TR/microdata/">especificado pela
+W3C</a> e feito justamente para facilitar a
+tarefa de extração automatizada. Vários sites suportam este tipo de marcação,
+alguns exemplos famosos são <a href="http://www.yelp.com">Yelp</a>, <a href="http://www.theguardian.co.uk">The
+Guardian</a>, <a href="http://lemonde.fr">LeMonde</a>, etc.</p>
+<p>Quando um site tem esse tipo de marcação para o conteúdo que você está
+interessado, você pode usar o extrator de microdata da biblioteca
+<a href="https://pypi.python.org/pypi/extruct">extruct</a>.</p>
+<p>Instale a biblioteca extruct com:</p>
+<pre><code>pip install extruct
+</code></pre>
+<p>Veja como fica o código usando a lib:</p>
+<pre><code>import scrapy
+from extruct.w3cmicrodata import LxmlMicrodataExtractor
+
+
+class QuotesSpider(scrapy.Spider):
+    name = &quot;quotes-microdata&quot;
+    start_urls = ['http://spidyquotes.herokuapp.com/']
+    download_delay = 1.5
+
+    def parse(self, response):
+        extractor = LxmlMicrodataExtractor()
+        items = extractor.extract(response.body_as_unicode(), response.url)['items']
+
+        for it in items:
+            yield it['properties']
+
+        link_next = response.css('li.next a::attr(&quot;href&quot;)').extract_first()
+        if link_next:
+            yield scrapy.Request(response.urljoin(link_next))
+</code></pre>
+<p>Usando microdata você reduz sobremaneira os problemas de mudanças de leiaute,
+pois o desenvolvedor do site ao colocar o markup microdata se compromete a
+mantê-lo atualizado.</p>
+<h3>Lidando com leiaute de tabelas:</h3>
+<p>Agora, vamos extrair os mesmos dados mas para um markup faltando bom-gosto:
+<a href="http://spidyquotes.herokuapp.com/tableful/">http://spidyquotes.herokuapp.com/tableful/</a></p>
+<p>Para lidar com esse tipo de coisa, a dica é: <strong>aprenda XPath</strong>, vale a pena!</p>
+<p>Comece aqui: <a href="http://www.slideshare.net/scrapinghub/xpath-for-web-scraping">http://www.slideshare.net/scrapinghub/xpath-for-web-scraping</a></p>
+<blockquote>
+<p><em>O domínio de XPath diferencia os gurus dos gafanhotos. -- Elias Dorneles, 2014</em></p>
+</blockquote>
+<p>Como o markup HTML dessa página não uma estrutura boa, em vez de fazer scraping
+baseado nas classes CSS ou ids dos elementos, com XPath podemos fazer baseando-se
+na estrutura e nos padrões presentes no conteúdo.</p>
+<p>Por exemplo, se você abrir o shell para a página
+<a href="http://spidyquotes.herokuapp.com/tableful">http://spidyquotes.herokuapp.com/tableful</a>, usando a expressão a seguir
+retorna os os nós <code>tr</code> (linhas da tabela) que contém os textos das citações,
+usando uma condição para pegar apenas linhas que estão imediatamente antes de
+linhas cujo texto comece com <code>&quot;Tags: &quot;</code>:</p>
+<pre><code>&gt;&gt;&gt; response.xpath('//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]')
+[&lt;Selector xpath='//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]' data=u'&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;\n      '&gt;,
+ &lt;Selector xpath='//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]' data=u'&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;\n      '&gt;,
+ &lt;Selector xpath='//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]' data=u'&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;\n      '&gt;,
+ &lt;Selector xpath='//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]' data=u'&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;\n      '&gt;,
+ &lt;Selector xpath='//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]' data=u'&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;\n      '&gt;,
+ &lt;Selector xpath='//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]' data=u'&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;\n      '&gt;,
+ &lt;Selector xpath='//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]' data=u'&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;\n      '&gt;,
+ &lt;Selector xpath='//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]' data=u'&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;\n      '&gt;,
+ &lt;Selector xpath='//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]' data=u'&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;\n      '&gt;,
+ &lt;Selector xpath='//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]' data=u'&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;\n      '&gt;]
+</code></pre>
+<p>Para extrair os dados, precisamos de alguma exploração:</p>
+<pre><code>&gt;&gt;&gt; quote = response.xpath('//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]')[0]
+&gt;&gt;&gt; print quote.extract()
+&lt;tr style=&quot;border-bottom: 0px; &quot;&gt;
+            &lt;td style=&quot;padding-top: 2em;&quot;&gt;“We accept the love we think we deserve.” Author: Stephen Chbosky&lt;/td&gt;
+                    &lt;/tr&gt;
+&gt;&gt;&gt; quote.xpath('string(.)').extract_first()
+    u'\n            \u201cWe accept the love we think we deserve.\u201d Author: Stephen Chbosky\n        '
+&gt;&gt;&gt; quote.xpath('normalize-space(.)').extract_first()
+    u'\u201cWe accept the love we think we deserve.\u201d Author: Stephen Chbosky'
+</code></pre>
+<p>Note como não tem marcação separando o autor do conteúdo, apenas uma string
+&quot;Author:&quot;.  Então podemos usar o método <code>.re()</code> da classe seletor, que nos
+permite usar uma expressão regular:</p>
+<pre><code>&gt;&gt;&gt; text, author = quote.xpath('normalize-space(.)').re('(.+) Author: (.+)')
+&gt;&gt;&gt; text
+    u'\u201cWe accept the love we think we deserve.\u201d'
+&gt;&gt;&gt; author
+    u'Stephen Chbosky'
+</code></pre>
+<p>O código final do spider fica:</p>
+<pre><code>import scrapy
+
+
+class QuotesSpider(scrapy.Spider):
+    name = 'quotes-tableful'
+    start_urls = ['http://spidyquotes.herokuapp.com/tableful']
+    download_delay = 1.5
+
+    def parse(self, response):
+        quotes_xpath = '//tr[./following-sibling::tr[1]/td[starts-with(., &quot;Tags:&quot;)]]'
+
+        for quote in response.xpath(quotes_xpath):
+            texto, autor = quote.xpath('normalize-space(.)').re('(.+) Author: (.+)')
+            tags = quote.xpath('./following-sibling::tr[1]//a/text()').extract()
+            yield dict(texto=texto, autor=autor, tags=tags)
+
+        link_next = response.xpath('//a[contains(., &quot;Next&quot;)]/@href').extract_first()
+        if link_next:
+            yield scrapy.Request(response.urljoin(link_next))
+</code></pre>
+<p>Note como o uso de XPath permitiu vincularmos elementos de acordo com o conteúdo
+tanto no caso das tags quanto no caso do link para a próxima página.</p>
+<h3>Lidando com dados dentro do código</h3>
+<p>Olhando o código-fonte da versão do site: <a href="http://spidyquotes.herokuapp.com/js/">http://spidyquotes.herokuapp.com/js/</a>
+vemos que os dados que queremos estão todos num bloco de código Javascript,
+dentro de um array estático. E agora?</p>
+<p>A dica aqui é usar a lib <a href="https://github.com/redapple/js2xml">js2xml</a> para
+converter o código Javascript em XML e então usar XPath ou CSS em cima do XML
+resultante para extrair os dados que a gente quer.</p>
+<p>Instale a biblioteca js2xml com:</p>
+<pre><code>pip install js2xml
+</code></pre>
+<p>Exemplo no shell:</p>
+<pre><code>scrapy shell http://spidyquotes.herokuapp.com/js/
+
+&gt;&gt;&gt; import js2xml
+&gt;&gt;&gt; script = response.xpath('//script[contains(., &quot;var data =&quot;)]/text()').extract_first()
+&gt;&gt;&gt; sel = scrapy.Selector(_root=js2xml.parse(script))
+&gt;&gt;&gt; sel.xpath('//var[@name=&quot;data&quot;]/array/object')
+    [&lt;Selector xpath='//var[@name=&quot;data&quot;]/array/object' data=u'&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;'&gt;,
+ &lt;Selector xpath='//var[@name=&quot;data&quot;]/array/object' data=u'&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;'&gt;,
+ &lt;Selector xpath='//var[@name=&quot;data&quot;]/array/object' data=u'&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;'&gt;,
+ &lt;Selector xpath='//var[@name=&quot;data&quot;]/array/object' data=u'&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;'&gt;,
+ &lt;Selector xpath='//var[@name=&quot;data&quot;]/array/object' data=u'&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;'&gt;,
+ &lt;Selector xpath='//var[@name=&quot;data&quot;]/array/object' data=u'&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;'&gt;,
+ &lt;Selector xpath='//var[@name=&quot;data&quot;]/array/object' data=u'&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;'&gt;,
+ &lt;Selector xpath='//var[@name=&quot;data&quot;]/array/object' data=u'&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;'&gt;,
+ &lt;Selector xpath='//var[@name=&quot;data&quot;]/array/object' data=u'&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;'&gt;,
+ &lt;Selector xpath='//var[@name=&quot;data&quot;]/array/object' data=u'&lt;object&gt;&lt;property name=&quot;author&quot;&gt;&lt;object&gt;'&gt;]
+&gt;&gt;&gt; quote = sel.xpath('//var[@name=&quot;data&quot;]/array/object')[0]
+&gt;&gt;&gt; quote.xpath('string(./property[@name=&quot;text&quot;])').extract_first()
+    u'\u201cWe accept the love we think we deserve.\u201d'
+&gt;&gt;&gt; quote.xpath('string(./property[@name=&quot;author&quot;]//property[@name=&quot;name&quot;])').extract_first()
+    u'Stephen Chbosky'
+&gt;&gt;&gt; quote.xpath('./property[@name=&quot;tags&quot;]//string/text()').extract()
+    [u'inspirational', u'love']
+</code></pre>
+<p>O código final fica:</p>
+<pre><code>import scrapy
+import js2xml
+
+
+class QuotesSpider(scrapy.Spider):
+    name = 'quotes-js'
+    start_urls = ['http://spidyquotes.herokuapp.com/js/']
+    download_delay = 1.5
+
+    def parse(self, response):
+        script = response.xpath('//script[contains(., &quot;var data =&quot;)]/text()').extract_first()
+        sel = scrapy.Selector(_root=js2xml.parse(script))
+        for quote in sel.xpath('//var[@name=&quot;data&quot;]/array/object'):
+            yield {
+                'texto': quote.xpath('string(./property[@name=&quot;text&quot;])').extract_first(),
+                'autor': quote.xpath(
+                    'string(./property[@name=&quot;author&quot;]//property[@name=&quot;name&quot;])'
+                ).extract_first(),
+                'tags': quote.xpath('./property[@name=&quot;tags&quot;]//string/text()').extract(),
+            }
+
+        link_next = response.css('li.next a::attr(&quot;href&quot;)').extract_first()
+        if link_next:
+            yield scrapy.Request(response.urljoin(link_next))
+</code></pre>
+<p>Fica um pouco obscuro pela transformação de código Javascript em XML, mas a
+extração fica mais confiável do que hacks baseados em expressões regulares.</p>
+<h3>Lidando com AJAX</h3>
+<p>Agora, vamos para a versão AJAX com scroll infinito: <a href="http://spidyquotes.herokuapp.com/scroll/">http://spidyquotes.herokuapp.com/scroll/</a></p>
+<p>Se você observar o código-fonte, verá que os dados não estão lá.  No fonte só
+tem um código Javascript que busca os dados via AJAX, você pode ver isso
+olhando a aba <em>Network</em> das ferramentas do browser (no meu caso Chrome, mas
+no Firefox é similar).</p>
+<p>Nesse caso, precisamos replicar essas requisições com o Scrapy, e tratar
+os resultados de acordo com a resposta.</p>
+<p>Explorando no shell, vemos que o conteúdo é JSON:</p>
+<pre><code>scrapy shell http://spidyquotes.herokuapp.com/api/quotes?page=1
+
+&gt;&gt;&gt; response.headers
+{'Content-Type': 'application/json',
+ 'Date': 'Sun, 15 Nov 2015 22:18:29 GMT',
+ 'Server': 'gunicorn/19.3.0',
+ 'Via': '1.1 vegur'}
+</code></pre>
+<p>Portanto, podemos simplesmente usar o módulo JSON da biblioteca padrão e ser feliz:</p>
+<pre><code>&gt;&gt;&gt; import json
+&gt;&gt;&gt; data = json.loads(response.body)
+&gt;&gt;&gt; data.keys()
+[u'has_next', u'quotes', u'tag', u'page', u'top_ten_tags']
+&gt;&gt;&gt; data['has_next']
+True
+&gt;&gt;&gt; data['quotes'][0]
+{u'author': {u'goodreads_link': u'/author/show/12898.Stephen_Chbosky',
+  u'name': u'Stephen Chbosky'},
+ u'tags': [u'inspirational', u'love'],
+ u'text': u'\u201cWe accept the love we think we deserve.\u201d'}
+&gt;&gt;&gt; data['page']
+1
+</code></pre>
+<p>Código final do spider fica:</p>
+<pre><code>import scrapy
+import json
+
+
+class QuotesSpider(scrapy.Spider):
+    name = 'quotes-scroll'
+    quotes_base_url = 'http://spidyquotes.herokuapp.com/api/quotes?page=%s'
+    start_urls = [quotes_base_url % 1]
+    download_delay = 1.5
+
+    def parse(self, response):
+        data = json.loads(response.body)
+        for d in data.get('quotes', []):
+            yield {
+                'texto': d['text'],
+                'autor': d['author']['name'],
+                'tags': d['tags'],
+            }
+        if data['has_next']:
+            next_page = data['page'] + 1
+            yield scrapy.Request(self.quotes_base_url % next_page)
+</code></pre>
+<p>Ao lidar com requisições desse tipo, uma ferramenta útil que pode ser o
+<a href="https://pypi.python.org/pypi/minreq">minreq</a>, instale com: <code>pip install minreq</code>.</p>
+<p>O minreq tenta encontrar a requisição mínima necessária para replicar
+uma requisição do browser, e pode opcionalmente mostrar como montar
+um objeto <code>scrapy.Request</code> equivalente.</p>
+<p>Rode o minreq com:</p>
+<pre><code>minreq --action print_scrapy_request
+</code></pre>
+<p>Ele fica esperando você colar uma requisição no formato cURL. Para isto,
+encontre a requisição AJAX que você quer replicar na aba Network do browser, e
+use o recurso &quot;Copy as cURL&quot;:</p>
+<p><img src="https://i.imgur.com/hqz9b58.jpg" alt="Screenshot showing Copy as cURL" /></p>
+<p>Cole no prompt do minreq, e espere ele fazer a mágica. =)</p>
+<blockquote>
+<p><strong>Nota:</strong> O minreq está em estágio pre-alpha, você provavelmente vai
+encontrar bugs -- por favor reporte no GitHub.</p>
+</blockquote>
+<h2>Rodando no Scrapy Cloud</h2>
+<p>O <a href="http://scrapinghub.com/platform/">Scrapy Cloud</a> é a plataforma PaaS para
+rodar crawlers na nuvem, o que permite evitar uma série de preocupações com
+infraestrutura.</p>
+<p>Funciona como um &quot;Heroku para crawlers&quot;, você faz deploy do seu projeto Scrapy
+e configura jobs para rodar spiders periodicamente.  Você pode também
+configurar scripts Python para rodar periodicamente, os quais podem gerenciar o
+escalonamento dos spiders.</p>
+<p>Comece criando uma conta free forever em: <a href="http://try.scrapinghub.com/free">http://try.scrapinghub.com/free</a></p>
+<h3>Criação do projeto</h3>
+<p>Até aqui nossos exemplos foram simplesmente rodando spiders com <code>scrapy runspider</code>.
+Para fazer o deploy, chegou a hora de criar um projeto Scrapy propriamente dito.</p>
+<p>Para criar um projeto, basta rodar o comando <code>scrapy startproject</code> passando o nome do projeto:</p>
+<pre><code>scrapy startproject quotes_crawler
+</code></pre>
+<p>Feito isso, entre no diretório do projeto com <code>cd quotes_crawler</code> e copie os
+arquivos com spiders para dentro do diretório <code>quotes_crawler/spiders</code>.
+Certifique-se de usar um nome único para cada spider.</p>
+<p>A partir desse momento, você deve ser capaz de rodar cada spider em separado usando o comando:</p>
+<pre><code>scrapy crawl NOME_DO_SPIDER
+</code></pre>
+<blockquote>
+<p><strong>Nota:</strong> Dependendo do caso, é legal começar com um projeto desde o começo,
+para já fazer tudo de maneira estruturada. Pessoalmente, eu gosto de começar
+com spiders em arquivos soltos, quando estou apenas testando a viabilidade de
+um crawler. Crio um projeto apenas quando vou colaborar no código com outras
+pessoas ou fazer deploy no Cloud, nessa hora já é interessante que fique tudo
+estruturado e fácil de crescer dentro de um projeto.</p>
+</blockquote>
+<h3>Configuração no Scrapy Cloud</h3>
+<p>Antes do deploy, você precisa criar um projeto no Scrapy Cloud. Na tela
+inicial, clique no botão adicionar uma organização:</p>
+<center>
+<p><img src="https://i.imgur.com/9fsBv4I.png" alt="Scrapinghub screenshot: Add an organization" /></p>
+</center>
+<p>Dê um nome para a organização e confirme:</p>
+<center>
+<p><img src="https://i.imgur.com/GvfEXzu.png" alt="Scrapinghub screenshot: criando organização" /></p>
+</center>
+<p>Em seguida, adicione um serviço do para hospedar o seu serviço, clicando no
+botão &quot;+ Service&quot; que aparece dentro da organização criada:</p>
+<center>
+<p><img src="https://i.imgur.com/D0VTJLc.png" alt="Scrapinghub screenshot: Adicionar serviço" /></p>
+</center>
+<p>Preencha os dados do seu projeto e confirme:</p>
+<center>
+<p><img src="https://i.imgur.com/05Hvbu3.png" alt="Scrapinghub screenshot: Adicionar serviço" /></p>
+</center>
+<p>Depois disso, clique no nome do serviço na página inicial para acessar o local
+onde seu projeto estará disponível:</p>
+<center>
+<p><img src="https://i.imgur.com/OIZLxYA.png" alt="Scrapinghub screenshot: acessar serviço" /></p>
+</center>
+<p>Note o número identificador do seu projeto: você usará esse identificador na
+hora fazer o deploy.</p>
+<center>
+<p><img src="https://i.imgur.com/ErsMJbB.png" alt="Scrapinghub screenshot: pegando id do projeto" /></p>
+</center>
+<h3>Instalando e configurando shub</h3>
+<p>A maneira mais fácil de fazer deploy no Scrapy Cloud é usando a ferramenta
+<a href="http://doc.scrapinghub.com/shub.html">shub</a>, cliente da linha de comando
+para o Scrapy Cloud e demais serviços da Scrapinghub.</p>
+<p>Instale-a com:</p>
+<pre><code>pip install shub --upgrade
+</code></pre>
+<p>Faça login com o shub, usando o comando:</p>
+<pre><code>shub login
+</code></pre>
+<p>Informe sua API key conforme for solicitado (<a href="https://dash.scrapinghub.com/account/apikey">descubra aqui sua API
+key</a>).</p>
+<blockquote>
+<p><strong>Dica:</strong> Ao fazer login, o shub criará no arquivo <code>~/.netrc</code> uma entrada
+configurada para usar sua API key.  Esse arquivo também é usado pelo <code>curl</code>,
+o que é útil para quando você deseje fazer requisições HTTP para as APIs na
+linha de comando.</p>
+</blockquote>
+<h3>Preparando o projeto</h3>
+<p>Antes de fazer deploy do projeto, precisamos fazer deploy das dependências no
+Scrapy Cloud.
+Crie um arquivo <code>requirements-deploy.txt</code> com o seguinte conteúdo:</p>
+<pre><code>extruct
+js2xml
+slimit
+ply
+</code></pre>
+<p>Rode o comando:</p>
+<pre><code>shub deploy-reqs PROJECT_ID requirements-deploy.txt
+</code></pre>
+<p>Substitua <code>PROJECT_ID</code> pelo id do seu projeto (neste caso, 27199).</p>
+<h4>Deploy das dependências</h4>
+<p>Agora faça deploy do projeto com o comando:</p>
+<pre><code>shub deploy -p PROJECT_ID
+</code></pre>
+<p>Novamente, substituindo <code>PROJECT_ID</code> pelo id do seu projeto (neste caso, 27199)</p>
+<p>Se tudo deu certo, você verá algo como</p>
+<pre><code>$ shub deploy -p 27199
+Packing version 1447628479
+Deploying to Scrapy Cloud project &quot;27199&quot;
+{&quot;status&quot;: &quot;ok&quot;, &quot;project&quot;: 27199, &quot;version&quot;: &quot;1447628479&quot;, &quot;spiders&quot;: 5}
+Run your spiders at: https://dash.scrapinghub.com/p/27199/
+</code></pre>
+<p>Agora você pode ir para a URL indicada (neste caso, <a href="https://dash.scrapinghub.com/p/27199/">https://dash.scrapinghub.com/p/27199/</a>)
+e agendar jobs dos spiders usando o botão &quot;Schedule&quot;.</p>
+<blockquote>
+<p><strong>Nota:</strong> opcionalmente, você pode configurar o identificador do projeto no
+arquivo <code>scrapy.cfg</code>, para não precisar ter que lembrar a cada vez.</p>
+</blockquote>
+<p>Para configurar um spider para rodar periodicamente, utilize a aba &quot;Periodic
+Jobs&quot;, no menu à esquerda.</p>
+<h1>The End</h1>
+<p>Era isso, se você chegou até aqui, parabéns e obrigado pela atenção! :)</p>
+<p>Você pode conferir o código do projeto final em: <a href="https://github.com/eliasdorneles/quotes_crawler">https://github.com/eliasdorneles/quotes_crawler</a></p>
+<p>Para obter ajuda, pergunte no <a href="http://pt.stackoverflow.com/tags/scrapy">Stackoverflow em Português usando a tag
+scrapy</a> ou pergunte em inglês no
+<a href="http://stackoverflow.com/tags/scrapy">Stackoverflow em inglês</a> ou na <a href="https://groups.google.com/forum/#!forum/scrapy-users">lista de
+e-mail scrapy-users</a>.</p>
+<p>Obrigado Valdir pela ajuda com a montagem desse tutorial, tanto no desenvolvimento
+do app <code>spidyquotes</code> quanto na escrita do material. <em>You rock, dude!</em></p>
+
+</section>
+
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+        </footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/atom-one-dark.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+<script src="https://eliasdorneles.com/theme/js/imgviewer.js"></script>
+</body>
+</html>

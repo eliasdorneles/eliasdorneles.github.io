@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Lazy evaluation as alternative to state machines, maybe</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="manifest" href="/images/site.webmanifest">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4f3dd4ee-0791-4d9c-b94f-6d1aa073e79a"></script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
+                <nav><ul>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
+                </ul></nav>
+        </header><!-- /#banner -->
+        
+
+        
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="/2017/03/27/lazy-evaluation-as-alternative-to-state-machines.html"
+                    rel="bookmark" title="Permalink to Lazy evaluation as alternative to state machines, maybe">Lazy evaluation as alternative to state machines, maybe</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+            
+<footer class="post-info">
+        
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2017-03-27 22:13:00+02:00">27 Mar 2017</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/lazy-evaluation-as-alternative-to-state-machines.md">Edit</a>
+        </address>
+        
+
+
+</footer>
+
+            <p>Some days ago I read <a href="http://eli.thegreenplace.net/2009/08/29/co-routines-as-an-alternative-to-state-machines">this nice article talking about co-routines as an
+alternative to state
+machines</a>.</p>
+<p>The most popular use case for co-routines in Python has been asynchronous I/O,
+and there are a bunch of Python things that use them (like
+<a href="https://twistedmatrix.com">Twisted</a>, <a href="http://www.tornadoweb.org">Tornado</a> and
+the standard library module
+<a href="https://docs.python.org/3/library/asyncio.html">asyncio</a> which appeared in
+Python 3.4).</p>
+<p>Apart from the async stuff, I find quite hard to think up use cases for
+co-routines, they mostly look like complicated stuff that smart people have a
+lot of trouble to make it useful.</p>
+<p>So I was curious about this idea of using co-routines as alternative for <a href="https://en.wikipedia.org/wiki/Finite-state_machine">state
+machines</a>, because state
+machines are kind of everywhere, even if not always explicitly.</p>
+<p>I've seen a few other examples that kinda made sense, like David's <a href="http://www.dabeaz.com/coroutines/pyos8.py">scheduler
+for cooperative tasks</a>, and a
+discrete event simulation in the book <a href="http://shop.oreilly.com/product/0636920032519.do">Fluent
+Python</a> by <a href="https://twitter.com/ramalhoorg">Luciano
+Ramalho</a>, but these still seem a bit far away
+for me.</p>
+<p>So I decided to test out for myself reimplementing some simple state
+machine as a co-routine and see how it goes.</p>
+<h2>Are co-routines an alternative to state machines?</h2>
+<p>To try out the idea, I decided to write a small program using a state machine,
+and then write a co-routine version of it. I decided to implement a naive
+program to strip out C-style comments.</p>
+<p>I must say that this is not production code, it ignores the case of comments
+inside of a string (as in <code>'/**/'</code> for the sake of simplicity). I only wrote
+this to explore the idea of alternatives to state machines.</p>
+<p>Here is a diagram of the state machine:</p>
+<center>
+<p><img src="../../..//images/fsm_strip_comments.png" alt="Picture with diagram of Finite State machine" /></p>
+</center>
+<p><a href="https://github.com/eliasdorneles/lazy-eval-gt-state-machines/blob/master/001_state_machine.py">Here is the state machine implementation</a>.</p>
+<p>It was fairly straightforward to implement, but the code ends up a bit verbose.</p>
+<p>Next, I went on and wrote <a href="https://github.com/eliasdorneles/lazy-eval-gt-state-machines/blob/master/002_coroutine.py">the co-routine version</a>, and didn't really like the result.
+First of all, I find a bit cumbersome having to write the sink and build the driving code,
+I thought: &quot;why can't I just use the function? what if I want to do something
+else than just print, do I have to write a sink-like code every time?&quot;</p>
+<p>After mulling for a bit, I realized that the most important gain from the
+co-routine code was being able to &quot;pause execution&quot;, so I figured I could write
+a generator function that would consume the input lazily. While attempting
+to do that, I realized I don't even need it to be a generator, it can
+be just a regular function that will consume the input lazily and
+return the full results.</p>
+<p>And <a href="https://github.com/eliasdorneles/lazy-eval-gt-state-machines/blob/master/004_imperative_final.py">that's what I did, and decided that I like this code more than the co-routine version</a>.
+I think it allows you to skip thinking about the explicit states when writing
+the code, it's lazy and it's easy to use (just a regular function).</p>
+<p>I'm not sure if it's better than the state machine version, though,
+because I think to read it and understand you sort of have to build a
+mental model of the states in your head. So it seems easier to write,
+but may be tougher to read.
+I think for state machines with high number of states this would not be
+good for maintainability, and you'd probably want have a diagram.</p>
+<p>I also had <a href="https://github.com/eliasdorneles/lazy-eval-gt-state-machines/commit/458fb7e124dff3bb06a9f61b62453507ad0c3d75">a bug on the first
+implementation</a>,
+which I only noticed when writing this blog post and <a href="https://github.com/eliasdorneles/lazy-eval-gt-state-machines/blob/master/diagram.dot">creating the state
+machine
+diagram</a>
+and then had to go back and <a href="https://github.com/eliasdorneles/lazy-eval-gt-state-machines/commit/0bb8092a7d7b80aae34ef95af1334657ffd04ff5">fix it in the other implementations</a>.
+Fixing the bug was a lot easier for the state machine implementation.</p>
+<h2>Conclusions, or, how I feel about this</h2>
+<p>State machines are complicated, but they're very useful. Even if it takes some
+effort to understand them, I feel it's still less effort than co-routines.</p>
+<p>Co-routines are also complicated, I find they demand too much cognition
+to work with and can be harder to debug than regular state machine code.</p>
+<p>Combining lazy evaluation and Python functions probably work better as an
+alternative of state machines than co-routines, because they give you the
+benefits without most of the drawbacks.</p>
+<p>I'm not sure if they're as much powerful nor I'm convinced that the code is
+more maintainable, but for some state machines it may be very expressive.</p>
+<p>Also, <a href="https://github.com/eliasdorneles/lazy-eval-gt-state-machines/blob/master/005_pro.py">regular expressions are awesome</a>. =)</p>
+
+        </div>
+
+        <div class="taglist">
+</div>
+    </article>
+</section>
+
+
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+        </footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/atom-one-dark.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+<script src="https://eliasdorneles.com/theme/js/imgviewer.js"></script>
+</body>
+</html>

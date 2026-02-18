@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>VI Melhorado</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="manifest" href="/images/site.webmanifest">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4f3dd4ee-0791-4d9c-b94f-6d1aa073e79a"></script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
+                <nav><ul>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
+                </ul></nav>
+        </header><!-- /#banner -->
+        
+
+        
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="/2013/09/26/vi-melhorado.html"
+                    rel="bookmark" title="Permalink to VI Melhorado">VI Melhorado</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+            
+<footer class="post-info">
+        
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2013-09-26 16:49:00+02:00">26 Sep 2013</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/vi-melhorado.md">Edit</a>
+        </address>
+        
+
+
+</footer>
+
+            <p><a href="http://pragprog.com/book/dnvim/practical-vim">Practical Vim</a> é um livro sobre
+o <a href="http://www.vim.org/">Vim</a> -- o editor de textos xodó dos programadores.
+Muito bem escrito, recheado de exemplos e referências, kudos para o <a href="http://drewneil.com/">Drew
+Neil</a>, autor dessa belezinha.  Drew também faz vídeos
+sobre o Vim, disponíveis gratuitamente em
+<a href="http://vimcasts.org/">http://vimcasts.org</a>.</p>
+<p><a href="http://pragprog.com/book/dnvim/practical-vim"><img src="https://eljunior.files.wordpress.com/2013/09/dnvim.jpg?w=250" alt="Edit Text at the Speed of Thought" title="Practical
+Vim" /></a></p>
+<!-- PELICAN_END_SUMMARY -->
+<p>Se você ainda não conhece o Vim, talvez esse livro não seja um começo
+adequado. É bom ter pelo menos seguido o
+<a href="http://linuxcommand.org/man_pages/vimtutor1.html">vimtutor</a>. Se você
+usa Vim há um bom tempo e está sentindo que não usa todo o potencial da
+ferramenta, este livro pode ser o que você precisa.</p>
+<p>O livro foi escrito num formato de dicas, demonstrando problemas e
+soluções, começando com as mais simples e avançando para outras mais
+refinadas, com referências cruzadas entre elas. Isso torna possível você
+lê-lo aos poucos, não necessariamente em ordem, portanto fica uma
+leitura leve -- como se fosse uma centena de blog posts. Mas eu li na
+ordem mesmo assim. :P</p>
+<p>Como o livro é extremamente prático e recheado de exemplos, e também como <a href="https://eljunior.wordpress.com/2013/04/07/coisas-sobre-o-vim-que-gostaria-de-ter-sabido-antes/">já
+falei algumas coisas a respeito aqui
+antes</a>,
+vou só falar os destaques que pessoalmente me foram legais.</p>
+<p>Um dos pontos centrais do livro é que para usar bem os recursos Vim,
+devemos aprender os mecanismos de repetição que ele oferece. Repetir o
+último comando, a última mudança no texto, a última macro, a última
+busca -- essas funcionalidades ajudam bastante no trabalho de edição,
+que é repetitivo por natureza, portanto vale a pena aprender bem como
+elas funcionam.</p>
+<p>Aprendi a lidar com registradores (<em>registers</em>) no Vim, finalmente!  Muitas
+vezes antes já senti falta e acabei fazendo a tarefa manualmente ou recorrendo
+a uma ou outra mutreta... Você <a href="http://usevim.com/2012/04/13/registers/">pode aprender facilmente sobre os registers do
+Vim em um tutorial online</a>, mas o
+livro ensina com exemplos práticos, dando a motivação certa pra você aprender
+cada comando. Eu já havia lido várias vezes sobre os <em>registers</em> online, mas só
+depois de ler os pulos do gato no livro que estou me sentindo confortável para
+usá-los. São bem úteis na hora de fazer refatorações em código, e montar ações
+a serem repetidas com <a href="http://stackoverflow.com/questions/7325052/can-someone-explain-to-me-why-the-dot-command-is-so-useful-in-vim">o comando
+ponto</a>.</p>
+<p>Uma dica interessante do livro sobre
+<a href="http://usevim.com/2012/08/10/macros/">macros</a> é uma maneira de criar
+macros que “param automático”. A ideia é usar um movimento
+(<em><a href="http://vimdoc.sourceforge.net/htmldoc/motion.html">motion</a></em>) que
+falhe quando a macro não deve mais ser aplicada. Quando um movimento
+falha na execução de uma macro, o restante da execução é cancelado.
+Sabendo disso, podemos tirar proveito na hora de montar e executar a
+macro, o que nos permite criar macros &quot;infinitas&quot; que não precisam de
+contagem exata e pararão a execução no momento certo.</p>
+<p>Descobri algumas coisas legais também sobre a busca do Vim. Se você faz uma
+busca usando o comando <em>/</em> e depois aciona a substituição com a busca vazia
+<code>:s//texto a repor/</code> o Vim reusa o padrão usado na última busca. Isso é legal
+porque permite você refinar a busca visualmente primeiro, e então montar o
+comando de substituição depois. Às vezes isso é mais prático do que usar a
+busca e substituição pedindo confirmação com <code>:s/texto a substituir/texto a repor/gc</code>. Ah, e quando estiver montando expressões regulares na busca, é uma
+boa ideia começar as ERs com o escape <code>\v</code> que ativa o <a href="http://www.malloc.co/vim/using-very-magic-to-make-vim-regular-expressions-cleaner/">comportamento ”very
+magic”</a>
+-- muito mágico e muito mais fácil.</p>
+<p>Outra dica boa sobre busca é <a href="https://github.com/nelstrom/vim-visual-star-search">o plugin que muda comportamento do * e # no
+modo visual</a>. Por padrão, o
+Vim buscará a palavra sob o cursor (coerente com o comportamento no modo
+normal), estendendo a seleção. O plugin altera para ele buscar o texto que está
+selecionado, o que é bem mais útil. =)</p>
+<p>Curti também as explicações sobre a integração do Vim com
+<a href="http://ctags.sourceforge.net/">ctags</a>,
+<a href="https://en.wikipedia.org/wiki/Grep">grep</a> &amp; <a href="http://beyondgrep.com/">ack</a>, o
+funcionamento do corretor ortográfico, etc -- tem uma seção do livro dedicada a
+esses assuntos. Ainda não coloquei muita coisa na prática, mas fiquei cheio de
+ideias.</p>
+<p>Num mundo em que existem <a href="http://www.jetbrains.com/idea/">ferramentas muito inteligentes para edição de
+código</a> que por vezes até escrevem o código por
+você, o Vim tem se mantido relevante porque permite a economia de movimentos em
+qualquer tipo de texto. A longo prazo, o Vim ainda é um bom investimento para
+quem precisa de uma edição de texto mais refinada, como muitos programadores.
+Não todos, porque alguns programadores infelizmente só usarão as linguagens bem
+suportadas pela sua IDE. Mas a trupe de teimosos da qual eu faço parte
+provavelmente vai se manter usando Vim até o fim -- o benefício vem a longo
+prazo.</p>
+<p>Enfim, <a href="https://www.amazon.com/Practical-Vim-Thought-Pragmatic-Programmers/dp/1934356980">compre</a>
+<a href="http://pragprog.com/book/dnvim/practical-vim">o livro</a>, <a href="http://vimcasts.org/">assista os
+vídeos</a>, siga <a href="https://twitter.com/vimcasts">o twitter do
+Vimcasts</a>...</p>
+<p><sub>Ah, e quando programar em Java, sugiro <a href="http://confluence.jetbrains.com/display/IDEADEV/EAP">usar o Intellij IDEA</a> -- bem melhor que o Eclipse. :D</sub></p>
+
+        </div>
+
+        <div class="taglist">
+</div>
+    </article>
+</section>
+
+
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+        </footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/atom-one-dark.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+<script src="https://eliasdorneles.com/theme/js/imgviewer.js"></script>
+</body>
+</html>
