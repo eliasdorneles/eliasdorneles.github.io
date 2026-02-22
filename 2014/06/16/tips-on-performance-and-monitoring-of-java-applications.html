@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Tips on Performance and Monitoring of Java Applications</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="manifest" href="/images/site.webmanifest">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4f3dd4ee-0791-4d9c-b94f-6d1aa073e79a"></script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
+                <nav><ul>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
+                </ul></nav>
+        </header><!-- /#banner -->
+        
+
+        
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="/2014/06/16/tips-on-performance-and-monitoring-of-java-applications.html"
+                    rel="bookmark" title="Permalink to Tips on Performance and Monitoring of Java Applications">Tips on Performance and Monitoring of Java Applications</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+            
+<footer class="post-info">
+        
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2014-06-16 20:06:00+02:00">16 Jun 2014</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/tips-on-performance-and-monitoring-of-java-applications.md">Edit</a>
+        </address>
+        
+
+
+</footer>
+
+            <p>I cleaned up my desk this weekend and ended up finding some notes I wrote down
+some time ago when I attended a course about monitoring JBoss application
+servers. I haven't been doing much related to Java Web development lately, but
+I'm going to try to make a quick summary here because: 1) then I can safely
+throw away the paper with the notes, and 2) I think some of the tips can still
+be useful in the context of many long running JVM processes.</p>
+<h3>Memory and GC load</h3>
+<p>So, the most important thing to monitor in a long running JVM is arguably the
+garbage collection stats. When some JVM is misbehaving, the first thing you
+want to check is how much of the
+<a href="https://en.wikipedia.org/wiki/Java_virtual_machine#Heap">heap</a> is being used
+and how often the full GC is being called.</p>
+<p>One quick tip to reduce GC load is to set the initial heap size to the same
+amount of the maximum heap size, namely, you should use the same value for the
+<code>-Xms</code> and <code>-Xmx</code> JVM options. When you do this the JVM will allocate the
+maximum space it will ever use, right from the the start. This way you avoid
+memory reallocation for the heap and some GC calls, and can even sometimes
+speedup the startup of an application, it is usually the first thing I do when
+I install a Java desktop app like Eclipse or Intellij IDEA.</p>
+<p>There are
+<a href="http://www.cubrid.org/blog/dev-platform/understanding-java-garbage-collection/">some</a>
+<a href="http://www.cubrid.org/blog/dev-platform/how-to-monitor-java-garbage-collection/">nice</a>
+<a href="http://www.cubrid.org/blog/textyle/428187">articles</a> about garbage collection
+in Java available, it's a fairly big topic and I don't know much beyond the
+basics to survive. You definitely want to know that full GC stops are bad and,
+although you can't avoid them completely, you want to keep them to a minimum so
+your application won't keep slogging.</p>
+<p>Full GC stops happen when the area of memory reserved to objects that are &quot;old&quot;
+(namely, objects that have been around for most of the time and therefore are
+probably going to be around in the future) reaches its size limit. That means
+that whatever application code was running will be stopped and only the GC will
+execute for a moment, until some space is freed and your application code can
+execute again (<a href="https://plumbr.eu/blog/understanding-java-lang-outofmemoryerror">or you'll be the misfortunate heir to
+anOutOfMemoryError</a>).</p>
+<p>As it happens, tuning the garbage collection is very specific to the type of
+application you're running. The JVM can use different garbage collection
+algorithms, and you may want to twiddle with them a little bit to see what
+works best. For your typical Java Web application, it's usually better to run
+several machines with moderate memory in a cluster than run all in one big
+machine with several GiB of memory due to how the GC works. However, your
+mileage may vary, so your best bet is to measure and monitor what's happening
+with the heap.</p>
+<h3>The number of threads vs backlog tradeoff</h3>
+<p>Now, in the case of Web applications, the second most important thing you want
+to watch is the busy threads count. Usually, it represents the number of
+requests being handled at a given moment. There is an useful tradeoff to be
+aware of that has to do with how these things happen inside the Web container,
+so bear with me for a little bit with the inaccurate description.</p>
+<p>Whenever your application server (or whatever it is you're using to deploy your
+Java Web app) gets a new request, it tries to respond as soon as possible
+creating a new thread to handle it, right? Then, when the configured maximum
+number of threads is reached, all the new requests are kept on a queue
+(sometimes called backlog or acceptCount), waiting until one of the current
+busy threads finishes so that the server can then get the next request from the
+queue and use another thread to handle it.</p>
+<p>Well, okay, it's not <em>reaaally</em> like that, I think what
+really happens is that each new request always goes to the backlog queue and
+there are some threads responsible for request processing that keep getting
+work from the backlog, but I thought it would be a bit easier to explain that
+way.</p>
+<center>
+<img width="500" alt="I think my Tomcat can handle more work... Now, should I increase maxThreads or the backlog?"
+src="https://3.bp.blogspot.com/-1Op2WBzfGno/U5928NTAtqI/AAAAAAAAAwQ/d1lxWxNcmHY/s1600/doubt-maxThreads_vs_backlog.jpg"/>
+</center>
+<p>But here is the little secret: it's usually much easier for the operating
+system to manage queues than attend threads. So, often enough it's better to
+let the queue get big than to increase the maximum number of threads for your
+system to handle. Threads are often competing for resources, increasing its
+number may even hurt performance instead of improve it, specially when you have
+a peak load.</p>
+<p>Of course the best thing to do will depend on the application you are serving
+and the load patterns in your server, so you need to measure it and experiment
+for a bit to figure out what numbers work best for you.</p>
+<p>So, if there is any way to wrap-up all this, it would be: measure it, measure
+it, measure it! Different types of long-running JVM applications will have
+different effects on your system, so it's important to have data to make good
+decisions. Measuring the heap stats to see how the GC is doing and the number
+of busy threads to see the patterns in request handling (in the case of Web
+applications) is a good start.</p>
+<p>Thanks for the review, José Ricardo and Valdir Stumm!</p>
+<p><a href="https://www.flickr.com/photos/24141546@N06/8097784516/in/photostream/">Image credits (CCBY)</a></p>
+
+        </div>
+
+        <div class="taglist">
+</div>
+    </article>
+</section>
+
+
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+        </footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/atom-one-dark.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+<script src="https://eliasdorneles.com/theme/js/imgviewer.js"></script>
+</body>
+</html>

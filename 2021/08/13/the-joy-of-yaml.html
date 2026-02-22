@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>The Joy of YAML</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="manifest" href="/images/site.webmanifest">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4f3dd4ee-0791-4d9c-b94f-6d1aa073e79a"></script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
+                <nav><ul>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
+                </ul></nav>
+        </header><!-- /#banner -->
+        
+
+        
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="/2021/08/13/the-joy-of-yaml.html"
+                    rel="bookmark" title="Permalink to The Joy of YAML">The Joy of YAML</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+            
+<footer class="post-info">
+        
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2021-08-13 22:14:00+02:00">13 Aug 2021</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/the-joy-of-yaml.md">Edit</a>
+        </address>
+        
+
+
+</footer>
+
+            <p>I haven't written much on the blog on the last few years, I don't know, I
+didn't felt like I had much to say.  There is so much being said on the Web,
+lots of great stuff, but also tons of crap too, and I didn't feel like adding
+to the noise. I've learned loads of stuff, but not in the mood for sharing, and
+anyway the most important stuff wasn't related to tech.</p>
+<p>But today I've got the itch to write, and this little comeback is to tell you that I think
+<a href="https://en.wikipedia.org/wiki/YAML">YAML</a> is a pretty cool thing because it
+lets you cut corners, ship things fast, give power to your power users, all
+that while keeping the design straightforward.</p>
+<p>The traditional way most Web programmers have learned to do things like content
+management systems, forms, and such, goes something along these lines:</p>
+<ol>
+<li>get a database (usually relational)</li>
+<li>setup a web app with your framework of choice</li>
+<li>create the user facing features, either by old-fashioned Web app, or API + frontend app</li>
+<li>create an administration interface for staff users to update content</li>
+</ol>
+<p><sup>(yeah yeah, there are cloud paas providers, nosql, graphql, brainfucql,
+yadda yadda... whatever, I said <em>traditional way</em>! By that I mean, people that
+learned like me =P)</sup></p>
+<p>I want to talk about this last step: the admin interface for your internal users.</p>
+<p>When you're doing this for users that you can trust, that's where YAML can be
+of great value.</p>
+<h2>Growing the admin interface is tricky</h2>
+<p>If you use a framework like
+<a href="https://docs.djangoproject.com/en/3.2/ref/contrib/admin/">Django</a>, you get
+lots of help for quickly having a neat administration interface from the start. With a
+few lines of code, you get something that users can actually use, which can be
+extended in many ways by adding a few more lines of code.</p>
+<p><sup>(If you're not using Django or something similar, you don't get much help
+and you gotta implement it like any other user feature, which means it's
+even more expensive.  I'll stick to Django or similar here to make my
+point.)</sup></p>
+<p>So it's great, and it is one of the reasons why I and many people like
+Django. It's a web framework for perfectionists with deadlines. Even as a solo
+developer, you get a lot of shit done real fast, with code that doesn't look
+too bad. Awesome!</p>
+<p>Except... well, if the system continues living on for a few years, it keeps
+increasing and being patched up, you keep adding models and relationships, and
+your admin interface starts getting quite complicated.</p>
+<p>Users start to get lost on the many different models and the relationships
+between them, because the structure isn't clear anymore when you have a few
+dozens of models / tables. You start reaching the limits of what can be
+achieved with extending the Django admin, it's not as easy to add things
+quickly anymore, things like proper validation are quite complicated because of
+the many relationships, the admin is getting complex and slow.</p>
+<p>And if you have multiple deployment environments (production, staging, beta,
+etc), it can get tricky for users as well. They will maybe have to do all this
+complicated setup on a testing environment, and then redo everything again on
+production once things are deployed. Ugh, it's getting painful.</p>
+<p>What to do?</p>
+<h2>Your admin interface is configuration</h2>
+<p>When I was learning how to program in college, I quickly developed some sort of
+taste / habit for most of the code I'd write: I would start with a hard-coded
+hash table with configuration at the top of the module file, then a bunch of
+functions under that, and at the very bottom there would be some main-like code
+that would drive the execution and use the configuration.</p>
+<p>A lot of what I wrote back then was PHP, so reducing it to a minimal example, it looked to something like this:</p>
+<pre><code class="language-php">&lt;?php
+
+$config = array(
+  &quot;items&quot; =&gt; array(
+    &quot;apple&quot; =&gt; array(&quot;count&quot; =&gt; 2, &quot;description&quot; =&gt; &quot;Apples for baking a pie&quot;),
+    &quot;banana&quot; =&gt; array(&quot;count&quot; =&gt; 1, &quot;description&quot; =&gt; &quot;Banana for quick dessert&quot;),
+    &quot;tomato&quot; =&gt; array(&quot;count&quot; =&gt; 3, &quot;description&quot; =&gt; &quot;Tomatoes for a salad&quot;),
+  )
+);
+
+function generate_table($items) {
+  $out = &quot;&lt;table&gt;\n&quot;;
+  $out .= &quot;&lt;th&gt;&lt;td&gt;Name&lt;/td&gt;&lt;td&gt;Count&lt;/td&gt;&lt;td&gt;Description&lt;/td&gt;&lt;/th&gt;\n&quot;;
+  foreach($items as $name =&gt; $it) {
+    $out .= &quot;&lt;tr&gt;&quot;;
+    $out .= &quot;&lt;td&gt;&quot; . $name . &quot;&lt;/td&gt;&quot;;
+    $out .= &quot;&lt;td&gt;&quot; . $it[&quot;count&quot;] . &quot;&lt;/td&gt;&quot;;
+    $out .= &quot;&lt;td&gt;&quot; . $it[&quot;description&quot;] . &quot;&lt;/td&gt;&quot;;
+    $out .= &quot;&lt;/tr&gt;\n&quot;;
+  }
+  $out .= &quot;&lt;/table&gt;\n&quot;;
+  return $out;
+}
+
+echo generate_table($config[&quot;items&quot;]);
+</code></pre>
+<p>I remember that my friend Valdir, with whom I hanged out all the time, after I showed him some code I was working on, he told me: &quot;dude, I know a piece of code is from you when I see a big array of configuration in the beginning!&quot;. He was teasing me, of course, we had a laugh, and I remember feeling kind of proud of it! <em>&quot;Yeah, this is my thing!&quot;</em></p>
+<p>There were a bunch of things that I liked about this:</p>
+<ol>
+<li>
+<p>I had one central place to put all the &quot;knobs&quot; that determined how the program behave. That's pretty neat, if I came back later to code that I had written before, I didn't need to read through the code to figure out where to tweak some parameter: I would go directly to my configuration array.</p>
+</li>
+<li>
+<p>I could quickly extend the configuration (copy and paste, modify, tap tap tap...), and use my text editor features and my growing <a href="https://www.vim.org">vim</a> skills.  Working on vim is addictive: I still code on it to this day, even after trying lots of other editors and IDEs (<a href="https://github.com/eliasdorneles/dotfiles">and my configuration files are on Github, if you're curious</a>).</p>
+</li>
+<li>
+<p>I could easily add new knobs and extend the model as needed, sometimes by only changing the type of structure: need to add more details to some value in one place? Replace the scalar variable and turn it yet into an array, then in the code type-check and do the right thing if it's an array or scalar.</p>
+</li>
+</ol>
+<p>At the time I was doing it mostly out of intuition, I don't remember having
+clearly stated why I like to do it like this back then. But I like to think
+that the young programmer I was, in his own way, felt already the need to
+come up with something of a clean architecture.</p>
+<p>Though I'd probably tell you off if you'd tell me something like that, back
+then I was pretty rebellious and I hated jargon that wanted to sound important
+like &quot;architecture&quot;, &quot;layers&quot;. I only trusted code that I could read and run.
+I had absorbed a bit too much that phrase from Linus Torvalds, <em>&quot;talk is cheap,
+show me the code&quot;</em>.</p>
+<p>If you had sent me the link to a <a href="https://blog.cleancoder.com/uncle-bob/2011/11/22/Clean-Architecture.html">blog post by Robert Martin defending clean
+architecture</a>,
+I would scoff.</p>
+<p>But, deep down, I was working my way into those ideas. Years later, when I was ready,
+I read folks like Martin Fowler, Robert Martin, Kent Beck, and was like &quot;yes, yes!&quot;</p>
+<p>Okay, I like that I showed you some PHP code even though you, dear reader, are most likely a lover of Python, but I will stop digressing and get to the point.</p>
+<p>The first point is: every big enough well-structured program has need of some form of configuration.</p>
+<p>That is, structured information that some power user may need change from time to time. Some values are more stable than others, some almost never change, some are specific to a deployment environment, etc. It's usually not truly programming code, but it can be, or it can contain code bits. And if it's kept in text files, it starts looking a lot like code, and you can use text editors, with syntax highlighting and automatic checks.</p>
+<p>The second point, and this is the important one, is that you can turn some of
+your admin interface into configuration files, and let your internal power
+users use their text editor to copy and paste, and have their fix of
+dopamine when they write &quot;code&quot; and it works!</p>
+<p>And that's where YAML comes in!</p>
+<p>There is a lot to gain from using well-structured YAML files for the more
+stable bits of admin configuration.</p>
+<p>Put the files somewhere where your staff users can access and change them, for
+example, a dedicated Git repository, or something like an S3 bucket -- this way
+you can even track history for free, no need to implement anything fancy.</p>
+<p>Then, you can either sync the files with the database, or make your system read
+directly from S3, or whatever suits better your system.</p>
+<h2>YAML is powerful and human readable</h2>
+<p>Of the most commonly available configuration file formats, YAML is the one that
+has the best combination of tooling support, power and readability.</p>
+<p>In my current job, I will sometimes draft some YAML together with the product
+folks who can immediately understand what it means, and later even write YAML
+on their own. That YAML draft becomes a spec once everyone is happy with it,
+and feeds right into the implementation. In a way, it's almost like it would
+answer the programmer who would say: <em>&quot;talk is cheap, show me the code&quot;</em>.</p>
+<p>It's widely supported, has plenty of tooling support, and if you've never done
+any YAML, you may be surprised that it has even some <a href="https://www.netways.de/en/blog/2019/11/21/gitlab-ci-yaml-write-less-with-anchors-extends-and-hidden-keys/">reuse
+features</a>,
+so that I don't need to repeat myself, unless if I so desire.</p>
+<p>And it's not hard to learn, you can learn the basics in Y minutes:
+<a href="https://learnxinyminutes.com/docs/yaml/">https://learnxinyminutes.com/docs/yaml/</a>.
+Of course you won't do this right now, you'll learn as you go when you need it,
+on your rhythm, and that's totally fine.</p>
+<p>The only kinda bad thing about using YAML is that, depending on your parser
+implementation, sometimes you might run into some confusing error messages for
+some silly syntax errors, which is <strong>VERY</strong> annoying.  As YAML is
+indentation-based (like Python), there are some corner cases for which it's
+tricky to handle the error with a clear error message -- oh well.</p>
+<p>But most of the time it works correctly, and the value that it brings overcomes
+this by far.  Plus, the tooling will get better and better, and perhaps more
+importantly, people get better at avoiding mistakes even more quickly, so it's
+fine.</p>
+<h2>YAML inspiration</h2>
+<p>The DevOps folks have known about the power of YAML for quite a while, plenty of DevOps tools
+use YAML for its configuration.</p>
+<p>One great example is <a href="https://docs.gitlab.com/ee/ci/quick_start/#create-a-gitlab-ciyml-file">the Gitlab CI
+configuration</a>
+which is all YAML-based, which is a great inspiration. They've actually kind of extended
+YAML supporting &quot;include&quot; features and other things.</p>
+<p>Someone did a round up of <a href="https://octopus.com/blog/state-of-config-file-formats">some common formats used for configuration
+here</a>, mostly to explain
+why Hashicorp went out to develop <a href="https://github.com/hashicorp/hcl">their own language</a> to use
+in Terraform, which is actually quite cool, but not really usable for anything other at this point.</p>
+<p>A non-DevOps example: a French startup called Papernest <a href="https://medium.com/papernest/papercraft-le-secret-des-po-de-papernest-pour-sortir-des-features-sans-une-seule-ligne-de-code-f5b85de97202">has essentially built
+an internal CMS based on
+YAML</a>,
+with AB-testing support and all.  I specially like how they came up with a neat
+way of representing nested AND/OR conditions that you can see on one of the
+screenshots, something which is <a href="https://ux.stackexchange.com/questions/11177/good-solutions-for-boolean-filter-with-sub-conditions">notably hard to come up with a good user
+interface
+for</a>,
+<a href="https://ux.stackexchange.com/questions/1737/intuitive-interface-for-composing-boolean-logic">even for
+Apple</a>.</p>
+<p>Okay, I think I said everything I wanted to say, let's stop here!</p>
+<p>Aaaand, I've managed to write a blog post about YAML with zero YAML snippets on it, only PHP, haha!</p>
+<p>I'm off, have a good one, folks!
+Have fun coding, or whatever it is you like to do! =)</p>
+
+        </div>
+
+        <div class="taglist">
+</div>
+    </article>
+</section>
+
+
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+        </footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/atom-one-dark.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+<script src="https://eliasdorneles.com/theme/js/imgviewer.js"></script>
+</body>
+</html>

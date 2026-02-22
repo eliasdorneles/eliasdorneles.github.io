@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Programando Erlang - 1 de Any</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="manifest" href="/images/site.webmanifest">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4f3dd4ee-0791-4d9c-b94f-6d1aa073e79a"></script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
+                <nav><ul>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
+                </ul></nav>
+        </header><!-- /#banner -->
+        
+
+        
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="/2014/04/05/programando-erlang---1-de-any.html"
+                    rel="bookmark" title="Permalink to Programando Erlang - 1 de Any">Programando Erlang - 1 de Any</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+            
+<footer class="post-info">
+        
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2014-04-05 23:35:00+02:00">05 Apr 2014</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/programando-erlang---1-de-any.md">Edit</a>
+        </address>
+        
+
+
+</footer>
+
+            <p>Na virada do ano, uma das minhas resoluções para 2014 foi a de que este ano
+aprenderia <a href="http://www.erlang.org/">Erlang</a>.  Eu queria brincar com alguma
+linguagem que usasse ideias diferentes das que uso no trabalho e que me
+ensinasse mais do que simplesmente outro jeito de escrever os programas que já
+sei.</p>
+<p>Como eu gostei de ler as ideias do <a href="http://joearms.github.io/">Joe Armstrong</a>
+no livro <a href="http://www.codersatwork.com/">Coders at Work</a>, e as <a href="https://en.wikipedia.org/wiki/Erlang_(programming_language)">descrições de
+Erlang</a> na Internet
+me deixaram curioso, resolvi que em 2014 eu iria aprender Erlang. E assim,
+decidi por comprar logo o livro <a href="http://pragprog.com/book/jaerlang2/programming-erlang">Programming
+Erlang</a>, escrito pelo
+próprio Joe, e tentar aprender por ele.</p>
+<p>Ainda não terminei de ler o livro, estou curtindo o aprendizado, acho que foi
+uma boa escolha de linguagem “extra” pra aprender. Mas como o livro fala sobre
+bastante coisa, resolvi escrever alguma coisa logo porque se deixar para
+escrever sobre o livro inteiro a tarefa vai ficar grande demais e eu vou fugir
+correndo com medo dela.</p>
+<p>Então...  Erlang!</p>
+<p>É uma linguagem divertida. =)</p>
+<p>Erlang é uma linguagem funcional com tipagem dinâmica, de propósito geral,
+focada em facilitar o desenvolvimento de programas concorrentes e que roda em
+uma máquina virtual própria (também chamada
+<a href="http://www.erlang-factory.com/upload/presentations/708/HitchhikersTouroftheBEAM.pdf">BEAM</a>).</p>
+<p>Mas Erlang é mais do que uma linguagem, podemos dizer que Erlang é todo um
+ambiente diferente. A VM de Erlang lembra um sistema operacional em muitas
+formas, possuindo seu próprio shell, seu próprio gerenciador de processos, seu
+esquema de atualização sem precisar parar nenhum processo e seus <a href="https://pt.wikipedia.org/wiki/Comunica%C3%A7%C3%A3o_entre_processos">mecanismos
+disponíveis para comunicação entre
+processos</a>.</p>
+<p>Um processo Erlang não é nem um processo do sistema operacional nem uma thread:
+é um <a href="https://en.wikipedia.org/wiki/Erlang_(programming_language)#Concurrency_and_distribution_orientation">processo
+leve</a>,
+muito mais leve que threads. A criação de um novo processo é praticamente
+gratuita -- pode-se dizer que criar um novo processo em Erlang é tão comum e
+tão sossegado quanto instanciar um novo objeto em Java.</p>
+<p>Em Erlang, é idiomático encapsular funcionalidade em processos, e é comum um
+sistema ter milhares desses processos concorrentes, cada um com sua
+responsabilidade. Assim, esses processos encapsulando funcionalidades são
+análogos a<a href="https://en.wikipedia.org/wiki/Service_(systems_architecture)">serviços em uma arquitetura orientada a
+serviços</a>, só que
+em Erlang eles aparecem numa forma bem natural na linguagem e mais integrada ao
+ambiente.</p>
+<p>Aqui, permita-me apresentar algumas coisinhas da linguagem pra você, bem
+rapidão. Para acompanhar, <a href="http://www.erlang.org/download.html">instale Erlang</a>
+(no Ubuntu: <code>sudo apt-get install erlang</code>).</p>
+<h3>Super-quick-little-taste-of-Erlang</h3>
+<p>Veja o seguinte esqueleto de um programa concorrente em Erlang:</p>
+<p><a href="https://2.bp.blogspot.com/-HmS5hqh97EA/U0D7Y5iIeII/AAAAAAAAAtk/SVLNHGSIVHk/s1600/erlang-loop-menor.png"><img src="https://2.bp.blogspot.com/-HmS5hqh97EA/U0D7Y5iIeII/AAAAAAAAAtk/SVLNHGSIVHk/s1600/erlang-loop-menor.png" alt="&quot;Esqueleto de programa Erlang&quot;" /></a></p>
+<p>Note a recursão na função <code>loop</code>: é assim que se faz processos iterativos
+(loops) em Erlang, que não tem sintaxe especial para isso. O compilador
+implementa a otimização de “<a href="https://pt.wikipedia.org/wiki/Recursividade_(ci%C3%AAncia_da_computa%C3%A7%C3%A3o)#Fun.C3.A7.C3.B5es_recursivas_em_cauda">recursão de
+cauda</a>”
+(<a href="https://en.wikipedia.org/wiki/Tail_call">tail recursion</a>) para fazer uma
+função escrita de maneira recursiva executar de forma iterativa  -- isto é, sem
+re-chamar a função aumentando a<a href="https://pt.wikipedia.org/wiki/Pilha_de_chamada">pilha de
+chamada</a> (<a href="https://en.wikipedia.org/wiki/Call_stack">call
+stack</a>).</p>
+<p>Você pode testar esse código colocando-o em um arquivo <code>esqueleto.erl</code> e chamá-lo
+do shell Erlang, conforme a sessão abaixo:</p>
+<pre><code> $ erl
+ Erlang R16B01 (erts-5.10.2) [source] [64-bit] [smp:4:4] [async-threads:10] [kernel-poll:false]
+ 
+ 
+ Eshell V5.10.2  (abort with ^G)
+ 1&gt; c(esqueleto).
+ {ok,esqueleto}
+ 2&gt; Pid = esqueleto:start().
+ &lt;0.41.0&gt;
+ 3&gt; Pid ! &quot;alo!&quot;.
+ Received: &quot;alo!&quot;
+ &quot;alo!&quot;
+ 4&gt; Pid ! 1234.
+ Received: 1234
+ 1234
+ 5&gt; Pid ! {teste, com, uma, tupla, 123, &quot;ola&quot;}.
+ Received: {teste,com,uma,tupla,123,&quot;ola&quot;}
+ {teste,com,uma,tupla,123,&quot;ola&quot;}
+ 6&gt;
+</code></pre>
+<p>Note os pontos finais no fim de cada comando: o comando não roda se você
+esquecer deles. Em Erlang, o ponto <code>.</code> separa comandos e declarações, o
+ponto-e-vírgula <code>;</code> separacláusulas, e a vírgula <code>,</code> separa expressões.</p>
+<p>A primeira linha, <code>c(esqueleto).</code>  manda compilar o módulo no arquivo
+<code>esqueleto.erl</code>.</p>
+<p>Na segunda linha, <code>Pid = esqueleto:start().</code> aciona a função <code>start()</code> do módulo
+<code>esqueleto</code>, que vai gerar um novo processo e retornar o identificador do
+processo (em inglês, process identifier), que armazenamos na variável <code>Pid</code>.</p>
+<p>A seguir, na terceira linha usamos o comando!  para envio de mensagens em
+Erlang, enviando a mensagem“alo!” para o processo criado na linha anterior,
+identificado porPid.  O comando <code>receive</code> da função <code>loop()</code>  vai receber a
+mensagem e executar o código que imprime a mensagem na tela. A mensagem aparece
+repetida na tela porque o retorno do comando de envio <code>Pid ! Mensagem</code> é a
+mensagem enviada, e o shell sempre imprime o retorno do último comando
+executado.</p>
+<p>As linhas seguintes apenas repetem o mesmo feito da linha anterior, com outras
+mensagens diferentes (um inteiro e uma tupla contendo átomos, inteiros e
+strings).</p>
+<p>O comando <code>receive</code>  tem algumas habilidades especiais: além de bloquear a
+execução do código até o processo receber uma mensagem (que também pode ter um
+timeout  definido), ele pode selecionar o bloco de código a ser executado
+dependendo da forma ou conteúdo da mensagem, com o mecanismo chamado de
+<a href="https://en.wikipedia.org/wiki/Pattern_matching">pattern matching</a> (ou,
+<a href="https://pt.wikipedia.org/wiki/Casamento_de_padr%C3%B5es">casamento de
+padrões</a>).</p>
+<p>Por exemplo, usando pattern matching, podemos alterar o comando  <code>receive</code> da
+função  <code>loop()</code>   para executar um código diferente caso receba a mensagem
+<code>&quot;alo!&quot;</code>:</p>
+<pre><code>loop() -&gt;
+    receive
+        &quot;alo!&quot; -&gt;
+            io:format(&quot;Alooooow, galerinha da paaishhh!&quot;),
+            loop();
+        Any -&gt;
+            io:format(&quot;Received: ~p~n&quot;, [Any]),
+            loop()
+    end.
+</code></pre>
+<p>Se você repetir os passos anteriores com esse novo código, receberá uma
+resposta mais animada quando enviar a mensagem <code>&quot;alo!&quot;</code>. =)</p>
+<p>Nesse exemplo, o padrão casado foi o conteúdo da mensagem, isto é, a string
+<code>&quot;alo!&quot;</code>. Mas o mecanismo permite fazer vários tipos de verificações: você
+pode, por exemplo, verificar se a mensagem é um número ou uma tupla, se é uma
+tupla contendo um determinado elemento, se é uma lista com tantos elementos,
+etc.</p>
+<p>Quando alguém mais acostumado ao paradigma imperativo se depara com a ideia de
+pattern matching (que existe em outras linguagens além de Erlang), usualmente
+acha útil <a href="http://stackoverflow.com/questions/2502354/what-is-pattern-matching-in-functional-languages">pensar nele como um &quot;switch-case em
+esteróides&quot;</a>,
+uma espécie de Super Estrutura Condicional.</p>
+<p>Em Erlang, todavia,pattern matching (ou casamento de padrões) aparece em mais
+do que estruturas condicionais.</p>
+<p>De fato, na expressão:</p>
+<pre><code>X = 1.
+</code></pre>
+<p>o <code>=</code> (igual) é um acionamento do operador depattern matching de Erlang --
+diferente de outras linguagens em que o igual é um operador de
+<a href="https://pt.wikipedia.org/wiki/Atribui%C3%A7%C3%A3o_(computa%C3%A7%C3%A3o)">atribuição</a>.
+Erlang não tem operador atribuição, que usualmente permite definir e redefinir
+o conteúdo de variáveis.</p>
+<p>O que acontece aqui é que o <a href="http://www.erlang.org/doc/reference_manual/patterns.html">operador de pattern
+matching</a> liga um
+valor a uma variável quando esta ainda não tem nenhum valor associado (isto é,
+quando se trata de uma <a href="https://pt.wikipedia.org/wiki/Vari%C3%A1veis_livres_e_ligadas">variável
+livre</a>, ou
+<em>unbound variable</em>).</p>
+<p>Na próxima vez que a variável for referenciada, ela terá o valor &quot;casado&quot;
+(matched) anteriormente, veja:</p>
+<pre><code>1&gt; A.
+* 1: variable 'A' is unbound
+2&gt; A=&quot;oi&quot;.
+&quot;oi&quot;
+3&gt; A.
+&quot;oi&quot;
+4&gt;
+</code></pre>
+<p>Uma vez ligada, a variável só casará com o valor original, e nunca mais com
+outro. Caso tente casar a variável com outro valor (pensando que funcionaria
+como atribuição), você obterá um erro avisando que falhou o casamento do
+padrão:</p>
+<pre><code>4&gt; A = &quot;alô&quot;. 
+** exception error: no match of right hand side value &quot;alô&quot;
+</code></pre>
+<p>Isto porque em Erlang, as variáveis são imutáveis para o contexto local.  Outra
+forma de dizer é: em Erlang, as variáveis são de atribuição única (single
+assignment variables).  Uma vez atribuído um valor a uma variável, você não
+pode alterá-lo -- como demonstrei acima.</p>
+<p>Isto parece estranho no começo, para quem está acostumado com o paradigma
+imperativo. Pensando bem, é a mesma estranheza que a gente sente quando aprende
+a programar e é exposto a variáveis e atribuição pela primeira vez (“como
+assim, x = x + 1?).  Faz mais sentido pensar nas variáveis de Erlang como as
+variáveis da Matemática, em que o valor de um nome é sempre o mesmo.”</p>
+<p>A imutabilidade de variáveis tem como consequência algumas coisas
+interessantes:</p>
+<ul>
+<li>
+<p>força você a criar novas variáveis em algumas situações, mesmo que esteja com
+pouca criatividade para dar um nome decente (no livro mesmo tem alguns
+exemplos com <code>Word1</code>, <code>Word2</code> -- o que é meio feio)</p>
+</li>
+<li>
+<p>evita alguns tipos debugs e simplifica a depuração, pois aumenta a
+previsibilidade da execução do código (isto é, você pode confiar que o valor
+de uma variável não vai mudar)</p>
+</li>
+<li>
+<p>facilita a escrita de programas concorrentes e permite que sejam rodados em
+paralelo, pois evita uma cacetada de problemas de memória compartilhada</p>
+</li>
+</ul>
+<p>E esta última consequência compensa as dificuldades de dar nomes às variáveis.
+Porque escrever programas multi-thread é difícil de fazer direito (você precisa
+se preocupar com
+<a href="https://en.wikipedia.org/wiki/Synchronization_(computer_science)">sincronização</a>
+de processos e de memória), e o jeito Erlang de escrever programas concorrentes
+que se comunicam via envio de mensagens (o <a href="http://c2.com/cgi/wiki?ActorsModel">modelo de
+atores</a>) simplifica as coisas, de forma que
+os programas são sempre paralelizáveis.</p>
+<p>Isso faz com que aplicações escritas em Erlang escalem mais fácil do que
+aplicações escritas em outras linguagens. Claro que vários problemas de
+escalabilidade se manterão, principalmente os relacionados a hardware e
+infraestrutura, mas problemas de software tendem a ser resolvidos mais fácil
+com Erlang.</p>
+<p>De fato, Erlang vem de fábrica com mecanismos de clusterização, e você pode
+facilmente iniciar nós de um cluster em algumas máquinas e disparar chamadas
+remotas de um nó para outro.</p>
+<p>Para um exemplo rápido, inicie um nó do cluster em um terminal, dando um nome:</p>
+<pre><code>$ erl -sname lennon@localhost
+Erlang R16B01 (erts-5.10.2) [source] [64-bit] [smp:4:4] [async-threads:10] [kernel-poll:false]
+
+
+Eshell V5.10.2  (abort with ^G)
+(lennon@localhost)1&gt; 
+</code></pre>
+<p>Em outro terminal, inicie outro nó e faça uma chamada remota ao nó anterior:</p>
+<pre><code>$ erl -sname mccartney@localhost
+Erlang R16B01 (erts-5.10.2) [source] [64-bit] [smp:4:4] [async-threads:10] [kernel-poll:false]
+
+
+Eshell V5.10.2  (abort with ^G)
+(mccartney@localhost)1&gt; rpc:call(lennon@localhost, file, list_dir, [&quot;/&quot;]).
+{ok,[&quot;var&quot;,&quot;tmp&quot;,&quot;mnt&quot;,&quot;lib&quot;,&quot;boot&quot;,&quot;lib32&quot;,&quot;vmlinuz&quot;,
+     &quot;proc&quot;,&quot;media&quot;,&quot;bin&quot;,&quot;lib64&quot;,&quot;sys&quot;,&quot;opt&quot;,&quot;sbin&quot;,&quot;srv&quot;,
+     &quot;root&quot;,&quot;dev&quot;,&quot;usr&quot;,&quot;initrd.img&quot;,&quot;lost+found&quot;,&quot;cdrom&quot;,&quot;home&quot;,
+     &quot;vmlinuz.old&quot;,&quot;run&quot;,&quot;etc&quot;,&quot;initrd.img.old&quot;]}
+(mccartney@localhost)2&gt;
+</code></pre>
+<p>O argumento <code>-sname</code> faz com que Erlang inicie um nó com o nome passado (note
+como o nome do nó é mostrado no prompt). No comando que executamos no segundo
+nó (<code>mccartney@localhost</code>) usamos a função <a href="http://erlang.org/doc/man/rpc.html">call do módulo
+<code>rpc</code></a> para acionar uma função remotamente
+em outro nó e obter o resultado -- neste caso, a função <code>os:listdir(&quot;/&quot;)</code> para
+retornar a lista de arquivos do diretório raiz.</p>
+<p>E tudo com código da distribuição padrão. (Try that in Java, biátch!)</p>
+<p>Bom, tentei mostrar algumas coisas interessantes da linguagem aqui, mas Erlang
+tem muito a oferecer ainda. Ela tem outros <a href="http://www.erlang.org/doc/reference_manual/data_types.html">tipos de dados
+interessantes</a>
+(átomos,
+<a href="http://www.erlang.org/doc/efficiency_guide/binaryhandling.html">binaries</a>,
+tuplas, <a href="http://www.erlang.org/doc/reference_manual/records.html">records</a>, e
+na <a href="http://www.erlang.org/news/67">versão R17</a> terá
+<a href="http://www.erlang.org/eeps/eep-0043.html">maps</a>), um <a href="http://www.erlang.org/doc/reference_manual/ports.html">mecanismo próprio de
+comunicação com outros processos do sistema
+operacional</a>, permite a
+<a href="http://www.erlang.org/doc/reference_manual/typespec.html">especificação opcional de tipos para
+funções</a>, um <a href="http://www.erlang.org/doc/man/mnesia.html">banco
+de dados para aplicações
+distribuídas</a>, vem com ferramentas
+de fábrica para análise estática de código, depuração e profiling e com um
+<a href="http://learnyousomeerlang.com/what-is-otp">conjunto de bibliotecas e funções para aplicações tolerante a falhas e
+distribuídas</a>.</p>
+<p>Só tem dois problemas de usabilidade que me incomodam um pouco:</p>
+<ul>
+<li>
+<p>Nem todos os comandos ou exemplos de código funcionam no shell. Algumas
+funcionalidades só estão disponíveis no shell, e outras apenas em módulos
+compilados (<a href="http://stackoverflow.com/questions/2065990/defining-erlang-functions-in-the-shell">criar funções no
+shell</a>,
+por exemplo). Isso é uma espécie de “bug conhecido”: <a href="http://joearms.github.io/2013/05/31/a-week-with-elixir.html">Joe Armstrong, o criador
+da linguagem, conta que seus cabelos embranqueceram de tanto explicar por que
+a implementação ficou desse
+jeito</a>.</p>
+</li>
+<li>
+<p>O shell não tem histórico persistente, e não suporta atalhos comuns em
+aplicações da linha de comando que usam a <a href="https://en.wikipedia.org/wiki/GNU_Readline">GNU
+Readline</a>.  Parece que o esquema
+de IO do shell Erlang é meio complicado de manter -- no GitHub tem <a href="https://github.com/ferd/erlang-history">um
+projeto que adiciona um histórico persistente
+básico</a>, mas o FAQ não é muito
+encorajador.</p>
+</li>
+</ul>
+<p>O resto é fantástico. =)</p>
+<p>Caso você tenha ficado curioso, pode querer conferir o livro <a href="http://learnyousomeerlang.com/">Learn You Some
+Erlang</a> -- não li, mas já tirei algumas dúvidas
+nele caindo de buscas do Google e pareceu muito bom. Have a nice journey!  :)</p>
+<p>Valeu pela revisão, Fredi e Denise.</p>
+
+        </div>
+
+        <div class="taglist">
+</div>
+    </article>
+</section>
+
+
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+        </footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/atom-one-dark.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+<script src="https://eliasdorneles.com/theme/js/imgviewer.js"></script>
+</body>
+</html>

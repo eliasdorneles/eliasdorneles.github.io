@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Aventurando-se com Grails</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="manifest" href="/images/site.webmanifest">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4f3dd4ee-0791-4d9c-b94f-6d1aa073e79a"></script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
+                <nav><ul>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
+                </ul></nav>
+        </header><!-- /#banner -->
+        
+
+        
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="/2013/06/03/aventurando-se-com-grails.html"
+                    rel="bookmark" title="Permalink to Aventurando-se com Grails">Aventurando-se com Grails</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+            
+<footer class="post-info">
+        
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2013-06-03 20:09:00+02:00">03 Jun 2013</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/aventurando-se-com-grails.md">Edit</a>
+        </address>
+        
+
+
+</footer>
+
+            <p>Estou usando <a href="http://www.grails.org">Grails</a> ativamente há alguns meses
+atrás. Comecei fazendo manutenção numa aplicação legada usando uma
+versãozinha do Grails já bem gasta. Eventualmente, acabei migrando de
+vez, usando Grails 2.x para praticamente todas as aplicações novas lá no
+trampo. O bichinho é muito bom!</p>
+<p>Quem caiu aqui para ler uma simplificação grosseira, lá vai: Grails é
+Rails pra <a href="http://groovy.codehaus.org">Groovy</a>, e
+<a href="http://groovy.codehaus.org/">Groovy</a> é Ruby + Java. <a href="#f1">[1]</a></p>
+<p>Groovy, pelo menos, inspira-se bastante em ambas as linguagens. De fato,
+Groovy é um “Ruby” para os programadores Java que têm preguiça de
+aprender outra linguagem. Qualquer programador fluente na linguagem Java
+pode <a href="http://groovy.dzone.com/news/java-groovy-few-easy-steps">aprender o básico de Groovy em uma horinha de boa
+vontade</a> e há
+<a href="http://streetsaheadllc.com/article/ten-reasons-every-java-developer-should-learn-groovy--part-1-">vários</a>
+<a href="http://streetsaheadllc.com/article/ten-reasons-every-java-developer-should-learn-groovy--part-2-">motivos</a>
+muito bons para fazer isso.</p>
+<p>Mas não vou ficar explicando aqui <a href="https://pt.wikipedia.org/wiki/Groovy">o que é
+Groovy</a> e <a href="https://pt.wikipedia.org/wiki/Grails">o que é
+Grails</a>, a Wikipedia tá aí pra
+isso. Só quero anotar algumas coisas, mesmo -- também não é como se você
+estivesse com as expectativas lá muito altas. :P</p>
+<p>Como você talvez já se deu conta, as tais <a href="https://pt.wikipedia.org/wiki/Linguagem_de_dom%C3%ADnio_espec%C3%ADfico">linguagens de domínio
+específico
+(DSLs)</a>
+representam hoje <a href="https://eljunior.wordpress.com/2012/12/03/fatos-e-falacias-da-engenharia-de-software-notas-do-livro/">nossa melhor chance de conseguir reuso em grande
+escala</a>
+-- isto é, reuso de soluções para problemas genéricos. Groovy, a
+linguagem que empodera Grails, tem vários <a href="http://docs.codehaus.org/display/GROOVY/Writing+Domain-Specific+Languages">recursos justamente pra
+facilitar a criação de
+DSLs</a>.</p>
+<p>E Grails é recheado dessas linguagenzinhas. <a href="#f2">[2]</a> Tem DSLs para as
+configurações em diferentes ambientes, pra customizar o mapeamento de
+tabelas no banco de dados, pra configurar recursos estáticos (arquivos
+CSS, JS, etc), pra fazer consultas no banco de maneira mais legível, pra
+declarar regras de validação, enfim, pra uma pancada de coisa. E tem uma
+pancada de <a href="http://grails.org/plugins/">plugins extras</a> pra você usar
+que adicionam ainda outras.</p>
+<p>Isso é muito legal porque significa que você consegue fazer muito
+escrevendo bem pouco. Compressão. Eu curto. :)</p>
+<p>Bem, o caso é que eu tô curtindo muito ter <a href="http://grails.org/plugin/console">um REPL dentro da própria
+aplicação</a>, que permite eu vasculhar
+os objetos que estão escondidos lá no servidor de aplicação, executar
+queries no mesmo banco que a aplicação tá usando, checar a configuração
+da aplicação rodando e até mesmo esboçar um novo <em>feature</em>.</p>
+<p>Além disso, várias coisas que você sofre pra configurar nas aplicações
+Java Web comuns (gerenciamento de dependências, build automatizado fora
+da IDE, maneira fácil de rodar os testes unitários e de integração,
+gerenciamento dos recursos estáticos), com Grails você já ganha tudo
+prontinho de graça, bem organizado e em geral, muito mais fácil de
+manter.</p>
+<p>Nem tudo são flores, todavia. Não curto muito o comportamento default do
+<a href="http://www.grails.org/doc/latest/ref/Domain%20Classes/save.html">save()</a>,
+essa parada de ele falhar silenciosamente quando a validação não passa.
+Estou a par dos <a href="http://blog.springsource.com/2010/06/23/gorm-gotchas-part-1/">motivos que levaram os desenvolvedores do Grails a
+fazer dessa
+forma</a>,
+mas isso é simplesmente contrário ao esperado -- <em>not the best UX, guys,
+and you know it</em>. Já que não podíamos ter o parzinho <em>save</em> e <em>save!</em>
+como no Rails, bem que o comportamento poderia ter sido invertido aqui
+-- <em>save()</em> e <em>saveQuietly(),</em> talvez?</p>
+<p>De qualquer forma, tarde demais. Ainda assim, agora é só a gente lembrar
+de colocar <code>grails.gorm.failOnError=true</code> lá no <code>Config.groovy</code> sempre
+que criar uma aplicação nova, e todo mundo fica feliz de novo. :)</p>
+<p><a name="f1"></a><strong>[1]</strong> É, eu sei, Rails hoje em dia é um animal bem
+diferente, mas o fato é que Grails tem muita semelhança com as primeiras
+versões do Rails e ainda se inspira muito nele.</p>
+<p><a name="f2"></a><strong>[2]</strong> Não, as sintaxes das DSLs não são um problema
+-- todas elas são meio parecidas, justamente porque usam as mesmas
+<a href="http://groovy.codehaus.org/Closures">construções básicas</a>. Você nem
+precisa saber que são DSLs. ;-)</p>
+
+        </div>
+
+        <div class="taglist">
+</div>
+    </article>
+</section>
+
+
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+        </footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/atom-one-dark.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+<script src="https://eliasdorneles.com/theme/js/imgviewer.js"></script>
+</body>
+</html>

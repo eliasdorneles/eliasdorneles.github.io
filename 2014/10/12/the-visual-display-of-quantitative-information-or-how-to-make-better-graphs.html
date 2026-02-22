@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>The Visual Display of Quantitative Information, or How to Make Better Graphs</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="manifest" href="/images/site.webmanifest">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4f3dd4ee-0791-4d9c-b94f-6d1aa073e79a"></script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
+                <nav><ul>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
+                </ul></nav>
+        </header><!-- /#banner -->
+        
+
+        
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="/2014/10/12/the-visual-display-of-quantitative-information-or-how-to-make-better-graphs.html"
+                    rel="bookmark" title="Permalink to The Visual Display of Quantitative Information, or How to Make Better Graphs">The Visual Display of Quantitative Information, or How to Make Better Graphs</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+            
+<footer class="post-info">
+        
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2014-10-12 17:42:00+02:00">12 Oct 2014</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/the-visual-display-of-quantitative-information-or-how-to-make-better-graphs.md">Edit</a>
+        </address>
+        
+
+
+</footer>
+
+            <p><a href="https://www.edwardtufte.com/tufte/books_vdqi">The Visual Display
+of Quantitative Information</a>,
+by <a href="https://www.edwardtufte.com/">Edward Tufte</a>, is a beautiful book. It's not
+just well-written, it's really beautiful, you feel like every inch of the book
+was planned and designed with great care. The book makes the case for better
+data graphics, shows you several examples of great graphics (some of them were
+published centuries ago), plus some bad examples and how to improve them.</p>
+<a href="https://www.edwardtufte.com/tufte/books_vdqi">
+    <img src="https://www.edwardtufte.com/tufte/graphics/vdqi_bookcover.gif" align="right" />
+</a>
+<p>After reading it, I feel much more prepared to create graphs and choose better
+visualizations for the different kinds of data that may end up on my lap. Also,
+while reading the book, I got a lot of ideas for new things to try – I don't
+know if I'll ever be able to actually implement them, but it's been refreshing
+anyway.</p>
+<p>I've put down a few notes from the book just to whet your appetite, so here
+you are.</p>
+<h3>Good graphics tell a story</h3>
+<p>Data graphics are not about aesthetic sensibility of the artist who created it,
+nor making boring data a bit more fun. Great data graphics tell you a story
+about something, communicates complex stuff in a clear way, makes you wonder
+about the data on display, there is no need for distracting decorations.</p>
+<p>That's also why good graphics are often about multivariate and complex data,
+bringing new ways to look at it, enabling you to make comparisons and reason
+about it.</p>
+<p>A nice example used throughout the book is <a href="https://en.wikipedia.org/wiki/Charles_Joseph_Minard#Work">the graphic by Charles Minard
+showing Napoleon's disastrous attempt to conquer
+Russia</a>:</p>
+<p><a href="https://en.wikipedia.org/wiki/File:Minard.png"><img src="https://lh4.googleusercontent.com/D1zpfFIzj6ExFTso1a4fCr7RA2PWSQQ2FIBbNu03Ey1CPKzkumOdT7eiXhw7i116WelNxBRtMFXJXljwR0ZC6aXKE1_HSj90_gkgY9uLEymrRjS5ssDGdd3SoDLeyTwdJA" alt="900px-Minard.png" /></a></p>
+<h3>Good graphics don't lie</h3>
+<p>It's all about conveying precise information, so any tricks to distract the
+viewer from the truth are a bad idea. It's not much different than the written
+words, after all.</p>
+<p>Therefore, when constructing data graphics, make the physical representation of
+numbers in the paper or the screen always directly proportional to the
+quantities they represent. Do not bend rules in a way that may distort the data
+and induce erroneous comparisons. Do not use 2D graphics for 1D data. Finally,
+do not quote data out of context: show the full history of the measurements and
+take inflation into account when showing money-over-time.</p>
+<h3>Above all else show the data</h3>
+<p><a href="https://www.infovis-wiki.net/index.php/Data-Ink_Ratio">Data-ink ratio</a> is the
+proportion of a graphic's ink devoted to the non-redundant display of
+data-information. Namely, it represents the parts of a graphic that cannot be
+erased without loss of information.</p>
+<p>The process of creating a great data graphic involves maximizing the data-ink
+ratio, reducing all the non-relevant information.The folks at <a href="https://darkhorseanalytics.com/">DarkHorse
+Analytics</a> have done a good demonstration of
+this in <a href="https://speakerdeck.com/cherdarchuk">their neat Remove to Improve
+slideshows</a> (<a href="https://darkhorseanalytics.com/blog/">read more about it on their
+blog</a>).</p>
+<h3>Friendly data graphics are accessible</h3>
+<p>And this does not mean that you should &quot;dumb down&quot; the graphic to make it more
+accessible, but that you need to have the viewer in mind while constructing it.</p>
+<p>Therefore, you will spell out the words instead of using abbreviations,
+annotate the graphic with helpful little messages instead of requiring
+elaborated legends, use colors in a way that color-deficient people can also
+make sense of the graphic (tip: use red-blue instead of red-green for
+contrast), use clear, precise and modest font types, upper-and-lower case and
+with serifs.</p>
+<p>Liked it? <a href="https://www.amazon.com/The-Visual-Display-Quantitative-Information/dp/0961392142">Buy the book and read
+it</a>,
+it's worthy it.</p>
+<p>Thanks <a href="https://twitter.com/skywy">Paul</a>, for the great book recommendation. =)</p>
+
+        </div>
+
+        <div class="taglist">
+</div>
+    </article>
+</section>
+
+
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+        </footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/atom-one-dark.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+<script src="https://eliasdorneles.com/theme/js/imgviewer.js"></script>
+</body>
+</html>

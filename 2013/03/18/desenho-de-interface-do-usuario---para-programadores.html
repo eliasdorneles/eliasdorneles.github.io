@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Desenho de Interface do Usuário - para programadores</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="manifest" href="/images/site.webmanifest">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4f3dd4ee-0791-4d9c-b94f-6d1aa073e79a"></script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
+                <nav><ul>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
+                </ul></nav>
+        </header><!-- /#banner -->
+        
+
+        
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="/2013/03/18/desenho-de-interface-do-usuario---para-programadores.html"
+                    rel="bookmark" title="Permalink to Desenho de Interface do Usuário - para programadores">Desenho de Interface do Usuário - para programadores</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+            
+<footer class="post-info">
+        
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2013-03-18 22:57:00+02:00">18 Mar 2013</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/desenho-de-interface-do-usuario---para-programadores.md">Edit</a>
+        </address>
+        
+
+
+</footer>
+
+            <p><a href="http://www.joelonsoftware.com/">Joel Spolsky</a> é um cara batuta e muito
+inteligente. Ele é uma das figuras por trás do
+<a href="https://www.trello.com/">Trello</a> e do
+<a href="http://stackoverflow.com/">StackOverflow</a> (e seus <a href="http://stackexchange.com/">sites
+irmãos</a>), dois produtos show de bola que têm
+sido parte da minha vida diária ultimamente. Ele também é bastante
+conhecido pelos excelentes textos que escreveu no blog sobre vários
+aspectos de desenvolvimento de software, cobrindo assuntos desde
+gerenciamento de projetos, arquitetura e design de software, usabilidade
+e também contratação de funcionários. Resumindo: HERÓI! Se você lê
+inglês, ou quer aprender (e se você é programador, isso é altamente
+recomendado), dê uma olhada por lá! Aqui, vou deixar fácil:
+<a href="http://www.joelonsoftware.com/">http://www.JoelOnSoftware.com</a></p>
+<p>Num fim de semana desses, gastei duas horinhas lendo <a href="http://www.joelonsoftware.com/uibook/fog0000000249.html">a versão online do
+mini-livro dele voltado para programadores que trata desenho de
+interfaces de
+usuário</a> (tem
+<a href="https://www.amazon.com/User-Interface-Design-Programmers-Spolsky/dp/1893115941">outra versão à venda na Amazon que parece ter mais
+conteúdo</a>).
+Tempo muito bem gasto, diga-se de passagem, porque o conteúdo é muito
+bom! O Joel escreve bem pra caramba, a leitura é muito engajante e as
+histórias que ele conta são bem divertidas.</p>
+<p><strong>UPDATE:</strong> Recentemente, descobri que tem <a href="http://brazil.joelonsoftware.com/" title="Tradução dos posts do Joel">uma tradução dos posts do Joel Spolsky que fizeram o livro aqui</a>: <a href="http://brazil.joelonsoftware.com/">http://brazil.joelonsoftware.com</a>.</p>
+<p>Ele comenta sobre o desgosto que alguns programadores têm de fazer
+interfaces, provavelmente baseado no medo injustificado de ter que fazer
+<a href="https://pt.wikipedia.org/wiki/Design_gr%C3%A1fico">design gráfico</a> (não,
+não é a mesma coisa que <em>desenho de interface -- UI design</em>).
+Programadores tendem a pensar sobre si mesmos como pessoas racionais,
+com bom raciocínio mas fraco em arte. Todavia, Joel explica, desenho de
+interface não é nenhuma arte misteriosa, e na verdade existem uma série
+de regras e princípios que podem ser aplicados para melhorar a interface
+dos programas para o usuário.</p>
+<p>O caso é que a interface é importante porque afeta as emoções das
+pessoas. Quando um usuário não consegue fazer o que ele queria com o
+software, fica frustrado. Infeliz, mesmo! Mesmo que sejam algumas
+pequenas frustraçõezinhas, elas tendem a se somar, principalmente num
+software que é usado frequentemente. E o resultado é um grupo de
+usuários bem infelizes, no fim do dia. E eles vão botar a culpa no seu
+software!</p>
+<p>Todavia, quando o usuário consegue fazer o que queria, o programa
+funciona do jeito que ele esperava, o resultado é um usuário bem
+animado. <em>Funcionou! Ripei um DVD! Que massa esse programa! \o/</em></p>
+<p>Por isso, a primeira coisa importante a se ter em mente é:</p>
+<h3>Uma interface é bem-feita quando o programa se comporta exatamente como o usuário esperava.</h3>
+<p>Todas as regras e princípios restantes são corolários a esta.</p>
+<p>Quando um usuário senta pra usar um programa, ele tem uma série de
+expectativas sobre como ele acha que o programa vai funcionar. Se ele já
+usou outros programas parecidos antes, vai achar que esse vai funcionar
+mais ou menos como aquele outro. Essas expectativas que devemos tentar
+descobrir, na hora de fazer uma interface pra o usuário. E você descobre
+isso de um jeito muito científico, e muito simples: <strong>perguntando aos
+usuários!</strong> Você não precisa <em>fazer</em> o que eles querem que você faça,
+mas você deve pelo menos <em>ouvir</em> o que eles têm a dizer.</p>
+<p>Em vez de ficar argumentando e discutindo qual o melhor jeito de tratar
+determinado problema, simplesmente pergunte a alguns usuários o que eles
+esperariam como solução. É claro que alguns podem não saber, não se
+interessar ou simplesmente nunca ter pensado muito a respeito, mas se
+você perguntar pra gente suficiente eventualmente vai começar a enxergar
+uma espécie de consenso. E aí você já pode fazer um teste de usabilidade
+usando um protótipo da interface e pedindo pra alguns usuários tentar
+completar algumas tarefas, enquanto você observa.</p>
+<p>Nessa hora você pode descobrir algumas coisas interessantes, tipo como
+certos usuários tentam clicar em coisas que não são clicáveis, ou
+procuram por uma certa opção num lugar diferente no menu. Talvez você
+perceba que precisará melhorar o suporte a copiar e colar em alguns
+campos, ou oferecer uma opção para desfazer certas ações, talvez
+reescrever os rótulos de alguns botões, e outras coisas do tipo. O legal
+é que você nem precisa fazer o teste com muitos usuários: mais de cinco
+ou seis pessoas e os resultados já começarão a se repetir! Resumindo,
+não requer nenhum investimento pesado em pesquisa.</p>
+<p>Enfim, fazendo as coisas dessa maneira você consegue ter uma idéia
+melhor do que é que os usuários esperam. Você pode descobrir que
+melhorará a vida duma grande porcentagem dos usuários se construir sua
+aplicação a respeito de tarefas dos usuários, em vez de uma série de
+recursos genéricos não muito claros. Está no caminho para construir uma
+interface que atenda essas expectativas.</p>
+<p>Uma coisa que reforça esse assunto, é a questão da <a href="http://web.cs.wpi.edu/~matt/courses/cs563/talks/smartin/int_design.html">consistência
+externa</a>,
+isto é, a consistência com as outras ferramentas que o usuário está
+acostumado (este assunto é também tratado <a href="https://eljunior.wordpress.com/2012/11/25/livro-effectiveui-minhas-notas/">no livro sobre experiência do
+usuário que comentei há uns tempos
+atrás</a>).
+Quando as primeiras aplicações começaram a aparecer, todo mundo precisou
+imaginar os próprios atalhos, menus e botões para determinadas coisas.
+Ainda existe muito software daquela época que é assim até hoje, em que
+mesmo o jeito de fechar o programa é bem diferente (<em>hello, Emacs... and
+vim :</em>).</p>
+<p>Hoje em dia, as aplicações Web tentam se aproximar bastante à
+experiência oferecida pelas aplicações Desktop, porque corresponde
+melhor às expectativas dos usuários. Estou escrevendo este texto no
+Google Docs e sou grato ao Google por ter mantido no Docs a interface
+familiar das outras suítes de Office -- menus
+Arquivo/Editar/Formatar/etc, a barra de ferramentas, a maioria dos
+atalhos para formatação também simplesmente funcionam. Imagina se eles
+resolvessem: <em>“ei, nossa aplicação é Web, não tem nada a ver com o
+Office tradicional, vamos então prover uma experiência totalmente nova!
+Arquivos são coisas do passado, nós não temos arquivos, temos documentos
+na nuvem, então esse item File no menu não faz sentido!”</em> Ainda bem que
+não rolou nada disso, certo? (Certo, Google?)</p>
+<p>Por isso, ao fazer a interface do seu programa, faça o favor de seguir
+as convenções que os outros estão usando -- mesmo que elas tenham sido
+estabelecidas por certas gigantes multinacionais pelas quais você não
+tem muito carinho. Para construir interfaces usáveis deixe a ideologia
+de lado, os usuários agradecem. Caso contrário, você corre o risco de
+ser <a href="http://sivers.org/quirks">aquele hotel que resolveu fazer tudo diferente e deixou impossível
+pra um recém-chegado descobrir como acender as luzes do quarto ou abrir
+a torneira</a>.</p>
+<p>A segunda grande regra de desenho de interface do Joel é:</p>
+<h3>Cada vez que você apresenta uma opção, você está pedindo ao usuário para tomar uma decisão.</h3>
+<p>O que não é necessariamente uma coisa ruim, é claro. Todo mundo gosta de
+poder escolher certas coisas, é por isso que Subway, Spoletto e outros
+restaurantes do tipo fazem sucesso. Todavia, ninguém gosta de escolher
+coisas que <em>simplesmente não interessam</em>.</p>
+<p><a href="https://eljunior.files.wordpress.com/2013/03/clippy-letter20110724-22047-qcxdai.png"><img src="https://eljunior.files.wordpress.com/2013/03/clippy-letter20110724-22047-qcxdai.png" alt="Lembra desse cara chato?" /></a>
+Lembra desse cara chato?</p>
+<p>E a verdade é que a maioria dos usuários não se importam com tanta coisa
+quanto você pode achar. Joel dá um exemplo do que não fazer, citando o
+caso da ajuda do Windows, que em vez de mostrar a ajuda, abria um wizard
+perguntando como você queria configurar o índice da ajuda... É igual
+como quando você está tentando trabalhar em alguma coisa e alguém fica
+interrompendo, exigindo sua atenção para um assunto inútil.</p>
+<p>Outro exemplo de problema do tipo foi a possibilidade de configurar a
+posição das barras de ferramentas... Você pode configurar tanto, que
+pode inclusive extrair a barra pra uma janela separada (e depois lutar
+bastante pra colocá-la de volta no lugar original). Aí você tem uma
+coisa que ninguém quer, mas que acaba atrapalhando para todo mundo.</p>
+<p>Resumindo: <em>pense muito bem antes de forçar o usuário decidir sobre uma
+coisa</em>. Em geral, você deve tentar minimizar a quantidade de decisões,
+deixando apenas o que realmente importa.</p>
+<h2>Como criar interfaces para pessoas que têm mais o que fazer na vida</h2>
+<p>Quando você desenha interfaces para o usuário, diz Joel, é uma boa idéia
+manter dois princípios em mente:</p>
+<ol>
+<li><strong>Usuários não lêem o manual</strong></li>
+<li><strong>Na verdade, usuários não lêem nada</strong></li>
+</ol>
+<p>Usuários não lêem o manual por diversos motivos. Às vezes, eles nem
+<em>têm</em> o manual, mas não iam querer ler mesmo se tivessem. Em geral, seus
+usuários estão tentando <em>fazer</em> alguma coisa. Para eles, ler o manual é
+interromper a tarefa que estão fazendo, é mais perda de tempo (e tendo
+em vista como tantos manuais são escritos mal, frequentemente eles estão
+corretos em assumir isso).</p>
+<p>E de fato, usuários não lêem nada! Isso pode soar meio bizarro, mas a
+verdade é que existem muitas pessoas que simplesmente não lêem as
+palavras que estão escritas na tela. Isso é muito azarado para o
+programador, que geralmente gosta de imaginar tendo uma espécie de
+diálogo com o usuário. Mas se você já parou para observar as outras
+pessoas usando o computador, provavelmente já percebeu que algumas nunca
+lêem o que aparece num diálogo e automaticamente clicam em <em>Ok</em> ou
+<em>Cancelar</em> -- dependendo do nível de confiança de cada uma.</p>
+<p>Eu conheço de perto um programador que se comporta exatamente dessa
+forma. O bicho simplesmente não lê as mensagens que aparecem na tela,
+mesmo quando vai usar um programa que não está acostumado, é incrível!
+Incidentalmente, ele vive reclamando que os usuários dos programas dele
+não lêem as mensagens na tela...</p>
+<p>Mas é assim mesmo. Os usuários avançados usualmente pulam as instruções.
+Iniciantes não gostam mesmo de ler muito. E os poucos usuários que realmente
+tentam ler as instruções, muitas vezes acabam ficando ainda mais confusos
+depois de lê-las! Por isso, os textos que você põe na tela devem ser polidos
+para minimização. Substitua explicações por ações auto-explicativas. Dá mais
+trabalho fazer assim porque você precisa pensar mais para conseguir reduzir os
+textos, mas vale a pena. <strong>Menos é realmente mais.</strong></p>
+<p>Ok. Joel fala de várias outras coisas também, mas este texto está ficando
+grande demais, e você é um herói legendário tendo lido até aqui de qualquer
+forma, então, prometo que já-já vou terminar.</p>
+<p>Outra coisa que usuários também não são muito bons em fazer é controlar o
+mouse. Pois é, eles não controlam o mouse muito bem. Meus pais mesmo tiveram
+uma certa dificuldade de aprender o duplo clique. Certas tarefas são
+particularmente complicadas de fazer com o mouse. E às vezes, mesmo se o
+usuário sabe usar o mouse, ele não funciona muito bem. Eu mesmo cansei de
+xingar aplicações com barras de rolagem muito chatas, em que algumas tarefas
+simples viram um exercício de autocontrole pra não socar o monitor. E até hoje
+ainda tenho alguns medinhos sobre clicar e arrastar...</p>
+<p>Outra coisa a lembrar: Usuários não conseguem lembrar muita coisa.
+Praticamente, nadica! E é por isso que menus são melhores interfaces que linhas
+de comando crípticas. Por isso que escolher um arquivo de imagem selecionando
+uma miniatura da imagem é melhor do que procurar o nome do arquivo numa lista.
+E por isso que, mesmo quem jura que a linha de comando é uma interface melhor,
+não larga do autocompletar. :)</p>
+<p>E ei, eu sou um que vivo na linha de comando, uso na grande maioria das minhas
+tarefas no PC. Mas não tem como negar que o Windows Explorer apresentando as
+pastas em árvore é uma metáfora <em>beeem</em> melhor para o sistema de arquivos. Eu
+na linha de comando é só eu na minha zona de conforto. Eu devia tentar usar
+mais a interface gráfica, mas...</p>
+<p>Ok, agora sim, estou finalizando! O que segue é provavelmente o ponto mais
+importante de todo esse texto.</p>
+<p>Alguém lendo este texto, pode achar que um princípio geral a ser seguido é:
+<em>“pense que seus usuários são muito burros”</em>, e talvez achar que essa seja uma
+atitude arrogante. Não muito, eu diria... <em>Uma arrogância muito pior é achar
+que o seu software é tão bom e bem-feito que as outras pessoas simplesmente
+devem se virar pra aprender a usá-lo</em>.</p>
+<p><a href="https://eljunior.files.wordpress.com/2013/03/ui-usuarios-final.png"><img src="https://eljunior.files.wordpress.com/2013/03/ui-usuarios-final.png" alt="UI-usuarios-final" /></a></p>
+<p>Pense comigo. A grande maioria das pessoas sabe operar uma televisão.
+Uma boa porção dessas pessoas deve ser capaz de usar o PC, navegar na
+Internet e olhar email, criar tabela no Excel. Uma porção pequena dessas
+pessoas deve saber usar Linux, talvez usar um pouco a linha de comando,
+e usar o último <em>tablet</em> da moda. Pouquíssimas dessas pessoas saberão
+programar. E das que sabem, muito poucas saberão programar em C++. (<em>Cá
+entre nós, quase nenhuma mesmo, mas vai ter muitas que acham que sabem!
+:D</em>)</p>
+<p>O que podemos concluir disso é que <em>quando você melhora a interface do
+seu programa, mesmo que em pequena quantidade, você aumenta
+dramaticamente o número de pessoas que pode usá-lo</em> com facilidade.
+Melhore a interface para o <em>noob</em> que mal e mal sabe usar a TV, e a
+interface vai melhorar pra todo mundo -- inclusive para os hackers
+barbudinhos! Tipo, melhore a interface em 10%, e ganhe 50% mais
+usuários. Por isso também, que fazer pequenas melhoras numa aplicação
+ruim que é usada largamente, pode valer muito mais a pena do que criar
+uma aplicação nova toda perfeitinha, que talvez não tenha tanto público.</p>
+<p>Então, não é que os seus usuários sejam tolos, mas sim que se você
+seguir tentando fazer seu sistema à prova de tolos, você chegará num
+programa fácil de usar pra todo mundo. De fato, se fazer de tolo é uma
+boa maneira de avaliar a usabilidade de um programa ou tela. Não ler o
+que tá escrito na tela, sair clicando onde acha que deve ser, usar o
+mouse com um dedo só. Se a interface não aguenta você sendo imaturo e
+impaciente, provavelmente ela pode ser melhorada um bocado.</p>
+<p>Finalmente, o último conselho é: <strong>faça seu programa girar em torno de
+atividades do usuário</strong>. Se você vai fazer um produto, não saia
+simplesmente criando os recursos que acha que será necessário. Imagine
+alguns usuários (Pedro, pai de família, usa o PC para ver vídeos no
+YouTube e trocar emails com os amigos. Luana, filha adolescente de
+Pedro, passa as tardes no Facebook e baixa MP3 via BitTorrent). Isso
+deve ajudar a despertar empatia por eles. Então você pode imaginar
+algumas <em>coisas</em> que esses usuários queiram <em>fazer</em> com seu programa. E
+o passo seguinte é ter certeza de deixar bem óbvio como essas coisas
+podem ser feitas, na interface do seu programa.</p>
+<p>Dessa maneira você evita uma aplicação que os usuários tenham que ler o
+manual (que ele não tem, lembra?) pra ver o que pode fazer com ela. De
+cara, ele já pode descobrir como fazer o que precisa. <em>Ripar um CD</em>.
+Enviar um cartão de Feliz Aniversário. <em>Criar álbum de fotos</em>. Imprimir
+o artigo inteiro. <em>Achar uma imagem para ilustrar o texto</em>. Revisar os
+últimos comentários postados.</p>
+<p>Uma interface desenhada em torno de atividades sempre vai detonar uma
+desenhada em cima de quantidade de recursos, tranquilamente e de mãos
+atadas!</p>
+<p>Era isso, chega por hoje! :)</p>
+
+        </div>
+
+        <div class="taglist">
+</div>
+    </article>
+</section>
+
+
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+        </footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/atom-one-dark.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+<script src="https://eliasdorneles.com/theme/js/imgviewer.js"></script>
+</body>
+</html>

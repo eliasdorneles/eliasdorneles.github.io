@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Learning from DAS screencasts - season 3</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="manifest" href="/images/site.webmanifest">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4f3dd4ee-0791-4d9c-b94f-6d1aa073e79a"></script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
+                <nav><ul>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
+                </ul></nav>
+        </header><!-- /#banner -->
+        
+
+        
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="/2015/12/30/learning-from-das-screencasts-season-3.html"
+                    rel="bookmark" title="Permalink to Learning from DAS screencasts - season 3">Learning from DAS screencasts - season 3</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+            
+<footer class="post-info">
+        
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2015-12-30 12:36:00+02:00">30 Dec 2015</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/learning-from-das-screencasts-season-3.md">Edit</a>
+        </address>
+        
+
+
+</footer>
+
+            <p>Here is a summary of my learning from watching <a href="https://www.destroyallsoftware.com/screencasts/catalog">season 3 of Destroy All
+Software screencasts</a>.</p>
+<h2>Which kind of code should go into Models?</h2>
+<p>Gary is fond of an architecture style for web applications, which is
+<a href="http://rhodesmill.org/brandon/slides/2014-07-pyohio/clean-architecture/">equivalent to the so-called clean architecture described by Brandon Rhodes
+here</a>:</p>
+<center>
+<img src="../../..//images/clean-architecture.jpg" alt="The Clean Architecture diagram" width="500" />
+</center>
+<p>Following this architecture, the code inside model classes (in Rails, this
+would be Active Record classes) should be either:</p>
+<ul>
+<li>validations/relationships</li>
+<li>mutation (set &amp; save)</li>
+<li>wrapper (meaningful getter)</li>
+<li>queries (where/order/etc &lt;- best to always be only there)</li>
+<li>creation (create and save)</li>
+</ul>
+<p>And that’s it.</p>
+<p>Things with more application logic (aka business rules) should go into their
+own libraries, decoupled from the framework or ORM. This leaves the models with
+no extra dependencies apart from the ORM, and make the code implementing the
+application logic easier to test and modify.</p>
+<p>I like this idea very much, but it seems often quite hard to put it in practice,
+because most web frameworks encourage coupling with its APIs. I'm yet to see
+a framework that really encourages this kind of separation of concerns.
+Even the so-called micro-frameworks often fall in this trap.</p>
+<p>My feeling is that you need extra discipline to use this architecture.  I think
+there is a complexity threshold for deciding when the effort will pay off.</p>
+<h2>Outside-in TDD</h2>
+<p>I already mentioned <a href="http://coding-is-like-cooking.info/2013/04/outside-in-development-with-double-loop-tdd/">outside-in
+TDD</a>
+in <a href="%7Bfilename%7D./learning-from-das-screencasts-season-2.md">the summary for the second
+season</a>, when
+Gary talked about
+<a href="https://joneaves.wordpress.com/2004/02/18/spike_to_learn_tdd_to_build/">spiking</a>.</p>
+<p>Here he shows two approaches to do it:</p>
+<ol>
+<li>
+<p>stubbing dependencies: here you program by wishful thinking, and design the
+dependencies by stubbing them out (i.e. using mocks to define the interaction
+with the code not yet implemented).</p>
+</li>
+<li>
+<p>stash (using Git): implement a feature, but instead of stubbing a wished
+feature, stash the current code (i.e. set apart the current code via
+<a href="http://www.gitguys.com/topics/temporarily-stashing-your-work/">git stash</a>),
+test and implement the wished feature TDD-style, commit it, unstash the
+previous code (git stash pop), finish implementing test with the newly
+developped code and then commit it.</p>
+</li>
+</ol>
+<p>Both approaches are valid and result in equivalent granularities, but the order
+of commits will be different (with stubbing, the order will be more like
+top-down) and tests with the stub approach tend to be more isolated.</p>
+<h2>Testing code that calls HTTP APIs</h2>
+<p>Here is a cool idea: consider external HTTP APIs like “databases”, and test
+your wrapper code mocking the HTTP interactions with a tool to replay
+interactions like you would test with a fake database.</p>
+<p>There is a neat tool for doing this called <a href="https://github.com/vcr/vcr">vcr</a>
+which is written in Ruby, there is a Python port called
+<a href="https://pypi.python.org/pypi/vcrpy">vcrpy</a>.</p>
+<p>What this VCR tool does is: it records HTTP requests into a &quot;cassette&quot; (an
+<a href="https://en.wikipedia.org/wiki/YAML">YAML file</a>) to replay the requests later
+from it when running the tests and then checks if the requests match the
+expected ones from the cassete file.</p>
+<p>This makes the tests verify at the boundary of your app with the external HTTP
+API, which is arguably more reliable than verifying interactions with proxy
+objects (see <a href="https://www.destroyallsoftware.com/talks/boundaries">this talk for about this idea of
+boundaries</a>.)</p>
+<p>Here is the introduction for <code>vcrpy</code>:</p>
+<blockquote>
+<p>VCR.py simplifies and speeds up tests that make HTTP requests. The first time
+you run code that is inside a VCR.py context manager or decorated function,
+VCR.py records all HTTP interactions that take place through the libraries it
+supports and serializes and writes them to a flat file (in yaml format by
+default). This flat file is called a cassette. When the relevant piece of
+code is executed again, VCR.py will read the serialized requests and
+responses from the aforementioned cassette file, and intercept any HTTP
+requests that it recognizes from the original test run and return the
+responses that corresponded to those requests.</p>
+</blockquote>
+<p>I've recently started using <code>vcrpy</code>, and I like the approach.
+However, I'm not sure about</p>
+<p>One possible drawback of this approach is that the library must support the
+HTTP library you're using, to be able to intercept the requests -- VCR.py
+currently lacks support for Twisted Web Client.</p>
+<h2>Dealing with untested Code</h2>
+<p>In a series of episodes, Gary demonstrates how to tackle an untested method,
+adding tests and then refactoring it, keeping the test suite updated.</p>
+<p>In this case, you can’t isolate upfront. Sometimes you can start with &quot;smoke
+tests&quot; (e.g. simple output test of a happy path).</p>
+<p>Gary’s example is a Rails controller method, he starts by writing RSpec
+contexts (just the names/descriptions of the tests), one for every code path
+(namely, two for every conditional), then sort them from the happiest path to the &quot;saddest&quot; path.</p>
+<p>Having that, then he starts writing tests in that order, always checking the
+tests fail for every context when appropriate -- this way ensuring that the
+test is verifying the right thing.</p>
+<p>I found this quite useful, since I often find myself having to deal with
+untested code -- often it's my own (lazy programmer detected!).</p>
+<p><strong>Aside about testing tools for Python</strong></p>
+<p>These videos got me envious of Ruby programmers because of
+<a href="http://rspec.info/">RSpec</a>, it’s a really powerful tool. I couldn't find any
+good equivalent for Python yet.</p>
+<ul>
+<li>If you just want a nice output you may try out
+<a href="https://github.com/bitprophet/spec">spec</a> (or <a href="https://pypi.python.org/pypi/pinocchio/">pinochio</a>),
+that work with <a href="http://nose.readthedocs.org">nosetests</a></li>
+<li><a href="https://pypi.python.org/pypi/pytest-describe">pytest-describe</a> almost cuts
+it, but it only supports one level of nesting and its reporting is quite ugly
+due to limitations of the implementation.</li>
+<li><a href="https://github.com/nestorsalceda/mamba">mamba</a> looks promising -- I like the
+API, but it's currently lacking documentation.</li>
+<li>I've recently found out about <a href="http://heynemann.github.io/pyvows/">pyvows</a>
+which looks really cool. I really like the API, but I'm not sold on requiring
+<a href="http://www.gevent.org">gevent</a> for my test suite.</li>
+</ul>
+<p>I even toyed around with <a href="https://gist.github.com/eliasdorneles/a9d5e7ff9a0c00f5bf29">a class decorator allowing for a similar API but relying
+only on unittest</a>
+which seems to work well with nose and pytest, but I don't know if it's worth
+the hassle (let me know if you think this is useful).</p>
+<p>Python doesn't make it easy to build this kind of tool, I'm really envious. =)</p>
+<h2>Emacs, chainsaw of chainsaws</h2>
+<p>Emacs is written in Elisp, and can be extended with Elisp -- this offers a
+great level of customization. Also, Emacs environment knows about itself: for
+example, the help system is dynamic and can even show your own custom shortcut
+for a function.
+Vim doesn’t have anything like that, help system are static text files.</p>
+<blockquote>
+<p>You can build vim inside Emacs, but you could never build Emacs inside vim.</p>
+</blockquote>
+<p>However, a fresh Emacs installation (without customization) is less usable than
+a fresh Vim installation.</p>
+<h2>Better structure for Bash scripts by using many small functions.</h2>
+<p>This:</p>
+<pre><code>userinfo() {
+    grep &quot;^$1:&quot; /etc/passwd
+}
+
+extract_uid(){
+    cut -d: -f3
+}
+
+extract_home(){
+    cut -d: -f6
+}
+
+echo User ID: $(userinfo $1 | extract_uid)
+echo Home: $(userinfo $1 | extract_home)
+</code></pre>
+<p>is better than this:</p>
+<pre><code>echo User ID: $(grep &quot;^$1:&quot; /etc/passwd | cut -d: -f3)
+echo Home: $(grep &quot;^$1:&quot; /etc/passwd | cut -d: -f6)
+</code></pre>
+<p>Last one is shorter, but the former is easier to read and more composable.</p>
+<h2>TDD: when to generalize</h2>
+<p>Deciding when to generalize in TDD can be difficult, depending on your code and
+process.</p>
+<p>In case you start your tests with the happy path (as opposed to starting with edge cases),
+here are some situations to help you decide when it's time to generalize instead of sliming
+(hardcoding values or writing fake implementation just for the current test to pass).</p>
+<ul>
+<li>
+<p>If there is a pending test (not yet implemented) that will force
+generalization, use that: implement the test and then generalize.</p>
+</li>
+<li>
+<p>If sliming  is harder than generalize, just generalize already.</p>
+</li>
+<li>
+<p>If the implementation is obvious and easy (e.g., it's just calling code
+that's already tested and trusted), generalize, then consider the edge
+cases and write tests for them.</p>
+</li>
+</ul>
+<p>Note that this is illustrative, but not comprehensive -- there are probably.</p>
+<h2>TDD: bad expectations</h2>
+<p>Here are some notes about bad expectations/assertions in the test code, which
+are bad because they mine our confidence in the test suite.</p>
+<p>Negative expectations (e.g., asserting that some function was NOT called, or
+that some expression isn't true) are dangerous because it's easy to miss
+a case where result can be incorrect and the assertion still pass.</p>
+<p>The same is true for partial matches (checking containment or substring) like:</p>
+<pre><code>'connected' in status  # what if status is &quot;disconnected&quot;?
+</code></pre>
+<p>Tests that obsess about implementation (like, a test checking the internal state
+of the component being tested) are also bad. This kind of test pours concrete
+over the code, making changes harder.</p>
+<p>Finally, it’s best to write tests against the broad interface of a class,
+instead of tests for helper methods in it. In the end, the broad interface is
+what really matters, and the helper methods have higher probability to be
+changed later, best not to pour concrete around them either.</p>
+<p>That's it for season 3 -- thanks for reading! :)</p>
+
+        </div>
+
+        <div class="taglist">
+</div>
+    </article>
+</section>
+
+
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+        </footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/atom-one-dark.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+<script src="https://eliasdorneles.com/theme/js/imgviewer.js"></script>
+</body>
+</html>

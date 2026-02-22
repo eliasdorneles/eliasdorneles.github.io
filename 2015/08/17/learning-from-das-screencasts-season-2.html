@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Learning from DAS screencasts - season 2</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="manifest" href="/images/site.webmanifest">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4f3dd4ee-0791-4d9c-b94f-6d1aa073e79a"></script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
+                <nav><ul>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
+                </ul></nav>
+        </header><!-- /#banner -->
+        
+
+        
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="/2015/08/17/learning-from-das-screencasts-season-2.html"
+                    rel="bookmark" title="Permalink to Learning from DAS screencasts - season 2">Learning from DAS screencasts - season 2</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+            
+<footer class="post-info">
+        
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2015-08-17 01:41:00+02:00">17 Aug 2015</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/learning-from-das-screencasts-season-2.md">Edit</a>
+        </address>
+        
+
+
+</footer>
+
+            <p>These are my notes for <a href="https://www.destroyallsoftware.com/screencasts/catalog">season 2 of Destroy All Software
+screencasts</a>.</p>
+<h2>The command line, Unix, git and Vim</h2>
+<p>In the first episode Gary teaches how to compose a complex Unix command line:
+the point is that you want to build it slowly, checking if it works at every
+step of the way. This becomes common sense pretty quickly after you acquire the
+habit of doing this kind of thing for a while.</p>
+<p>For example, say you want to remove the untracked files from a git repo.
+Instead of trying to write all of this in one go:</p>
+<pre><code>$ git status -s | grep '??' | awk '{ print $2 }' | xargs rm -f
+</code></pre>
+<p>Since you don't want to delete any files by mistake, you will check every step
+along the way, until arriving at the safe command:</p>
+<pre><code>$ git status -s
+ M README.rst
+?? anotherfile.txt
+?? file.txt
+$ git status -s | grep '^??'
+?? anotherfile.txt
+?? file.txt
+$ git status -s | grep '^??' | awk '{ print $2 }'
+anotherfile.txt
+file.txt
+$ # great, got right the list of files now!
+$ # now let's pipe it to xargs and print the delete command:
+$ git status -s | grep '^??' | awk '{ print $2 }' | xargs echo rm -f
+rm -f anotherfile.txt file.txt
+$ # looks safe, let's remove the echo and do it for real:
+$ git status -s | grep '^??' | awk '{ print $2 }' | xargs rm -f
+</code></pre>
+<p>His example is more complicated and more interesting than this, but you get the gist of it.</p>
+<p>The second episode is about the tar pipe, you can read <a href="http://blog.extracheese.org/2010/05/the-tar-pipe.html">Gary's own post about
+it here</a>. I was already
+familiar with the shell inner workings because I had to implement a toy shell
+as homework when I was in college (my buddy
+<a href="https://twitter.com/stummjr">Valdir</a> and I had loads of fun with that).  It
+was pretty cool to see it takes a few minutes and 10 lines of Python code what
+took us days and many lines of C code at the time.</p>
+<p>Later there is an episode about Vim with tips about how to learn it.
+Here is a summary:</p>
+<ul>
+<li>Learn the normal mode</li>
+<li>Learn the motions (<code>:help motions</code>)</li>
+<li>Don't repeat yourself</li>
+<li>When automating stuff, you usually start with something that you <em>read</em> (a
+message in a buffer), then with something that you <em>scan</em> (a list of things),
+then finally with something that you <em>do</em> (an action or command).</li>
+<li>An action is better than scanning over a list which is better than having to
+read an interpret a message. Choose plugins that are more of the former than
+the latter.</li>
+</ul>
+<p>The thing about Vim is that it feels like practicing a sport or playing an
+instrument, you can often do edit work with your eyes closed.</p>
+<p>In another episode Gary builds a command-line to look at evolution of the
+execution time of the test suite, and then demonstrates using <code>git bisect</code> to
+find out which change was responsible for a nice performance boost. He used a
+few tricks which I thought were pretty neat.</p>
+<p>First trick was, while building a command line for a long list of commits, he
+used awk to filter the input to get only every 50th line, before getting the
+rest of the command line right for the full output, like this:</p>
+<pre><code>some command generating many lines | awk 'NR % 50 == 0'
+</code></pre>
+<p>I can see myself using this in the future, it’s a good way of previewing the results of a command. :)</p>
+<p>The other trick I liked was getting a quick histogram in the command-line using
+<a href="http://www.unix.com/man-page/freebsd/1/jot/">a command utility called jot</a>
+present in Mac OS X and other BSD based systems. The <code>jot</code> command is pretty
+similar to seq in Linux-based distros, only it allows to print a string
+repeatedly (<code>-b</code> argument) while <code>seq</code> does not allow printing things other
+than numbers. This is nice, because you can do things like this:</p>
+<pre><code>$ jot -s '' -b'#' 10
+##########
+</code></pre>
+<p>Now for an example plotting some numbers:</p>
+<pre><code>$ seq 15 20 | sort -R | while read num; do echo `jot -s '' -b'#' $num` $num; done
+################ 16
+################### 19
+################# 17
+################## 18
+#################### 20
+############### 15
+</code></pre>
+<p>While we don’t have <code>jot</code> distributed by default in Linux distros, we can do the
+same thing in Linux using python:</p>
+<pre><code>$ seq 15 20 | sort -R | while read num; do echo `python -c &quot;print('#'*$num)&quot;` $num; done
+################# 17
+############### 15
+################### 19
+#################### 20
+################## 18
+################ 16
+</code></pre>
+<p>There are <a href="http://superuser.com/questions/86340/linux-command-to-repeat-a-string-n-times">a bunch of other ways of doing it in the shell
+itself</a>,
+but I like the conciseness and readability of this one.</p>
+<h2>TDD</h2>
+<p>Some videos deal with Test Driven Design vs Test Driven Development, talking
+about an idea I had never heard before called
+<a href="http://lizkeogh.com/2012/06/24/beyond-test-driven-development/">spiking</a>
+(apparently I’ve missed some TDD literature). The idea is to write some code
+without tests in a sort of exploratory way, usually to get an understanding of
+what’s possible, and then throw it away and restart from the beginning writing
+tests first.</p>
+<p>Gary demonstrates the idea of doing <a href="https://www.destroyallsoftware.com/screencasts/catalog/spiking-and-continuous-spiking">continuous
+spiking</a>,
+where instead of throwing all the code away you’d transition it in a TDD-style
+manner, as you write tests for it. (He shows another example of this later in
+another video in a workflow using git, where you'd rebase the branch where you
+spiked on top of the new implementation you're TDDing.) He mentions there is a
+danger of doing this because the end result will probably be heavily influenced
+by the design you ended up when doing the spike (writing code without tests),
+so you’ll not be driving the design in a test-driven manner.</p>
+<p>This probably sounds a bit extreme to some, but the reasoning is that you will
+miss some design insights when you’re not putting yourself in the shoes of the
+user. It makes sense to me, even though I confess I often do not work that hard
+to do test driven design as I'd want to.</p>
+<p>There was a nice video about test stubs making the distinction between
+incidental interaction vs essential interaction and the relation to using a
+normal stub (a dummy for an incidental interaction) vs a null object stub (aka
+mocks, when you assert on methods, checking essential interactions). Testing
+a module mixin may be a special case, you can mixin directly in the stub for
+simpler testing.</p>
+<p>As an additional note, it’s useful to make stubs first and share them for
+several tests, to localize and make clear what each test cares about.</p>
+<p>In another episode Gary shows something I’ve also learned on my own: it’s a
+good practice to split tests that test several things into finer grained
+isolated tests with meaningful names that test only one thing. This is
+specially useful when you’re refactoring and a test breaks, because you can see
+more directly what went wrong.</p>
+<h2>Refactoring in a codebase new to you</h2>
+<p>There are two episodes quite interesting to watch, where Gary refactors out a
+Rails controller without much previous knowledge about the code.</p>
+<p>I find it hard to write about it, it seems to be the kind of thing for which
+video is the best vehicle because it's hard to talk about it using words alone,
+without showing the mechanics of it. It seems to me that these videos
+illustrate that if you know well your language and tools, you can work
+reasonably well in codebases that are new to you. It’s nice to try this kind of
+thing every once in a while.</p>
+<h2>Acceptance tests</h2>
+<p>In a video about acceptance tests, Gary shows the usage of
+<a href="https://cucumber.io/">Cucumber</a> for testing a Rails application, using a
+browser engine to simulate user actions and a few tricks he uses to make it run
+fast (20 scenarios with 104 tests in total, finish under ten seconds). I don’t
+have much experience with <a href="https://en.wikipedia.org/wiki/Acceptance_test-driven_development">acceptance test-driven
+development</a>,
+but one good point I took from from this is that it’s better to come up with
+meaningful short names for user actions (&quot;when user creates a monthly coupon&quot;)
+instead of long names that describe the input (&quot;when user enters X into field Y
+and selects option Z&quot;).</p>
+<p>In another video he investigates the performance of tests testing the same
+feature but from different levels for a Rails app: two acceptance tests using a
+browser engine to simulate an user, two tests running the controller method
+including rendering the view, two tests for the view only and finally two tests
+for the same functionality inside a class method.</p>
+<p>Plotting the results of the execution times for the tests at different levels,
+the curve looks exponential. I suppose the lesson here is that it’s good to
+move a lot of functionality into classes and libraries, in order to be able to
+rely as much as possible into unit tests and not need to rely much on
+integration and acceptance tests. This should probably not be much surprising.</p>
+<p>Following that, Gary explains which of those tests he would actually want to
+keep for the test suite of the app (he discards the controller tests, leaves
+only one acceptance test and reluctantly keeps the view tests because they're
+around a conditional). A good point he makes is that if you see a test that
+it’s mostly talking about dependencies of the things it claims to be testing,
+then it’s probably not testing at the right level.</p>
+<p>And that's it for season 2, a pretty cool experience -- thanks for reading! =)</p>
+
+        </div>
+
+        <div class="taglist">
+</div>
+    </article>
+</section>
+
+
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+        </footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/atom-one-dark.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+<script src="https://eliasdorneles.com/theme/js/imgviewer.js"></script>
+</body>
+</html>

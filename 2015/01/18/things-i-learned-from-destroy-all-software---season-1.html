@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Things I Learned from Destroy All Software - Season 1</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="manifest" href="/images/site.webmanifest">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4f3dd4ee-0791-4d9c-b94f-6d1aa073e79a"></script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
+                <nav><ul>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
+                </ul></nav>
+        </header><!-- /#banner -->
+        
+
+        
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="/2015/01/18/things-i-learned-from-destroy-all-software---season-1.html"
+                    rel="bookmark" title="Permalink to Things I Learned from Destroy All Software - Season 1">Things I Learned from Destroy All Software - Season 1</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+            
+<footer class="post-info">
+        
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2015-01-18 10:07:00+02:00">18 Jan 2015</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/things-i-learned-from-destroy-all-software---season-1.md">Edit</a>
+        </address>
+        
+
+
+</footer>
+
+            <p>So, a few weeks ago I purchased and watched the first season of <a href="https://www.destroyallsoftware.com/">Destroy All
+Software screencasts</a> (from <a href="https://twitter.com/garybernhardt">Gary
+Bernhard</a>), and it was awesome. I'd say
+there are different kinds of stuff to learn from it, depending on your personal
+interests and experience.</p>
+<p>Here are my notes for some things I found useful and want to remember for
+later.</p>
+<h3>About Git:</h3>
+<p>You can use the <code>git rev-list HEAD</code>  command to get a list of commits in the
+current branch. This is useful for writing scripts to report something about
+each commit in the repo.  You can, for example, check the evolution of line
+counts over the course of the project (or any other statistic like number of
+tests, number of files, etc). You can also run the tests for every commit in
+the history:</p>
+<pre><code>:::shell
+git rev-list HEAD | while read rev; do
+   git checkout $rev &amp;&amp; git clean-fd &amp;&amp; make test
+done
+</code></pre>
+<p>Gary has a script ready for this:
+<a href="https://github.com/garybernhardt/dotfiles/blob/master/bin/run-command-on-git-revisions">run-command-on-git-revisions</a></p>
+<p>Git tracks everything that happens in the local repo, even stuff that is not
+shared when you push (like when you rewrite history doing a rebase). You can
+use <code>git reflog</code> to see the history of local changes and <code>git reset --hard REFLOG_ENTRY</code> to go back to where you were.</p>
+<h3>About design:</h3>
+<ul>
+<li>
+<p>Avoiding <code>nil</code> is good because it makes your code more predictable and tracebacks
+more understandable.</p>
+</li>
+<li>
+<p>When adding tests to a suite, it's important to pay attention at your stubs.
+If they are getting complicated, the design can probably be improved in a way
+that will render better tests and better production code.</p>
+</li>
+<li>
+<p>When adding extra functions to a 3rd party API, sometimes it's tempting to do
+monkey-patching of the library for a small change. It's usually better to use
+a wrapper it instead, because later you will probably need more changes and
+this will be easier if your production code is already using a wrapper.</p>
+</li>
+<li>
+<p>Isolated tests are good because they run faster, they encourage better design
+and code clarity. This is something I've read about repeatedly in the past and
+also applied to some of the code I've done myself, so it's not that new. But it
+was great to watch someone applying this on several different code bases,
+showing some interesting paths -- it inspired me to apply a bit more of this in
+my work.</p>
+</li>
+</ul>
+<h3>About Unix:</h3>
+<p>To bring a background process to foreground, besides fg, you can also use <code>%N</code>
+where N is the job number reported by the command jobs.</p>
+<p>You can use the output of a command as if it were a filename, using
+<code>&lt;(COMMAND)</code>, like so:</p>
+<pre><code>$ diff &lt;(echo) &lt;(date)
+1c1
+&lt; 
+---
+&gt; Sat Jan 17 18:47:48 BRST 2015
+</code></pre>
+<p>The shell will run the commands and pass to the program file descriptors
+with the proper contents, which you can verify doing:</p>
+<pre><code>$ echo &lt;(ls -l) &lt;(ls -l)
+/dev/fd/63
+/dev/fd/62
+</code></pre>
+<p>This is useful for commands like diff that need more than one input file (and
+therefore can't just use the stdin), to use it with arbitrary stuff generated
+from other commands.</p>
+<p>I found this specially helpful for when I want to refactor a script: before I
+make changes, I store its original output in a file and then while refactoring
+I keep comparing the output of the script with the file to see if I'm not
+breaking anything:</p>
+<pre><code>diff &lt;(./my_script) original.txt
+</code></pre>
+<p>It can also be useful to see differences between two different versions of
+the same web application or sites:</p>
+<pre><code>diff &lt;(curl -s http://somesite.com) &lt;(curl -s http://anothersite.com)
+</code></pre>
+<h3>About vim:</h3>
+<p>It's nice to see people using vim well, because I can compare with my own
+habits and see things where I can improve. Gary seems to strive to keep a tight
+feedback loop in everything he's doing, so seeing him using vim and the shell
+to build things in this fashion is pretty cool. I see it as a nice validation
+for the choice of tools.</p>
+<p>I found myself using splits a bit more, after watching the screencasts.  I'm
+more used to using vim tabs, mostly because I'm not much comfortable with stuff
+happening outside my view. This is probably something I can work better if I
+grow some tolerance for it.</p>
+<p>Apart from this, I stole a bunch of vim functions and ideas from <a href="https://github.com/garybernhardt/dotfiles">Gary's
+dotfiles</a>, which I also share in <a href="https://github.com/eliasdorneles/dotfiles">my
+dotfiles</a>.</p>
+
+        </div>
+
+        <div class="taglist">
+</div>
+    </article>
+</section>
+
+
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+        </footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/atom-one-dark.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+<script src="https://eliasdorneles.com/theme/js/imgviewer.js"></script>
+</body>
+</html>

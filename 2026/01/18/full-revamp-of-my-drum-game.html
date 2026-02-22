@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Full revamp of my drum game</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="manifest" href="/images/site.webmanifest">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4f3dd4ee-0791-4d9c-b94f-6d1aa073e79a"></script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
+                <nav><ul>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
+                </ul></nav>
+        </header><!-- /#banner -->
+        
+
+        
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="/2026/01/18/full-revamp-of-my-drum-game.html"
+                    rel="bookmark" title="Permalink to Full revamp of my drum game">Full revamp of my drum game</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+            
+<footer class="post-info">
+        
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2026-01-18 22:24:00+02:00">18 Jan 2026</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/full-revamp-of-my-drum-game.md">Edit</a>
+        </address>
+        
+
+
+</footer>
+
+            <p>In the past week I've fully revamped my <a href="https://github.com/eliasdorneles/drum-game">drum
+game</a> that I had initially written like 10
+years ago.</p>
+<p><a href="https://eliasdorneles.com/drum-game/">Play it here</a></p>
+<h2>The Revamp Story</h2>
+<p><strong>Before:</strong></p>
+<div class="figure align-center">
+  <img src="../../..//images/drum_game-before.png" alt="Screenshot of old version of my game 2 years prior">
+  <p class="caption">The drum game 2 years ago</p>
+</div>
+<p><strong>After:</strong></p>
+<div class="figure align-center">
+  <img src="../../..//images/drum_game-after.png" alt="Screenshot of the game as of the time the blog post is published">
+  <p class="caption">The game after revamp</p>
+</div>
+<p>Did I use agent coding? Well, yes, I did!</p>
+<p>I also used Gemini for some help improving the copy.</p>
+<p>Actually I used this game project to try Claude Code again, since I had paid
+for an annual subscription which I was not using at all, after getting
+disenchanted with AI agent coding assistance.</p>
+<p>Btw, I am sure I'm not the only person who have gone through a phase like this,
+and it might be not even my last one -- I might need a break from AI coding
+assistance in the future again. As a programmer who really <em>enjoys</em> to program,
+I am clearly mourning a certain loss of something, maybe the relevance of some
+abilities that I had worked hard to build, like typing fast, or generally using
+my creativity to write code.</p>
+<p>Anyway, I had read some news about how agent coding had got much better over
+the past 6 months and saw some colleagues having some good successes with it,
+so I decided to give it another chance.</p>
+<p>I'm glad I did, because I've got some good results with my game project, I
+managed to implement -- gosh, I feel ashamed of using the word <em>implement</em>
+when most of the code changes were done by the coding agent in &quot;vibecoding&quot;
+mode... anyway, I managed to <em>get done</em> several features that were sitting on a
+<a href="https://github.com/eliasdorneles/drum-game/blob/master/PLAN.md">to-do list</a>
+for <em>years</em> which I had never had the energy to implement previously.</p>
+<p>It allowed me to greatly improve the game, and I have a bunch of ideas for what
+to do next.</p>
+<h3>Adding a level editor</h3>
+<p>One big enabler was adding a level editor, something that I wanted to do but wasn't sure exactly how to begin.</p>
+<p>Until a few days ago, adding a level had to be done editing a JSON file. You
+know, okay for simple patterns, but not a good workflow to work with music. To
+be able to design better levels, I needed a way to be able to quickly preview a
+drum loop, make adjustments and check the result.</p>
+<p>It took like 3 or 4 prompts to have a nice usable level editor that I could use
+right away. This alone already allowed me to make the game much better, with
+more interesting and musical drum patterns, and got me very excited.</p>
+<p>The level editor looks like this:</p>
+<div class="figure align-center">
+  <img src="../../..//images/level_editor.png" alt="Screenshot of the level editor">
+  <p class="caption">The level editor</p>
+</div>
+<h2>Coding with AI</h2>
+<p>So yeah, I guess I am back to using AI for coding again.</p>
+<p>I am worried of getting hooked to it and becoming &quot;dumb&quot;, because there is
+clearly a big dopamine hit when things work, and it can get addictive.</p>
+<p>For production work, I will need to be a lot more careful and disciplined than
+what I can get away with on a weekend project like my drum game. So, we'll see!</p>
+<h3>Usage limits</h3>
+<p>I did bump into the usage limits after like 40 prompts or so, that was a bit annoying. I didn't
+do anything special to optimize my token usage except compacting the conversations a few times.</p>
+<p>Honestly, I don't feel like doing that -- using the lesser model would be less
+reliable, and I can live with the limit. It is a good reminder that these tools
+are expensive and energy-intensive, so it's a good thing to be mindful about
+how much I use it anyway, and maybe this way I won't rely on it too much.
+Working in bursts is fine by me.</p>
+<h3>Conclusion?</h3>
+<p>I am excited about the possibilities of creating more things!</p>
+<p>At the same time, I'm mourning the value loss about manually written code
+and relevance of some of my hard-earned abilities.
+I am also worried about the cost of this kind of technology and the power that
+it gives to people that will use it for malicious purposes...</p>
+<p>I hope that it will be used more for good than for evil!</p>
+<p>I believe in the world there is just enough love to prevent hate from
+destroying everything, I hope it will continue to be the case!</p>
+
+        </div>
+
+        <div class="taglist">
+</div>
+    </article>
+</section>
+
+
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+        </footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/atom-one-dark.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+<script src="https://eliasdorneles.com/theme/js/imgviewer.js"></script>
+</body>
+</html>

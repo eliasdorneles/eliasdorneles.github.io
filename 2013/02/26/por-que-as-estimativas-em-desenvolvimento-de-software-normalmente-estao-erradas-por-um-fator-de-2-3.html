@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Por que as estimativas em desenvolvimento de software normalmente estão erradas por um fator de 2-3?</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="manifest" href="/images/site.webmanifest">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4f3dd4ee-0791-4d9c-b94f-6d1aa073e79a"></script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
+                <nav><ul>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
+                </ul></nav>
+        </header><!-- /#banner -->
+        
+
+        
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="/2013/02/26/por-que-as-estimativas-em-desenvolvimento-de-software-normalmente-estao-erradas-por-um-fator-de-2-3.html"
+                    rel="bookmark" title="Permalink to Por que as estimativas em desenvolvimento de software normalmente estão erradas por um fator de 2-3?">Por que as estimativas em desenvolvimento de software normalmente estão erradas por um fator de 2-3?</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+            
+<footer class="post-info">
+        
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2013-02-26 06:34:00+02:00">26 Feb 2013</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/por-que-as-estimativas-em-desenvolvimento-de-software-normalmente-estao-erradas-por-um-fator-de-2-3.md">Edit</a>
+        </address>
+        
+
+
+</footer>
+
+            <blockquote>
+<p>Aviso 1: Esta é uma tradução livre de uma das melhores histórias sobre
+estimativas de software já escritas. O original em inglês é uma
+<a href="http://www.quora.com/Engineering-Management/Why-are-software-development-task-estimations-regularly-off-by-a-factor-of-2-3">resposta no Quora à pergunta do
+título</a>,
+e essa tradução foi realizada com o consentimento do autor <a href="http://about.me/michaelrwolfe" title="Michael Wolfe">Michael
+Wolfe</a>. Caso a língua
+não seja problema, recomendamos fortemente a leitura do texto
+original... simplesmente melhor e mais engraçado.</p>
+<p>Aviso 2: Este post é resultado duma colaboração minha com o senhor
+Crineu Tres. Isto é, ele fez tudo e eu só traduzi os palavrões.</p>
+</blockquote>
+<p>Vamos dar uma caminhada saindo da costa de San Francisco até Los Angeles
+para visitar nossos amigos em Newport Beach. Pego meu mapa e desenho
+nossa rota pela costa:</p>
+<p><img src="https://eljunior.files.wordpress.com/2013/02/1.png" alt="1" /><br />
+O percurso é de aproximadamente 400 milhas; podemos caminhar 4 milhas
+por hora, 10 horas por dia. Dessa forma chegaremos lá em 10 dias.
+Ligamos para nossos amigos e marcamos uma janta para o próximo domingo
+às 18h, quando chegaremos de forma triunfante! Eles mal podem esperar!</p>
+<p>Acordamos cedo no dia seguinte altamente motivados para essa nova
+aventura. Colocamos as mochilas, pegamos o mapa e a rota para o primeiro
+dia. Olhamos então para o mapa. Ai ai:</p>
+<p><a href="https://eljunior.files.wordpress.com/2013/02/2.png"><img src="https://eljunior.files.wordpress.com/2013/02/2.png" alt="2" /></a><br />
+Caramba, a costa tem um milhão de curvas e reentrâncias! Com apenas um
+dia de caminhada de 40 milhas não chegaremos nem em Half Moon Bay. Essa
+viagem tem pelo menos 500 milhas, e não 400! Ligamos para nossos amigos
+e atrasamos o jantar para a terça-feira. É melhor sermos realistas. Eles
+ficam meio desapontados, mas não vêem a hora de chegarmos. Além disso,
+12 dias de San Francisco até Los Angeles não é um tempo ruim.</p>
+<p>Bem, com essa inconveniência resolvida, partimos. Duas horas mais tarde,
+não passamos nem do zoológico. Qual o problema? Olhamos novamente para
+nossa trilha:</p>
+<p><a href="https://eljunior.files.wordpress.com/2013/02/3.jpg"><img src="https://eljunior.files.wordpress.com/2013/02/3.jpg" alt="3" /></a></p>
+<p>Jesus, essa trilha não é fácil! Areia, água, escadas, riachos, lobos
+marinhos furiosos! Estamos caminhando a no máximo 2 milhas por hora,
+metade da velocidade pretendida... podemos então começar a caminhar 20
+horas por dia ou ligar para nossos amigos e atrasar a janta mais uma
+semana. Ok, vamos dividir o fardo: caminharemos 12 horas por dia e
+atrasaremos a janta até o final de semana seguinte. Ligamos para nossos
+amigos e remarcamos o jantar até o domingo seguinte. Eles ficam um pouco
+irritados, mas confirmam o evento mesmo assim.</p>
+<p>Montamos acampamento em Moss Beach após um dia duro de doze horas
+caminhando. Cacilda, como é difícil montar barracas nesse vento! Não
+conseguimos dormir antes da meia noite. Nada demais: iremos apertar o
+passo amanhã.</p>
+<p>Dormimos demais e acordamos doídos e cansados às.. 10 da manhã. Caralho!
+Sem condições de fazer 12 horas hoje! Vamos caminhar 10 e compensaremos
+com 14 amanhã. Juntamos os equipamentos e partimos.</p>
+<p>Após um esforço redobrado nas primeiras horas, percebo nosso colega
+mancando. Maravilha, bolhas nos pés... precisamos resolver isso agora.
+Somos do tipo de grupo que resolve os problema individuais antes que
+comecem a nos atrasar. Eu corro por 45 minutos, 3 milhas para longe da
+costa até Pescadero, pego alguns band-aids e corro de volta para medicar
+meu colega. Chego exausto e o sol está se pondo, então declaramos o dia
+encerrado. Vamos dormir após fazer míseras 6 milhas. Mas temos
+suprimentos novos. Ficaremos bem. Compensaremos amanhã.</p>
+<p>Acordamos na manhã seguinte, protegemos nossos pés de futuras bolhas e
+começamos a caminhar. Contornamos a encosta. Que?! Que porra é essa?</p>
+<p><a href="https://eljunior.files.wordpress.com/2013/02/4.jpg"><img src="https://eljunior.files.wordpress.com/2013/02/4.jpg" alt="4" /></a></p>
+<p>O maldito mapa não mostra essa merda! Temos que caminhar 3 milhas para o
+interior, contornar uma propriedade federal rodeada por cercas, nos
+perder duas vezes, e somente então voltar à costa em torno do meio-dia.
+A maior parte do dia foi gasta para realizar 1 milha de progresso. Ok,
+<strong>não</strong> ligaremos para nossos amigos para atrasar mais uma vez a janta.
+Caminharemos até meia-noite para voltar ao planejamento inicial.</p>
+<p>Após uma terrível noite de sono sob a névoa, meu amigo acorda com uma
+dor de cabeça infernal e febre. Pergunto se ele consegue continuar e ele
+responde: <em>&quot;O que você acha, panaca? Estou caminhando nessa névoa gelada
+por 3 dias sem descanso!&quot;</em>. Beleza... o dia de hoje está perdido. Vamos
+descansar e nos recuperar. A partir de amanhã faremos 14 horas por dia,
+já que estaremos descansados e preparados para tudo... são apenas mais
+alguns dias, então obviamente podemos cumprir o prazo!</p>
+<p>Acordamos moídos no dia seguinte. Olho o mapa:</p>
+<p><img src="https://eljunior.files.wordpress.com/2013/02/5.png" alt="5" /></p>
+<p>Puta merda! Estamos no dia 5 de uma viagem de 10 dias e não saímos nem
+da Bay Area! Isso é patético! Vamos trabalhar em uma estimativa mais
+precisa e ligar para nossos amigos. Provavelmente seremos repreendidos,
+mas teremos uma data realista pelo menos.</p>
+<p>Meu amigo diz: <em>&quot;Bem, fizemos 40 milhas em 4 dias, e é uma viagem de
+pelo menos 600 milhas, então são 60 dias, provavelmente 70 considerando
+uma margem para imprevistos&quot;</em>. Eu respondo <em>&quot;Nem fu...... Ok, eu posso
+nunca ter feito essa caminhada antes, mas eu <strong>sei</strong> que não demora 70
+dias para caminhar de São Francisco até Los Angeles. Nossos amigos irão
+rir de nós se ligarmos avisando que só chegaremos na Páscoa!&quot;</em></p>
+<p>E continuo: <em>&quot;Se vocês se comprometerem a caminhar 16 horas por dia,
+podemos compensar o tempo perdido! Sei que será difícil, mas essa é a
+reta final!&quot;</em>. Meu colega grita de volta: <em>&quot;Pra começo de conversa, não
+fui eu que liguei dizendo que estaríamos lá no Domingo, tá? Você está
+acabando com a gente por um erro seu!&quot;</em></p>
+<p>Um silêncio tenso recai sobre o grupo. A ligação não é realizada.
+Ligarei amanhã, quando meu camarada voltar às suas faculdades mentais e
+concordar em algo razoável.</p>
+<p>Na manhã seguinte aguardamos em nossas barracas até o temporal passar.
+Levantamos acampamento e saímos às 10h, esticando músculos doídos e
+novas bolhas nos pés. Não comentamos nada sobre a briga do dia anterior,
+embora eu tenha xingado um certo colega idiota que esqueceu a garrafa de
+água e fez a gente gastar 30 minutos para buscá-la.</p>
+<p>Faço uma nota mental lembrando que estamos sem papel higiênico e
+precisamos parar na cidade mais próxima. Contornamos a enseada: um rio
+está bloqueando nosso caminho. Sinto uma forte dor-de-barriga e a
+sensação de diarréia iminente...</p>
+
+        </div>
+
+        <div class="taglist">
+</div>
+    </article>
+</section>
+
+
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+        </footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/atom-one-dark.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+<script src="https://eliasdorneles.com/theme/js/imgviewer.js"></script>
+</body>
+</html>

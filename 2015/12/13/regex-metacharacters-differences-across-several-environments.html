@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Regex metacharacters differences across several environments</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="manifest" href="/images/site.webmanifest">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4f3dd4ee-0791-4d9c-b94f-6d1aa073e79a"></script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
+                <nav><ul>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
+                </ul></nav>
+        </header><!-- /#banner -->
+        
+
+        
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="/2015/12/13/regex-metacharacters-differences-across-several-environments.html"
+                    rel="bookmark" title="Permalink to Regex metacharacters differences across several environments">Regex metacharacters differences across several environments</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+            
+<footer class="post-info">
+        
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2015-12-13 02:16:00+02:00">13 Dec 2015</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/regex-metacharacters-differences-across-several-environments.md">Edit</a>
+        </address>
+        
+
+
+</footer>
+
+            <!-- PELICAN_BEGIN_SUMMARY -->
+<p>Here is a table helpful for learning regular expression metacharacters
+differences across several languages and environments.</p>
+<!-- PELICAN_END_SUMMARY -->
+<table>
+<thead>
+<tr>
+<th align="right">Language/environment</th>
+<th>Optional</th>
+<th>More</th>
+<th>Brackets</th>
+<th>Border</th>
+<th>Or</th>
+<th>Group</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">Apache, Bash, egrep, Java, JS, Perl, PHP, Python, Ruby, VBScript, .NET</td>
+<td><code>?</code></td>
+<td><code>+</code></td>
+<td><code>{,}</code></td>
+<td><code>\b</code></td>
+<td><code>|</code></td>
+<td><code>()</code></td>
+</tr>
+<tr>
+<td align="right">Gawk, Openffice.org</td>
+<td><code>?</code></td>
+<td><code>+</code></td>
+<td><code>{,}</code></td>
+<td><code>\&lt;,\&gt;</code></td>
+<td><code>|</code></td>
+<td><code>()</code></td>
+</tr>
+<tr>
+<td align="right">awk, Mawk, Expect</td>
+<td><code>?</code></td>
+<td><code>+</code></td>
+<td>N/A</td>
+<td>N/A</td>
+<td><code>|</code></td>
+<td><code>()</code></td>
+</tr>
+<tr>
+<td align="right">C, Lex, Tcl</td>
+<td><code>?</code></td>
+<td><code>+</code></td>
+<td><code>{,}</code></td>
+<td>N/A</td>
+<td><code>|</code></td>
+<td><code>()</code></td>
+</tr>
+<tr>
+<td align="right">Find, Emacs</td>
+<td><code>?</code></td>
+<td><code>+</code></td>
+<td>N/A</td>
+<td><code>\b</code></td>
+<td><code>&amp;#124;</code></td>
+<td><code>\(\)</code></td>
+</tr>
+<tr>
+<td align="right">grep, ed</td>
+<td><code>\?</code></td>
+<td><code>\+</code></td>
+<td><code>\{,\}</code></td>
+<td><code>\b</code></td>
+<td><code>&amp;#124;</code></td>
+<td><code>\(\)</code></td>
+</tr>
+<tr>
+<td align="right">sed</td>
+<td><code>\?</code></td>
+<td><code>\+</code></td>
+<td><code>\{,\}</code></td>
+<td><code>\&lt;,\&gt;</code></td>
+<td><code>&amp;#124;</code></td>
+<td><code>\(\)</code></td>
+</tr>
+<tr>
+<td align="right">Vim</td>
+<td><code>\=</code></td>
+<td><code>\+</code></td>
+<td><code>\{,}</code></td>
+<td><code>\&lt;,\&gt;</code></td>
+<td><code>&amp;#124;</code></td>
+<td><code>\(\)</code></td>
+</tr>
+<tr>
+<td align="right">PostgreSQL</td>
+<td><code>?</code></td>
+<td><code>+</code></td>
+<td><code>{,}</code></td>
+<td><code>\y</code></td>
+<td><code>|</code></td>
+<td><code>()</code></td>
+</tr>
+<tr>
+<td align="right">MySQL</td>
+<td><code>?</code></td>
+<td><code>+</code></td>
+<td><code>{,}</code></td>
+<td><code>[[:&lt;:]]</code></td>
+<td><code>|</code></td>
+<td><code>()</code></td>
+</tr>
+<tr>
+<td align="right">Oracle</td>
+<td><code>?</code></td>
+<td><code>+</code></td>
+<td><code>{,}</code></td>
+<td>N/A</td>
+<td><code>|</code></td>
+<td><code>()</code></td>
+</tr>
+</tbody>
+</table>
+<p>Thankfully, <code>.</code> <code>*</code> <code>[]</code> <code>[^]</code> <code>^</code> and <code>$</code> work the same way in all.</p>
+<p>The hard work of checking the differences was done by <a href="http://aurelio.net/">Aurelio
+Jargas</a>, published in <a href="http://www.piazinho.com.br/">his wonderful book about regular
+expressions</a>. (Portuguese only)</p>
+<p>I merely grouped them by language/environment, chunking the information for
+easier memorizing.</p>
+
+        </div>
+
+        <div class="taglist">
+</div>
+    </article>
+</section>
+
+
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+        </footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/atom-one-dark.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+<script src="https://eliasdorneles.com/theme/js/imgviewer.js"></script>
+</body>
+</html>

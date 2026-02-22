@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Aventuras apresentando Java EE a mim mesmo</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="manifest" href="/images/site.webmanifest">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4f3dd4ee-0791-4d9c-b94f-6d1aa073e79a"></script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
+                <nav><ul>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
+                </ul></nav>
+        </header><!-- /#banner -->
+        
+
+        
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="/2013/01/15/aventuras-apresentando-java-ee-a-mim-mesmo.html"
+                    rel="bookmark" title="Permalink to Aventuras apresentando Java EE a mim mesmo">Aventuras apresentando Java EE a mim mesmo</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+            
+<footer class="post-info">
+        
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2013-01-15 07:45:00+02:00">15 Jan 2013</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/aventuras-apresentando-java-ee-a-mim-mesmo.md">Edit</a>
+        </address>
+        
+
+
+</footer>
+
+            <blockquote>
+<p><strong>Cuidado:</strong> o texto a seguir contém níveis perigosos de nerdice,
+acrônimos e javeiragem em geral.</p>
+</blockquote>
+<p>Não sou nenhum fã de Java: a linguagem eu realmente <strong>não</strong> curto (não
+tenho culpa de ter conhecido
+<a href="http://www.python.org/" title="Python.org">Python</a> e
+<a href="http://www.ruby-lang.org/" title="Ruby-Lang.org">Ruby</a> antes :P), todavia a
+plataforma tem os seus apelos. Só que eu estava ficando com vergonha de
+ainda desconhecer o <em>stack</em> do <a href="https://en.wikipedia.org/wiki/Java_EE">Java
+EE</a>, ao passo que uso diariamente
+várias tecnologias relacionadas no meu trabalho. Por isso, decidi que
+iria tomar vergonha na cara e estudar um pouco mais da parada (e tentar
+reclamar menos). Comprei <a href="http://antoniogoncalves.org/2009/02/13/java-ee-6-book/">o
+livro</a> do
+<a href="http://antoniogoncalves.org/">Antonio Goncalves</a> sobre <a href="https://en.wikipedia.org/wiki/Java_EE">Java
+EE</a> 6, e caí em cima. Tendo
+recentemente terminado sua leitura, registro aqui minhas impressões a
+respeito.</p>
+<hr />
+<h2><a href="https://www.amazon.com/Beginning-Java-Platform-GlassFish-Professional/dp/1430219548"><img src="https://eljunior.files.wordpress.com/2013/01/intro-javaee.png?w=300" alt="Read the original, dude!" /></a>
+Read the original, dude!</h2>
+<p>Antes de começar, porém, já adianto uma coisa: apesar do conteúdo do
+livro ser bem decente, a tradução dele é <strong>péssima</strong>. Me encontrei
+frequentemente tendo que adivinhar como seria o texto original em inglês
+para poder compreender o traduzido, pois este não fazia nenhum sentido.
+A impressão é que o livro foi traduzido por várias pessoas diferentes
+(estagiários?), que não sabem muito sobre orientação a objetos e muito
+menos da plataforma Java EE, resultando numa confusão de palavreado
+mal-traduzido bem difícil de entender. Resumindo: a tradução atrapalha
+muito mais do que ajuda! Se soubesse que seria tão desleixada, jamais
+teria comprado o livro traduzido. Portanto, se você já lê inglês,
+obtenha <a href="https://www.amazon.com/Beginning-Java-Platform-GlassFish-Professional/dp/1430219548">a versão
+original</a>
+(mesmo que saia mais caro): você vai poupar sofrimento e a leitura será
+mais tranquila. Se você não lê inglês, leia <a href="https://www.amazon.com/Beginning-Java-Platform-GlassFish-Professional/dp/1430219548" title="Beginning Java EE 6 Platform with Glassfish 3">a versão
+original</a>
+também e aproveite pra começar a aprender inglês logo: será mais
+saudável pra sua carreira não depender de traduções fajutas! OK, fim da
+reclamação.</p>
+<p>O livro fornece uma visão geral da plataforma, e também tenta mostrar o
+contexto histórico e motivações para o surgimento dos protocolos e APIs.
+Após apresentar rapidamente o que consiste a plataforma e os programas
+necessários para rodar os exemplos
+(<a href="https://en.wikipedia.org/wiki/Java_Development_Kit">JDK</a>,
+<a href="https://maven.apache.org/">Maven</a>, <a href="http://glassfish.java.net/">Glassfish
+3</a>, <a href="https://en.wikipedia.org/wiki/JUnit">Junit
+4</a> and
+<a href="http://db.apache.org/derby">Derby</a>), o livro começa a apresentar as
+APIs e conceitos da plataforma numa abordagem meio <em>bottom-up</em>: alguns
+capítulos sobre mapeamento objeto-relacional com
+<a href="https://en.wikipedia.org/wiki/Java_Persistence_API">JPA</a> -- a API
+especificada para persistência com Java, depois alguns capítulos sobre
+as partes de Java EE usadas principalmente para a lógica de negócio
+(<a href="https://en.wikipedia.org/wiki/Enterprise_JavaBeans">EJBs</a>, Transações,
+<a href="https://en.wikipedia.org/wiki/Aspect-oriented_programming">AOP</a> no
+estilo Java EE com <em>Callbacks</em> e <em>Interceptors</em>), seguidos de uma visão
+rápida das tecnologias usadas para a parte de apresentação na Web
+(<a href="https://en.wikipedia.org/wiki/JavaServer_Faces">JSF</a>,
+<a href="https://en.wikipedia.org/wiki/JavaServer_Pages">JSP</a>, e assuntos
+relacionados), e culmina com os últimos 3 capítulos dedicados a
+comunicação entre sistemas: mensageria com
+<a href="https://en.wikipedia.org/wiki/Java_Message_Service">JMS</a>, <a href="https://en.wikipedia.org/wiki/Java_API_for_XML_Web_Services">Web Services
+SOAP</a> e
+<a href="https://en.wikipedia.org/wiki/Java_API_for_RESTful_Web_Services">RESTful</a>.</p>
+<p>O conteúdo é bom pra <em>“designorantar-se”</em> dos conceitos e tecnologias
+disponíveis na plataforma, acho que dá pra recomendar pra qualquer
+pessoa envolvida com Java e ainda não conferiu o Java EE, ou que vem de
+outras linguagens/frameworks e quer conhecer o padrão. Todavia, pelo que
+tenho lido no StackOverflow e em alguns outros lugares, a API
+especificada de Java EE sobre <a href="http://docs.oracle.com/javaee/6/tutorial/doc/gjbnr.html">Contextos e Injeção de
+Dependência</a>
+(CDI, na sigla em inglês) vem ganhando cada vez mais importância na
+plataforma, então é um certo pecado o livro simplesmente ignorá-la -- em
+nenhum lugar do texto é sinalizado a omissão de uma parte importante da
+coisa.</p>
+<p>Gostei bastante da cobertura de JPA, relativamente bem completa para um
+livro de introdução à plataforma. Rapidamente encontrei material pra uso
+no meu trabalho. A seção sobre EJBs pra mim foi interessante para
+comparar com a minha experiência com os recursos substitutos do
+<a href="https://en.wikipedia.org/wiki/Spring_Framework">Spring</a>. (Parece que os
+meus <a href="https://en.wikipedia.org/wiki/Session_Beans#Stateless_Session_Beans">SLSBs</a>
+são beans do Spring com
+<a href="http://static.springsource.org/spring/docs/2.5.x/api/org/springframework/transaction/annotation/Transactional.html">@Transactional</a>.
+:) As partes exclusivamente sobre JSF não me reservaram muitas
+surpresas, mas curti aprender mais sobre o contexto histórico do
+framework, com a seção descrevendo o surgimento de
+<a href="https://en.wikipedia.org/wiki/JavaServer_Pages">JSP</a>,
+<a href="https://en.wikipedia.org/wiki/JavaServer_Pages_Standard_Tag_Library">JSTL</a>,
+<a href="https://en.wikipedia.org/wiki/Facelets">Facelets</a>,
+<a href="https://en.wikipedia.org/wiki/Unified_Expression_Language">EL</a>, etc.
+Achei muito boa também a exposição sobre a API Javascript que ganhou
+especificação no JSF 2, usada para as requisições Ajax.</p>
+<p>Por fim, os 3 últimos capítulos sobre interoperabilidade também estão
+interessantes, embora eu me arrastei na leitura deles. Sobre JMS, não
+tinha muita novidade (a API andou meio parada por algum tempo, e deverá
+ter novidades no <a href="http://jcp.org/en/jsr/detail?id=342">Java EE 7</a> com o
+<a href="http://jcp.org/en/jsr/detail?id=343">JMS 2</a>). Fato curioso: o capítulo
+sobre serviços REST conseguiu ser mais enfadonho do que o de serviços
+SOAP (e olha que eu tendo a favorecer REST). Começou entrando demais nos
+conceitos dos protocolos antes de mostrar um exemplo prático que
+demonstrasse as vantagens da coisa -- o que provavelmente teria criado
+um engajamento melhor com a exposição da API. Mas bem, o estilo REST é
+relativamente novo no mundo Java, talvez à medida que mais gente compre
+a idéia, ele deve receber mais atenção no futuro.</p>
+<p>Os exemplos do livro servem apenas como um chute inicial mesmo, é só pra
+você ter uma idéia mesmo do que é possível de atingir com as APIs que
+estão sendo explicadas. Quase nada dos códigos de exemplo parecem
+aproveitáveis para uma aplicação real -- muito longe de código de
+produção. Nesse sentido, o livro provavelmente não está longe da vasta
+maioria das documentações técnicas para programadores, infelizmente.</p>
+<p>Apesar de tudo, ler esse livro foi muito bom pra mim, pois expandiu um
+bocado minha compreensão sobre algumas tecnologias que trabalho e sobre
+as possibilidades da tal plataforma Java EE. E como uso bastante JPA e
+JSF no meu trabalho atual, fiquei por dentro de vários recursos úteis
+dessas APIs que eu desconhecia. Por exemplo, apesar de usar JPA há já
+uns 2 anos, eu desconhecia os mecanismos de mapeamento com
+<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/ElementCollection.html">@ElementCollection</a>
+e
+<a href="http://docs.oracle.com/javaee/6/api/javax/persistence/Embeddable.html">@Embeddable</a>.
+Também, mesmo usando JSF há um bom tempo, desconhecia o
+<a href="http://docs.oracle.com/javaee/6/javaserverfaces/2.0/docs/pdldocs/facelets/composite/insertChildren.html">composite:insertChildren</a>
+(meus olhos devem ter pulado essa tag na listagem da documentação mais
+de uma vez). Essas e outras coisas encontraram uso bem rapidinho no
+código da aplicação que estou trabalhando. Meio besta eu não saber disso
+antes, né? Mas bem, isso é pra ser um dos benefícios esperados ao se
+sentar pra ler uma josca dessas até o final. :)</p>
+<p>No final, fiquei com uma sensação um pouco mais positiva em relação ao
+Java EE (ou devo dizer, menos negativa?). Enfim, parece que do seu
+próprio modo a plataforma está evoluindo, e as APIs estão ficando bem
+decentes. E <a href="http://jcp.org/en/jsr/detail?id=342">a próxima versão Java EE
+7</a> parece que sairá em breve (<a href="http://jdevelopment.nl/open-source/java-ee-7-progress-page/">essa
+página</a>
+tenta registrar o progresso), com mais melhorias em todas as áreas.
+Contudo, às vezes tenho a impressão que o meu sentimento positivo é mais
+devido ao péssimo estado anterior das APIs do que aos recursos
+verdadeiros das versões atuais.</p>
+<p>Pessoalmente, das tecnologias para aplicações Web do “mundo Java”, tendo
+a gostar mais de coisas como o <a href="http://grails.org/">Grails</a>, que oferece
+várias facilidades semelhantes aos da plataforma Java EE, mas com
+usabilidade bem melhorada para mim como programador. Sei que não é muito
+justo comparar, já que Java EE é um conjunto de especificações (tem
+muita gente que valoriza isso), mas em termos de recursos disponíveis
+para um programador construir um app, pode fazer bastante sentido
+compará-los.</p>
+<p>Finalmente, tem algumas coisas que me importam bastante num <em>toolkit</em>, e
+que Java EE ainda precisa melhorar:</p>
+<ul>
+<li>Facilidade de fazer bootstrap duma aplicação Web (IDEs e o Maven
+ajudam, mas ainda estão longe de <em>grails create-app NOME_DO_APP</em>)</li>
+<li>Facilidade de instalar/publicar uma aplicação -- em especial,
+minimizando a quantidade de configuração a ser feita para os
+recursos que ela vai usar.
+<ul>
+<li>Envolve colocar o máximo de configuração possível embutido na
+aplicação. Isso meio que bate de frente com a idéia prevalente
+do Java EE de que as configurações devem ser feitas no servidor
+de aplicação.</li>
+</ul>
+</li>
+<li>Suporte de primeira-classe a uma linguagem dinâmica nas partes em
+que faz mais sentido. (Groovy, Python, Ruby ou JavaScript já
+resolveriam pra mim, mas outras também serviriam).</li>
+<li>Independência de IDE -- quero poder acionar facilmente a execução
+dos testes e geração de builds pela linha de comando. (Aqui usar uma
+ferramenta como o Maven ajuda bastante, mas ainda depende de muita
+configuração <em>boilerplate</em> -- e frequentemente, bastante esforço).</li>
+</ul>
+<p>Concluindo, acho que é bem interessante conhecer o que o Java EE tem a
+oferecer. Mas é bom não parar por aí: ainda tem
+<a href="http://www.playframework.org/">bastante</a> <a href="http://torquebox.org/">coisa</a>
+<a href="http://grails.org/">interessante</a> <a href="http://www.joodoweb.com/">por</a>
+<a href="http://www.webnoir.org/">aí</a> <a href="http://griffon.codehaus.org/">pra</a>
+<a href="http://appfuse.org/">investigar</a>.</p>
+
+        </div>
+
+        <div class="taglist">
+</div>
+    </article>
+</section>
+
+
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+        </footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/atom-one-dark.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+<script src="https://eliasdorneles.com/theme/js/imgviewer.js"></script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>The power of a good template</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="manifest" href="/images/site.webmanifest">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4f3dd4ee-0791-4d9c-b94f-6d1aa073e79a"></script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
+                <nav><ul>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
+                </ul></nav>
+        </header><!-- /#banner -->
+        
+
+        
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="/2015/10/18/the-power-of-a-good-template.html"
+                    rel="bookmark" title="Permalink to The power of a good template">The power of a good template</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+            
+<footer class="post-info">
+        
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2015-10-18 14:25:00+02:00">18 Oct 2015</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/the-power-of-a-good-template.md">Edit</a>
+        </address>
+        
+
+
+</footer>
+
+            <p>Almost ten years ago, I was an intern helping to maintain a PHP application and
+attempting to write a little framework to create the new version of that
+application. My little framework generated PHP classes from some templates and
+a description you’d write in a DSL language I came up with.</p>
+<p>It was a nice feeling to come up with a little model and quickly generate a
+bunch of classes, but it was also pretty stupid: the generated classes would
+get edited, and later the templates would change too, and suddenly all the
+generated classes needed manual update.</p>
+<p>So I learned back then the following lesson: generating code that needs to be
+edited later is a bad idea -- instead of doing that, I must create libraries
+and components that allow to be combined and build on top of them. I never
+wanted to use boilerplate code generation again. I started thinking that any
+solution that required boilerplate were too bloated. I also dismissed the
+utility of code snippets too, because I wanted a function, not boilerplate
+code.</p>
+<p>Great, except this is the wrong conclusion.</p>
+<p>It’s true that solutions which don’t require generated code are generally
+better for reusability and long term maintenance (e.g. Python properties vs
+Java getters), but good templates for boilerplate code generation can be of
+great utility sometimes. Good templates are nice not only because they help you
+get started in something quickly, they can also teach you the proper way of
+doing things and get you started learning more about something.</p>
+<p>I started to realize the power of code snippets a couple of years ago, when I
+noticed that I was being lazy to write argument parsing code properly for my
+Python scripts. I knew the script would be much better parsing arguments with
+argparse, but as I wasn’t sure if the script would be useful when I started
+writing it, I would be lazy and write something like:</p>
+<pre><code>import sys
+
+inputfile = sys.argv[1]
+if len(sys.argv) &lt; 2:
+    print(&quot;Please provide an input file&quot;)
+else:
+    process(inputfile)
+</code></pre>
+<p>And this is just awful, for a variety of reasons:</p>
+<ol>
+<li>it doesn't have a nice help, so people would often need to read the code to
+understand what it does</li>
+<li>the code isn’t obvious, one has to keep in mind details about sys.argv</li>
+<li>it is hard to change when you have more arguments</li>
+</ol>
+<p>After thinking about this laziness, I decided this was a good use case for a
+code snippet, so I grabbed a vim plugin for code snippets and came up with the
+following snippet:</p>
+<pre><code>:::python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+&quot;&quot;&quot;Script description here
+&quot;&quot;&quot;
+
+from __future__ import print_function
+
+
+def run(args):
+    pass
+
+
+if '__main__' == __name__:
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+
+    args = parser.parse_args()
+    run(args)
+</code></pre>
+<p>Well, as you can see, there is not that much going on here, just simple
+boilerplate stuff: a docstring, a shebang, a docstring, and an argparse
+initialization inside the if main block.</p>
+<p>However, now every time I started a script, even if I <em>really</em> wanted to be
+lazy, I could just add to the if main block:</p>
+<pre><code>parser.add_argument('my_argument_name')
+</code></pre>
+<p>Then, I could code my script inside the <code>run()</code> function, ending up with a neat
+code with help for free. Plus, it was easy to change, I could use the <code>argparse</code>
+features for providing defaults, argument help text and maybe validate and type
+check the arguments.</p>
+<p>This little snippet changed my habit for writing scripts. It made the scripts
+easier for people to use and modify them (including myself) and it helped me
+to learn better the library, which I didn’t knew much besides the basics earlier
+as I didn’t use it much. As I started using <code>argparse</code> more, I started
+designing the command line interfaces better, making decisions about
+positional vs optional arguments, handling grouping and conflicting options,
+trying to come up with truly helpful help text.
+The snippet freed me of making small bad decisions when starting a script.</p>
+<p>My bad habit was impeding my learning, making life harder for people wanting to
+use my scripts and making my life harder when maintaining the scripts. This
+little snippet helped me to solve all these problems.</p>
+<p>That is the power of a good template.</p>
+<p>It helps you grow. If you let it. :)</p>
+<p>Templates are not about being lazy -- they’re about <em>learning</em>.</p>
+<p>A good template empowers you to learn better, by reducing the initial barrier.</p>
+<p>About an year ago, I didn’t know much about Python packaging, my Python
+projects were all badly packaged, the <code>setup.py</code> being patched when I hit
+an issue. And every time I tried to read some packaging guide I’d get
+overwhelmed pretty quickly. <em>“Uh, this is for Python gurus, too many
+decisions I don’t understand, it will take years for me to learn enough to
+build a nice Python package, nevermind.”</em></p>
+<p>Then I heard about <a href="http://cookiecutter.rtfd.org/">cookiecutter</a> (tool for
+building and using project templates), found this template for Python packages
+called
+<a href="https://github.com/audreyr/cookiecutter-pypackage">cookiecutter-pypackage</a> and
+gave it a try.</p>
+<p>I was very happy when I first built my first little package in a matter of
+minutes, wrapping some lame script I had around. It had gorgeous docs published
+on <a href="http://readthedocs.org">ReadTheDocs</a>, tests running in
+<a href="http://travis-ci.org">Travis-CI</a>, and last but not least, it was published in
+<a href="http://pypi.python.org">PyPI</a>! Now anyone can install it with <code>pip install my_lame_package</code> -- this is awesome!</p>
+<p>As the months went by, I got involved in splitting some code bases into smaller
+packages. I used the cookiecutter-pypackage template for some of the new small
+packages, and for others that needed more custom packaging I would get
+inspiration about how the template solved a problem, discuss with others about
+better ways to do it, and ended up learning a lot about Python packaging in the
+process. I’m far from a guru, but I’m much less ignorant than one year ago.</p>
+<p>All this in a learning process that started with trying out a template.</p>
+<p>Templates are a great learning tool.</p>
+<p>The lesson I should have learned in my failed framework attempt of long time
+ago was not that boilerplate code generation is bad in general. It was bad for
+what I was using it, generating application code that needed to be kept in sync
+with the template sources, quickly turning the generated code into legacy.</p>
+<p>But for code that can stand on its own, don’t require updates when the template
+source changes, and specially for things that are a bit awkward to get started,
+templates are awesome.</p>
+
+        </div>
+
+        <div class="taglist">
+</div>
+    </article>
+</section>
+
+
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+        </footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/atom-one-dark.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+<script src="https://eliasdorneles.com/theme/js/imgviewer.js"></script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Fluid blogging again -- with images!</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="manifest" href="/images/site.webmanifest">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4f3dd4ee-0791-4d9c-b94f-6d1aa073e79a"></script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
+                <nav><ul>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
+                </ul></nav>
+        </header><!-- /#banner -->
+        
+
+        
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="/2026/01/31/fluid-blogging-again.html"
+                    rel="bookmark" title="Permalink to Fluid blogging again -- with images!">Fluid blogging again -- with images!</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+            
+<footer class="post-info">
+        
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2026-01-31 21:15:00+02:00">31 Jan 2026</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/fluid-blogging-again.md">Edit</a>
+        </address>
+        
+
+
+</footer>
+
+            <p>Okay, I am very excited about this!</p>
+<p>I just built a blog post manager/editor that I am using right now writing these lines, and it's so cool! It was fully vibecoded and it works like a charm!</p>
+<p>Let's recap with...</p>
+<h2>A little blogging history</h2>
+<h3>It all started with Wordpress</h3>
+<p>The very first posts of this blog were written in 2011, in a <a href="https://eljunior.wordpress.com/">Wordress.com website that is actually still available</a>, except it's empty now.</p>
+<div class="figure align-center" style="width: 400px">
+  <img src="../../..//images/hopeful_ramble-2026-01-30_22-30.png" alt="Screenshot of old Wordpress.com blog">
+  <p class="caption">My old Wordpress blog</p>
+</div>
+<p>I used that Wordpress blog for years, it had a nice WYSIWIG editor which worked nicely most of the time. I specially liked how easy it made adding images.</p>
+<p>Anyway, I migrated out of Wordpress because it was kinda slow, I found that the ads of the free plan I was using were getting too much in the way of the content, the no-ads subscription was expensive and I guess I wanted to toy with static site generators.</p>
+<p>I think I even had a phase of using Google's blogger platform for some time, before moving to GitHub pages with a static site generator.</p>
+<p>Now, GitHub pages is great, and I chose Pelican as static site generator because that was what we had for Python back then and I thought sticking with Python I'd be able to easily adapt to my needs. I just needed a decent theme, and then my blog was snappy and I was writing blog posts in Markdown right inside my editor like all the cool kids.</p>
+<p>This was my setup for many years.</p>
+<blockquote>
+<p>At some point there was <a href="https://www.getlektor.com/">Lektor</a>, which is interesting and useful, but seemed a big commitment for my blog, no simple migration from Pelican and no simple way out of it either.</p>
+</blockquote>
+<h3>Blog writing in Vim Markdown files</h3>
+<p>As a programmer, I am used to the workflow of making code changes in an editor, compile the code, fix compilation errors, compile again and then run. It was how I learned to code back in 2004, writing small C programs in college.</p>
+<p>I adapted to the workflow of writing blog posts in Markdown in an editor and then running some commands in order to view the result.
+Not suuuper fluid, but that's fine.</p>
+<p>However, over the years there were two things that were bothering me:</p>
+<ol>
+<li>every time I'd want to write a blog post, I'd spent some time fiddling with the setup because of issues either with the Python environment setup or with dependencies that were too old or no longer compatible</li>
+<li>the workflow for adding images to my posts was just too bad. I had to copy the image file into the proper folder, reference it with the proper syntax, and if I wanted to resize the image of course I had to do it manually.</li>
+</ol>
+<p>In fact, <a href="https://eliasdorneles.com/2018/05/02/meta-blogging.html">I wrote about these frustrations in a post from 2018</a>:</p>
+<div class="figure align-center" style="width: 500px">
+  <img src="../../..//images/metablogging-archive-screenshot-2026-01-31-10-44-58.png" alt="Screenshot of my old blog post">
+  <p class="caption">My old blog post, with the design from back then</p>
+</div>
+<p>Anyway, I expressed that frustration and then went on with my life, not blogging much, not using images much when I did.</p>
+<h3>Writing my own static site generator</h3>
+<p>At some point, I started wanting to learn new programming languages again, to get out of my Pythonic comfort zone. And you know, a static site generator is such a classic yak-shaving project for getting your feet wet with a new programming language.</p>
+<p>So while I was learning <a href="https://odin-lang.org/">Odin</a> last year, I decided to write my own static site generator, just for my own needs, which would solve all my issues with environment setup and dependencies nonsense.</p>
+<p>That's how I ended up completely replaced Pelican with <a href="https://github.com/eliasdorneles/eliasdorneles.github.io/tree/source/sitegen">some hacky Odin code</a> which does the job pretty well and is also super fast. It uses a handmade template engine with supports just enough jinja2-like syntax for the features used in my blog theme. I actually simplified the theme to avoid implementing some features in the template engine -- YAGNI and KISS are my way of life!</p>
+<p>So now I had a snappy website that was developed with my own static site generator tooling, no Python environment issues nor annoying dependencies breaking compatibility.</p>
+<p>Only remained the &quot;decent workflow to add images to my post&quot; problem.</p>
+<p>When I described this to a friend, he was like: &quot;are you complaining about having to write an img tag?&quot; -- well, yes, I am! 😅
+When I'm writing, I want the process to be as fluid as possible to not break my thinking, I want to go from the thought of adding an image to having the image integrated to my text with the minimal amount of cognition as possible.</p>
+<h3>So I vibecoded a blog post editor</h3>
+<p>It supports adding images via drag-n-drop, and I can also just paste an image from the clipboard, which is great for screenshots, for example. When I add an image, it will preprocess it (thanks <a href="https://pypi.org/project/pillow/">Pillow</a>), optimizing it for web usage.</p>
+<p>Here, let me add a screenshot of the editor as it is looking right now:</p>
+<div class="figure align-center" style="width: 500px">
+  <img src="../../..//images/blog-editor-screenshot-2026-01-31-19-42-27.png" alt="A screenshot of my blog post editor while editing this post">
+  <p class="caption">I just Ctrl+V this from my clipboard! Ahhh... so cool to be able to do that this easily!</p>
+</div>
+<p>As you can see, I get Markdown syntax highlight via <a href="https://codemirror.net/5/">Code Mirror 5</a>, Markdown preview via <a href="https://marked.js.org/">marked.js</a>, and I can even make links by pasting the URL while selecting the target text.</p>
+<p>I can now retire the scripts that I was using to ease the blog writing inside Neovim.</p>
+<h2>Epilogue</h2>
+<p>Did I really need AI for this? Could I have already built something like this before?</p>
+<p>I guess I could, but it would take more effort than I'd estimate worth it, because I'd tell myself: &quot;nah, not worth to do all that just to avoid typing an img tag&quot;, so I think that's why I never even considered it.</p>
+<p>But making this tool makes me happy. I feel like writing on the blog again. I feel like I can fix more things than before.</p>
+<p>That I could get a result this good from a few prompts with Claude Code in just a couple hours, building something I'm able start using right away and can tweak to be just perfect for me... well, that's progress!</p>
+
+        </div>
+
+        <div class="taglist">
+</div>
+    </article>
+</section>
+
+
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+        </footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/atom-one-dark.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+<script src="https://eliasdorneles.com/theme/js/imgviewer.js"></script>
+</body>
+</html>
