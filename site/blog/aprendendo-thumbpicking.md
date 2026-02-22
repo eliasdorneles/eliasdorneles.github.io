@@ -49,18 +49,11 @@ Travis](https://en.wikipedia.org/wiki/Merle_Travis "Merle Travis na Wikipedia").
 Travis, por sua vez, desenvolveu o seu estilo a partir do *country
 blues* que era tocado pelos negros americanos da sua região.
 
-Enfim, a origem da coisa toda é muito interessante, mas eu obviamente só
-fui descobrir essas coisas pesquisando bastante depois. Eu comecei nessa
-parada mesmo, basicamente, a partir dessa [pequena lição do próprio
+Enfim, a origem da coisa toda é muito interessante, mas eu só
+descobri essas coisas bem depois. Meu começo nessa
+parada mesmo foi a partir dessa [aula do próprio
 Tommy](https://www.youtube.com/watch?v=YoqG7PO-MHs "Tommy Emmanuel dando lição de violão"):
 <https://www.youtube.com/watch?v=YoqG7PO-MHs>
-
-<center>
-
-  [![Tommy Emmanuel fazendo palhaçada pra gente](https://eljunior.files.wordpress.com/2011/12/dsc05668.jpg?w=300 "Tommy Emmanuel fazendo palhaçada pra gente")](https://eljunior.files.wordpress.com/2011/12/dsc05668.jpg)
-
-  Tommy fazendo graça, e eu felizão assistindo...
-</center>
 
 Nesse vídeo ele conta, entre outras coisas, de quando ele ouviu no rádio
 pela primeira vez Chet Atkins tocando a melodia, o baixo e o ritmo, tudo
@@ -71,6 +64,13 @@ iniciado, treinando os exercícios que ele ensinou nesse vídeo (deixando
 os amigos doidos), tentando incorporar nas músicas que eu já tocava,
 tentando em outras que aprendi depois, e tirando algumas músicas do
 Tommy e Chet.
+
+<center>
+  
+  [![Tommy Emmanuel fazendo palhaçada pra gente](https://eljunior.files.wordpress.com/2011/12/dsc05668.jpg?w=300 "Tommy Emmanuel fazendo palhaçada pra gente")](https://eljunior.files.wordpress.com/2011/12/dsc05668.jpg)
+
+  <em>Tive a honra de conhecer Tommy em pessoa em 2010.<br />Aqui uma foto com ele fazendo graça, e eu assistindo todo bobão...</em>
+</center>
 
 Meu objetivo é tentar passar essas mesmas idéias aqui, no nosso bom
 português, pra quem também quer aprender esse jeito de tocar. Então,
@@ -107,44 +107,23 @@ e toque com o dedão nas 3 cordas graves alternando o baixo, tentando
 imitar o som que você ouve no áudio a seguir. Use o lado da palma da mão
 levemente encostado as 3 cordas de cima, para abafar um pouco o som.
 
-<p>
-<audio controls="controls">  
-<source src="https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/01-baixo_alternado.mp3" type="audio/mpeg">  
-</source>  
+<iframe src="https://drive.google.com/file/d/0B5Aeqmaq5y1MSDloLXNPZFhPUXM/preview?resourcekey=0-XMv8r8-3TF9MikofSJA7KA" height="40" width="400"></iframe>
 
-<embed height="80px" width="100px">
-  
-
-</embed>
-  
-Your browser does not support this audio  
-</audio>
-
-</p>
-
-[Baixar
-MP3](https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/01-baixo_alternado.mp3 "Baixar MP3 - Baixo Alternado") 
-|  [Baixar tablatura: Baixo
+[Ver a Tablatura: Baixo
 Alternado](https://eljunior.files.wordpress.com/2011/12/01-baixo_alternado.pdf)
 
-<div style="padding-left: 30px;">
-
+<blockquote>
 Se você nunca fez esse tipo de coisa antes, você vai descobrir que o seu
 dedão é um bicho muito teimoso! O danado do polegar não quer fazer o que
 você manda ele fazer! Não se preocupe se o começo for difícil. Insista
-um pouco, tenha paciência, e em algumas semanas ele vai estar que é um
-leque! :)
+um pouco, tenha paciência, e em algumas semanas ele vai estar livre.
+</blockquote>
+<blockquote>
+Experimente deixar os outros quatro dedos encostados no tampo do violão,
+assim você se força a usar somente o polegar e deixar os outros dedos parados.
+Isso foi algo que precisei fazer no começo por um bom tempo.
+</blockquote>
 
-</div>
-
-<div style="padding-left: 30px;">
-
-Uma coisa que você pode tentar, é deixar os outros quatro dedos
-encostados no tampo do violão, assim você se força a usar somente o
-polegar e deixar os outros dedos parados. Isso foi uma coisa que eu
-precisei fazer no começo por um bom tempo.
-
-</div>
 
 O detalhe desse exercício é tentar abafar apenas as 3 cordas graves que
 você vai utilizar para o baixo, deixando as 3 cordas de baixo livres e
@@ -169,77 +148,31 @@ de Lá menor, toque no tempo forte com os outros três dedos seguinte nas
 outras três cordas, enquanto faz o baixo alternado com abafamento nas
 três cordas de cima. Tente imitar o som do áudio:
 
-<p>
-<audio controls="controls">  
-<source src="https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/02-acordes_no_tempo_forte_com_baixo_alternado.mp3" type="audio/mpeg">  
-</source>  
+<iframe src="https://drive.google.com/file/d/0B5Aeqmaq5y1MT2lZN29NblNsSW8/preview?resourcekey=0-B6D3KYFWslnIz-2_wX0RSQ" width="400" height="40"></iframe>
 
-<embed height="80px" width="100px">
-  
-
-</embed>
-  
-Your browser does not support this audio  
-</audio>
-
-</p>
-
-[Baixar
-MP3](https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/02-acordes_no_tempo_forte_com_baixo_alternado.mp3 "Baixar MP3 - Acordes no Tempo Forte + Baixo Alternado") 
-|  [Baixar tablatura: Acordes no Tempo Torte +
+[Ver Tablatura: Acordes no Tempo Torte +
 Baixo\_alternado](https://eljunior.files.wordpress.com/2011/12/02-acordes_no_tempo_forte_com_baixo_alternado.pdf)
 
-<div style="padding-left: 30px;">
-
+<blockquote>
 Novamente, se é a primeira vez que você faz algo parecido, você vai
 perceber o dedão teimoso! Quando você coloca os outros dedos pra tocar o
-acorde, o danado se rebela... Tente trabalhar nisso até achar que está
-bom.
+acorde, o danado se rebela... Não esquente a cabeça em ficar perfeito logo de cara. Trabalhe nisso até achar que está bom.
+</blockquote>
 
-</div>
-
-<div style="padding-left: 30px;">
-
-Não esquente a cabeça em ficar perfeito logo de cara. Você está
-treinando sua mão pra fazer um troço que ela não tá acostumada, vai
-levar um bom tempo até o som sair estável. O negócio agora é o dedão
-ficar independente dos outros dedos. O som você trabalha pelo resto da
-vida depois... ;)
-
-</div>
-
-A seguir, quando você achar que está pronto, adicione uma outra puxada
+A seguir, quando achar que está pronto, adicione uma outra puxada
 no acorde com os outros dedos, no contratempo, como no áudio a seguir:
 
-<p>
-<audio controls="controls">  
-<source src="https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/03-acordes_no_contratempo_com_baixo_alternado.mp3" type="audio/mpeg">  
-</source>  
+<iframe src="https://drive.google.com/file/d/0B5Aeqmaq5y1MRlduY2wxTXd6eTQ/preview?resourcekey=0-0hWdvqVrweNdJURFlpf0YQ" width="400" height="40"></iframe>
 
-<embed height="80px" width="100px">
-  
-
-</embed>
-  
-Your browser does not support this audio  
-</audio>
-
-</p>
-
-[Baixar
-MP3](https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/03-acordes_no_contratempo_com_baixo_alternado.mp3 "Baixar MP3 - Acordes no contratempo com baixo alternado") 
-|  [Baixar tablatura: Acordes no contratempo +
+[Ver Tablatura: Acordes no contratempo +
 Baixo\_alternado](https://eljunior.files.wordpress.com/2011/12/03-acordes_no_contratempo_com_baixo_alternado.pdf)
 
 Dependendo de como você estiver, esses 3 exercícios podem levar dias,
 semanas ou até meses. Pra mim, levou alguns meses até o som começar a
 soar mais natural. Eu nunca fui realmente muito disciplinado com essas
-práticas todas, mas o ideal é você manter a consistência. 15 minutos por
-dia é mais importante que 6 horas só no final de semana.
+práticas todas, mas o ideal é manter alguma consistência. Tipo, 20 minutos vários dias seguidos é mais importante que 6 horas uma vez por mês.
 
-Minha sugestão é que você faça no seu ritmo, sem estresse. Mas sempre
-sabendo que se não está treinando, também não vai simplesmente conseguir
-tocar de repente.
+Negócio é fazer no seu ritmo, sem estresse.
 
 **Mudando os acordes e rascunhando melodia**
 
@@ -248,24 +181,9 @@ repetindo um padrão na mão direita várias vezes seguidas. Experimente
 agora mudar de acorde, mantendo o baixo alternado com o dedão: comece em
 Lá menor e vá para Mi maior, e depois volte, imitando o áudio.
 
-<p>
-<audio controls="controls">  
-<source src="https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/04-base-thumbpicking.mp3" type="audio/mpeg">  
-</source>  
+<iframe src="https://drive.google.com/file/d/0B5Aeqmaq5y1MWFpmZGJ0c0JTVHM/preview?resourcekey=0-O4R25PCeC2y7tWterzEqnw" width="400" height="40"></iframe>
 
-<embed height="80px" width="100px">
-  
-
-</embed>
-  
-Your browser does not support this audio  
-</audio>
-
-</p>
-
-[Baixar
-MP3](https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/04-base-thumbpicking.mp3 "Baixar MP3 - Base Thumbpicking")
- |  [Baixar tablatura: Base thumbpicking - Trocando
+[Ver Tablatura: Base thumbpicking - Trocando
 acordes](https://eljunior.files.wordpress.com/2011/12/04-base-thumbpicking.pdf)
 
 Repare que quando muda o acorde, temos que recomeçar o padrão de
@@ -274,15 +192,13 @@ tempo forte. Quando em Lá menor, o baixo alternado deve começar em Lá
 (5a corda), quando em Mi maior, o baixo alternado deve começar em Mi (6a
 corda).
 
-<div style="padding-left: 30px;">
-
-Esse é outro exercício que vai empoderar bastante seu dedão. Quando você
-consegue tocar com as duas mãos acompanhando as mudanças, você pode
+<blockquote>
+Esse é outro exercício que vai aumentar a capacidade do seu dedão.
+Quando você consegue tocar com as duas mãos acompanhando as mudanças, você pode
 tocar qualquer música que encaixe nesse ritmo! Você pode criar seus
 próprios exercícios usando outros acordes, cifras de músicas que você
 conheça, cantigas de roda, enfim!
-
-</div>
+</blockquote>
 
 A seguir, o próximo exercício é dar mais serviço para os outros dedos,
 sempre mantendo o dedão no baixo alternado. Você vai colocar alguns
@@ -290,24 +206,9 @@ padrões de dedilhado, e o dedão não pode parar. Volte para os exercícios
 anteriores se necessário, comece só com o dedão, e aos poucos comece a
 usar os outros. O áudio:
 
-<p>
-<audio controls="controls">  
-<source src="https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/05-base_com_dedilhado-thumbpicking.mp3" type="audio/mpeg">  
-</source>  
+<iframe src="https://drive.google.com/file/d/0B5Aeqmaq5y1MSldNbDY0bGtUZEk/preview?resourcekey=0-w-kumMsK66cP3wZe3PwZPA" width="400" height="40"></iframe>
 
-<embed height="80px" width="100px">
-  
-
-</embed>
-  
-Your browser does not support this audio  
-</audio>
-
-</p>
-
-[Baixar
-MP3](https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/05-base_com_dedilhado-thumbpicking.mp3 "Baixar MP3 - Base thumbpicking com dedilhado")
- |  [Baixar tablatura: Base thumbpicking com dedilhado em
+[Ver Tablatura: Base thumbpicking com dedilhado em
 cima](https://eljunior.files.wordpress.com/2011/12/05-base_com_dedilhado-thumbpicking.pdf)
 
 Por fim, o último exercício é uma variação do anterior, em outro tom e
@@ -315,93 +216,44 @@ com um padrão um pouquinho mais complicado. Todavia, o princípio é o
 mesmo: mudar de acorde, dedilhando com os dedos nas cordas de baixo, e o
 dedão sempre fazendo o baixo alternado.
 
-<p>
-<audio controls="controls">  
-<source src="https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/06-outra_base_com_dedilhado-thumbpicking.mp3" type="audio/mpeg">  
-</source>  
+<iframe src="https://drive.google.com/file/d/0B5Aeqmaq5y1MeW4wVlpkM2RVWDQ/preview?resourcekey=0-IRYP26q5lAzmEjHAYl6qlQ" width="400" height="40"></iframe>
 
-<embed height="80px" width="100px">
-  
-
-</embed>
-  
-Your browser does not support this audio  
-</audio>
-
-</p>
-
-[Baixar
-MP3](https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/06-outra_base_com_dedilhado-thumbpicking.mp3 "Baixar MP3 - Base thumbpicking em dó, com dedilhado")
- |  [Baixar tablatura: Base thumbpicking em Dó
+[Ver Tablatura: Base thumbpicking em Dó
 maior](https://eljunior.files.wordpress.com/2011/12/06-outra_base_com_dedilhado-thumbpicking.pdf)
 
 **Músicas simples de exemplo para estudar**
 
-O resto agora é com você, meu nego! :)
-
-Fazer o que a maioria dos outros violeiros/guitarristas têm preguiça:
-aprender músicas novas!
+O resto agora é com você: bora aprender músicas novas, aplicando a técnica! =)
 
 Para o pontapé inicial, gravei essas versões de Aloha Oe e Windy and
 Warm pra esta pequena lição de *thumbpicking*. Você pode começar
 trabalhando nelas, ou achar outras no YouTube ([Freight
 Train](https://www.youtube.com/watch?v=Z3RArufrbgw "Freight Train lesson no Youtube")
-é uma boa).
+por exemplo).
 
 **Exemplo de Thumbpicking - Aloha Oe**
 
-<p>
-<audio controls="controls">  
-<source src="https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/07-exemplo-aloha_oe.mp3" type="audio/mpeg">  
-</source>  
+<iframe src="https://drive.google.com/file/d/0B5Aeqmaq5y1MYkNrMzIxR0o2ZzA/preview?resourcekey=0-K5IdGm3XmBPSdBkpB-bCVg" width="400" height="40"></iframe>
 
-<embed height="80px" width="100px">
-  
-
-</embed>
-  
-Your browser does not support this audio  
-</audio>
-
-</p>
-
-[Baixar MP3 - Aloha
-Oe](https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/07-exemplo-aloha_oe.mp3 "Baixar MP3 de Aloha Oe")
 
 **Exemplo de Thumbpicking - Windy & Warm**
 
-<p>
-<audio controls="controls">  
-<source src="https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/08-exemplo-windy_and_warm.mp3" type="audio/mpeg">  
-</source>  
+<iframe src="https://drive.google.com/file/d/0B5Aeqmaq5y1MeVBCUDAzTHJJLU0/preview?resourcekey=0-2RA5L_Fp8QEPIGm0LxcSkg" width="400" height="40"></iframe>
 
-<embed height="80px" width="100px">
-  
-
-</embed>
-  
-Your browser does not support this audio  
-</audio>
-
-</p>
-
-[Baixar MP3 - Windy and
-Warm](https://googledrive.com/host/0B5Aeqmaq5y1MSTVNOXUtb0t0WnM/08-exemplo-windy_and_warm.mp3 "Baixar MP3 - Windy and Warm")
-
+(*sorry,* não fiz tablatura para essas)
 
 > Não deixe de conferir as versões de Windy & Warm de Tommy e Chet no
 > Youtube. Só do Tommy tem várias versões, uma melhor que a outra...
 
-E aprenda mais músicas. Dizem que músicas são os melhores professores.
+E aprenda mais músicas. Canções são as melhores professoras.
 Copie as versões dos outros, faça as suas versões.
 
 Pra você não se frustrar, comece com músicas simples. Se as que você já
 tentou estão fáceis, tente aprender algumas do Tommy Emmanuel ou do Chet
-Atkins, olhando os vídeos no Youtube, ou
+Atkins, procure os vídeos no Youtube, ou
 [catando](http://tommyemmanuel.wordpress.com/gitar-tabok/ "blog compartilhando tablaturas do Tommy")
 [algumas](http://tommyemmanuel.wordpress.com/chet-atkins/ "blog compartilhando tablaturas do Chet")
-tablaturas por aí. (Se todas estiverem fáceis, me avise, que vou querer
-fazer aula com você. :)
+tablaturas por aí.
 
 Uma coisa que ajuda na hora de aprender uma música, é [reproduzir o
 arquivo de áudio e/ou vídeo mais lento, mantendo o mesmo
@@ -413,7 +265,7 @@ comando). Para Windows, muita gente usa o
 [BestPractice](http://bestpractice.sourceforge.net/ "página do BestPractice")
 para áudio, mas não sei indicar um que faça o mesmo com vídeo.
 
-No más, acho que era isso! Quaisquer dúvidas, sugestões ou correções,
+*No más*, acho que era isso! Quaisquer dúvidas, sugestões ou correções,
 deixe um comentário ou mande um email, que responderei assim que puder.
 
 **Lista dos exercícios dessa lição:**
