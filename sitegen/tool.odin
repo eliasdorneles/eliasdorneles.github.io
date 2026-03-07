@@ -271,7 +271,7 @@ Options :: struct {
 }
 
 load_config :: proc(config_file: string, args: ^Options) -> (json.Object, bool) {
-    if bytes_content, err := os.read_entire_file(config_file, context.allocator); err != nil {
+    if bytes_content, err := os.read_entire_file(config_file, context.allocator); err == nil {
         if parsed, err := json.parse_string(string(bytes_content)); err == nil {
             config := parsed.(json.Object)
 
@@ -370,7 +370,7 @@ main :: proc() {
 
     // Process pages first
     pages, load_pages_err := load_pages()
-    if load_pages_err != nil {
+    if load_pages_err == nil {
         for &page in pages {
             temp_ctx := clone_context(&ctx)
             page_obj: json.Object
@@ -418,7 +418,7 @@ main :: proc() {
         proc(a: Article, b: Article) -> bool {return a.date < b.date},
     )
     object_list: json.Array
-    if load_articles_err != nil {
+    if load_articles_err == nil {
         // Group articles by slug to find translations
         article_groups := group_articles_by_slug(articles[:])
         defer {
