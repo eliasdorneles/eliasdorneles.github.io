@@ -34,6 +34,16 @@ Article :: struct {
     status:     string,
 }
 
+ParsingError :: enum {
+    ArticleMissingMetadata = 999,
+    ArticleMissingMetadataSeparator,
+}
+
+LoadError :: union #shared_nil {
+    os.Error,
+    ParsingError
+}
+
 extract_ymd :: proc(date: string) -> (string, string, string) {
     return date[:4], date[5:][:2], date[8:][:2]
 }
@@ -55,7 +65,7 @@ makedirs :: proc(dir_path: string) -> bool {
     return true
 }
 
-load_article_from_string :: proc(article: ^Article, raw_content: string) -> bool {
+load_article_from_string :: proc(article: ^Article, raw_content: string) -> ParsingError {
     metadata_lines: [dynamic]string
     markdown_content: string
     defer delete(metadata_lines)
@@ -69,11 +79,11 @@ load_article_from_string :: proc(article: ^Article, raw_content: string) -> bool
                 // two subsequent newlines means the end of metadata section
                 if len(raw_content) < index + 10 {
                     log.error("Error: article missing metadata or is too short")
-                    return false
+                    return ParsingError.ArticleMissingMetadata
                 }
                 article.md_content = raw_content[index + 1:]
                 article.lang = article.lang if article.lang != "" else DEFAULT_LANG
-                return true
+                return nil
             }
             line = raw_content[line_start_index:index]
             line_split := strings.split_n(line, ":", 2)
@@ -106,7 +116,7 @@ load_article_from_string :: proc(article: ^Article, raw_content: string) -> bool
         "Article is mal-formed, missing sep between metadata and content: ",
         article,
     )
-    return false
+    return ParsingError.ArticleMissingMetadataSeparator
 }
 
 slug_from_path :: proc(path: string) -> string {
@@ -114,13 +124,13 @@ slug_from_path :: proc(path: string) -> string {
     return filename[:len(filename) - len(".md")]
 }
 
-load_articles :: proc() -> (blog_articles: [dynamic]Article, load_ok: bool) {
+load_articles :: proc() -> (blog_articles: [dynamic]Article, ret_err: LoadError) {
     article_path_list, err := filepath.glob("site/blog/*.md")
     if err != nil {
-        return nil, false
+        return nil, err
     }
     for article_path in article_path_list {
-        bytes_content := os.read_entire_file(article_path) or_return
+        bytes_content := os.read_entire_file(article_path, context.allocator) or_return
         article: Article
         article.filepath = article_path
         article.slug = slug_from_path(article_path)
@@ -128,7 +138,7 @@ load_articles :: proc() -> (blog_articles: [dynamic]Article, load_ok: bool) {
         append(&blog_articles, article)
 
     }
-    return blog_articles, true
+    return blog_articles, nil
 }
 
 render_article_content :: proc(article: ^Article) -> string {
@@ -234,20 +244,20 @@ generate_article_summary :: proc(article: ^Article, summary_max_length: int = 1)
     return clean_html_summary(html)
 }
 
-load_pages :: proc() -> (pages: [dynamic]Article, load_ok: bool) {
+load_pages :: proc() -> (pages: [dynamic]Article, ret_err: LoadError) {
     page_path_list, err := filepath.glob("site/pages/*.md")
     if err != nil {
-        return nil, false
+        return nil, err
     }
     for page_path in page_path_list {
-        bytes_content := os.read_entire_file(page_path) or_return
+        bytes_content := os.read_entire_file(page_path, context.allocator) or_return
         page: Article
         page.filepath = page_path
         page.slug = slug_from_path(page_path)
         load_article_from_string(&page, string(bytes_content)) or_return
         append(&pages, page)
     }
-    return pages, true
+    return pages, nil
 }
 
 get_page_url :: proc(page: ^Article) -> string {
@@ -261,7 +271,7 @@ Options :: struct {
 }
 
 load_config :: proc(config_file: string, args: ^Options) -> (json.Object, bool) {
-    if bytes_content, ok := os.read_entire_file(config_file); ok {
+    if bytes_content, err := os.read_entire_file(config_file, context.allocator); err != nil {
         if parsed, err := json.parse_string(string(bytes_content)); err == nil {
             config := parsed.(json.Object)
 
@@ -359,8 +369,8 @@ main :: proc() {
     count_files_written := 0
 
     // Process pages first
-    pages, pages_ok := load_pages()
-    if pages_ok {
+    pages, load_pages_err := load_pages()
+    if load_pages_err != nil {
         for &page in pages {
             temp_ctx := clone_context(&ctx)
             page_obj: json.Object
@@ -374,12 +384,13 @@ main :: proc() {
             temp_ctx["page"] = page_obj
             temp_ctx["rel_source_path"] = fmt.aprintf("site/pages/%s.md", page.slug)
 
-            out_dir_path := filepath.join({args.output, "pages"})
+            out_dir_path, err1 := filepath.join({args.output, "pages"}, context.allocator)
             if !makedirs(out_dir_path) {
                 fmt.eprintln("Error attempting to create dir:", out_dir_path)
             }
-            target_path := filepath.join(
+            target_path, err2 := filepath.join(
                 {out_dir_path, fmt.aprintf("%s.html", page.slug)},
+                context.allocator
             )
 
             template_name := page.template if page.template != "" else "page.html"
@@ -391,7 +402,7 @@ main :: proc() {
                 fmt.eprintln("Error rendering page:", page.slug)
                 continue
             }
-            if !os.write_entire_file(target_path, transmute([]u8)rendered) {
+            if os.write_entire_file(target_path, transmute([]u8)rendered) != nil {
                 fmt.eprintln("Error writing page:", target_path)
                 continue
             }
@@ -401,13 +412,13 @@ main :: proc() {
     fmt.printfln("Rendered %d pages", count_files_written)
 
     // let's now render the blog articles
-    articles, ok := load_articles()
+    articles, load_articles_err := load_articles()
     slice.reverse_sort_by(
         articles[:],
         proc(a: Article, b: Article) -> bool {return a.date < b.date},
     )
     object_list: json.Array
-    if ok {
+    if load_articles_err != nil {
         // Group articles by slug to find translations
         article_groups := group_articles_by_slug(articles[:])
         defer {
@@ -446,11 +457,11 @@ main :: proc() {
                 append(&object_list, article_obj)
             }
 
-            out_dir_path := filepath.join({args.output, year, month, day})
+            out_dir_path, err := filepath.join({args.output, year, month, day}, context.allocator)
             if !makedirs(out_dir_path) {
                 fmt.eprintln("Error attempting to create dir:", out_dir_path)
             }
-            target_path := filepath.join({out_dir_path, get_article_filename(&article)})
+            target_path, err2 := filepath.join({out_dir_path, get_article_filename(&article)}, context.allocator)
 
             template_name :=
                 article.template if article.template != "" else "article.html"
@@ -462,7 +473,7 @@ main :: proc() {
                 // Replace {static} with relative path for articles
                 rendered, _ = strings.replace_all(rendered, "{static}", "../../../")
                 bytes_to_write := transmute([]u8)rendered
-                if !os.write_entire_file(target_path, bytes_to_write) {
+                if os.write_entire_file(target_path, bytes_to_write) != nil {
                     fmt.eprintln("Error writing file:", target_path)
                 }
                 count_files_written += 1
@@ -485,9 +496,9 @@ main :: proc() {
         // Remove {static} for index page
         rendered, _ = strings.replace_all(rendered, "{static}", "")
         rendered, _ = strings.replace_all(rendered, "%7Bstatic%7D", "")
-        target_path := filepath.join({args.output, "index.html"})
+        target_path, err := filepath.join({args.output, "index.html"}, context.allocator)
         bytes_to_write := transmute([]u8)rendered
-        if !os.write_entire_file(target_path, bytes_to_write) {
+        if os.write_entire_file(target_path, bytes_to_write) != nil {
             fmt.eprintln("Error writing index file:", target_path)
         } else {
             count_files_written += 1
@@ -498,7 +509,8 @@ main :: proc() {
 
     fmt.printfln("\nWrote %d files!\n", count_files_written)
 
-    makedirs(filepath.join({args.output, "theme"}))
+    theme_dir, err := filepath.join({args.output, "theme"}, context.allocator)
+    makedirs(theme_dir)
 
     run_cmdf :: proc(cmdf: string, cmdf_args: ..any) {
         cmd := fmt.aprintf(cmdf, ..cmdf_args)

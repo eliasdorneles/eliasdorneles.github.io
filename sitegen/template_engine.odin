@@ -1152,7 +1152,10 @@ load_template :: proc(env: ^Environment, template_name: string) -> bool {
     }
     template_path := strings.join({TEMPLATE_DIR, template_name}, "")
     defer delete(template_path)
-    template_data := os.read_entire_file(template_path) or_return
+    template_data, err := os.read_entire_file(template_path, context.allocator)
+    if err != nil {
+        return false
+    }
     env.raw_templates[template_name] = string(template_data)
     resolve_template_includes(env, template_name) or_return
     return true
