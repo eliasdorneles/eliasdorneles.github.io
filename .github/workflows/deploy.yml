@@ -33,6 +33,25 @@ jobs:
       - name: Build site
         run: ./sitegen.bin --output output_prod --config-file config_sitegen.json
 
+      - name: Validate site output
+        run: |
+          echo "Checking that output_prod contains expected files..."
+          if [ ! -s output_prod/index.html ]; then
+            echo "ERROR: output_prod/index.html is missing or empty"
+            exit 1
+          fi
+          if [ ! -f output_prod/CNAME ]; then
+            echo "ERROR: output_prod/CNAME is missing"
+            exit 1
+          fi
+          # Blog posts are organized by date: output_prod/YYYY/MM/DD/slug.html
+          post_count=$(find output_prod -name "*.html" -path "*/[0-9][0-9][0-9][0-9]/*" | wc -l)
+          if [ "$post_count" -eq 0 ]; then
+            echo "ERROR: No blog post HTML files found in output_prod"
+            exit 1
+          fi
+          echo "Validation passed: index.html present, CNAME present, $post_count blog post(s) found."
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
