@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Elias Dorneles' website"
 requires-python = ">=3.11.0"
 dependencies = [
+    "beautifulsoup4>=4.12.0",
     "flask>=3.1.2",
     "ghp-import>=2.1.0",
     "pillow>=12.1.0",

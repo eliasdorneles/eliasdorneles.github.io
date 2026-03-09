@@ -13,10 +13,20 @@ sitegen.bin: sitegen/tool.odin sitegen/template_engine.odin config_sitegen.json
 .PHONY: compile-dev
 compile-dev: clean-local sitegen.bin  ## Compile the site for local development
 	./sitegen.bin --local --output output --config-file config_sitegen.json
+	uv run python manage/gen_rss.py --output-dir output
 
 .PHONY: compile-prod
 compile-prod: sitegen.bin
 	./sitegen.bin --output ${PROD_OUTPUT_DIR} --config-file config_sitegen.json
+	uv run python manage/gen_rss.py --output-dir ${PROD_OUTPUT_DIR}
+
+.PHONY: gen-rss
+gen-rss:  ## Generate RSS feed for local output
+	uv run python manage/gen_rss.py --output-dir output
+
+.PHONY: gen-rss-prod
+gen-rss-prod:  ## Generate RSS feed for production output
+	uv run python manage/gen_rss.py --output-dir ${PROD_OUTPUT_DIR}
 
 .PHONY: server
 server: compile-dev  ## Start a local server to view the site

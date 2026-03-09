@@ -27,11 +27,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libcmark-gfm-dev libcmark-gfm-extensions-dev
 
-      - name: Build sitegen
-        run: odin build sitegen
-
       - name: Build site
-        run: ./sitegen.bin --output output_prod --config-file config_sitegen.json
+        run: make compile-prod
 
       - name: Validate site output
         run: |
@@ -50,7 +47,15 @@ jobs:
             echo "ERROR: No blog post HTML files found in output_prod"
             exit 1
           fi
-          echo "Validation passed: index.html present, CNAME present, $post_count blog post(s) found."
+          if [ ! -s output_prod/feed.xml ]; then
+            echo "ERROR: output_prod/feed.xml is missing or empty"
+            exit 1
+          fi
+          if ! python3 -c "import xml.etree.ElementTree as ET; ET.parse('output_prod/feed.xml')"; then
+            echo "ERROR: output_prod/feed.xml is not valid XML"
+            exit 1
+          fi
+          echo "Validation passed: index.html present, CNAME present, $post_count blog post(s) found, feed.xml valid."
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
