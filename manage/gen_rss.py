@@ -8,11 +8,11 @@ extracts content from rendered HTML, writes feed.xml to output dir.
 
 import argparse
 import json
-import re
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from email.utils import format_datetime
 from pathlib import Path
+from urllib.parse import urljoin
 
 from bs4 import BeautifulSoup
 
@@ -63,7 +63,7 @@ def get_output_path(md_file: Path, meta: dict, output_dir: Path) -> Path | None:
     return output_dir / date_path / f"{slug}.html"
 
 
-def extract_content(html_file: Path, siteurl: str) -> str:
+def extract_content(html_file: Path, article_url: str) -> str:
     soup = BeautifulSoup(html_file.read_text(encoding="utf-8"), "html.parser")
     entry_div = soup.find("div", class_="entry-content")
     if not entry_div:
@@ -79,17 +79,12 @@ def extract_content(html_file: Path, siteurl: str) -> str:
     if taglist:
         taglist.decompose()
 
-    content_html = entry_div.decode_contents().strip()
+    # Resolve all relative URLs (src and href) to absolute using the article URL as base
+    for tag, attr in [("img", "src"), ("a", "href"), ("source", "src")]:
+        for el in entry_div.find_all(tag, **{attr: True}):
+            el[attr] = urljoin(article_url, el[attr])
 
-    # Fix relative URLs: src="/..." → src="SITEURL/..."
-    # (images and other assets use absolute paths starting with /)
-    content_html = re.sub(
-        r'(src|href)="(/[^"]*)"',
-        lambda m: f'{m.group(1)}="{siteurl}{m.group(2)}"',
-        content_html,
-    )
-
-    return content_html
+    return entry_div.decode_contents().strip()
 
 
 def load_posts(output_dir: Path) -> list[dict]:
@@ -176,7 +171,7 @@ def build_rss(posts: list[dict], sitename: str, siteurl: str) -> ET.Element:
         if post["author"]:
             ET.SubElement(item, "author").text = post["author"]
 
-        content_html = extract_content(post["html_file"], post["siteurl"])
+        content_html = extract_content(post["html_file"], post["url"])
         if content_html:
             encoded = ET.SubElement(item, "content:encoded")
             encoded.text = content_html
