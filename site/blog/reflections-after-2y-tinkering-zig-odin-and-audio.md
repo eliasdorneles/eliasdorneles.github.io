@@ -44,7 +44,8 @@ If you make music on Linux, you will at some point meet [JACK](https://jackaudio
 > For instance, you can apply effects to audio coming from the browser just the same as if it were coming from the microphone.
 >
 > Like most people these days, I am actually using [Pipewire](https://www.pipewire.org/) instead of JACK, as it works better and it supports the exact same JACK APIs. So it's still useful to learn them, even if I'm not using JACK anymore.
-> <div class="figure align-center" style="width: 450px">
+
+<div class="figure align-center" style="width: 450px">
   <img src="{static}/images/jack_or_pipewire.png" alt="JACK sound server visual explanation">
   <p class="caption">With JACK or Pipewire, you can virtually configure how the audio signals are routed in your computer.</p>
 </div>
