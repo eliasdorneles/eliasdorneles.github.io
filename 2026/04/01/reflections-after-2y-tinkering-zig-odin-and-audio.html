@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>Reflections after two years of tinkering with Zig and Odin for audio stuff</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="manifest" href="/images/site.webmanifest">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+        <link rel="alternate" type="application/rss+xml" title="Elias Dorneles" href="https://eliasdorneles.com/feed.xml">
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4f3dd4ee-0791-4d9c-b94f-6d1aa073e79a"></script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
+                <nav><ul>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
+                </ul></nav>
+        </header><!-- /#banner -->
+        
+
+        
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="/2026/04/01/reflections-after-2y-tinkering-zig-odin-and-audio.html"
+                    rel="bookmark" title="Permalink to Reflections after two years of tinkering with Zig and Odin for audio stuff">Reflections after two years of tinkering with Zig and Odin for audio stuff</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+            
+<footer class="post-info">
+        
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2026-04-01 02:05:00+02:00">01 Apr 2026</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/reflections-after-2y-tinkering-zig-odin-and-audio.md">Edit</a>
+        </address>
+        
+
+
+</footer>
+
+            <p>After many years of Python as my main programming language, I started learning <a href="https://ziglang.org/">Zig</a> around <a href="https://eliasdorneles.com/til/posts/how-to-call-fluidsynth-c-api-from-zig/">the end of 2023</a>. One of my goals was to tinker with audio programming, and I thought my life would be simpler if I could avoid C++.
+I'm now wondering if maybe I should learn C++ anyway... 🤔</p>
+<p>What can I say, I get excited about programming languages!</p>
+<p>Ever since I was in college, 20 years ago, I enjoy learning and exploring them.</p>
+<h2>My Zig learning journey</h2>
+<p>So the audio programming interest ended up being a good excuse to learn some Zig, and writing a bunch of blog posts about it <a href="https://eliasdorneles.com/til/tags/zig/">in my TIL website</a>.</p>
+<p>Here are some things I learned with Zig:</p>
+<h4>1. The WAVE audio file format</h4>
+<ul>
+<li>Crafting a WAVE audio file from scratch:
+<ul>
+<li><a href="https://eliasdorneles.com/til/posts/writing-a-wave-file/">take 1</a>, and <a href="https://eliasdorneles.com/til/posts/generate-wave-file-in-zig-choosing-the-bit-depth/">take 2</a> fixing issues of take 1</li>
+</ul>
+</li>
+<li>Creating <a href="https://eliasdorneles.com/til/posts/using-libsndfile-in-zig/">a WAVE file again, but this time using libsndfile</a></li>
+</ul>
+<h4>2. Using Fluidsynth programatically</h4>
+<img src="../../..//images/fluidsynth.png" class="align-center" width="550" alt="Fluidsynth visual explanation" />
+<p><a href="https://www.fluidsynth.org/">Fluidsynth</a> is a software that can read MIDI events (e.g. notes played on a keyboard) and then turn them into sound, based on information from a sound specification that tells Fluidsynth the properties of the sound and how to make it. The sound specification uses a format called <a href="https://en.wikipedia.org/wiki/SoundFont">SoundFont</a>, typically files have a <code>.sf2</code> extension.</p>
+<p>Small example programs I made using Fluidsynth:</p>
+<ul>
+<li>a first <a href="https://eliasdorneles.com/til/posts/how-to-call-fluidsynth-c-api-from-zig/">example program which just plays 3 notes</a></li>
+<li>a <a href="https://eliasdorneles.com/til/posts/the-basics-of-the-fluidsynth-sequencer-api/">dumb metronome with hardcoded BPM, to learn the Fluidsynth Sequencer API</a></li>
+<li><a href="https://github.com/eliasdorneles/zig-fluid-playground/blob/main/play_through.zig">a program that logs MIDI events from any connected MIDI device</a>, before sending them to the synthesizer to play them</li>
+<li><a href="https://github.com/eliasdorneles/zig-fluid-playground/blob/main/song_sequencer.zig">another sequencer example playing a hardcoded &quot;song&quot; with two tracks</a></li>
+</ul>
+<h4>3. The basics of using the JACK sound server programatically</h4>
+<p>If you make music on Linux, you will at some point meet <a href="https://jackaudio.org/">JACK</a>.</p>
+<blockquote>
+<p>JACK is a sound server that lets you decide how exactly audio is routed in our computer system. It is super handy for people using the computer to make music, because it gives a lot of control to you and to the software that you use.
+For instance, you can apply effects to audio coming from the browser just the same as if it were coming from the microphone.</p>
+<p>Like most people these days, I am actually using <a href="https://www.pipewire.org/">Pipewire</a> instead of JACK, as it works better and it supports the exact same JACK APIs. So it's still useful to learn them, even if I'm not using JACK anymore.</p>
+</blockquote>
+<div class="figure align-center" style="width: 450px">
+  <img src="../../..//images/jack_or_pipewire.png" alt="JACK sound server visual explanation">
+  <p class="caption">With JACK or Pipewire, you can virtually configure how the audio signals are routed in your computer.</p>
+</div>
+<p>These are essentially Zig ports of example code from JACK's repo:</p>
+<ul>
+<li>a <a href="https://github.com/eliasdorneles/zig-jack-example-clients/blob/main/simple_client.zig">program that plays a single note sine wave to the output</a></li>
+<li>a <a href="https://github.com/eliasdorneles/zig-jack-example-clients/blob/main/midisine.zig">program which plays a sine wave for the MIDI notes coming in the input</a> -- aka: look ma, I am synthesizing sound! 😄</li>
+</ul>
+<h4>Other non-audio related stuff:</h4>
+<ul>
+<li><a href="https://eliasdorneles.com/til/posts/parsing-command-line-args-in-zig-using-only-stdlib/">simple command-line parsing</a> without extra dependencies</li>
+<li>using <a href="https://eliasdorneles.com/til/posts/customizing-neovim-debugging-highlight-zig-debug-w-codelldb/">a debugger to debug Zig programs</a></li>
+<li>creating <a href="https://github.com/eliasdorneles/zig-calc">a simple REPL calculator</a> -- here are the related TIL posts:
+<ul>
+<li><a href="https://eliasdorneles.com/til/posts/simple-stdin-stdout-text-processing-with-zig/">basic REPL stdin/stout processing</a></li>
+<li><a href="https://eliasdorneles.com/til/posts/zig-exercise-using-std-types-to-implement-a-basic-shell-calculator/">implementing actual calculator</a></li>
+</ul>
+</li>
+</ul>
+<p>All in all, a bunch of tiny programs as you can see. Nothing too daunting, plenty of good fun!</p>
+<h3>Resources that helped me to learn Zig</h3>
+<ul>
+<li>of course, <a href="https://ziglang.org/learn/">the official documentation</a>, specially <a href="https://ziglang.org/learn/overview">the overview</a> and <a href="https://ziglang.org/documentation/0.15.2/">the language reference</a></li>
+<li>the <a href="https://www.youtube.com/@dudethebuilder/playlists">Youtube videos by Dude The Builder</a> helped me to understand some concepts that were hard for me to grasp from the documentation alone</li>
+<li>the <a href="https://ziggit.dev/">ziggit.dev forum</a> where people helped to troubleshoot my code and explained to me concepts that I was misunderstanding</li>
+<li>the <a href="https://zig.guide/">Zig Guide</a>, which complements the official documentation on some topics</li>
+<li>the <a href="https://cookbook.ziglang.cc/">Zig cookbook</a> website which has some useful recipes</li>
+<li>towards the end of my learning journey, I discovered <a href="https://pedropark99.github.io/zig-book/">the Zig book</a>, written by Pedro Faria (another Brazilian, yay! \o/), which I've read some chapters and found useful</li>
+</ul>
+<h3>Recap of Zig learning</h3>
+<p>I enjoyed learning Zig quite a bit!</p>
+<p><em>What I love about Zig:</em></p>
+<ul>
+<li>super easy to call C APIs from it: you don't even need to create bindings, you can just call them directly</li>
+<li>great tooling and documentation for it</li>
+<li>great community</li>
+<li>its maintainer personality: Andrew Kelley is such a warm person!
+<ul>
+<li>I get inspired whenever I watch any of his talks</li>
+</ul>
+</li>
+</ul>
+<p><em>What I find frustrating about Zig:</em></p>
+<ul>
+<li>every new release breaks most of my programs 😅</li>
+<li>hard to navigate and learn the standard library</li>
+</ul>
+<p>In any case, it's a great programming language and I believe it will become super popular when it reaches 1.0 and becomes more stable. I think Andrew senses this and that's why he's being careful about getting things right before the 1.0.</p>
+<h2>Getting into Odin</h2>
+<p>At some point last year I got into <a href="https://odin-lang.org/">Odin</a>. I don't quite remember why, I think I got curious after reading some people talking about it on Hacker News, then I found <a href="https://www.youtube.com/@karl_zylinski">Karl Zylinski's tutorials on Youtube teaching how to make games</a> with it and that got me officially hooked!</p>
+<blockquote>
+<p><strong>Why do people like to learn new programming languages?</strong><br>
+Because they want to feel cool doing cool stuff, that's why!</p>
+</blockquote>
+<p>So that's how I got into Odin, by making games with Karl! He doesn't know me, but after spending so many hours with his online video presence, I feel like he's a friend I can refer to on a first-name basis. 😄</p>
+<p>Some things I learned:</p>
+<h3>Making 2d games using Raylib</h3>
+<img src="../../..//images/netflix_or_not.png" class="align-center" width="400" alt="netflix_or_not.png" />
+<p>I had fun coding <a href="https://www.youtube.com/watch?v=lfiQNCNUifI">Snake</a> and <a href="https://www.youtube.com/watch?v=vfgZOEvO0kM&amp;pp=0gcJCdsKAYcqIYzv">Breakout</a> with Karl.</p>
+<p>After that, I paired with a friend and we made <a href="https://eliasdorneles.com/tictactoetoe/">TicTacToeToe</a>. This is a variant of the <a href="https://mathwithbaddrawings.com/2013/06/16/ultimate-tic-tac-toe/">Ultimate TicTacToe</a>. My friend wanted to do Rust, so he wrote <a href="https://codeberg.org/jean553/tictactoe-lib-rs">the game logic in Rust</a> and I wrote <a href="https://codeberg.org/eliasdorneles/tictactoetoe">the game UI in Odin</a> using Raylib -- fun stuff!</p>
+<h3>More JACK audio stuff</h3>
+<p>I went on to translate several of the JACK examples into Odin:</p>
+<ul>
+<li><a href="https://github.com/eliasdorneles/odin-jack-example-clients/blob/main/simple_client.odin">the same single-note sine wave aforementioned</a></li>
+<li>also <a href="https://github.com/eliasdorneles/odin-jack-example-clients/blob/main/midisine.odin">the same sine wave synth playing MIDI notes</a> from whatever input is connected to it</li>
+<li><a href="https://github.com/eliasdorneles/odin-jack-example-clients/blob/main/midiseq.odin">a silly command-line sequencer</a> that plays notes given as arguments</li>
+<li><a href="https://github.com/eliasdorneles/odin-jack-example-clients/blob/main/metro.odin">a metronome with a configurable attack/decay</a></li>
+<li><a href="https://github.com/eliasdorneles/odin-jack-example-clients/blob/main/capture_client.odin">a multithreaded program that records input and encodes it into a WAVE file</a>
+<ul>
+<li>This one was plenty of fun, cause I got to practice writing multithreaded code in Odin! 🤘</li>
+<li>The way this program works is: one thread gets samples from the input and writes them to a <a href="https://en.wikipedia.org/wiki/Circular_buffer">ring buffer</a>, while a separate thread reads from the ring buffer and writes the sample to the disk as a WAVE file.</li>
+</ul>
+</li>
+</ul>
+<h3>Creating a static site generator</h3>
+<p>As I was growing tired of issues with my website's setup every few months, I decided to replace it by a static site generator I'd write in Odin.</p>
+<p>This took me two weeks, I got to learn quite a bit of Odin in the process and I'm very satisfied with it. Indeed, the article you are reading right now has been generated by my homegrown static site generator written in Odin, how cool is that?</p>
+<p>The code is hacky, the template engine only supports the syntax used in my templates and it is not at all properly packaged to be shared, but it works for my needs and it's much faster than my previous setup! You can <a href="https://github.com/eliasdorneles/eliasdorneles.github.io/tree/source/sitegen">peek at the source here</a> if you want to have an idea what it looks like.</p>
+<h3>Resources that helped me to learn Odin</h3>
+<ul>
+<li>of course, <a href="https://odin-lang.org/docs/">the official documentation</a></li>
+<li>the <a href="https://www.youtube.com/@karl_zylinski">aforementioned videos on making games from Karl Zylinski</a></li>
+<li><a href="https://forum.odin-lang.org/">the Odin forum</a></li>
+<li><a href="https://odinbook.com/">the Odin book written by Karl Zylinski</a>
+<ul>
+<li>this guy is a champion!</li>
+</ul>
+</li>
+</ul>
+<h3>Recap of Odin learning journey</h3>
+<p>I also enjoyed very much learning Odin!</p>
+<p><em>What I love about Odin:</em></p>
+<ul>
+<li>joy of programming vibes: many small usability features that make the code <em>feel</em> good and easier to reason about</li>
+<li><a href="https://pkg.odin-lang.org/vendor/">bindings to many high quality libraries included</a></li>
+<li>the <a href="https://odin-lang.org/docs/overview/#implicit-context-system">implicit context system</a>, with its allocator and temp_allocator</li>
+<li>it's done! The language is considered mostly finished, the efforts are now in improving the standard library</li>
+</ul>
+<p><em>What I find frustrating about Odin:</em></p>
+<ul>
+<li>so few people using it... will it ever become popular? 🤔</li>
+</ul>
+<p>Popularity is relevant because the more there are people using a language, the more tools it will have, more it will be tested, more opportunities will be created, etc.</p>
+<p>I wonder if Odin is a language that people need to have suffered beforehand in order to appreciate it. Or maybe it will become more popular when there will be more tutorials and documentation freely available that are truly beginner-friendly.</p>
+<p>Anyway...</p>
+<h2>Should I stop going around it and just learn some C++?</h2>
+<p>I've been thinking on what are my actual goals with all these.</p>
+<p>It's been good fun learning these languages, and I don't regret it, but I can't help but think: is this the best use of my time?</p>
+<p>Are Zig and Odin distractions on my way to building more meaningful programming skills, like audio programming with digital signal processing? Is learning languages fun to me because it's less daunting than aiming for more ambitious projects like learning how to implement audio effects and synths, which I've been meaning to?</p>
+<p>Next year I'll be 40 years old, and I'm conscious that there is a limit to the number of programming languages I can still learn and be productive with, there is a limit to the amount of meaningful projects I can build. The more I get older, the more I have to choose wisely.</p>
+<p>Of course, it's totally okay and not a bad thing to explore new languages for fun and all! I am just not sure I'm getting as much out of it as I would want to.</p>
+<img src="../../..//images/prog_langs.png" class="align-center" width="550" alt="prog_langs.png" />
+<p>I knew I wanted to learn languages that would let me write more performant programs than the Python I've been using heavily over the last decade or so. For work stuff, I don't need to choose because my company has already chosen <a href="https://go.dev/">Go</a> for the non-Python services, which is a sensible choice and I'm excited about doing some Go at work soon.</p>
+<p>But for my personal journey, since C++ seems to be the industry standard for audio programming which is what I want to pursue in my &quot;hobby programming&quot;, maybe I should just bite the bullet and dive into it.</p>
+<p><a href="https://learnmoderncpp.com/">Modern C++</a> seems to be much better than earlier versions, and it seems to keep getting better. Plus, there are several tools for interoperability with Python, it seems much better than Zig or Odin in this aspect.</p>
+<p>So I think this year I'll be learning some C++. Just enough to be dangerous!</p>
+<p>I also want to try to create some Reaper plugins with <a href="https://www.reaper.fm/sdk/js/js.php">JSXF</a> to explore more with audio plugins.</p>
+<p>Let's see how it goes!</p>
+
+        </div>
+
+        <div class="taglist">
+</div>
+    </article>
+</section>
+
+
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+        </footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/atom-one-dark.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+<script src="https://eliasdorneles.com/theme/js/imgviewer.js"></script>
+</body>
+</html>

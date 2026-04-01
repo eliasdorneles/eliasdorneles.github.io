@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <title>zenmarked for Markdown editing + my history with lightweight markup languages</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        <link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="manifest" href="/images/site.webmanifest">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://eliasdorneles.com/theme/css/main.css" type="text/css" />
+        <link rel="alternate" type="application/rss+xml" title="Elias Dorneles" href="https://eliasdorneles.com/feed.xml">
+<script>
+var host = "eliasdorneles.github.io";
+if (window.location.host == host && window.location.protocol != "https:") {
+  window.location.protocol = "https:";
+}
+</script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4f3dd4ee-0791-4d9c-b94f-6d1aa073e79a"></script>
+</head>
+
+<body>
+    <a name="top"></a>
+
+<div class="site-container">
+        
+        <header id="banner" class="body">
+                <h1><a href="https://eliasdorneles.com/index.html">Elias Dorneles </a></h1>
+                <nav><ul>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/">Blog</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/til">Today I Learned...</a>
+                    </li>
+                
+                    <li >
+                        <a href="https://eliasdorneles.com/pages/about.html">About me</a>
+                    </li>
+                
+                </ul></nav>
+        </header><!-- /#banner -->
+        
+
+        
+<section id="content" class="body">
+    <article>
+        <header>
+            <h1 class="entry-title">
+                <a href="/2026/03/07/zenmarked-yet-another-markdown-editor.html"
+                    rel="bookmark" title="Permalink to zenmarked for Markdown editing + my history with lightweight markup languages">zenmarked for Markdown editing + my history with lightweight markup languages</a>
+            </h1>
+        </header>
+
+        <div class="entry-content">
+            
+<footer class="post-info">
+        
+        <address class="vcard author">
+            posted by
+            <a href="https://eliasdorneles.com/pages/about.html">Elias Dorneles</a>
+            on <abbr class="published" title="2026-03-07 13:24:00+02:00">07 Mar 2026</abbr>
+            <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/site/blog/zenmarked-yet-another-markdown-editor.md">Edit</a>
+        </address>
+        
+
+
+</footer>
+
+            <p>It's been a wild ride for lightweight markup languages the last few decades!</p>
+<p>Let's go through some of the different markup languages I've used during the past 20 years or so. Some of these I learned by personal interest, some because I was forced to use, and each has its own feel.</p>
+<h2>Markup languages I've used or dabbled with</h2>
+<ol>
+<li><a href="https://en.wikipedia.org/wiki/BBCode">BBCode</a>: Like many people using the Internet in the 2000s, I was exposed to BBcode when participating on Internet forums. It is lightweight in amount of features, its syntax is not that light: it's pretty HTML-ish, but with square brackets, i.e.: <code>[b]bold[/b]</code> instead of <code>&lt;b&gt;bold&lt;/b&gt;</code>, etc.</li>
+<li><a href="https://txt2tags.org/">txt2tags</a> is probably the most obscure one from this list. It's not actively maintained anymore and it's been a long time since I last used it, but it had some interesting features and <a href="https://txt2tags.org/markup.html">its markup</a> is quite clean. I quite liked txt2tags, and when I was in college, for some time I had a blog with an ad-hoc blog engine I had written in a mix of bash and PHP, where the articles were written in txt2tags. Github didn't exist back then, so I don't have that code anymore.
+<ul>
+<li>Fun fact: txt2tags was created by <a href="https://aurelio.net/">Aurélio Jargas</a>, a prolific Brazilian programmer and writer well known in the Brazilian Linux user community from his books, projects and online writings.</li>
+</ul>
+</li>
+<li><a href="https://en.wikipedia.org/wiki/Textile_(markup_language)">Textile</a> was one of the ones I was forced to use and found it quite annoying! 😅 I had to use it for the <a href="https://en.wikipedia.org/wiki/Redmine">Redmine</a> project management tool (which also feels old now). I think it was annoying because its syntax looks deceptively simple, but I had to check the syntax docs almost every time.</li>
+<li><a href="https://en.wikipedia.org/wiki/ReStructuredText">reST</a> is one I didn't like using it in the beginning, until I used it more and understood better <a href="https://docutils.sourceforge.io/docs/ref/rst/introduction.html#goals">its design goals</a>; then I started admiring it. It's designed specifically for technical documentation, so its syntax has a steeper learning curve, but it offers plenty of possibilities. The moment when it clicked for me was when I was working in the documentation for the <a href="https://www.scrapy.org/">Scrapy framework</a>, I was able to reliably automate generating a <a href="https://docs.scrapy.org/en/latest/topics/settings.html#settings-documented-elsewhere">list of all settings that were documented elsewhere in the documentation</a> using <a href="https://www.sphinx-doc.org">Sphinx</a>, linking to them properly (<a href="https://github.com/scrapy/scrapy/pull/1220">see here the PR if you're curious</a>). And this will keep working for any future setting that will be added, because that's the power or <em>reStructuredText</em>: you can add structured semantic information that can be parsed and processed later, which is what the smart folks maintaining Scrapy did for its settings, making it possible to automate listing and linking to them.</li>
+<li><a href="https://asciidoc.org/">asciidoc</a> is one I've messed around with by curiosity, but I can't remember ever using it for anything serious. That doesn't mean it's not a serious project though: it's pretty much serious and in fact, many technical books are written using that -- for instance, it's one of <a href="https://docs.atlas.oreilly.com/">the three supported languages of the toolchain used for Oreilly books</a>.</li>
+<li><a href="https://en.wikipedia.org/wiki/Help:Wikitext">Wikitext</a> I used on the few occasions I contributed to Wikipedia, or used <a href="https://www.mediawiki.org/wiki/MediaWiki">Mediawiki</a> in other wikis. It's not <em>that</em> lightweight: even though the <a href="https://www.mediawiki.org/wiki/Help:Formatting">formatting basics</a> are simple enough, Mediawiki's markup <a href="https://www.mediawiki.org/wiki/Manual:Extending_wiki_markup">can be extended</a> and I think that's allowed Wikipedia to <a href="https://en.wikipedia.org/wiki/Help:Score">have</a> <a href="https://www.mediawiki.org/wiki/Extension:Math">so</a> <a href="https://www.mediawiki.org/wiki/Extension:ImageMap">many</a> <a href="https://en.wikipedia.org/wiki/Wikipedia:Citing_sources">rich</a> <a href="https://www.mediawiki.org/wiki/Extension:SyntaxHighlight">features</a>.</li>
+<li>finally, <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a>, which is of course the winner of the lightweight markup languages race. By now, I figure a lot of people write in Markdown without even knowing that's what it is called. I am not sure if younger technical folks want to learn any other markup after learning Markdown, even if they will miss features like cross-referencing, footnotes, comments, and other goodies, anything different will feel &quot;less standard&quot;. And now, it is of course the lingua franca of LLMs: ChatGPT, Claude and etc are all big readers and writers of Markdown.</li>
+</ol>
+<p>Sometimes when I think about it, Markdown's popularity is kind of crazy: how did that happen? It wasn't the language with most features, and it wasn't the cleanest syntax, the original definition had ambiguities and earlier implementations diverged quite a bit, until there was the <a href="https://commonmark.org/">CommonMark</a> standardization effort 10 years after Markdown had been created. I suppose the success was probably due in part because of the support in sites like GitHub/Gitlab/Bitbucket and StackOverflow, also the standardization effort and the reference C library <a href="https://github.com/commonmark/cmark">CMark</a> certainly helped.</p>
+<p>Maybe the ambiguities of the early times were also somehow part of its success? Maybe it allowed just enough freedom so that different people could experiment with implementing their own version, until the shared understanding of some devoted ones converged into the CommonMark thing and its C library reference implementation? 🤔</p>
+<p>Or maybe it doesn't have much to do with easeness of implementation and availability, and it's really an optimal learning curve for 80% of the needs?</p>
+<p>In any case, today Markdown is unavoidable: it's available everywhere or almost, and it's super easy to learn. At least, until you want to use a table, in which case, I hope you are using an implementation which supports <a href="https://github.github.com/gfm/">GFM</a>, otherwise good luck!</p>
+<h2>zenmarked - yet another Markdown editor</h2>
+<p>There is a <a href="https://github.com/mundimark/awesome-markdown-editors">plethora of Markdown editor apps out there</a>. Why did I make a new one?</p>
+<p>Because most of them suck, in a way or another! 😝</p>
+<p>Okay, I'm joking, that's not fair: there are many great tools out there, but none that I tried had what I was looking for.</p>
+<p>What I wanted:</p>
+<ul>
+<li><em>local, offline first</em>: something I can use on my laptop when I'm traveling
+<ul>
+<li>this eliminates all the online Markdown editors like <a href="https://stackedit.io/">StackEdit</a></li>
+</ul>
+</li>
+<li><em>fast</em>: I don't want to wait 10 seconds while some bullshit Electron-based app boots up, just to edit a bloody Markdown file
+<ul>
+<li>this eliminates most of the desktop Markdown apps</li>
+</ul>
+</li>
+<li><em>live preview</em>: in the terminal I can already edit the file in <a href="https://neovim.io/">Neovim</a> and preview it with <a href="https://github.com/sharkdp/bat">bat</a>, but nothing beats live preview in the browser to really see what readers will see</li>
+<li><em>image support</em>: i want to be able to paste or drag-and-drop images
+<ul>
+<li>this one eliminates for good all the terminal-based options</li>
+</ul>
+</li>
+</ul>
+<p>If the above features interest you, you might want to try <a href="https://github.com/eliasdorneles/zenmarked"><code>zenmarked</code></a>.</p>
+<p>For years I had been editing Markdown files with my text editor and previewing them with <a href="https://github.com/joeyespo/grip">grip</a> -- <code>grip</code> works but it isn't perfect, it supports GFM by calling Github APIs, so it doesn't work offline. Since I built <a href="https://eliasdorneles.com/2026/01/31/fluid-blogging-again.html">the editor for my blog which I talk about in the previous post</a>, whenever I would edit a Markdown file at work I would be like: <em>&quot;hm, it would be nice to be able to edit this in the same way I do it for my blog posts&quot;</em>.</p>
+<p>So I decided to extract the Markdown editor from that code, release it as an open source project, so I can use it everywhere and now you can too.</p>
+<p>So <a href="https://github.com/eliasdorneles/zenmarked">go check it out</a>!</p>
+<p>It runs as a local server that you access through the browser.</p>
+<p>You can install it with <code>pip install zenmarked</code>, or if you use <a href="https://docs.astral.sh/uv/"><code>uv</code></a>, you can do: <code>uv tool install zenmarked</code> (or skip installation entirely and just run <code>uvx zenmarked</code> everytime).</p>
+<p>Once you've installed, you can run <code>zenmarked [SOMEFILE.md]</code> and it will open the file in your browser ready to edit in a 3-column layout with a sidebar to manage Markdown files in current directory and a live preview in the right, like this:</p>
+<div class="figure align-center" style="width: 600px">
+  <img src="../../..//images/screenshot-zenmarked-readme.png" alt="Screenshot of zenmarked">
+  <p class="caption">This website's README.md open with zenmarked</p>
+</div>
+<p>You can open multiple instances in parallel, it will use different TCP ports: it does this by binding to port <code>0</code> so the OS decides which port to allocate for it.</p>
+<p>It's written in Python and Javascript, but the code is actually rather small, because it's standing on the shoulders of giants: <a href="https://marked.js.org/">marked</a> and <a href="https://codemirror.net/5/">CodeMirror 5</a> and <a href="https://flask.palletsprojects.com/en/stable/">Flask</a>, that is.</p>
+<p>It's MIT licensed, feel free to create a issue if you have suggestions/ideas for improving it.</p>
+<p>Don't send PRs without my consentment beforehand though, I won't be taking PRs at this stage, not without discussing beforehand -- I don't want to review your vibecoded stuff!</p>
+<p>Happy writing/editing, cheers! 😃</p>
+
+        </div>
+
+        <div class="taglist">
+</div>
+    </article>
+</section>
+
+
+
+        <hr />
+        <footer class="footer-menu">
+            <a href="#top">Back to the top</a>
+        </footer>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/atom-one-dark.min.css">
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/highlight.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+<script src="https://eliasdorneles.com/theme/js/imgviewer.js"></script>
+</body>
+</html>
