@@ -3,6 +3,7 @@
     "SITENAME": "Elias Dorneles",
     "MENUITEMS": [
         {"title": "Blog", "url": ""},
+        {"title": "Music", "url": "pages/music.html"},
         {"title": "Today I Learned...", "url": "til"},
         {"title": "About me", "url": "pages/about.html"}
     ]

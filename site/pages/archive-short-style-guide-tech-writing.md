@@ -1,8 +1,8 @@
 Title: A Short Style Guide for Direct, Concise Technical Writing
 Date: 2015-11-13 10:04
 Author: Ben Minson
-Slug: archive-short-style-guide-for-direct-concise-technical-writing
 Status: hidden
+Slug: archive-short-style-guide-for-direct-concise-technical-writing
 
 
 > These tips were written by [Ben Minson](https://twitter.com/gryphmount) in
