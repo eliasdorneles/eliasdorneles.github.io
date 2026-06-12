@@ -9,6 +9,17 @@
         <link rel="manifest" href="/images/site.webmanifest">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#52B69A">
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1d4a40">
+<script>
+// apply saved theme before first paint to avoid a flash of the wrong theme
+(function () {
+  try {
+    var t = localStorage.getItem('theme');
+    if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+  } catch (e) {}
+})();
+</script>
         <link rel="stylesheet" href="{{ SITEURL }}/theme/css/main.css" type="text/css" />
         <link rel="alternate" type="application/rss+xml" title="{{ SITENAME }}" href="{{ SITEURL }}/feed.xml">
 <script>
@@ -26,6 +37,10 @@ if (window.location.host == host && window.location.protocol != "https:") {
 <div class="site-container">
         {% block header %}
         <header id="banner" class="body">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+                    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                </button>
                 <h1><a href="{{ SITEURL }}/index.html">{{ SITENAME }} {% if SITESUBTITLE %} <strong>{{ SITESUBTITLE }}</strong>{% endif %}</a></h1>
                 <nav><ul>
                 {% for it in MENUITEMS %}
@@ -51,5 +66,6 @@ if (window.location.host == host && window.location.protocol != "https:") {
 
 <script>hljs.highlightAll();</script>
 <script src="{{ SITEURL }}/theme/js/imgviewer.js"></script>
+<script src="{{ SITEURL }}/theme/js/theme.js"></script>
 </body>
 </html>
