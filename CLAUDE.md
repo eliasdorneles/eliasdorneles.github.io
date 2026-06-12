@@ -3,8 +3,9 @@ This repository contains the code for my website.
 ## Static Site Generator
 
 The sitegen/ folder contains my homegrown static site generator
-written in [Odin](https://odin-lang.org/docs/overview).
-It contains also my homegrown template engine, with Jinja-like syntax.
+written in Go. It uses [gonja](https://github.com/NikolaLohinski/gonja)
+(a Jinja2-compatible template engine) for templates and
+[goldmark](https://github.com/yuin/goldmark) for markdown rendering.
 
 Look at the commands inside the Makefile to see how to compile and run the tests.
 

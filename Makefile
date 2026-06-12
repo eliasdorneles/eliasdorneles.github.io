@@ -7,8 +7,8 @@ export LC_ALL := en_US.UTF-8
 
 .DEFAULT_GOAL := help
 
-sitegen.bin: sitegen/tool.odin sitegen/template_engine.odin config_sitegen.json
-	odin build sitegen
+sitegen.bin: $(wildcard sitegen/*.go) go.mod
+	go build -o sitegen.bin ./sitegen
 
 .PHONY: compile-dev
 compile-dev: clean-local sitegen.bin  ## Compile the site for local development
@@ -39,7 +39,7 @@ watch: compile-dev  ## Start a local server and watch for changes
 		--directory=site \
 		--directory=sitegen \
 		--directory=mytheme \
-		--patterns="*.odin;*.md;*.css;*.html" \
+		--patterns="*.go;*.md;*.css;*.html" \
 		--recursive -- \
 		make server
 
@@ -67,16 +67,12 @@ clean-local:
 clean:  ## Clean up generated files
 	make clean-local clean-prod
 
-.PHONY: test-manage
-test-manage: manage.bin  ## Run manage tests
-	odin test manage -all-packages
-
 .PHONY: test-sitegen
-test-sitegen: sitegen.bin  ## Run sitegen tests
-	odin test sitegen -all-packages
+test-sitegen:  ## Run sitegen tests
+	go test ./sitegen/...
 
 .PHONY: test
-test: test-manage test-sitegen  ## Run all tests
+test: test-sitegen  ## Run all tests
 	@echo
 
 # Implements this pattern for autodocumenting Makefiles:

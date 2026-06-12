@@ -1,10 +1,9 @@
-{% set rel_source_path = 'site/' + article.source_path.split('/site/')[1] %}
 <footer class="post-info">
         {% if article.author %}
         <address class="vcard author">
             posted by
             <a href="{{ SITEURL }}/pages/about.html">{{ article.author }}</a>
-            on <abbr class="published" title="{{ article.date.isoformat() }}">{{ article.date.strftime("%d %b %Y") }}</abbr>
+            on <abbr class="published" title="{{ article.date_iso }}">{{ article.date_display }}</abbr>
             <a class="edit-article" href="https://github.com/eliasdorneles/eliasdorneles.github.io/edit/source/{{ rel_source_path }}">Edit</a>
         </address>
         {% endif %}
