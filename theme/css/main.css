@@ -1,0 +1,902 @@
+/* ========================
+   SELF-HOSTED FONTS
+   ======================== */
+
+/* Covered By Your Grace — display/header */
+@font-face {
+  font-family: 'Covered By Your Grace';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/covered-by-your-grace-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Covered By Your Grace';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/covered-by-your-grace-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Libre Baskerville — body text */
+@font-face {
+  font-family: 'Libre Baskerville';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/libre-baskerville-400-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Libre Baskerville';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/libre-baskerville-400.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Libre Baskerville';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/libre-baskerville-700-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Libre Baskerville';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/libre-baskerville-700.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Libre Baskerville';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/libre-baskerville-400-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Libre Baskerville';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/libre-baskerville-400-italic.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* IBM Plex Mono — code */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/ibm-plex-mono-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/ibm-plex-mono-400-italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/ibm-plex-mono-500.woff2') format('woff2');
+}
+
+/* ========================
+   CSS CUSTOM PROPERTIES
+   ======================== */
+
+:root {
+  color-scheme: light dark;
+
+  /* accents */
+  --teal:        light-dark(#52B69A, #41977f);
+  --teal-dark:   light-dark(#34A0A4, #5cc0b4);
+  --blue:        light-dark(#1A759F, #6fb9d9);
+  --blue-navy:   light-dark(#184e77, #a5d6ec);
+
+  /* surfaces */
+  --backdrop:    light-dark(#1E6091, #0a131b);
+  --bg:          light-dark(#fefefe, #16212b);
+  --banner-bg:   light-dark(#52B69A, #1d4a40);
+  --border:      light-dark(#dde0e4, #2d3b46);
+  --shadow:      light-dark(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5));
+
+  /* text */
+  --text:        light-dark(#222, #d6d3c9);
+  --text-muted:  light-dark(#666, #92a2a0);
+
+  /* code (blocks stay dark in both themes, matching highlight.js) */
+  --code-bg:     #282c34;
+  --code-text:   #abb2bf;
+  --inline-code-bg:   light-dark(#f0f2f5, #242f3a);
+  --inline-code-text: light-dark(#b04040, #e0938b);
+
+  /* blockquotes */
+  --quote-bg:    light-dark(#f7f8f9, #1b2832);
+  --quote-text:  light-dark(#3a3a3a, #c7c4bb);
+
+  /* non-color knobs, overridden in the dark blocks below */
+  --img-dim:     none;
+  --show-sun:    none;
+  --show-moon:   inline;
+
+  --font-body:   'Libre Baskerville', Georgia, serif;
+  --font-display:'Covered By Your Grace', cursive;
+  --font-mono:   'IBM Plex Mono', 'Courier New', monospace;
+}
+
+/* Manual override via the banner toggle (persisted in localStorage) */
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"]  { color-scheme: dark; }
+
+/* light-dark() only covers colors; these mirror the dark scheme for the rest */
+:root[data-theme="dark"] {
+  --img-dim: brightness(0.88) contrast(1.04);
+  --show-sun: inline;
+  --show-moon: none;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --img-dim: brightness(0.88) contrast(1.04);
+    --show-sun: inline;
+    --show-moon: none;
+  }
+}
+
+/* ========================
+   RESPONSIVE LAYOUT
+   ======================== */
+
+@media all and (min-width: 1024px) {
+  body { max-width: 960px; width: 90%; margin: 0 auto; }
+}
+@media all and (min-width: 768px) and (max-width: 1023px) {
+  body { max-width: 720px; width: 90%; margin: 0 auto; }
+}
+@media all and (min-width: 480px) and (max-width: 767px) {
+  body { max-width: 450px; width: 90%; margin: 0 auto; }
+}
+@media all and (max-width: 479px) {
+  body { max-width: 100%; width: 95%; margin: 0 auto; }
+}
+
+/* ========================
+   BASE
+   ======================== */
+
+body {
+  font: 18px/1.75 var(--font-body);
+  color: var(--text);
+  background-color: var(--backdrop);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ========================
+   SITE CONTAINER
+   ======================== */
+
+.site-container {
+  background-color: var(--bg);
+  padding: 0 1.2em 1.2em;
+  border: 8px solid var(--teal);
+  border-top: 0;
+  border-bottom: 0;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ========================
+   HEADER / BANNER
+   ======================== */
+
+#banner {
+  position: relative;
+  background-color: var(--banner-bg);
+  padding: 1.1em 1.4em 0.7em;
+  margin: 0 -1.2em 2em;
+  transition: background-color 0.3s ease;
+}
+
+#banner h1 {
+  margin: 0 0 0.05em;
+  font-family: var(--font-display);
+  font-size: 3em;
+  line-height: 1.1;
+}
+
+#banner h1 a,
+#banner h1 > a:visited,
+#banner h1 a:hover {
+  color: #fff;
+  text-decoration: none;
+  text-shadow: 2px 2px 0 light-dark(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.35));
+}
+
+/* ========================
+   THEME TOGGLE
+   ======================== */
+
+.theme-toggle {
+  position: absolute;
+  z-index: 1;
+  top: 1.2em;
+  right: 1.3em;
+  background: none;
+  border: none;
+  padding: 0.35em;
+  line-height: 0;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.8);
+  transition: color 0.2s ease, transform 0.4s ease;
+}
+
+.theme-toggle:hover {
+  color: #fff;
+  transform: rotate(40deg);
+}
+
+.theme-toggle svg {
+  width: 22px;
+  height: 22px;
+}
+
+.theme-toggle .icon-sun  { display: var(--show-sun); }
+.theme-toggle .icon-moon { display: var(--show-moon); }
+
+nav ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3em 1.4em;
+}
+
+nav ul li {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+#banner nav ul li a,
+#banner nav ul li a:visited {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  font-size: 0.9em;
+  letter-spacing: 0.03em;
+}
+
+#banner nav ul li a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* ========================
+   HEADINGS
+   ======================== */
+
+h1, h2, h3, h4 {
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 1.7em;
+  margin-top: 2em;
+  margin-bottom: 0.4em;
+  line-height: 1.25;
+}
+
+header:first-child h1 {
+  margin-top: 0.8em;
+}
+
+h2 {
+  font-size: 1.3em;
+  margin: 0;
+  margin-top: 1.8em;
+}
+
+h3 {
+  font-size: 1.05em;
+  margin: 0;
+  margin-top: 1.6em;
+  color: var(--text-muted);
+}
+
+h4 {
+  font-size: 0.9em;
+  margin: 0;
+  margin-top: 1.4em;
+  color: var(--text-muted);
+}
+
+h1.archive-title {
+  color: light-dark(#444, #c3c7c3);
+  font-size: 1.8em;
+}
+
+/* ========================
+   LINKS
+   ======================== */
+
+a, a:visited {
+  color: var(--blue);
+}
+
+a:hover {
+  color: var(--blue-navy);
+}
+
+/* ========================
+   POST LIST (homepage)
+   ======================== */
+
+.posttitle h1 {
+  font-size: 1.55em;
+  margin-top: 2.5em;
+  margin-bottom: 0.15em;
+}
+
+#content .posttitle:first-child h1 {
+  margin-top: 0.2em;
+}
+
+.posttitle small.published {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.7em;
+  color: var(--teal-dark);
+  letter-spacing: 0.06em;
+  margin-bottom: 0.7em;
+}
+
+ul.posts-list li {
+  list-style-type: none;
+}
+
+/* ========================
+   ARTICLE PAGE
+   ======================== */
+
+.entry-title {
+  font-size: 1.9em;
+  line-height: 1.2;
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+}
+
+.entry-title a,
+.entry-title a:visited {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.entry-title a:hover {
+  color: var(--blue);
+}
+
+/* Post metadata */
+.post-info {
+  font-family: var(--font-mono);
+  font-size: 0.72em;
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+  margin: 0.3em 0 2.2em;
+  font-style: normal;
+}
+
+.post-info a,
+.post-info a:visited {
+  color: var(--teal-dark);
+}
+
+address {
+  font-style: normal;
+}
+
+/* ========================
+   CODE
+   ======================== */
+
+code, pre, kbd {
+  font-family: var(--font-mono);
+}
+
+/* Inline code */
+code {
+  background-color: var(--inline-code-bg);
+  color: var(--inline-code-text);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 0.84em;
+}
+
+/* Code blocks */
+.highlight pre,
+pre {
+  background-color: var(--code-bg);
+  color: var(--code-text);
+  border: none;
+  border-radius: 6px;
+  padding: 1.1em 1.3em;
+  overflow-x: auto;
+  white-space: pre;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.6;
+  margin: 1.4em 0;
+}
+
+/* Reset inline code styles inside code blocks */
+pre code,
+pre code.hljs {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  font-size: 0.82em;
+  border-radius: 0;
+}
+
+/* ========================
+   BLOCKQUOTES
+   ======================== */
+
+blockquote {
+  background: var(--quote-bg);
+  border-left: 4px solid var(--teal);
+  margin: 1.5em 0;
+  padding: 0.8em 1.3em;
+  color: var(--quote-text);
+  font-style: italic;
+}
+
+blockquote:before {
+  content: none;
+}
+
+blockquote p {
+  display: block;
+  margin: 0;
+}
+
+/* ========================
+   IMAGES
+   ======================== */
+
+img, div.figure {
+  max-width: 100%;
+  height: auto;
+}
+
+img {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 4px;
+  margin: 1em 1em 1em 0;
+  box-shadow: 2px 3px 10px var(--shadow);
+  /* white backing keeps transparent images (diagrams) legible in dark mode;
+     content-box clipping hides it behind the padding in both themes */
+  background-color: #fff;
+  background-clip: content-box;
+  filter: var(--img-dim);
+  transition: filter 0.25s ease;
+}
+
+img:hover {
+  filter: none;
+}
+
+img.align-left  { float: left; }
+img.align-right { float: right; margin: 1em 0 1em 1em; }
+
+.align-center {
+  display: block;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+.figure {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 4px;
+  margin: 0 1em 1em 0;
+  box-shadow: 2px 3px 10px var(--shadow);
+}
+
+.figure.align-right { float: right; margin: 0 0 1em 1em; }
+.figure.align-left  { float: left; }
+
+/* always center figures on home page */
+.home-content .align-left,
+.home-content .align-right {
+  float: none;
+  display: block;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+/* ========================
+   VIDEO EMBEDS
+   ======================== */
+
+.video-embed {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 1.4em 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  box-shadow: 2px 3px 10px var(--shadow);
+  overflow: hidden;
+}
+
+.video-embed iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.figure img {
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+}
+
+.figure p.caption {
+  margin: 0;
+  font-size: 0.8em;
+  padding: 4px;
+  text-align: left;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.figure div.legend {
+  padding: 4px;
+  font-size: 0.8em;
+  color: light-dark(#aaa, #8a98a0);
+  font-style: italic;
+}
+
+/* ========================
+   TAGS
+   ======================== */
+
+.taglist {
+  font-size: 0.85em;
+  font-style: italic;
+  color: var(--text-muted);
+  margin-top: 2em;
+}
+
+/* ========================
+   MISC
+   ======================== */
+
+#sidebar { display: none; }
+
+hr {
+  margin-top: 2.5em;
+  margin-bottom: 1em;
+  border: none;
+  border-top: 1px solid var(--border);
+}
+
+.footer-menu {
+  padding: 0.8em 0;
+  font-size: 0.82em;
+  color: var(--text-muted);
+}
+
+.footer-menu a,
+.footer-menu a:visited {
+  color: var(--text-muted);
+}
+
+a.edit-article { color: transparent; }
+address:hover > a.edit-article { color: light-dark(#ccc, #4d5d67); }
+
+/* ========================
+   HOME PAGE
+   ======================== */
+
+.home-page {
+  /* a touch more breathing room than the article flow */
+  padding-bottom: 1em;
+}
+
+/* --- hero --- */
+.home-hero {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.6em;
+  margin: 0.6em 0 2.4em;
+}
+
+.home-portrait {
+  flex: 0 0 auto;
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--teal);
+  padding: 0;
+  background-clip: border-box;
+  box-shadow: 2px 4px 14px var(--shadow);
+}
+
+.home-hero-text { margin: 0; }
+
+.home-greeting {
+  font-family: var(--font-display);
+  font-size: 2.4em;
+  line-height: 1.05;
+  color: var(--teal-dark);
+  margin: 0 0 0.15em;
+}
+
+.home-tagline {
+  font-size: 1.15em;
+  margin: 0 0 0.5em;
+}
+
+.home-blurb {
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* --- section cards --- */
+.home-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1em;
+  margin: 0 0 3em;
+}
+
+.home-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15em;
+  padding: 1.3em 1.2em 1.1em;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--quote-bg);
+  text-decoration: none;
+  color: var(--text);
+  text-align: center;
+  box-shadow: 1px 2px 8px var(--shadow);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.home-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 2px 8px 18px var(--shadow);
+  border-color: var(--teal);
+  color: var(--text);
+}
+
+.home-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1em;
+}
+
+/* --- abstract card art --- */
+.home-card-art {
+  display: block;
+  width: 100%;
+  max-width: 150px;
+  margin-bottom: 0.4em;
+}
+
+.home-card-art svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* per-card pastel pairings (--c1 primary stroke, --c2 accent) */
+.home-card {
+  --c1: var(--teal-dark);
+  --c2: var(--blue);
+}
+.home-card--writing { --c1: light-dark(#e8746e, #f0a7a2); --c2: light-dark(#e0a13a, #f4c27a); }
+.home-card--music   { --c1: light-dark(#9b7fd1, #c2aef0); --c2: light-dark(#e0789f, #f6a9c4); }
+.home-card--code    { --c1: light-dark(#2fa89c, #6fd0c4); --c2: light-dark(#4f9fe0, #8cc4f2); }
+
+.art-blob { transition: transform 0.45s ease; }
+.art-blob-a { fill: var(--c1); opacity: 0.2; }
+.art-blob-b { fill: var(--c2); opacity: 0.18; }
+
+.art-line,
+.art-wave {
+  stroke: var(--c1);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.art-accent,
+.art-accent-line {
+  stroke: var(--c2);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.art-dot { fill: var(--c1); }
+.art-accent-dot { fill: var(--c2); }
+.art-fill { fill: var(--c1); }
+.art-fill-accent { fill: var(--c2); }
+
+/* playful nudge on hover: blobs drift & swell */
+.home-card:hover .art-blob-a { transform: translate(3px, -3px) scale(1.08); }
+.home-card:hover .art-blob-b { transform: translate(-3px, 3px) scale(1.08); }
+.home-card:hover .art-blob { opacity: 0.28; }
+
+.home-card-title {
+  font-family: var(--font-display);
+  font-size: 1.7em;
+  line-height: 1.1;
+  color: var(--blue);
+}
+
+.home-card-go {
+  margin-top: 0.15em;
+  font-family: var(--font-mono);
+  font-size: 0.72em;
+  letter-spacing: 0.04em;
+  color: var(--teal-dark);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-card,
+  .art-blob { transition: none; }
+}
+
+/* --- recent writing --- */
+.home-recent { margin: 0 0 2.5em; }
+
+.home-recent-heading {
+  font-family: var(--font-display);
+  font-size: 1.7em;
+  color: var(--text);
+  margin: 0 0 0.6em;
+}
+
+.home-recent-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.home-recent-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1em;
+  padding: 0.5em 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.home-recent-link {
+  text-decoration: none;
+  flex: 1 1 auto;
+}
+
+.home-recent-link:hover { text-decoration: underline; }
+
+.home-recent-date {
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-size: 0.7em;
+  letter-spacing: 0.06em;
+  color: var(--teal-dark);
+  white-space: nowrap;
+}
+
+.home-recent-all {
+  display: inline-block;
+  margin-top: 0.9em;
+  font-family: var(--font-mono);
+  font-size: 0.78em;
+  letter-spacing: 0.04em;
+}
+
+/* --- elsewhere line --- */
+.home-elsewhere {
+  font-size: 0.92em;
+  color: var(--text-muted);
+}
+
+/* narrow screens: tighten the banner, stack the hero */
+@media all and (max-width: 560px) {
+  /* reclaim the vertical space the banner wastes on phones */
+  #banner {
+    padding-top: 0.8em;
+    padding-bottom: 0.55em;
+    margin-bottom: 1.4em;
+  }
+  #banner h1 {
+    font-size: 2.1em;
+    line-height: 1.05;
+  }
+  #banner nav ul { gap: 0.15em 1.1em; }
+
+  .home-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 1em;
+  }
+  /* keep the hero centered only when there's a portrait to anchor it */
+  .home-hero:has(.home-portrait) {
+    align-items: center;
+    text-align: center;
+  }
+
+  .home-recent-list li { gap: 0.6em; }
+}
+
+/* ========================
+   IMAGE VIEWER OVERLAY
+   ======================== */
+
+.imgviewer-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.imgviewer-overlay.imgviewer-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.imgviewer-image {
+  max-width: 90%;
+  max-height: 90%;
+  border: none;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  background-clip: border-box;
+  filter: none;
+}
+
+.imgviewer-close {
+  position: absolute;
+  top: 20px; right: 30px;
+  font-size: 40px;
+  color: #fff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+}
+
+.imgviewer-close:hover { color: #ccc; }
