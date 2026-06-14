@@ -7,19 +7,16 @@ Hello, I'm Elias Dorneles, a human originally from Brazil 🇧🇷️, living in
 
 ## Music
 
-Music is important to me: both consuming and making it. It feeds my soul.
+Music is important to me: I love both consuming and making it. It feeds my soul.
 
-You can listen to some of [my compositions here](/pages/music.html).
+You can [go here to listen to music I've created](/pages/music.html).
 
 ## Programming
 
 I work as a software developer, notably with [Python](https://www.python.org)
-and web technologies.
+and web technologies. I currently work for [Back Market](https://www.backmarket.fr). The views expressed in this blog are mine and mine alone, and do not represent my employer in any way.
 
 In 2017 I've attended the [Recurse Center](https://www.recurse.com), a retreat for programmers in NYC. There I learned a lot, made great friends and came out of it a braver programmer.
-
-I currently work for [Back Market](https://www.backmarket.fr). The views expressed in this blog are mine and mine alone, and do not represent my
-employer in any way.
 
 You can find me on [GitHub](https://github.com/eliasdorneles) or [Stackoverflow](https://stackoverflow.com/users/149872/elias?tab=profile).
 
@@ -34,7 +31,7 @@ Analysis](https://www.goodtherapy.org/learn-about-therapy/types/transactional-an
 
 ## Open Source
 
-I'm fond of open source software, and in the past I have been active notably in the [Python](https://www.python.org/) open source community.
+I like open source software, and in the past I have been active notably in the [Python](https://www.python.org/) open source community.
 
 Some projects I have contributed to:
 

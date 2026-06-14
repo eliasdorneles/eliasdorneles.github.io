@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Post Editor</title>
+    <title>Site Editor</title>
     <link rel="stylesheet" href="/static/editor.css">
     <!-- CodeMirror -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/codemirror.min.css">
@@ -13,16 +13,30 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <div class="sidebar-header">
-                <h1>Blog Editor</h1>
-                <button class="btn btn-new" onclick="createNewPost()">+ New Post</button>
-                <input type="text" class="search-input" placeholder="Search posts..." id="searchInput" oninput="filterPosts()">
-                <div class="filter-tabs">
-                    <button class="filter-tab active" data-filter="all" onclick="setFilter('all')">All</button>
-                    <button class="filter-tab" data-filter="draft" onclick="setFilter('draft')">Drafts</button>
-                    <button class="filter-tab" data-filter="published" onclick="setFilter('published')">Published</button>
+                <h1>Site Editor</h1>
+                <div class="main-tabs">
+                    <button class="main-tab active" data-main-tab="posts" onclick="setMainTab('posts')">Blog Posts</button>
+                    <button class="main-tab" data-main-tab="pages" onclick="setMainTab('pages')">Pages</button>
                 </div>
             </div>
-            <div class="post-list" id="postList"></div>
+            <div class="tab-content active" id="postsTabContent" data-main-tab="posts">
+                <div class="tab-content-header">
+                    <button class="btn btn-new" onclick="createNewPost()">+ New Post</button>
+                    <input type="text" class="search-input" placeholder="Search posts..." id="searchInput" oninput="filterPosts()">
+                    <div class="filter-tabs">
+                        <button class="filter-tab active" data-filter="all" onclick="setFilter('all')">All</button>
+                        <button class="filter-tab" data-filter="draft" onclick="setFilter('draft')">Drafts</button>
+                        <button class="filter-tab" data-filter="published" onclick="setFilter('published')">Published</button>
+                    </div>
+                </div>
+                <div class="post-list" id="postList"></div>
+            </div>
+            <div class="tab-content" id="pagesTabContent" data-main-tab="pages">
+                <div class="tab-content-header">
+                    <button class="btn btn-new" onclick="createNewPage()">+ New Page</button>
+                </div>
+                <div class="pages-list" id="pagesList"></div>
+            </div>
             <div class="image-gallery-section">
                 <div class="image-gallery-header">Image Gallery</div>
                 <div class="image-gallery" id="imageGallery"></div>
@@ -38,7 +52,7 @@
                         <input type="text" id="postTitle" oninput="scheduleAutoSave()">
                     </div>
                     <div class="editor-i18n-fields">
-                        <div class="editor-field-small">
+                        <div class="editor-field-small" id="langFieldWrapper">
                             <label>Lang</label>
                             <input type="text" id="postLang" placeholder="e.g. en, pt-br" oninput="scheduleAutoSave()">
                         </div>
@@ -49,6 +63,9 @@
                     </div>
                     <div class="editor-actions">
                         <span class="post-status-display" id="postStatusDisplay"></span>
+                        <label class="page-hidden-toggle" id="pageHiddenToggle">
+                            <input type="checkbox" id="pageHiddenCheckbox" onchange="togglePageHidden()"> Hidden from navigation
+                        </label>
                         <button class="btn btn-publish" id="publishBtn" onclick="publishPost()">Publish</button>
                         <button class="btn btn-secondary" id="unpublishBtn" onclick="unpublishPost()">Unpublish</button>
                         <button class="btn btn-danger" id="deleteBtn" onclick="deleteDraft()" title="Delete draft">Delete</button>
@@ -66,8 +83,8 @@
                 </div>
             </div>
             <div id="editorEmpty" class="empty-state">
-                <p>Select a post to edit or create a new one</p>
-                <button class="btn" onclick="createNewPost()">+ New Post</button>
+                <p>Select an item to edit or create a new one</p>
+                <button class="btn" onclick="currentMainTab === 'pages' ? createNewPage() : createNewPost()">+ New</button>
             </div>
         </div>
 

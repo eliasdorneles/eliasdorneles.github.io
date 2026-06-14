@@ -1,6 +1,9 @@
 // State
 let posts = [];
+let pages = [];
 let currentPost = null;
+let currentItemType = 'post'; // 'post' or 'page'
+let currentMainTab = 'posts'; // 'posts' or 'pages'
 let currentFilter = 'all';
 let autoSaveTimeout = null;
 let previewTimeout = null;
@@ -17,6 +20,7 @@ let contextMenuFilename = null; // Filename for context menu actions
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     loadPosts();
+    loadPages();
     loadImages();
     setupCodeMirror();
     setupDropZone();
@@ -25,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupWidthToggle();
     setupPreviewClickHandler();
     setupGalleryContextMenu();
+    setMainTab('posts');
 });
 
 // Setup CodeMirror
@@ -59,6 +64,16 @@ async function loadPosts() {
     }
 }
 
+async function loadPages() {
+    try {
+        const response = await fetch('/api/pages');
+        pages = await response.json();
+        renderPagesList();
+    } catch (error) {
+        console.error('Failed to load pages:', error);
+    }
+}
+
 async function loadImages() {
     try {
         const response = await fetch('/api/images');
@@ -74,16 +89,36 @@ async function loadPost(filename) {
         const response = await fetch(`/api/posts/${filename}`);
         currentPost = await response.json();
         currentPost.filename = filename;
+        currentItemType = 'post';
         renderEditor();
         updatePreview();
 
-        // Update active state in list
-        document.querySelectorAll('.post-item').forEach(el => {
-            el.classList.toggle('active', el.dataset.filename === filename);
-        });
+        updateActiveListItem(filename);
     } catch (error) {
         console.error('Failed to load post:', error);
     }
+}
+
+async function loadPage(filename) {
+    try {
+        const response = await fetch(`/api/pages/${filename}`);
+        currentPost = await response.json();
+        currentPost.filename = filename;
+        currentItemType = 'page';
+        renderEditor();
+        updatePreview();
+
+        updateActiveListItem(filename);
+    } catch (error) {
+        console.error('Failed to load page:', error);
+    }
+}
+
+// Highlight the active item across the posts and pages lists
+function updateActiveListItem(filename) {
+    document.querySelectorAll('.post-item, .page-item').forEach(el => {
+        el.classList.toggle('active', el.dataset.filename === filename && el.dataset.itemtype === currentItemType);
+    });
 }
 
 async function savePost() {
@@ -91,25 +126,39 @@ async function savePost() {
 
     setSaveStatus('saving', 'Saving...');
 
+    const isPage = currentItemType === 'page';
+    const endpoint = isPage ? `/api/pages/${currentPost.filename}` : `/api/posts/${currentPost.filename}`;
+    const payload = {
+        title: document.getElementById('postTitle').value,
+        date: currentPost.date || '',
+        author: currentPost.author || 'Elias Dorneles',
+        slug: document.getElementById('postSlug').value || '',
+        body: cmEditor.getValue(),
+    };
+    if (isPage) {
+        payload.status = currentPost.status || '';
+        payload.template = currentPost.template || '';
+        payload.lang = currentPost.lang || '';
+    } else {
+        payload.status = currentPost.status || 'draft';
+        payload.lang = document.getElementById('postLang').value || '';
+    }
+
     try {
-        const response = await fetch(`/api/posts/${currentPost.filename}`, {
+        const response = await fetch(endpoint, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                title: document.getElementById('postTitle').value,
-                date: currentPost.date || '',
-                author: 'Elias Dorneles',
-                status: currentPost.status || 'draft',
-                lang: document.getElementById('postLang').value || '',
-                slug: document.getElementById('postSlug').value || '',
-                body: cmEditor.getValue(),
-            }),
+            body: JSON.stringify(payload),
         });
 
         if (response.ok) {
             setSaveStatus('saved', 'Saved');
-            // Reload posts list to update title/status if changed
-            loadPosts();
+            // Reload list to update title/status if changed
+            if (isPage) {
+                loadPages();
+            } else {
+                loadPosts();
+            }
         } else {
             setSaveStatus('error', 'Save failed');
         }
@@ -138,6 +187,33 @@ async function createNewPost() {
     } catch (error) {
         console.error('Failed to create post:', error);
     }
+}
+
+async function createNewPage() {
+    const title = prompt('Enter page title:', 'New Page');
+    if (!title) return;
+
+    try {
+        const response = await fetch('/api/pages', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title }),
+        });
+
+        const data = await response.json();
+        if (data.success) {
+            await loadPages();
+            loadPage(data.filename);
+        }
+    } catch (error) {
+        console.error('Failed to create page:', error);
+    }
+}
+
+function togglePageHidden() {
+    if (!currentPost) return;
+    currentPost.status = document.getElementById('pageHiddenCheckbox').checked ? 'hidden' : '';
+    scheduleAutoSave();
 }
 
 async function publishPost() {
@@ -282,8 +358,9 @@ function renderPostList() {
         const isCollapsed = collapsedYears.has(year);
 
         const postsHtml = isCollapsed ? '' : yearPosts.map(post => `
-            <div class="post-item ${currentPost?.filename === post.filename ? 'active' : ''}"
+            <div class="post-item ${currentItemType === 'post' && currentPost?.filename === post.filename ? 'active' : ''}"
                  data-filename="${post.filename}"
+                 data-itemtype="post"
                  onclick="loadPost('${post.filename}')">
                 <div class="post-item-title">${escapeHtml(post.title)}</div>
                 <div class="post-item-meta">
@@ -318,6 +395,20 @@ function toggleYear(year) {
     renderPostList();
 }
 
+function renderPagesList() {
+    const container = document.getElementById('pagesList');
+
+    container.innerHTML = pages.map(page => `
+        <div class="page-item ${currentItemType === 'page' && currentPost?.filename === page.filename ? 'active' : ''}"
+             data-filename="${page.filename}"
+             data-itemtype="page"
+             onclick="loadPage('${page.filename}')">
+            <div class="page-item-title">${escapeHtml(page.title)}</div>
+            ${page.status === 'hidden' ? '<span class="status-badge status-hidden">hidden</span>' : ''}
+        </div>
+    `).join('');
+}
+
 function renderImageGallery() {
     const container = document.getElementById('imageGallery');
     container.innerHTML = images.slice(0, 12).map(img => `
@@ -344,6 +435,13 @@ function renderEditor() {
     document.getElementById('postSlug').value = currentPost.slug || '';
     cmEditor.setValue(currentPost.body || '');
 
+    const isPage = currentItemType === 'page';
+    document.getElementById('langFieldWrapper').style.display = isPage ? 'none' : '';
+    document.getElementById('pageHiddenToggle').style.display = isPage ? 'flex' : 'none';
+    if (isPage) {
+        document.getElementById('pageHiddenCheckbox').checked = currentPost.status === 'hidden';
+    }
+
     updateStatusDisplay();
     updateActionButtons();
     setSaveStatus('ready', 'Ready');
@@ -351,6 +449,13 @@ function renderEditor() {
 
 function updateStatusDisplay() {
     const statusDisplay = document.getElementById('postStatusDisplay');
+
+    if (currentItemType === 'page') {
+        statusDisplay.style.display = 'none';
+        return;
+    }
+    statusDisplay.style.display = '';
+
     const status = currentPost?.status || 'draft';
     const date = currentPost?.date || '';
 
@@ -367,6 +472,14 @@ function updateActionButtons() {
     const publishBtn = document.getElementById('publishBtn');
     const unpublishBtn = document.getElementById('unpublishBtn');
     const deleteBtn = document.getElementById('deleteBtn');
+
+    if (currentItemType === 'page') {
+        publishBtn.style.display = 'none';
+        unpublishBtn.style.display = 'none';
+        deleteBtn.style.display = 'none';
+        return;
+    }
+
     const status = currentPost?.status || 'draft';
 
     if (status === 'draft') {
@@ -401,6 +514,16 @@ function updatePreview() {
 }
 
 // UI Helpers
+function setMainTab(tab) {
+    currentMainTab = tab;
+    document.querySelectorAll('.main-tab').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mainTab === tab);
+    });
+    document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.toggle('active', content.dataset.mainTab === tab);
+    });
+}
+
 function setFilter(filter) {
     currentFilter = filter;
     document.querySelectorAll('.filter-tab').forEach(tab => {
@@ -731,10 +854,10 @@ function setupKeyboardShortcuts() {
             }
         }
 
-        // Alt+N for new post
+        // Alt+N for new post/page depending on active tab
         if (e.altKey && e.key === 'n') {
             e.preventDefault();
-            createNewPost();
+            currentMainTab === 'pages' ? createNewPage() : createNewPost();
         }
 
         // Escape to close modals
@@ -1100,7 +1223,11 @@ async function submitRename() {
                     p => p.filename === currentPost.filename
                 );
                 if (currentWasUpdated) {
-                    await loadPost(currentPost.filename);
+                    if (currentItemType === 'page') {
+                        await loadPage(currentPost.filename);
+                    } else {
+                        await loadPost(currentPost.filename);
+                    }
                 }
             }
 

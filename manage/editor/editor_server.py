@@ -18,8 +18,12 @@ from PIL import Image
 # Configuration
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 BLOG_DIR = BASE_DIR / "site" / "blog"
+PAGES_DIR = BASE_DIR / "site" / "pages"
 IMAGES_DIR = BASE_DIR / "site" / "images"
 EDITOR_DIR = Path(__file__).resolve().parent
+
+# Markdown content directories to scan for image references
+CONTENT_DIRS = [BLOG_DIR, PAGES_DIR]
 
 ALLOWED_IMAGE_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp", "svg"}
 
@@ -62,6 +66,7 @@ def title_to_slug(title: str) -> str:
 
 def parse_frontmatter(content: str) -> tuple[dict, str]:
     """Parse frontmatter from post content."""
+    content = content.lstrip("﻿")  # strip leading UTF-8 BOM, if present
     lines = content.split("\n")
     metadata = {}
     body_start = 0
@@ -83,8 +88,8 @@ def parse_frontmatter(content: str) -> tuple[dict, str]:
 def build_frontmatter(metadata: dict) -> str:
     """Build frontmatter string from metadata dict."""
     lines = []
-    # Preserve order: Title, Date, Author, Status, Lang, Slug
-    order = ["title", "date", "author", "status", "lang", "slug"]
+    # Preserve order: Title, Date, Author, Status, Template, Lang, Slug
+    order = ["title", "date", "author", "status", "template", "lang", "slug"]
     for key in order:
         if key in metadata and metadata[key]:
             # Capitalize key for output
@@ -111,6 +116,24 @@ def get_post_list() -> list[dict]:
     # Posts without dates go to the end
     posts.sort(key=lambda p: p["date"] or "", reverse=True)
     return posts
+
+
+def get_page_list() -> list[dict]:
+    """Get list of all pages with metadata, sorted by title."""
+    pages = []
+    for filepath in PAGES_DIR.glob("*.md"):
+        try:
+            content = filepath.read_text(encoding="utf-8")
+            metadata, _ = parse_frontmatter(content)
+            pages.append({
+                "filename": filepath.name,
+                "title": metadata.get("title", filepath.stem),
+                "status": metadata.get("status", ""),
+            })
+        except Exception as e:
+            print(f"Error reading {filepath}: {e}")
+    pages.sort(key=lambda p: p["title"].lower())
+    return pages
 
 
 def sanitize_filename(filename: str) -> str:
@@ -317,6 +340,106 @@ def create_post():
     })
 
 
+@app.route("/api/pages", methods=["GET"])
+def list_pages():
+    """List all pages."""
+    return jsonify(get_page_list())
+
+
+@app.route("/api/pages/<filename>", methods=["GET"])
+def get_page(filename: str):
+    """Get a single page's full content."""
+    filepath = PAGES_DIR / filename
+    if not filepath.exists() or not filepath.is_file():
+        return jsonify({"error": "Page not found"}), 404
+
+    content = filepath.read_text(encoding="utf-8")
+    metadata, body = parse_frontmatter(content)
+
+    return jsonify({
+        "filename": filename,
+        "title": metadata.get("title", ""),
+        "date": metadata.get("date", ""),
+        "author": metadata.get("author", ""),
+        "status": metadata.get("status", ""),
+        "template": metadata.get("template", ""),
+        "lang": metadata.get("lang", ""),
+        "slug": metadata.get("slug", ""),
+        "body": body,
+    })
+
+
+@app.route("/api/pages/<filename>", methods=["PUT"])
+def save_page(filename: str):
+    """Save/update a page."""
+    filepath = PAGES_DIR / filename
+    if not filepath.exists() or not filepath.is_file():
+        return jsonify({"error": "Page not found"}), 404
+
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
+
+    metadata = {
+        "title": data.get("title", ""),
+        "date": data.get("date", ""),
+        "author": data.get("author", "Elias Dorneles"),
+    }
+    # Only include optional fields if they have values
+    if data.get("status"):
+        metadata["status"] = data.get("status")
+    if data.get("template"):
+        metadata["template"] = data.get("template")
+    if data.get("lang"):
+        metadata["lang"] = data.get("lang")
+    if data.get("slug"):
+        metadata["slug"] = data.get("slug")
+    body = data.get("body", "")
+
+    content = build_frontmatter(metadata) + "\n\n" + body
+    filepath.write_text(content, encoding="utf-8")
+
+    return jsonify({"success": True, "filename": filename})
+
+
+@app.route("/api/pages", methods=["POST"])
+def create_page():
+    """Create a new page."""
+    data = request.get_json()
+    title = data.get("title", "New Page")
+    now = datetime.now()
+    date = now.strftime("%Y-%m-%d %H:%M")
+
+    slug = title_to_slug(title)
+    filename = f"{slug}.md"
+    filepath = PAGES_DIR / filename
+
+    # Ensure unique filename
+    counter = 1
+    while filepath.exists():
+        filename = f"{slug}-{counter}.md"
+        filepath = PAGES_DIR / filename
+        counter += 1
+
+    metadata = {
+        "title": title,
+        "date": date,
+        "author": "Elias Dorneles",
+        "slug": filepath.stem,
+    }
+    body = "Write here..."
+
+    content = build_frontmatter(metadata) + "\n\n" + body
+    filepath.write_text(content, encoding="utf-8")
+
+    return jsonify({
+        "success": True,
+        "filename": filename,
+        "title": title,
+        "status": "",
+    })
+
+
 @app.route("/api/images", methods=["GET"])
 def list_images():
     """List all images in the images directory."""
@@ -380,23 +503,24 @@ def upload_image():
 
 
 def find_posts_with_image(filename: str) -> list[dict]:
-    """Find all posts that reference a given image filename."""
+    """Find all posts/pages that reference a given image filename."""
     posts_with_refs = []
     pattern = re.compile(re.escape(f"{{static}}/images/{filename}"))
 
-    for filepath in BLOG_DIR.glob("*.md"):
-        try:
-            content = filepath.read_text(encoding="utf-8")
-            matches = pattern.findall(content)
-            if matches:
-                metadata, _ = parse_frontmatter(content)
-                posts_with_refs.append({
-                    "filename": filepath.name,
-                    "title": metadata.get("title", filepath.stem),
-                    "ref_count": len(matches),
-                })
-        except Exception as e:
-            print(f"Error reading {filepath}: {e}")
+    for content_dir in CONTENT_DIRS:
+        for filepath in content_dir.glob("*.md"):
+            try:
+                content = filepath.read_text(encoding="utf-8")
+                matches = pattern.findall(content)
+                if matches:
+                    metadata, _ = parse_frontmatter(content)
+                    posts_with_refs.append({
+                        "filename": filepath.name,
+                        "title": metadata.get("title", filepath.stem),
+                        "ref_count": len(matches),
+                    })
+            except Exception as e:
+                print(f"Error reading {filepath}: {e}")
 
     return posts_with_refs
 
@@ -457,29 +581,31 @@ def rename_image(filename: str):
     if new_filepath.exists():
         return jsonify({"error": f"An image named '{new_filename}' already exists"}), 400
 
-    # Find and update all posts with references
+    # Find and update all posts/pages with references
     posts_updated = []
-    for post_filepath in BLOG_DIR.glob("*.md"):
-        try:
-            content = post_filepath.read_text(encoding="utf-8")
-            if f"{{static}}/images/{filename}" in content:
-                updated_content = update_image_references(content, filename, new_filename)
-                post_filepath.write_text(updated_content, encoding="utf-8")
-                metadata, _ = parse_frontmatter(content)
-                posts_updated.append({
-                    "filename": post_filepath.name,
-                    "title": metadata.get("title", post_filepath.stem),
-                })
-        except Exception as e:
-            print(f"Error updating {post_filepath}: {e}")
+    updated_filepaths = []
+    for content_dir in CONTENT_DIRS:
+        for post_filepath in content_dir.glob("*.md"):
+            try:
+                content = post_filepath.read_text(encoding="utf-8")
+                if f"{{static}}/images/{filename}" in content:
+                    updated_content = update_image_references(content, filename, new_filename)
+                    post_filepath.write_text(updated_content, encoding="utf-8")
+                    metadata, _ = parse_frontmatter(content)
+                    posts_updated.append({
+                        "filename": post_filepath.name,
+                        "title": metadata.get("title", post_filepath.stem),
+                    })
+                    updated_filepaths.append(post_filepath)
+            except Exception as e:
+                print(f"Error updating {post_filepath}: {e}")
 
     # Rename the actual image file
     try:
         filepath.rename(new_filepath)
     except Exception as e:
         # Rollback post updates if file rename fails
-        for post_info in posts_updated:
-            post_filepath = BLOG_DIR / post_info["filename"]
+        for post_filepath in updated_filepaths:
             try:
                 content = post_filepath.read_text(encoding="utf-8")
                 rollback_content = update_image_references(content, new_filename, filename)
