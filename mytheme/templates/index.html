@@ -65,16 +65,12 @@
         </a>
     </nav>
 
-    {% if recent_music %}
+    {% if latest_music %}
     <section class="home-recent" aria-labelledby="recent-music-heading">
         <h2 id="recent-music-heading" class="home-recent-heading">Recent music</h2>
-        <ul class="home-recent-list">
-            {% for item in recent_music %}
-            <li>
-                <a class="home-recent-link" href="{{ item.url }}" target="_blank" rel="noopener">{{ item.title }}</a>
-            </li>
-            {% endfor %}
-        </ul>
+        <div class="video-embed">
+            <iframe src="https://www.youtube.com/embed/{{ latest_music.video_id }}" title="{{ latest_music.title }}" frameborder="0" allowfullscreen></iframe>
+        </div>
         <a class="home-recent-all" href="{{ SITEURL }}/pages/music.html">All music &rarr;</a>
     </section>
     {% endif %}
