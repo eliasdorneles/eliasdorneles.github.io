@@ -150,6 +150,24 @@ func main() {
 	homeCtx := newRenderContext(config)
 	homeCtx["recent_articles"] = objectList[:min(5, len(objectList))]
 
+	// Extract recent music items from the music page
+	var recentMusic []interface{}
+	for i := range pages {
+		if pages[i].Slug == "music" {
+			musicItems := parseMusicItems(pages[i].MDContent)
+			n := min(3, len(musicItems))
+			for _, item := range musicItems[:n] {
+				recentMusic = append(recentMusic, map[string]interface{}{
+					"title":    item.Title,
+					"video_id": item.VideoID,
+					"url":      "https://www.youtube.com/watch?v=" + item.VideoID,
+				})
+			}
+			break
+		}
+	}
+	homeCtx["recent_music"] = recentMusic
+
 	rendered, err = renderTemplate("index.html", homeCtx)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "error rendering index template:", err)

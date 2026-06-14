@@ -14,23 +14,6 @@
     </div>
 
     <nav class="home-cards" aria-label="Sections">
-        <a class="home-card home-card--writing" href="{{ SITEURL }}/blog/">
-            <span class="home-card-art" aria-hidden="true">
-                <svg viewBox="0 0 120 90" fill="none">
-                    <ellipse class="art-blob art-blob-a" cx="48" cy="46" rx="40" ry="34"/>
-                    <ellipse class="art-blob art-blob-b" cx="74" cy="50" rx="32" ry="28"/>
-                    <path class="art-line" d="M28 32 q12 -9 24 0 t24 0"/>
-                    <path class="art-line" d="M28 48 q12 -9 24 0 t24 0"/>
-                    <path class="art-line art-line-short" d="M28 64 q9 -7 18 0"/>
-                    <path class="art-accent" d="M80 24 l14 14 -34 30 -16 4 4 -16z"/>
-                    <circle class="art-dot" cx="55" cy="68" r="3"/>
-                </svg>
-            </span>
-            <span class="home-card-body">
-                <span class="home-card-title">Writing</span>
-                <span class="home-card-go">Read the blog &rarr;</span>
-            </span>
-        </a>
         <a class="home-card home-card--music" href="{{ SITEURL }}/pages/music.html">
             <span class="home-card-art" aria-hidden="true">
                 <svg viewBox="0 0 120 90" fill="none">
@@ -46,6 +29,23 @@
             <span class="home-card-body">
                 <span class="home-card-title">Music</span>
                 <span class="home-card-go">Have a listen &rarr;</span>
+            </span>
+        </a>
+        <a class="home-card home-card--writing" href="{{ SITEURL }}/blog/">
+            <span class="home-card-art" aria-hidden="true">
+                <svg viewBox="0 0 120 90" fill="none">
+                    <ellipse class="art-blob art-blob-a" cx="48" cy="46" rx="40" ry="34"/>
+                    <ellipse class="art-blob art-blob-b" cx="74" cy="50" rx="32" ry="28"/>
+                    <path class="art-line" d="M28 32 q12 -9 24 0 t24 0"/>
+                    <path class="art-line" d="M28 48 q12 -9 24 0 t24 0"/>
+                    <path class="art-line art-line-short" d="M28 64 q9 -7 18 0"/>
+                    <path class="art-accent" d="M80 24 l14 14 -34 30 -16 4 4 -16z"/>
+                    <circle class="art-dot" cx="55" cy="68" r="3"/>
+                </svg>
+            </span>
+            <span class="home-card-body">
+                <span class="home-card-title">Writing</span>
+                <span class="home-card-go">Read the blog &rarr;</span>
             </span>
         </a>
         <a class="home-card home-card--code" href="https://github.com/eliasdorneles">
@@ -64,6 +64,20 @@
             </span>
         </a>
     </nav>
+
+    {% if recent_music %}
+    <section class="home-recent" aria-labelledby="recent-music-heading">
+        <h2 id="recent-music-heading" class="home-recent-heading">Recent music</h2>
+        <ul class="home-recent-list">
+            {% for item in recent_music %}
+            <li>
+                <a class="home-recent-link" href="{{ item.url }}" target="_blank" rel="noopener">{{ item.title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        <a class="home-recent-all" href="{{ SITEURL }}/pages/music.html">All music &rarr;</a>
+    </section>
+    {% endif %}
 
     {% if recent_articles %}
     <section class="home-recent" aria-labelledby="recent-heading">
