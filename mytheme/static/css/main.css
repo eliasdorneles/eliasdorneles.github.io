@@ -258,11 +258,14 @@ nav ul {
   list-style-type: none;
   padding-left: 0;
   margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3em 1.4em;
 }
 
 nav ul li {
-  display: inline;
-  margin-right: 1.4em;
+  display: inline-block;
+  white-space: nowrap;
 }
 
 #banner nav ul li a,
@@ -685,6 +688,13 @@ address:hover > a.edit-article { color: light-dark(#ccc, #4d5d67); }
   color: var(--text);
 }
 
+.home-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1em;
+}
+
 /* --- abstract card art --- */
 .home-card-art {
   display: block;
@@ -813,14 +823,32 @@ address:hover > a.edit-article { color: light-dark(#ccc, #4d5d67); }
   color: var(--text-muted);
 }
 
-/* stack the hero on narrow screens */
+/* narrow screens: tighten the banner, stack the hero */
 @media all and (max-width: 560px) {
+  /* reclaim the vertical space the banner wastes on phones */
+  #banner {
+    padding-top: 0.8em;
+    padding-bottom: 0.55em;
+    margin-bottom: 1.4em;
+  }
+  #banner h1 {
+    font-size: 2.1em;
+    line-height: 1.05;
+  }
+  #banner nav ul { gap: 0.15em 1.1em; }
+
   .home-hero {
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    align-items: flex-start;
+    text-align: left;
     gap: 1em;
   }
+  /* keep the hero centered only when there's a portrait to anchor it */
+  .home-hero:has(.home-portrait) {
+    align-items: center;
+    text-align: center;
+  }
+
   .home-recent-list li { gap: 0.6em; }
 }
 
