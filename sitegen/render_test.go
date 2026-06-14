@@ -124,12 +124,10 @@ func TestRenderHomeTemplate(t *testing.T) {
 	article := testArticle()
 	ctx := newRenderContext(testConfig())
 	ctx["recent_articles"] = []interface{}{buildArticleContext(article)}
-	ctx["recent_music"] = []interface{}{
-		map[string]interface{}{
-			"title":    "Chagrin",
-			"video_id": "LJYTnH2uOp8",
-			"url":      "https://www.youtube.com/watch?v=LJYTnH2uOp8",
-		},
+	ctx["latest_music"] = map[string]interface{}{
+		"title":    "Chagrin",
+		"video_id": "LJYTnH2uOp8",
+		"url":      "https://www.youtube.com/watch?v=LJYTnH2uOp8",
 	}
 
 	rendered, err := renderTemplate("index.html", ctx)
@@ -154,7 +152,7 @@ func TestRenderHomeTemplate(t *testing.T) {
 	if !strings.Contains(rendered, "Chagrin") {
 		t.Error("recent music item missing from home page")
 	}
-	if !strings.Contains(rendered, "https://www.youtube.com/watch?v=LJYTnH2uOp8") {
+	if !strings.Contains(rendered, "youtube.com/embed/LJYTnH2uOp8") {
 		t.Error("recent music URL missing from home page")
 	}
 	// music card appears before writing card in the home-cards section
