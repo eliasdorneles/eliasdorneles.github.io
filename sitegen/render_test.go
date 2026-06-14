@@ -146,8 +146,8 @@ func TestRenderHomeTemplate(t *testing.T) {
 		t.Error("recent article missing from home page")
 	}
 	// recent music section
-	if !strings.Contains(rendered, "Recent music") {
-		t.Error("recent music heading missing from home page")
+	if !strings.Contains(rendered, "Latest music") {
+		t.Error("latest music heading missing from home page")
 	}
 	if !strings.Contains(rendered, "Chagrin") {
 		t.Error("recent music item missing from home page")
