@@ -97,26 +97,48 @@ func TestRenderArticleWithTranslations(t *testing.T) {
 	}
 }
 
-func TestRenderIndexTemplate(t *testing.T) {
+func TestRenderBlogTemplate(t *testing.T) {
 	article := testArticle()
 	objectList := []interface{}{buildArticleContext(article)}
 	ctx := newRenderContext(testConfig())
 	ctx["articles_page"] = map[string]interface{}{"object_list": objectList}
 	ctx["articles"] = objectList
 
-	rendered, err := renderTemplate("index.html", ctx)
+	rendered, err := renderTemplate("blog.html", ctx)
 	if err != nil {
 		t.Fatal(err)
 	}
 	if !strings.Contains(rendered, "My <em>fancy</em> article") {
-		t.Error("article title missing from index")
+		t.Error("article title missing from blog listing")
 	}
 	if !strings.Contains(rendered, "01 May 2023") {
-		t.Error("article date missing from index")
+		t.Error("article date missing from blog listing")
 	}
 	// summary differs from content → "Continue reading" link shows
 	if !strings.Contains(rendered, "Continue reading") {
 		t.Error("continue reading link missing")
+	}
+}
+
+func TestRenderHomeTemplate(t *testing.T) {
+	article := testArticle()
+	ctx := newRenderContext(testConfig())
+	ctx["recent_articles"] = []interface{}{buildArticleContext(article)}
+
+	rendered, err := renderTemplate("index.html", ctx)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// hero + section cards make the home page, not a blog wall
+	if !strings.Contains(rendered, "home-hero") {
+		t.Error("home hero missing")
+	}
+	if !strings.Contains(rendered, "http://localhost:8000/blog/") {
+		t.Error("link to blog listing missing")
+	}
+	// recent writing pulls the article through
+	if !strings.Contains(rendered, "My <em>fancy</em> article") {
+		t.Error("recent article missing from home page")
 	}
 }
 

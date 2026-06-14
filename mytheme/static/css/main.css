@@ -606,6 +606,223 @@ a.edit-article { color: transparent; }
 address:hover > a.edit-article { color: light-dark(#ccc, #4d5d67); }
 
 /* ========================
+   HOME PAGE
+   ======================== */
+
+.home-page {
+  /* a touch more breathing room than the article flow */
+  padding-bottom: 1em;
+}
+
+/* --- hero --- */
+.home-hero {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.6em;
+  margin: 0.6em 0 2.4em;
+}
+
+.home-portrait {
+  flex: 0 0 auto;
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--teal);
+  padding: 0;
+  background-clip: border-box;
+  box-shadow: 2px 4px 14px var(--shadow);
+}
+
+.home-hero-text { margin: 0; }
+
+.home-greeting {
+  font-family: var(--font-display);
+  font-size: 2.4em;
+  line-height: 1.05;
+  color: var(--teal-dark);
+  margin: 0 0 0.15em;
+}
+
+.home-tagline {
+  font-size: 1.15em;
+  margin: 0 0 0.5em;
+}
+
+.home-blurb {
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* --- section cards --- */
+.home-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1em;
+  margin: 0 0 3em;
+}
+
+.home-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15em;
+  padding: 1.3em 1.2em 1.1em;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--quote-bg);
+  text-decoration: none;
+  color: var(--text);
+  text-align: center;
+  box-shadow: 1px 2px 8px var(--shadow);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.home-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 2px 8px 18px var(--shadow);
+  border-color: var(--teal);
+  color: var(--text);
+}
+
+/* --- abstract card art --- */
+.home-card-art {
+  display: block;
+  width: 100%;
+  max-width: 150px;
+  margin-bottom: 0.4em;
+}
+
+.home-card-art svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* per-card pastel pairings (--c1 primary stroke, --c2 accent) */
+.home-card {
+  --c1: var(--teal-dark);
+  --c2: var(--blue);
+}
+.home-card--writing { --c1: light-dark(#e8746e, #f0a7a2); --c2: light-dark(#e0a13a, #f4c27a); }
+.home-card--music   { --c1: light-dark(#9b7fd1, #c2aef0); --c2: light-dark(#e0789f, #f6a9c4); }
+.home-card--code    { --c1: light-dark(#2fa89c, #6fd0c4); --c2: light-dark(#4f9fe0, #8cc4f2); }
+
+.art-blob { transition: transform 0.45s ease; }
+.art-blob-a { fill: var(--c1); opacity: 0.2; }
+.art-blob-b { fill: var(--c2); opacity: 0.18; }
+
+.art-line,
+.art-wave {
+  stroke: var(--c1);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.art-accent,
+.art-accent-line {
+  stroke: var(--c2);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.art-dot { fill: var(--c1); }
+.art-accent-dot { fill: var(--c2); }
+
+/* playful nudge on hover: blobs drift & swell */
+.home-card:hover .art-blob-a { transform: translate(3px, -3px) scale(1.08); }
+.home-card:hover .art-blob-b { transform: translate(-3px, 3px) scale(1.08); }
+.home-card:hover .art-blob { opacity: 0.28; }
+
+.home-card-title {
+  font-family: var(--font-display);
+  font-size: 1.7em;
+  line-height: 1.1;
+  color: var(--blue);
+}
+
+.home-card-go {
+  margin-top: 0.15em;
+  font-family: var(--font-mono);
+  font-size: 0.72em;
+  letter-spacing: 0.04em;
+  color: var(--teal-dark);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-card,
+  .art-blob { transition: none; }
+}
+
+/* --- recent writing --- */
+.home-recent { margin: 0 0 2.5em; }
+
+.home-recent-heading {
+  font-family: var(--font-display);
+  font-size: 1.7em;
+  color: var(--text);
+  margin: 0 0 0.6em;
+}
+
+.home-recent-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.home-recent-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1em;
+  padding: 0.5em 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.home-recent-link {
+  text-decoration: none;
+  flex: 1 1 auto;
+}
+
+.home-recent-link:hover { text-decoration: underline; }
+
+.home-recent-date {
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-size: 0.7em;
+  letter-spacing: 0.06em;
+  color: var(--teal-dark);
+  white-space: nowrap;
+}
+
+.home-recent-all {
+  display: inline-block;
+  margin-top: 0.9em;
+  font-family: var(--font-mono);
+  font-size: 0.78em;
+  letter-spacing: 0.04em;
+}
+
+/* --- elsewhere line --- */
+.home-elsewhere {
+  font-size: 0.92em;
+  color: var(--text-muted);
+}
+
+/* stack the hero on narrow screens */
+@media all and (max-width: 560px) {
+  .home-hero {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1em;
+  }
+  .home-recent-list li { gap: 0.6em; }
+}
+
+/* ========================
    IMAGE VIEWER OVERLAY
    ======================== */
 

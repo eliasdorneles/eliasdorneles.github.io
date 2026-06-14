@@ -122,16 +122,39 @@ func main() {
 		countFilesWritten++
 	}
 
-	// Generate index page
-	indexCtx := newRenderContext(config)
-	indexCtx["articles_page"] = map[string]interface{}{"object_list": objectList}
-	indexCtx["articles"] = objectList // for backwards compatibility
+	// Generate the blog listing page at /blog/index.html
+	blogCtx := newRenderContext(config)
+	blogCtx["articles_page"] = map[string]interface{}{"object_list": objectList}
+	blogCtx["articles"] = objectList // for backwards compatibility
 
-	rendered, err := renderTemplate("index.html", indexCtx)
+	blogOutDir := filepath.Join(*output, "blog")
+	if err := os.MkdirAll(blogOutDir, 0o755); err != nil {
+		fmt.Fprintln(os.Stderr, "Error attempting to create dir:", blogOutDir)
+	}
+	rendered, err := renderTemplate("blog.html", blogCtx)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "error rendering blog template:", err)
+	} else {
+		// Remove {static} for the blog listing page
+		rendered = strings.ReplaceAll(rendered, "{static}", "")
+		rendered = strings.ReplaceAll(rendered, "%7Bstatic%7D", "")
+		targetPath := filepath.Join(blogOutDir, "index.html")
+		if err := writeFile(targetPath, rendered); err != nil {
+			fmt.Fprintln(os.Stderr, "Error writing blog file:", targetPath)
+		} else {
+			countFilesWritten++
+		}
+	}
+
+	// Generate the home page at /index.html
+	homeCtx := newRenderContext(config)
+	homeCtx["recent_articles"] = objectList[:min(5, len(objectList))]
+
+	rendered, err = renderTemplate("index.html", homeCtx)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "error rendering index template:", err)
 	} else {
-		// Remove {static} for index page
+		// Remove {static} for the home page
 		rendered = strings.ReplaceAll(rendered, "{static}", "")
 		rendered = strings.ReplaceAll(rendered, "%7Bstatic%7D", "")
 		targetPath := filepath.Join(*output, "index.html")

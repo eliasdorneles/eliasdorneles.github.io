@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Blog &mdash; {{ SITENAME }}{% endblock %}
+{% block content %}
+<section id="content" class="home-content">
+
+{% if articles %}
+    {% for article in articles_page.object_list %}
+    <header class="posttitle">
+        <h1>
+            <a href="{{ SITEURL }}/{{ article.url }}"
+                rel="bookmark" class="nodec"
+                title="Permalink to {{ article.title|striptags }}">{{ article.title }}
+            </a>
+        </h1>
+        <small class="published" title="{{ article.date_iso }}">{{ article.date_display }}</small>
+    </header>
+
+    <div class="postsummary"> {{ article._summary }} </div>
+    {% if article.content != article._summary %}
+    <a href="{{ SITEURL }}/{{ article.url }}"
+        title="Permalink to {{ article.title|striptags }}">Continue reading &rarr;
+    </a>
+    {% endif %}
+    {% endfor %}
+{% else %}
+    <p>No articles found.</p>
+    <h2>Pages</h2>
+    {% for page in PAGES %}
+        <li><a href="{{ SITEURL }}/{{ page.url }}">{{ page.title }}</a></li>
+    {% endfor %}
+{% endif %}
+
+</section>
+{% endblock content %}
