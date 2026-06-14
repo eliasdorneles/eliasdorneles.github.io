@@ -730,6 +730,8 @@ address:hover > a.edit-article { color: light-dark(#ccc, #4d5d67); }
 
 .art-dot { fill: var(--c1); }
 .art-accent-dot { fill: var(--c2); }
+.art-fill { fill: var(--c1); }
+.art-fill-accent { fill: var(--c2); }
 
 /* playful nudge on hover: blobs drift & swell */
 .home-card:hover .art-blob-a { transform: translate(3px, -3px) scale(1.08); }
