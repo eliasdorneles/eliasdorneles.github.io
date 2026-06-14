@@ -4,8 +4,8 @@
     "AVATAR": "",
     "MENUITEMS": [
         {"title": "Home", "url": ""},
-        {"title": "Blog", "url": "blog/"},
         {"title": "Music", "url": "pages/music.html"},
+        {"title": "Blog", "url": "blog/"},
         {"title": "Today I Learned...", "url": "til"},
         {"title": "About me", "url": "pages/about.html"}
     ]

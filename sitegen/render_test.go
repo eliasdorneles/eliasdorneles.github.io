@@ -124,6 +124,13 @@ func TestRenderHomeTemplate(t *testing.T) {
 	article := testArticle()
 	ctx := newRenderContext(testConfig())
 	ctx["recent_articles"] = []interface{}{buildArticleContext(article)}
+	ctx["recent_music"] = []interface{}{
+		map[string]interface{}{
+			"title":    "Chagrin",
+			"video_id": "LJYTnH2uOp8",
+			"url":      "https://www.youtube.com/watch?v=LJYTnH2uOp8",
+		},
+	}
 
 	rendered, err := renderTemplate("index.html", ctx)
 	if err != nil {
@@ -139,6 +146,24 @@ func TestRenderHomeTemplate(t *testing.T) {
 	// recent writing pulls the article through
 	if !strings.Contains(rendered, "My <em>fancy</em> article") {
 		t.Error("recent article missing from home page")
+	}
+	// recent music section
+	if !strings.Contains(rendered, "Recent music") {
+		t.Error("recent music heading missing from home page")
+	}
+	if !strings.Contains(rendered, "Chagrin") {
+		t.Error("recent music item missing from home page")
+	}
+	if !strings.Contains(rendered, "https://www.youtube.com/watch?v=LJYTnH2uOp8") {
+		t.Error("recent music URL missing from home page")
+	}
+	// music card appears before writing card in the home-cards section
+	musicIdx := strings.Index(rendered, "home-card--music")
+	writingIdx := strings.Index(rendered, "home-card--writing")
+	if musicIdx == -1 || writingIdx == -1 {
+		t.Error("home cards missing")
+	} else if musicIdx > writingIdx {
+		t.Error("music card should appear before writing card")
 	}
 }
 
